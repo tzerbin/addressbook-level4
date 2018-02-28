@@ -66,7 +66,7 @@ public class Person {
     public boolean removeTag(Tag toRemove) {
         Set<Tag> newTags = tags.toSet();
         boolean containsTheTag = newTags.remove(toRemove);
-        if(containsTheTag) {
+        if (containsTheTag) {
             tags.setTags(newTags);
         }
         return containsTheTag;

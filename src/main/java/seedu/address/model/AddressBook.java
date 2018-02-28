@@ -82,12 +82,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public int removeTag(Tag tag) {
         int count = 0;
-        for(Person person: persons) {
+        for (Person person: persons) {
             if (person.removeTag(tag)) {
                 count++;
             }
         }
-        if(count > 0) {
+        if (count > 0) {
             removeUnusedTags();
         }
         return count;
@@ -145,10 +145,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private Set<Tag> getUsedTags() {
         Set<Tag> usedTags = new HashSet<>();
-        for(Person person: persons) {
+        for (Person person: persons) {
             Set<Tag> tagsOfThisPerson = person.getTags();
-            for(Tag tag: tagsOfThisPerson) {
-                if(! usedTags.contains(tag)) {
+            for (Tag tag: tagsOfThisPerson) {
+                if (!usedTags.contains(tag)) {
                     usedTags.add(tag);
                 }
             }
