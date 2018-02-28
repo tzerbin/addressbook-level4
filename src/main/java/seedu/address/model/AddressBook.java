@@ -166,6 +166,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            removeUnusedTags();
             return true;
         } else {
             throw new PersonNotFoundException();
