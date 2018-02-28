@@ -1,6 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -18,6 +20,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
 
@@ -25,6 +29,9 @@ public class AddressBookTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBook addressBook = new AddressBook();
+    private final AddressBook addressBookWithBobAndAlice = new AddressBookBuilder().withPerson(BOB)
+            .withPerson(ALICE).build();
+    private final AddressBook addressBookWithAlice = new AddressBookBuilder().withPerson(ALICE).build();
 
     @Test
     public void constructor() {
@@ -54,6 +61,23 @@ public class AddressBookTest {
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
+    }
+
+    @Test
+    public void removePerson_theOnlyPersonWithHusbandTagRemoved_TagListUpdated() throws Exception{
+        addressBookWithBobAndAlice.removePerson(BOB);
+
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(ALICE).build();
+        assertEquals(expectedAddressBook, addressBookWithBobAndAlice);
+    }
+
+    @Test
+    public void updatePerson_theOnlyPersonWithFriendTagUpdated_TagListUpdated() throws Exception {
+        Person aliceWithoutFriendTag = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        addressBookWithAlice.updatePerson(ALICE, aliceWithoutFriendTag);
+
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(aliceWithoutFriendTag).build();
+        assertEquals(expectedAddressBook, addressBookWithAlice);
     }
 
     @Test
