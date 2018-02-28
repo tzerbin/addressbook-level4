@@ -1363,8 +1363,6 @@ Use case ends.
 .  Should come with automated unit tests and open source code
 .  Should favor DOS style commands over Unix-style commands
 
-_{More to be added}_
-
 [appendix]
 == Glossary
 
