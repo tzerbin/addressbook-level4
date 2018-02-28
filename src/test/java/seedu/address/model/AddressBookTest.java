@@ -31,11 +31,12 @@ public class AddressBookTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBook addressBook = new AddressBook();
-    private final AddressBook addressBookWithBobAndAmy = new AddressBookBuilder().withPerson(AMY)
-            .withPerson(ALICE).build();
+    private final AddressBook addressBookWithBobAndAmy = new AddressBookBuilder().withPerson(BOB)
+            .withPerson(AMY).build();
     private final AddressBook addressBookWithBobAndAlice = new AddressBookBuilder().withPerson(BOB)
             .withPerson(ALICE).build();
     private final AddressBook addressBookWithAlice = new AddressBookBuilder().withPerson(ALICE).build();
+    private final AddressBook addressBookWithAmy = new AddressBookBuilder().withPerson(AMY).build();
 
     @Test
     public void constructor() {
@@ -45,21 +46,21 @@ public class AddressBookTest {
 
     @Test
     public void removeTag_nonExistentTag_addressBookUnchanged() {
-        addressBookWithBobAndAmy.removeTag(new Tag(VALID_TAG_HUSBAND));
+        addressBookWithAmy.removeTag(new Tag(VALID_TAG_HUSBAND));
 
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).withPerson(ALICE).build();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).build();
 
-        assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
+        assertEquals(expectedAddressBook, addressBookWithAmy);
     }
 
     @Test
     public void removeTag_ExistentTag_tagRemoved() {
         addressBookWithBobAndAmy.removeTag(new Tag(VALID_TAG_FRIEND));
 
-        Person amyWithoutFriendTag = new PersonBuilder(AMY).build();
-        Person aliceWithoutFriendTag = new PersonBuilder(ALICE).build();
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(amyWithoutFriendTag).
-                withPerson(aliceWithoutFriendTag).build();
+        Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(bobWithoutFriendTag).
+                withPerson(amyWithoutFriendTag).build();
 
         assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
     }
