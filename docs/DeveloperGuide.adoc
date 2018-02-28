@@ -1385,7 +1385,7 @@ A list of contacts involved in an appointment but not attendees
 A list of contacts which should be marked for being untrustworthy or unacceptable for whatever reason
 
 [[UI]] User Interface::
-design and looks of the software
+The Design and looks of the software
 
 [appendix]
 == Product Survey
