@@ -87,6 +87,9 @@ public class AddressBook implements ReadOnlyAddressBook {
                 count++;
             }
         }
+        if(count > 0) {
+            removeUnusedTags();
+        }
         return count;
     }
 
