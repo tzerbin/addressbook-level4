@@ -76,6 +76,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes {@code tag} from all persons in this {@code AddressBook}.
+     * @returns the number of {@code person}s with this {@code tag} removed.
+     */
+    public int removeTag(Tag tag) {
+        int count = 0;
+        for(Person person: persons) {
+            if (person.removeTag(tag)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     //// person-level operations
 
     /**
