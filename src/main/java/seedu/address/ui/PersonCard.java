@@ -12,6 +12,7 @@ import seedu.address.model.person.Person;
  */
 public class PersonCard extends UiPart<Region> {
 
+    private static final String[] TAG_COLORS = { "teal", "red", "purple", "blue", "orange", "brown", "green", "pink", "black", "grey" };
     private static final String FXML = "PersonListCard.fxml";
 
     /**
@@ -47,7 +48,8 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+       // person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        tagsInitialise(person);
     }
 
     @Override
@@ -66,5 +68,23 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+    /**
+      * Creates the tag labels for {@code person}.
+      */
+    private void tagsInitialise(Person person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getColorForTags(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+    /**
+    * Returns the color style for {@code tagName}'s label.
+    */
+    private String getColorForTags(String tagName) {
+    // we use the hash code of the tag name to generate a random color, so that the color remain consistent
+    // between different runs of the program while still making it random enough between tags.
+        return TAG_COLORS[Math.abs(tagName.hashCode()) % TAG_COLORS.length];
     }
 }
