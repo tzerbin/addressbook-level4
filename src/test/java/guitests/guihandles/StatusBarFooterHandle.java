@@ -16,17 +16,17 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
-    private final StatusBar personsStatusTotalNode;
+    private final StatusBar totalPersonsStatusNode;
 
-    private String lastRememberedPersonsStatusTotal;
+    private String lastRememberedTotalPersonsStatus;
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
 
     public StatusBarFooterHandle(Node statusBarFooterNode) {
         super(statusBarFooterNode);
 
-        this.personsStatusTotalNode = getChildNode(TOTAL_PERSONS_STATUS_ID);
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
+        this.totalPersonsStatusNode = getChildNode(TOTAL_PERSONS_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
     }
 
@@ -40,8 +40,8 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     /**
      * Returns the digit text of 'total persons' portion of the status bar.
      */
-    public String getPersonsStatusTotal() {
-        return personsStatusTotalNode.getText();
+    public String getTotalPersonsStatus() {
+        return totalPersonsStatusNode.getText();
     }
 
     /**
@@ -70,8 +70,8 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      * Returns true if the current content of the 'total persons' is different from the value remembered by the most
      * recent {@code rememberPersonsStatusTotal()} call.
      */
-    public boolean isPersonsStatusTotalChanged() {
-        return !lastRememberedPersonsStatusTotal.equals(getPersonsStatusTotal());
+    public boolean isTotalPersonsStatusChanged() {
+        return !lastRememberedTotalPersonsStatus.equals(getTotalPersonsStatus());
     }
 
     /**
@@ -93,7 +93,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      * Remembers the content of the 'total persons' portion of the status bar.
      */
     public void rememberPersonsStatusTotal() {
-        lastRememberedPersonsStatusTotal = getPersonsStatusTotal();
+        lastRememberedTotalPersonsStatus = getTotalPersonsStatus();
     }
 
 }

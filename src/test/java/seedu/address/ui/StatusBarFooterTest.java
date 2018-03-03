@@ -3,9 +3,9 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.ui.StatusBarFooter.STATUS_TOTAL_PERSONS;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.address.ui.StatusBarFooter.TOTAL_PERSONS_STATUS;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -26,9 +26,10 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final String STUB_SAVE_LOCATION = "Stub";
     private static final String RELATIVE_PATH = "./";
 
+    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(
+            new AddressBookBuilder().withPerson(ALICE).build());
+
     private static final int INITIAL_TOTAL_PERSONS = 0;
-    private static final AddressBookChangedEvent EVENT_STUB =
-            new AddressBookChangedEvent(new AddressBookBuilder().withPerson(ALICE).build());
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -59,12 +60,12 @@ public class StatusBarFooterTest extends GuiUnitTest {
     public void display() {
         // initial state
         assertContentOfStatusBar(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL,
-                String.format(STATUS_TOTAL_PERSONS, INITIAL_TOTAL_PERSONS));
+                String.format(TOTAL_PERSONS_STATUS, INITIAL_TOTAL_PERSONS));
         // after address book is updated
         postNow(EVENT_STUB);
         assertContentOfStatusBar(RELATIVE_PATH + STUB_SAVE_LOCATION,
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
-                String.format(STATUS_TOTAL_PERSONS, EVENT_STUB.data.getPersonList().size()));
+                String.format(TOTAL_PERSONS_STATUS, EVENT_STUB.data.getPersonList().size()));
     }
 
     /**
@@ -75,7 +76,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private void assertContentOfStatusBar(String expectedSaveLocation, String expectedPersonsStatusTotal,
                                         String expectedSyncStatus) {
         assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
-        assertEquals(expectedPersonsStatusTotal, statusBarFooterHandle.getPersonsStatusTotal());
+        assertEquals(expectedPersonsStatusTotal, statusBarFooterHandle.getTotalPersonsStatus());
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
         guiRobot.pauseForHuman();
     }
