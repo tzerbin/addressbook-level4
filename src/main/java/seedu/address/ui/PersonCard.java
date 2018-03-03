@@ -12,7 +12,8 @@ import seedu.address.model.person.Person;
  */
 public class PersonCard extends UiPart<Region> {
 
-    private static final String[] TAG_COLORS = { "teal", "red", "purple", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static final String[] TAG_COLORS = { "teal", "red", "purple", "blue", "orange", "brown", "green",
+            "pink", "black", "grey" };
     private static final String FXML = "PersonListCard.fxml";
 
     /**
@@ -82,8 +83,10 @@ public class PersonCard extends UiPart<Region> {
     * Returns color style for {@code tagName}'s label.
     */
     private String getColorForTags(String tagName) {
-    // we use the hash code of the tag name to generate a random color, so that the color remain consistent
-    // between different runs of the program while still making it random enough between tags.
+        /**
+         * we use the hash code of the tag name to generate a random color, so that the color remain consistent
+         * between different runs of the program while still making it random enough between tags.
+         */
         return TAG_COLORS[Math.abs(tagName.hashCode()) % TAG_COLORS.length];
     }
 }
