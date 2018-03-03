@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/WJY-norainu/addressbook-level4
+:repoURL: https://github.com/CS2103W14-B4/addressbook-level4/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -787,6 +787,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* need to manage several people (celebrities) schedule
+* has a need to link contacts to appointments
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
@@ -806,12 +808,73 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user | remove appointments to a calendar |  keep my scheduling neat and tidy
+
+|`* * *` |user | edit appointment timings |  change the time of the appointment when I need to re-schedule
+
+|`* * *` |user | change appointment location |  change the venue if the original one is not available
+
+|`* * *` |user | change people involved in appointment |  add new people involved or remove people no longer involved
+
+|`* * *` |user | have notifications or reminder for urgent upcoming events that I need to take note of |  set my priorities straight
+
+|`* * *` |user |undo a previous command | remove the change made by mistake
+
+|`* * *` |user |redo a previous command | restore the change removed by mistake
+
+|`* * *` |user | add appointments to a calendar | schedule different appointments without time clash
+
+|`* * *` |user | see the location of a given appointment |  plan for travel
+
+|`* * *` |celebrity manager | associate the appointment with relevant celebrities and parties |  view who are involved
+
+|`* * *` |celebrity manager | associate the appointment with relevant contacts |  contact the relevant parties easily
+
+|`* * *` |celebrity manager | associate certain appointments with payment |  know if payment is needed for next appointment
+
+|`* * *` |celebrity manager | have multiple schedule calendars |  manage more than 1 different schedules in the event my client is a idol group
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user with many persons having long names in the address book |auto-fill the name as I key in the command | key in a person’s name without spelling out all names completely
 
-_{More to be added}_
+|`* *` |user | be able to email directly from the address book | do not need to use another platform to do so
+
+|`* *` |user with many international contacts | group contacts by country code | see my contacts from different countries
+
+|`* *` |user | change the size of different windows of the address book application UI | it looks pleasing to the eyes
+
+|`* *` |user who contacts different parties involved in an appointment | draft the message about appointment details automatically | don’t have to do it
+
+|`* *` |user who frequently contacts certain people | sort the contacts by contacting frequency |  find those people I frequently contact easily
+
+|`* *` |user | change the colour scheme of the application |  looks pleasing to my eyes
+
+|`* *` |user who has very bad eyesight | change the look and feel of the application such as font size and type |  look at the font properly
+
+|`* *` |user | blacklist phone numbers |  get rid of spams from other software.
+
+|`* *` |celebrity manager | consolidate payments for a certain period |   know if there is any outstanding payment
+
+|`* *` |celebrity manager | group celebrities up by their different talent (acting, singing, hosting etc.) |  find suitable celebrities for event quickly.
+
+|`* *` |celebrity manager managing a same group of celebrities| add event to the group of celebrities at the same time |  save time
+
+|`* *` |celebrity manager |  obtain information or details about the upcoming schedule (show) | keep my client informed and prepared on the content
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user of previous versions of the address book |transfer my contacts to the new version | don’t have to add the contacts one-by-one again
+
+|`*` |user with poor eyesight | the address book to read out the contacts to me | use it more efficiently
+
+|`*` |user who is time conscious |  see the time and date |  plan schedules faster
+
+|`*` |user | output the contacts to a separate list |  have a backup copy of the contacts
+
+|`*` |celebrity manager | check the celebrities I blacklisted |  organize the blacklist
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -844,16 +907,461 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Auto-fill
+
+*MSS*
+
+1.  User keys in a partially complete command which only has one match in the AddressBook
+2.  AddressBook shows the matched complete command
+3.  User presses tab to let AddressBook auto-fill the rest of the command
+
++
+Use case ends.
+
+*Extensions*
+
+=== Use case: Undo
+
+*MSS*
+
+1.  User requests to undo
+2.  AddressBook undoes the latest executed command that mutates the data
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no executed command that mutates the data
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Redo
+
+*MSS*
+
+1.  User requests to redo
+2.  AddressBook redoes the latest executed undo command
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no executed undo command.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Emailing
+
+*MSS*
+
+1.  User requests to email to a contact
+2.  AddressBook opens the platform of the emailing website
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Contact does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List contacts by tag
+
+*MSS*
+
+1.  User requests to list contacts by a tag
+2.  AddressBook lists out contacts with the specified tag
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no people with the tag.
++
+Use case ends.
+
+=== Use case: Blacklist phone number
+
+
+*MSS*
+
+1.  User requests to blacklist phone number
+2.  AddressBook requests the user to confirm black list
+3.  User confirms
+4.  AddressBook adds the phone number to black list
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Phone number is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3a. User does not confirm.
++
+Use case ends
+
+* 3b. User enters an invalid confirmation.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at 2.
+
+=== Use case: Change UI dimensions
+
+*MSS*
+
+1.  User inputs the new dimension for a specific UI
+2.  AddressBook updates the size of the UI indicated
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. New dimensions has conflict with overall dimension of the whole UI.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Add appointment
+
+*MSS*
+
+1.  User requests to add an appointment
+2.  AddressBook adds the appointment to the calendar
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment to add consist of incorrect details or format.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. Added appointment clashes with existing appointment.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: View appointment
+
+*MSS*
+
+1.  User requests to view an appointment
+2.  AddressBook shows the appointment details
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Remind attendees of appointment
+
+*MSS*
+
+1.  User requests to remind appointment
+2.  AddressBook sends a pre-drafted email containing appointment details to the attendees
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Remove appointment
+
+*MSS*
+
+1.  User requests to remove a specified appointment
+2.  AddressBook removes the appointment
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Edit appointment
+
+*MSS*
+
+1.  User requests to edit a specified appointment
+2.  AddressBook changes appointment details and displays new appointment details to user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 1b.  Information entered for edit is invalid.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Set appointment alarm
+
+*MSS*
+
+1.  User requests to set an alarm for a specified appointment at a specified time
+2.  AddressBook sends reminder whenever the user opens it after the specified time till appointment timing
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Cancel appointment alarm
+
+*MSS*
+
+1.  User requests to cancel an alarm for a specified appointment
+2.  AddressBook cancels the alarm
+
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 1b. No alarm is set for the specified appointment.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Consolidate payments
+
+*MSS*
+
+1.  User requests to consolidate payments within a specific period
+2.  AddressBook outputs payments made and pending
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The period specified is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2a. There is no payment within the specified period.
++
+[none]
+** 2a1. AddressBook shows a message that says no payment.
++
+Use case ends.
+
+=== Use case: Associate relevant parties to appointments
+
+*MSS*
+
+1.  User requests to access appointments.
+2.  AddressBook provide the list of appointments User has.
+3.  User requests to associate relevant parties to one of the appointments from the list.
+4.  AddressBook requests input of the relevant parties’ names.
+5.  User enters the names of the parties.
+6.  AddressBook adds the names to the appointments.
+7.  AddressBook provides confirmation.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User provides contact that is not in contact list.
++
+[none]
+** 4a1. AddressBook requests User to create a new contact.
++
+[none]
+** 4a2. User adds new contact (refer to Add New Contact use case).
++
+Use case resumes from step 5.
++
+[none]
+* a. At any time, user chooses to cancel
++
+[none]
+** a1. AddressBook provides status.
++
+Use case ends.
+
+=== Use case: Associate points of contact to appointments
+
+*MSS*
+
+1.  User requests to access appointments.
+2.  AddressBook provide the list of appointments User has.
+3.  User requests to associate points of contacts to one of the appointments from the list.
+4.  AddressBook requests input of the points of contact’ names.
+5.  User enters the names of the parties.
+6.  AddressBook adds the names to the appointments.
+7.  AddressBook provides confirmation.
+
++
+Use case ends.
+
+*Extensions*
+[none]
+* 4a. User provides contact that is not in contact list.
++
+[none]
+** 4a1. AddressBook requests User to create a new contact.
++
+[none]
+** 4a2. User adds new contact (refer to Add New Contact use case).
++
+Use case resumes from step 5.
++
+[none]
+* a. At any time, user chooses to cancel
++
+[none]
+** a1. AddressBook provides status.
++
+Use case ends.
+
+=== Use case: Associate payments to appointments
+
+*MSS*
+
+1.  User requests to access appointments.
+2.  AddressBook provide the list of appointments User has.
+3.  User requests to associate payments to one of the appointments from the list.
+4.  AddressBook requests input of the payment amount.
+5.  User enters the payment amount.
+6.  AddressBook adds payment amount to the appointments.
+7.  AddressBook provides confirmation.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User provides invalid input.
++
+[none]
+** 4a1. AddressBook requests User to provide valid input.
++
+[none]
+** 4a2. User enters new input.
++
+Steps 4a1-4a2 are repeated until input is valid.
++
+Use case resumes from step 5.
+
+[none]
+* a. At any time, user chooses to cancel
++
+[none]
+** a1. AddressBook provides status.
++
+Use case ends.
 
 [appendix]
+
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be usable by people with no knowledge about command line input
+.  Should respond to any user command within 10 seconds
+.  Should be backward compatible with data produced by earlier versions of the AddressBook
+.  Should come with automated unit tests and open source code
+.  Should favor DOS style commands over Unix-style commands
 
 [appendix]
 == Glossary
@@ -863,6 +1371,21 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[appointment]] Appointment::
+A meeting between contacts at a specific time, date and location. An appointment has a specific name
+
+[[attendees]] Attendees::
+A list of contacts being managed by the User who are attending the appointment
+
+[[points-of-contacts]] Points of Contacts::
+A list of contacts involved in an appointment but not attendees
+
+[[blacklist]] Blacklist::
+A list of contacts which should be marked for being untrustworthy or unacceptable for whatever reason
+
+[[UI]] User Interface::
+The Design and looks of the software
 
 [appendix]
 == Product Survey
