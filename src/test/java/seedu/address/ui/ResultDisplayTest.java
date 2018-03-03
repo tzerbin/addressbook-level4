@@ -29,7 +29,7 @@ public class ResultDisplayTest extends GuiUnitTest {
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(), ResultDisplayHandle.RESULT_DISPLAY_ID));
         styleOfResultDisplayDefault = new ArrayList<>(resultDisplayHandle.getClassStyle());
         styleOfResultDisplayError = new ArrayList<>(styleOfResultDisplayDefault);
-        styleOfResultDisplayError.add(ResultDisplay.ERROR_CLASS_STYLE);
+        styleOfResultDisplayError.add(ResultDisplay.STYLE_ERROR_CLASS);
     }
 
     /**

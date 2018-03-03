@@ -75,7 +75,7 @@ public abstract class AddressBookSystemTest {
 
         styleOfResultDisplayDefault = mainWindowHandle.getResultDisplay().getClassStyle();
         styleOfResultDisplayError = mainWindowHandle.getResultDisplay().getClassStyle();
-        styleOfResultDisplayError.add(ResultDisplay.ERROR_CLASS_STYLE);
+        styleOfResultDisplayError.add(ResultDisplay.STYLE_ERROR_CLASS);
 
         waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();

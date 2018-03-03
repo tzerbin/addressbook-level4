@@ -21,7 +21,7 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
-    public static final String ERROR_CLASS_STYLE = "error";
+    public static final String STYLE_ERROR_CLASS = "error";
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
@@ -37,7 +37,7 @@ public class ResultDisplay extends UiPart<Region> {
      * Sets the {@code ResultDisplay} style to the default style.
      */
     private void setStyleToShowCommandSuccess() {
-        resultDisplay.getStyleClass().remove(ERROR_CLASS_STYLE);
+        resultDisplay.getStyleClass().remove(STYLE_ERROR_CLASS);
     }
 
     /**
@@ -46,11 +46,11 @@ public class ResultDisplay extends UiPart<Region> {
     private void setStyleToShowCommandFailure() {
         ObservableList<String> styleClass = resultDisplay.getStyleClass();
 
-        if (styleClass.contains(ERROR_CLASS_STYLE)) {
+        if (styleClass.contains(STYLE_ERROR_CLASS)) {
             return;
         }
 
-        styleClass.add(ERROR_CLASS_STYLE);
+        styleClass.add(STYLE_ERROR_CLASS);
     }
 
     @Subscribe
