@@ -1,8 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.StatusBarFooter.STATUS_TOTAL_PERSONS;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
@@ -27,7 +27,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final String RELATIVE_PATH = "./";
 
     private static final int INITIAL_TOTAL_PERSONS = 0;
-    private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBookBuilder().withPerson(ALICE).build());
+    private static final AddressBookChangedEvent EVENT_STUB =
+            new AddressBookChangedEvent(new AddressBookBuilder().withPerson(ALICE).build());
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
