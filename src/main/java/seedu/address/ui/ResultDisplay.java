@@ -21,7 +21,7 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
-    public static final String ERROR_STYLE_CLASS = "error";
+    public static final String ERROR_CLASS_STYLE = "error";
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
@@ -34,35 +34,35 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
     /**
-     * Sets the {@code ResultDisplay} style to use the default style.
+     * Sets the {@code ResultDisplay} style to the default style.
      */
-    private void setStyleToIndicateCommandSuccess() {
-        resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
+    private void setStyleToShowCommandSuccess() {
+        resultDisplay.getStyleClass().remove(ERROR_CLASS_STYLE);
     }
 
     /**
-     * Sets the {@code ResultDisplay} style to indicate a failed command.
+     * Sets the {@code ResultDisplay} style to show a failed command.
      */
-    private void setStyleToIndicateCommandFailure() {
+    private void setStyleToShowCommandFailure() {
         ObservableList<String> styleClass = resultDisplay.getStyleClass();
 
-        if (styleClass.contains(ERROR_STYLE_CLASS)) {
+        if (styleClass.contains(ERROR_CLASS_STYLE)) {
             return;
         }
 
-        styleClass.add(ERROR_STYLE_CLASS);
+        styleClass.add(ERROR_CLASS_STYLE);
     }
 
     @Subscribe
-    private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    private void handleNewResultAvailableEvent(NewResultAvailableEvent newEvent) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(newEvent));
         Platform.runLater(() -> {
-            displayed.setValue(event.message);
+            displayed.setValue(newEvent.message);
 
-            if (event.isSuccessful) {
-                setStyleToIndicateCommandSuccess();
+            if (newEvent.successful) {
+                setStyleToShowCommandSuccess();
             } else {
-                setStyleToIndicateCommandFailure();
+                setStyleToShowCommandFailure();
             }
         });
     }

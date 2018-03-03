@@ -41,6 +41,7 @@ import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
 import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.ResultDisplay;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -49,6 +50,9 @@ import seedu.address.ui.CommandBox;
 public abstract class AddressBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
+
+    private List<String> styleOfResultDisplayDefault;
+    private List<String> styleOfResultDisplayError;
 
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
@@ -68,6 +72,10 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
+
+        styleOfResultDisplayDefault = mainWindowHandle.getResultDisplay().getClassStyle();
+        styleOfResultDisplayError = mainWindowHandle.getResultDisplay().getClassStyle();
+        styleOfResultDisplayError.add(ResultDisplay.ERROR_CLASS_STYLE);
 
         waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
@@ -234,19 +242,21 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the command box's shows the default style.
+     * Asserts that the results displayed and command box shows the error style.
      */
-    protected void assertCommandBoxShowsDefaultStyle() {
-        assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
-    }
-
-    /**
-     * Asserts that the command box's shows the error style.
-     */
-    protected void assertCommandBoxShowsErrorStyle() {
+    protected void assertResultDisplayAndCommandBoxShowsErrorStyle() {
+        assertEquals(styleOfResultDisplayError, getResultDisplay().getClassStyle());
         assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
     }
 
+    /**
+     * Asserts that the results displayed and command box shows the default style.
+     */
+    protected void assertResultDisplayAndCommandBoxShowsDefaultStyle() {
+        assertEquals(styleOfResultDisplayDefault, getResultDisplay().getClassStyle());
+        assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
+    }
+    
     /**
      * Asserts that the entire status bar remains the same.
      */
