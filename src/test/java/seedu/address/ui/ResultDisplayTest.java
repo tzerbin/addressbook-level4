@@ -14,8 +14,12 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
-    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB_FAILURE = new NewResultAvailableEvent("failure", false);
-    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB_SUCCESS = new NewResultAvailableEvent("success", true);
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB_FAILURE =
+            new NewResultAvailableEvent("failure", false);
+
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB_SUCCESS =
+            new NewResultAvailableEvent("success", true);
+
     private List<String> styleOfResultDisplayDefault;
     private List<String> styleOfResultDisplayError;
 
@@ -26,7 +30,8 @@ public class ResultDisplayTest extends GuiUnitTest {
         ResultDisplay resultDisplay = new ResultDisplay();
         uiPartRule.setUiPart(resultDisplay);
 
-        resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(), ResultDisplayHandle.RESULT_DISPLAY_ID));
+        resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),
+                ResultDisplayHandle.RESULT_DISPLAY_ID));
         styleOfResultDisplayDefault = new ArrayList<>(resultDisplayHandle.getClassStyle());
         styleOfResultDisplayError = new ArrayList<>(styleOfResultDisplayDefault);
         styleOfResultDisplayError.add(ResultDisplay.STYLE_ERROR_CLASS);

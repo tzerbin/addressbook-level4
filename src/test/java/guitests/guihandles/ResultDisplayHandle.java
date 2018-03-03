@@ -1,7 +1,8 @@
 package guitests.guihandles;
 
-import javafx.scene.control.TextArea;
 import java.util.List;
+
+import javafx.scene.control.TextArea;
 
 /**
  * A handler for the {@code ResultDisplay} of the UI

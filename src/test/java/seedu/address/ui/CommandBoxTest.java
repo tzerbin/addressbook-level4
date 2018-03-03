@@ -7,8 +7,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.Rule;
+import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
@@ -22,11 +22,11 @@ import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class CommandBoxTest extends GuiUnitTest {
 
-    @Rule
-    public final EventsCollectorRule eventsRuleForCollector = new EventsCollectorRule();
-
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+
+    @Rule
+    public final EventsCollectorRule eventsRuleForCollector = new EventsCollectorRule();
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;

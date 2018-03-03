@@ -51,12 +51,12 @@ public abstract class AddressBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
-    private List<String> styleOfResultDisplayDefault;
-    private List<String> styleOfResultDisplayError;
-
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+
+    private List<String> styleOfResultDisplayDefault;
+    private List<String> styleOfResultDisplayError;
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -256,7 +256,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(styleOfResultDisplayDefault, getResultDisplay().getClassStyle());
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
     }
-    
+
     /**
      * Asserts that the entire status bar remains the same.
      */
