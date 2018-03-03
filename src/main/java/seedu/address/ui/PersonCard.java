@@ -48,7 +48,6 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-       // person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         tagsInitialise(person);
     }
 
@@ -70,17 +69,17 @@ public class PersonCard extends UiPart<Region> {
                 && person.equals(card.person);
     }
     /**
-      * Creates the tag labels for {@code person}.
+      * Creates tag labels for {@code person}.
       */
     private void tagsInitialise(Person person) {
         person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.getStyleClass().add(getColorForTags(tag.tagName));
-            tags.getChildren().add(tagLabel);
+            Label labelTags = new Label(tag.tagName);
+            labelTags.getStyleClass().add(getColorForTags(tag.tagName));
+            tags.getChildren().add(labelTags);
         });
     }
     /**
-    * Returns the color style for {@code tagName}'s label.
+    * Returns color style for {@code tagName}'s label.
     */
     private String getColorForTags(String tagName) {
     // we use the hash code of the tag name to generate a random color, so that the color remain consistent
