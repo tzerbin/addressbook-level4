@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.address.ui.StatusBarFooter.STATUS_TOTAL_PERSONS;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
@@ -191,6 +192,7 @@ public abstract class AddressBookSystemTest {
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
+        statusBarFooterHandle.rememberPersonsStatusTotal();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
@@ -241,6 +243,21 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that the sync status in the status bar was changed to the timing of
+     * {@code ClockRule#getInjectedClock()}, and total persons was changed to match the total
+     * number of persons in the address book, while the save location remains the same.
+     */
+    protected void assertStatusBarUpdatedExceptSaveLocation() {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        String time = new Date(clockRule.getInjectedClock().millis()).toString();
+        String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, time);
+        assertEquals(expectedSyncStatus, handle.getSyncStatus());
+        final int totalPersons = testApp.getModel().getAddressBook().getPersonList().size();
+        assertFalse(handle.isSaveLocationChanged());
+        assertEquals(String.format(STATUS_TOTAL_PERSONS, totalPersons), handle.getPersonsStatusTotal());
+    }
+
+    /**
      * Asserts that the command box's shows the error style.
      */
     protected void assertCommandBoxShowsErrorStyle() {
@@ -248,25 +265,29 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the entire status bar remains the same.
-     */
-    protected void assertStatusBarUnchanged() {
-        StatusBarFooterHandle handle = getStatusBarFooter();
-        assertFalse(handle.isSaveLocationChanged());
-        assertFalse(handle.isSyncStatusChanged());
-    }
-
-    /**
      * Asserts that only the sync status in the status bar was changed to the timing of
-     * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
+     * {@code ClockRule#getInjectedClock()}, while the save location and the total person
+     * list remains the same.
      */
     protected void assertStatusBarUnchangedExceptSyncStatus() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
+        assertFalse(handle.isPersonsStatusTotalChanged());
         assertFalse(handle.isSaveLocationChanged());
     }
+
+    /**
+     * Asserts that the entire status bar remains the same.
+     */
+    protected void assertStatusBarUnchanged() {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        assertFalse(handle.isPersonsStatusTotalChanged());
+        assertFalse(handle.isSaveLocationChanged());
+        assertFalse(handle.isSyncStatusChanged());
+    }
+
 
     /**
      * Asserts that the starting state of the application is correct.
@@ -278,11 +299,14 @@ public abstract class AddressBookSystemTest {
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
+            assertEquals(String.format(STATUS_TOTAL_PERSONS, getModel().getAddressBook().getPersonList().size()),
+                    getStatusBarFooter().getPersonsStatusTotal());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }
     }
+
 
     /**
      * Returns a defensive copy of the current model.
@@ -290,4 +314,5 @@ public abstract class AddressBookSystemTest {
     protected Model getModel() {
         return testApp.getModel();
     }
+
 }
