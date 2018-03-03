@@ -249,9 +249,6 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertStatusBarChangedExceptSaveLocation() {
         StatusBarFooterHandle handle = getStatusBarFooter();
-        String time = new Date(clockRule.getInjectedClock().millis()).toString();
-//        String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, time);
-//        assertEquals(expectedSyncStatus, handle.getSyncStatus());
         final int totalPersons = testApp.getModel().getAddressBook().getPersonList().size();
         assertEquals(String.format(TOTAL_PERSONS_STATUS, totalPersons), handle.getTotalPersonsStatus());
         assertFalse(handle.isSaveLocationChanged());
