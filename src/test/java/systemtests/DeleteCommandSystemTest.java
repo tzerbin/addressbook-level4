@@ -173,7 +173,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             assertSelectedCardUnchanged();
         }
         assertResultDisplayAndCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
         assertStatusBarChangedExceptSaveLocation();
     }
 
