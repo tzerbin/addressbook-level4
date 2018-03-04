@@ -17,10 +17,12 @@ import seedu.address.ui.PersonCard;
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
+
+    private static final String LABEL_STYLE_DEFAULT = "label";
+
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    private static final String LABEL_STYLE_DEFAULT = "label";
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
