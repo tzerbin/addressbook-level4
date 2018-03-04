@@ -12,10 +12,13 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
+    private static final String TOTAL_PERSONS_STATUS_ID = "#totalPersonsStatus";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
+    private final StatusBar totalPersonsStatusNode;
 
+    private String lastRememberedTotalPersonsStatus;
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
 
@@ -23,6 +26,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         super(statusBarFooterNode);
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
+        this.totalPersonsStatusNode = getChildNode(TOTAL_PERSONS_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
     }
 
@@ -31,6 +35,13 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      */
     public String getSyncStatus() {
         return syncStatusNode.getText();
+    }
+
+    /**
+     * Returns the digit text of 'total persons' portion of the status bar.
+     */
+    public String getTotalPersonsStatus() {
+        return totalPersonsStatusNode.getText();
     }
 
     /**
@@ -56,6 +67,14 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     }
 
     /**
+     * Returns true if the current content of the 'total persons' is different from the value remembered by the most
+     * recent {@code rememberPersonsStatusTotal()} call.
+     */
+    public boolean isTotalPersonsStatusChanged() {
+        return !lastRememberedTotalPersonsStatus.equals(getTotalPersonsStatus());
+    }
+
+    /**
      * Remembers the content of the 'save location' portion of the status bar.
      */
     public void rememberSaveLocation() {
@@ -69,4 +88,12 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public boolean isSaveLocationChanged() {
         return !lastRememberedSaveLocation.equals(getSaveLocation());
     }
+
+    /**
+     * Remembers the content of the 'total persons' portion of the status bar.
+     */
+    public void rememberPersonsStatusTotal() {
+        lastRememberedTotalPersonsStatus = getTotalPersonsStatus();
+    }
+
 }

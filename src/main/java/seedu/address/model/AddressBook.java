@@ -76,6 +76,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes {@code tag} from all persons in this {@code AddressBook}.
+     * @returns the number of {@code person}s with this {@code tag} removed.
+     */
+    public int removeTag(Tag tag) {
+        int count = 0;
+        for (Person person: persons) {
+            if (person.removeTag(tag)) {
+                count++;
+            }
+        }
+        if (count > 0) {
+            removeUnusedTags();
+        }
+        return count;
+    }
+
     //// person-level operations
 
     /**
@@ -112,6 +129,31 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+        removeUnusedTags();
+    }
+
+    /**
+     * Removes all {@code tag}s that are not used by any {@code person} in this {@code AddressBook}.
+     */
+    private void removeUnusedTags() {
+        Set<Tag> usedTags = getUsedTags();
+        tags.setTags(usedTags);
+    }
+
+    /**
+     * @return a set of {@code tag}s that are used at least by one {@code person} in the person list.
+     */
+    private Set<Tag> getUsedTags() {
+        Set<Tag> usedTags = new HashSet<>();
+        for (Person person: persons) {
+            Set<Tag> tagsOfThisPerson = person.getTags();
+            for (Tag tag: tagsOfThisPerson) {
+                if (!usedTags.contains(tag)) {
+                    usedTags.add(tag);
+                }
+            }
+        }
+        return usedTags;
     }
 
     /**
@@ -141,6 +183,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            removeUnusedTags();
             return true;
         } else {
             throw new PersonNotFoundException();

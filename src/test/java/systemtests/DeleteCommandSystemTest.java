@@ -172,9 +172,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         } else {
             assertSelectedCardUnchanged();
         }
-
         assertResultDisplayAndCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
+        assertStatusBarChangedExceptSaveLocation();
     }
 
     /**
