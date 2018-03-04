@@ -109,7 +109,7 @@ public class GuiTestAssert {
 
             case "colleagues":
             case "neighbours":
-                return "yellow";
+                return "purple";
 
             case "husband":
                 return "grey";
