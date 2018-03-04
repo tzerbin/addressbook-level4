@@ -1,17 +1,17 @@
 package seedu.address.ui.testutil;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import seedu.address.ui.PersonCard;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.Person;
+import seedu.address.ui.PersonCard;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -28,7 +28,8 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
-        expectedCard.getTags().forEach(tag -> assertEquals(expectedCard.getTagStyleClasses(tag), actualCard.getTagStyleClasses(tag)));
+        expectedCard.getTags().forEach(tag -> assertEquals(expectedCard.getTagStyleClasses(tag),
+            actualCard.getTagStyleClasses(tag)));
     }
 
     /**
@@ -96,27 +97,27 @@ public class GuiTestAssert {
      */
     private static String getColorTagStyle(String nameOfTags) {
         switch (nameOfTags) {
-            case "family":
-            case "friend":
-                return "orange";
+        case "classmates":
+        case "owesMoney":
+            return "teal";
 
-            case "friends":
-                return "brown";
+        case "colleagues":
+        case "neighbours":
+            return "purple";
 
-            case "classmates":
-            case "owesMoney":
-                return "teal";
+        case "family":
+        case "friend":
+            return "orange";
 
-            case "colleagues":
-            case "neighbours":
-                return "purple";
+        case "friends":
+            return "brown";
 
-            case "husband":
-                return "grey";
+        case "husband":
+            return "grey";
 
-            default:
-                fail(nameOfTags + " does not have a color assigned.");
-                return "";
+        default:
+            fail(nameOfTags + " does not have a color assigned.");
+            return "";
         }
     }
 }
