@@ -210,5 +210,3 @@ public class MainApp extends Application {
         launch(args);
     }
 }
-
-// Push commit test
