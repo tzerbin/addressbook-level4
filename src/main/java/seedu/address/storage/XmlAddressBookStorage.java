@@ -85,5 +85,4 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath + ".backup");
     }
-
 }
