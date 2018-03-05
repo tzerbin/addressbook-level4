@@ -210,3 +210,5 @@ public class MainApp extends Application {
         launch(args);
     }
 }
+
+// Test auto publishing of doc
