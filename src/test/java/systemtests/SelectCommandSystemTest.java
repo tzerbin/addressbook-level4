@@ -126,7 +126,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         }
 
-        assertCommandBoxShowsDefaultStyle();
+        assertResultDisplayAndCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
 
@@ -147,7 +147,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
+        assertResultDisplayAndCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
 }
