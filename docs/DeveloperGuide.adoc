@@ -472,22 +472,22 @@ Dev Ops advocates automation and monitoring at all steps of software constructio
 
 === Build Automation
 
-We use Gradle for build automation.
+We use Gradle for build automation. +
 See <<UsingGradle#, UsingGradle.adoc>> for more details.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. 
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. +
 See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. 
+We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
 See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
 
-We use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look like when a pull request is merged. 
+We use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look like when a pull request is merged. +
 See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 === Making a Release
