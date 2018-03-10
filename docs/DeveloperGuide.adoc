@@ -397,7 +397,7 @@ Chose AsciiDoc(markup language) over markdown language format because it provide
 === Editing Documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
-Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you've have made to your `.adoc` files in real-time.
+Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
