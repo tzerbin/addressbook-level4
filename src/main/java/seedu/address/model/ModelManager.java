@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -26,6 +28,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final ArrayList<CelebCalendar> calendarList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -38,6 +41,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
+        calendarList = new ArrayList<>();
+        calendarList.add(new CelebCalendar("Test Celeb Calendar"));
     }
 
     public ModelManager() {
@@ -85,6 +91,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void removeTag(Tag tag) {
         addressBook.removeTag(tag);
+    }
+
+    //=========== Celeb Calendar Accessors =============================================================
+
+    @Override
+    public ArrayList<CelebCalendar> getCelebCalendars() {
+        return calendarList;
     }
 
     //=========== Filtered Person List Accessors =============================================================
