@@ -18,4 +18,5 @@ public class EditAppointmentCommand extends Command {
     public CommandResult execute() throws CommandException {
         return null;
     }
+
 }
