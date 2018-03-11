@@ -386,31 +386,35 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 == Documentation
+This section shows you how to document your project effectively.
 
-We use asciidoc for writing documentation.
+Use AsciiDoc a lightweight markup language for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+Chose AsciiDoc(markup language) over markdown language format because it provides more flexibility with regards to formatting.
+
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
 
 === Converting Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+Use https://www.google.com/chrome/browser/desktop/[Google Chrome] to convert documents to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
-.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
+.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Click on the `Print` option in Chrome's menu.
+.  Set the destination to `Save as PDF`, proceed to click `Save` to save a copy of the file in PDF format. For the best result, use the settings indicated in the screenshot below.
+
+*Menu below will appear after step 3*
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
