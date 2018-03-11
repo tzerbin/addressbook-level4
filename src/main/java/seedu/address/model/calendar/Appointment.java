@@ -32,7 +32,7 @@ public class Appointment extends Entry {
      */
     private static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public Appointment(String title){
+    public Appointment(String title) {
         super(title);
     }
 
