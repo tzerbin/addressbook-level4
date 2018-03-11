@@ -15,12 +15,11 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import sun.net.www.ParseUtil;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object
  */
-public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand>{
+public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand

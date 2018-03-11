@@ -2,7 +2,10 @@ package seedu.address.model.calendar;
 
 import com.calendarfx.model.Entry;
 
-public class Appointment extends Entry{
+/**
+ * Wraps all data required for an appointment, inheriting from a class of our calendar library
+ */
+public class Appointment extends Entry {
 
     public static final String MESSAGE_HOUR_CONSTRAINTS =
             "Hour should be either a 1 digit number or a 2 digit number between 00 and 23";
@@ -27,7 +30,7 @@ public class Appointment extends Entry{
      * The first character of the name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    private static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
     public Appointment(String title){
         super(title);
