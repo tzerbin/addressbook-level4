@@ -18,5 +18,4 @@ public class DeleteAppointmentCommand extends Command {
     public CommandResult execute() throws CommandException {
         return null;
     }
-
 }
