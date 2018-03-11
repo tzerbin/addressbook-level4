@@ -6,10 +6,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.calendar.Appointment;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -164,5 +166,86 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String hour} into an {@code Integer}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code hour} is invalid.
+     */
+    public static Integer parseHour(String hour) throws IllegalValueException {
+        requireNonNull(hour);
+        String trimmedHour = hour.trim();
+        if (!Appointment.isValidHour(trimmedHour)) {
+            throw new IllegalValueException(Appointment.MESSAGE_HOUR_CONSTRAINTS);
+        }
+        return new Integer(trimmedHour);
+    }
+
+    /**
+     * Parses a {@code Optional<String> hour} into an {@code Optional<Integer>} if {@code hour} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Integer> parseHour(Optional<String> hour) throws IllegalValueException {
+        requireNonNull(hour);
+        Optional<Integer> opt = Optional.of(parseHour(hour.get()));
+        return hour.isPresent() ? Optional.of(parseHour(hour.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String minute} into an {@code Integer}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code minute} is invalid.
+     */
+    public static Integer parseMinute(String minute) throws IllegalValueException {
+        requireNonNull(minute);
+        String trimmedMinute = minute.trim();
+        if (!Appointment.isValidMinute(trimmedMinute)) {
+            throw new IllegalValueException(Appointment.MESSAGE_MINUTE_CONSTRAINTS);
+        }
+        return new Integer(trimmedMinute);
+    }
+
+    /**
+     * Parses a {@code Optional<String> minute} into an {@code Optional<Integer>} if {@code minute} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Integer> parseMinute(Optional<String> minute) throws IllegalValueException {
+        requireNonNull(minute);
+        return minute.isPresent() ? Optional.of(parseMinute(minute.get())) : Optional.empty();
+    }
+
+    /**
+     * Validates if a {@code String name} into a valid name.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static String parseGeneralName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!Appointment.isValidName(trimmedName)) {
+            throw new IllegalValueException(Appointment.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return trimmedName;
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<String>} if {@code name} is present and valid.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseGeneralName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(parseGeneralName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    public static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

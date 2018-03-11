@@ -422,7 +422,7 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
-Testing is very important as it allows us to find application defects that were made during development, and it should be done constantly. It can be expensive if software testing is done only in the later stages of development, as a bug may affect different components of the project. 
+Testing is very important as it allows us to find application defects that were made during development, and it should be done constantly. It can be expensive if software testing is done only in the later stages of development, as a bug may affect different components of the project.
 
 === Types of tests
 
