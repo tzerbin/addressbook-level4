@@ -47,6 +47,6 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**Removes the given {@code tag} from all {@code person}s. */
-    void removeTag(Tag tag);
+    int removeTag(Tag tag);
 
 }
