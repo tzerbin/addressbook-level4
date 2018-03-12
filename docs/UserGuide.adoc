@@ -252,7 +252,7 @@ Alias: `rt` +
 Format: `removeTag TAG`
 
 [TIP]
-You can remove a tag that does not exist in the address book and it will show 0 person gets affected. 
+You can remove a tag that does not exist in the address book and it will show 0 person gets affected.
 
 Examples:
 
