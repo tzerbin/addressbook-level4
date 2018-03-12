@@ -6,7 +6,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 import static seedu.address.testutil.TypicalTags.HUSBAND_TAG;
 
-
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
