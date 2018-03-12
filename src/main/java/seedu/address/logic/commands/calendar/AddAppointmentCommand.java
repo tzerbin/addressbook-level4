@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.calendar;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_HOUR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
@@ -7,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MINUTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.time.LocalTime;
+
+import com.sun.istack.internal.NotNull;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -39,29 +42,23 @@ public class AddAppointmentCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Added appointment successfully";
 
     private final int calendarIndex;
-    private final int startHour;
-    private final int startMinute;
-    private final String appointmentName;
+    private final Appointment appt;
 
     /**
      * Creates an AddAppointmentCommand with the following parameters
-     * @param appointmentName
-     * @param hour The starting hour of the appointment
-     * @param minute The starting minute of the appointment
+     * @param appt The created appointment
+     * @param calendarIndex The index of the calendar we want to add to
      */
-    public AddAppointmentCommand(String appointmentName, Integer hour, Integer minute) {
-        this.calendarIndex = 0;
-        this.appointmentName = appointmentName;
-        this.startHour = hour.intValue();
-        this.startMinute = minute.intValue();
+    public AddAppointmentCommand(Appointment appt, int calendarIndex) {
+        requireNonNull(appt);
+        this.calendarIndex = calendarIndex; // just use first calendar for now since we only created one calendar
+        this.appt = appt;
     }
 
 
     @Override
     public CommandResult execute() throws CommandException {
         CelebCalendar cal = model.getCelebCalendars().get(calendarIndex);
-        Appointment appt = new Appointment("Important concert");
-        appt.changeStartTime(LocalTime.of(startHour, startMinute));
         cal.addEntry(appt);
         return new CommandResult(MESSAGE_SUCCESS);
     }

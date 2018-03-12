@@ -1,6 +1,11 @@
 package seedu.address.model.calendar;
 
+import static java.util.Objects.requireNonNull;
+
+import java.time.LocalTime;
+
 import com.calendarfx.model.Entry;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Wraps all data required for an appointment, inheriting from a class of our calendar library
@@ -32,8 +37,9 @@ public class Appointment extends Entry {
      */
     private static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public Appointment(String title) {
-        super(title);
+    public Appointment(@NotNull String title, int startHour, int startMinute) {
+        super(requireNonNull(title));
+        this.changeStartTime(LocalTime.of(startHour, startMinute));
     }
 
     public static boolean isValidHour(String test) {

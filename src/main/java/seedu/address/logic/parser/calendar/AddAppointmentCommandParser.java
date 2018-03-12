@@ -8,6 +8,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MINUTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
+import java.time.LocalTime;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -15,6 +17,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calendar.Appointment;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object
@@ -38,9 +41,22 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 
         try {
             String appointmentName = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_NAME)).get();
-            Integer hour = ParserUtil.parseHour(argMultiMap.getValue(PREFIX_HOUR)).get();
-            Integer minute = ParserUtil.parseMinute(argMultiMap.getValue(PREFIX_MINUTE)).get();
-            return new AddAppointmentCommand(appointmentName, hour, minute);
+            boolean hourIsPresent = ParserUtil.parseHour(argMultiMap.getValue(PREFIX_HOUR)).isPresent();
+            boolean minuteIsPresent = ParserUtil.parseMinute(argMultiMap.getValue(PREFIX_MINUTE)).isPresent();
+
+            int hour = LocalTime.now().getHour();
+            int minute = LocalTime.now().getMinute();
+
+            if (hourIsPresent) {
+                hour = ParserUtil.parseHour(argMultiMap.getValue(PREFIX_HOUR)).get();
+            }
+
+            if (minuteIsPresent) {
+                minute = ParserUtil.parseMinute(argMultiMap.getValue(PREFIX_MINUTE)).get();
+            }
+
+            Appointment appt = new Appointment(appointmentName, hour, minute);
+            return new AddAppointmentCommand(appt, 0); // Let index be 0 for now since we only have one cal
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAppointmentCommand.MESSAGE_USAGE));
