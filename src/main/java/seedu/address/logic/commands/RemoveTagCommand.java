@@ -24,6 +24,7 @@ public class RemoveTagCommand extends UndoableCommand {
     private final Tag tagToRemove;
 
     public RemoveTagCommand(Tag tagToRemove) {
+        requireNonNull(tagToRemove);
         this.tagToRemove = tagToRemove;
     }
 
