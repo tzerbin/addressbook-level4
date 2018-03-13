@@ -12,6 +12,7 @@ import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
 import com.google.maps.model.TravelMode;
+
 /**
  * Calculates distance and travel duration between two location.
  */
