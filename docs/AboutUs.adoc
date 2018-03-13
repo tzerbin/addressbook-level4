@@ -3,27 +3,48 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+Celeb Scheduler was developed by the https://github.com/CS2103JAN2018-W14-B4/[CS2103JAN2018-W14-B4] team.
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== K Murugas
+image::murugas.jpeg[width="150", align="left"]
+{empty} [https://github.com/muruges95[github]]
 
-Role: Project Advisor
+Role: Team Leader
+
+Responsibilities: Logic
 
 '''
 
 === Ng Tzer Bin
 image::tzerbin.png[width="150", align="left"]
-{empty}[http://github.com/tzerbin[GitHub]] [https://www.linkedin.com/in/tzerbin[LinkedIn]] [<<johndoe#, Portfolio>>]
+{empty}[https://github.com/tzerbin[github]]
 
-Role: Placeholder
+Role: Developer
 
-Responsibilities: In charge of `Storage` component
+Responsibilities: Storage(Data) component
 
 '''
+
+=== Wang Jinyi
+image::jinyi.jpeg[width="150", align="left"]
+{empty}[https://github.com/WJY-norainu[github]]
+
+Role: Developer
+
+Responsibilities: Model Component
+
+'''
+
+=== Sim Kwan Tiong Damien
+image::damien.jpeg[width="150", align="left"]
+{empty}[http://github.com/Damienskt[github]]
+
+Role: Developer
+
+Responsibilities: UI component
+=======
+
+
