@@ -121,10 +121,10 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-//        browserPanel = new BrowserPanel();
-//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
         CalendarPanel calendarPanel = new CalendarPanel(calendarSource);
-        browserPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+//        browserPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
