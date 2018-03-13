@@ -34,10 +34,10 @@ import seedu.address.model.tag.Tag;
  */
 public class RemoveTagCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void constructor_nullTag_throwsNullPointerException() {
