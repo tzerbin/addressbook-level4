@@ -45,6 +45,6 @@ image::damien.jpeg[width="150", align="left"]
 Role: Developer
 
 Responsibilities: UI component
+=======
 
-'''
 
