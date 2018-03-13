@@ -189,7 +189,6 @@ public class ParserUtil {
      */
     public static Optional<Integer> parseHour(Optional<String> hour) throws IllegalValueException {
         requireNonNull(hour);
-        Optional<Integer> opt = Optional.of(parseHour(hour.get()));
         return hour.isPresent() ? Optional.of(parseHour(hour.get())) : Optional.empty();
     }
 
