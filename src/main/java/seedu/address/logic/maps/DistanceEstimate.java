@@ -91,7 +91,7 @@ public class DistanceEstimate {
         travelTime = String.valueOf(extractDurationDetailsToString(estimate));
     }
 
-    public String getTravelTime(){
+    public String getTravelTime() {
         return travelTime;
     }
 
