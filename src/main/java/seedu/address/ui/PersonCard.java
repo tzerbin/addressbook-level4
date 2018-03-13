@@ -84,8 +84,8 @@ public class PersonCard extends UiPart<Region> {
     */
     private String getColorForTags(String tagName) {
         /**
-         * we use the hash code of the tag name to generate a random color, so that the color remain consistent
-         * between different runs of the program while still making it random enough between tags.
+         * Uses hashing to generate random color that will be
+         * consistent through different runs of program
          */
         return TAG_COLORS[Math.abs(tagName.hashCode()) % TAG_COLORS.length];
     }
