@@ -3,53 +3,48 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+Celeb Scheduler was developed by the https://github.com/CS2103JAN2018-W14-B4/[CS2103JAN2018-W14-B4] team.
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== K Murugas
+image::murugas.jpeg[width="150", align="left"]
+{empty} [https://github.com/muruges95[github]]
 
-Role: Project Advisor
+Role: Team Leader
 
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Logic
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Ng Tzer Bin
+image::tzerbin.png[width="150", align="left"]
+{empty}[https://github.com/tzerbin[github]]
 
-Role: Developer +
-Responsibilities: Data
+Role: Developer
 
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Storage(Data) component
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Wang Jinyi
+image::jinyi.jpeg[width="150", align="left"]
+{empty}[https://github.com/WJY-norainu[github]]
 
-Role: Developer +
-Responsibilities: UI
+Role: Developer
+
+Responsibilities: Model Component
 
 '''
+
+=== Sim Kwan Tiong Damien
+image::damien.jpeg[width="150", align="left"]
+{empty}[http://github.com/Damienskt[github]]
+
+Role: Developer
+
+Responsibilities: UI component
+
+'''
+
