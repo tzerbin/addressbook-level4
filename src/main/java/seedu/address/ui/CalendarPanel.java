@@ -3,12 +3,16 @@ package seedu.address.ui;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
 
 import javafx.application.Platform;
 
+/**
+ * The panel for the Calendar. Constructs a calendar view and attaches to it a CalendarSource.
+ * The view is then returned by calling getCalendarView in MainWindow to attach it to the
+ * browserPlaceholder.
+ */
 public class CalendarPanel {
 
     private CalendarView calendarView;

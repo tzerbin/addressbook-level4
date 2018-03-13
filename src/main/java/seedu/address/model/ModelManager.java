@@ -105,7 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public CalendarSource getCelebCalendarSource(){
+    public CalendarSource getCelebCalendarSource() {
         return celebCalendarSource;
     }
 
