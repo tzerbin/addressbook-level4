@@ -1,4 +1,4 @@
-package seedu.address.model.maps;
+package seedu.address.logic.maps;
 
 import java.io.IOException;
 
@@ -12,24 +12,32 @@ import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
 import com.google.maps.model.TravelMode;
-
+/**
+ * Calculates distance and travel duration between two location.
+ */
 public class DistanceEstimate {
-    public static String API_KEY = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
+
+    /**
+     * API Key required for requesting service from google server
+     */
+    public static final String API_KEY = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
     private GeoApiContext context;
     private String distOriginDest;
     private String travelTime;
 
-    public static void main(String[] args) {
-        DistanceEstimate estimate = new DistanceEstimate();
-        estimate.calculateDistanceMatrix("820296","NUS",TravelMode.DRIVING);
-        System.out.println(estimate.getDistOriginDest()+" "+estimate.getTravelTime());
-    }
-
+    /**
+     * Initialises access to google server
+     */
     public DistanceEstimate() {
         context = new GeoApiContext.Builder()
                 .apiKey(API_KEY)
                 .build();
     }
+
+    /**
+     * Extract time duration details from {@code matrixDetails}
+     * @return time needed to travel between two location
+     */
     private static Duration extractDurationDetailsToString(DistanceMatrix matrixDetails) {
         DistanceMatrixRow[] dataRow = matrixDetails.rows;
         DistanceMatrixElement[] dataElements = dataRow[0].elements;
@@ -37,6 +45,10 @@ public class DistanceEstimate {
         return dataElements[0].duration;
     }
 
+    /**
+     * Extract travel distance details from {@code matrixDetails}
+     * @return distance between two location
+     */
     private static Distance extractDistanceDetailsToString(DistanceMatrix matrixDetails) {
         DistanceMatrixRow[] dataRow = matrixDetails.rows;
         DistanceMatrixElement[] dataElements = dataRow[0].elements;
@@ -44,12 +56,21 @@ public class DistanceEstimate {
         return dataElements[0].distance;
     }
 
-    private static DistanceMatrixApiRequest getApproveForRequest(GeoApiContext context) {
+    /**
+     * Request new approval for each access
+     * @return successful approval from google server
+     */
+    private static DistanceMatrixApiRequest getApprovalForRequest(GeoApiContext context) {
         return DistanceMatrixApi.newRequest(context);
     }
 
+    /**
+     * Initialises the calculation of time and distance between two location by sending request with
+     * {@code startPostalCode},{@code endPostalCode} and {@code modeOfTravel} to google server, details
+     * extracted from result {@code estimate} and stored into {@code distOriginDest} and {@code travelTime}
+     */
     public void calculateDistanceMatrix(String startPostalCode, String endPostalCode, TravelMode modeOfTravel) {
-        DistanceMatrixApiRequest request = getApproveForRequest(context);
+        DistanceMatrixApiRequest request = getApprovalForRequest(context);
         DistanceMatrix estimate = null;
         try {
             estimate = request.origins(startPostalCode)
