@@ -14,7 +14,7 @@ image::murugas.jpeg[width="150", align="left"]
 
 Role: Team Leader
 
-Responsibilities: Logic
+Responsibilities: Logic Component, Deliverables and Deadlines
 
 '''
 
@@ -24,7 +24,7 @@ image::tzerbin.png[width="150", align="left"]
 
 Role: Developer
 
-Responsibilities: Storage(Data) component
+Responsibilities: Storage(Data) Component, Documentation
 
 '''
 
@@ -34,7 +34,7 @@ image::jinyi.jpeg[width="150", align="left"]
 
 Role: Developer
 
-Responsibilities: Model Component
+Responsibilities: Model Component, Testing, Schdeuling and Tracking
 
 '''
 
@@ -42,9 +42,9 @@ Responsibilities: Model Component
 image::damien.jpeg[width="150", align="left"]
 {empty}[http://github.com/Damienskt[github]]
 
-Role: Developer
+Role: Developer, Integration
 
-Responsibilities: UI component
+Responsibilities: UI Component, Code Quality, Integration
 =======
 
 
