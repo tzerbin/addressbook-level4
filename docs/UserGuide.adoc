@@ -17,7 +17,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Celeb Scheduler (CS) is for celebrity managers who *prefer to use a desktop app for managing appointments and contacts*. More importantly, CS is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CS can get your contact management and appointment schedule tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Celeb Scheduler (CS) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule with ease*. More importantly, CS is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the feature of managing contacts, organising schedules, emailing and trip planning. You are at the right place as CS would be the best platform for you, with its integration of address book, calendar and visual maps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
