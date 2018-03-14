@@ -84,7 +84,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public int removeTag(Tag tag) {
-        return addressBook.removeTag(tag);
+        int numPersonsAffected = addressBook.removeTag(tag);
+        indicateAddressBookChanged();
+        return numPersonsAffected;
     }
 
     //=========== Filtered Person List Accessors =============================================================
