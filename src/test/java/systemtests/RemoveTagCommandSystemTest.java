@@ -9,8 +9,8 @@ import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
