@@ -21,7 +21,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Removed Tag %1$s and %2$s person(s) affected.";
 
-    private final Tag tagToRemove;
+    public final Tag tagToRemove;
 
     public RemoveTagCommand(Tag tagToRemove) {
         requireNonNull(tagToRemove);
