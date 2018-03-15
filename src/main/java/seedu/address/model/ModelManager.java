@@ -93,8 +93,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeTag(Tag tag) {
-        addressBook.removeTag(tag);
+    public int removeTag(Tag tag) {
+        int numPersonsAffected = addressBook.removeTag(tag);
+        indicateAddressBookChanged();
+        return numPersonsAffected;
     }
 
     //=========== Celeb Calendar Accessors =============================================================

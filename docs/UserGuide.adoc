@@ -245,6 +245,20 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Removing a tag : `removeTag`
+
+Removes the specified tag from every person with it in the address book and shows the number of person(s) affected by this operation. +
+Alias: `rt` +
+Format: `removeTag TAG`
+
+[TIP]
+You can remove a tag that does not exist in the address book and it will show 0 person gets affected.
+
+Examples:
+
+* `removeTag friends` +
+Removes the tag, "friends" from every person with it in the address book and shows the number of person(s) affected.
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
@@ -269,6 +283,8 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
+* *RemoveTag* : `removeTag TAG` +
+e.g.`removeTag friends`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
