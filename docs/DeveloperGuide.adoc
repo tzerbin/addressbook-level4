@@ -14,18 +14,38 @@ endif::[]
 
 By: `CS2103JAN2018-W14-B4`      Since: `Jun 2016`      Licence: `MIT`
 
+== Overview
+
+Whether you are a new developer or a long time contributor to the CelebManager Project,
+this developer guide will serve as a helpful reference and source of "how-to" information
+when contributing to this project. Included are guides on how to set-up the project locally,
+an overview of the architecture and the different features present and how they are implemented.
+
+
+
 == Setting up
 
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+Before we get started on the setup, there are few prerequisites you must have for the setup to be successful. They are,
+
+. *JDK* +
+Our programming language of choice is Java in this project. To be able to work with java,
+you will need to have Java Development Kit (JDK) installed. You must install version `1.8.0_60` or later.
+You can get the JDK from: +
+http://www.oracle.com/technetwork/java/javase/downloads/index.html
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Some components of this app will not work +
+with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+. *IntelliJ* IDE +
+It is possible to setup without IntelliJ specifically and other IDEs might be used, but it is much simpler
+to carry it out in IntelliJ. All the steps for setup from here on out will be specific to IntelliJ. We highly recommend
+that you too use IntelliJ unless you have prior experience in working with gradle projects. You can get IntelliJ from: +
+https://www.jetbrains.com/idea/
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
@@ -34,21 +54,25 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+If you want to contribute to this project, you will need to work with a local copy of this project. To do so,
+
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle:
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file, select it and click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
+. Open a console and run the command `gradlew processResources`. (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+To ensure that you have setup the project correctly, +
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -57,12 +81,12 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 

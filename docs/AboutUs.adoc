@@ -8,7 +8,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== K Murugas
+=== K Muruges
 image::muruges95.png[width="150", align="left"]
 {empty} [https://github.com/muruges95[github]]
 
