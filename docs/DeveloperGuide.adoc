@@ -21,8 +21,6 @@ this developer guide will serve as a helpful reference and source of "how-to" in
 when contributing to this project. Included are guides on how to set-up the project locally,
 an overview of the architecture and the different features present and how they are implemented.
 
-
-
 == Setting up
 
 === Prerequisites
