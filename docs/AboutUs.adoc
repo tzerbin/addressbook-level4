@@ -8,8 +8,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== K Murugas
-image::murugas.jpeg[width="150", align="left"]
+=== K Muruges
+image::muruges95.png[width="150", align="left"]
 {empty} [https://github.com/muruges95[github]]
 
 Role: Team Leader
@@ -29,7 +29,7 @@ Responsibilities: Storage(Data) Component, Documentation
 '''
 
 === Wang Jinyi
-image::jinyi.jpeg[width="150", align="left"]
+image::WJY-norainu.jpeg[width="150", align="left"]
 {empty}[https://github.com/WJY-norainu[github]]
 
 Role: Developer
@@ -39,7 +39,7 @@ Responsibilities: Model Component, Testing, Schdeuling and Tracking
 '''
 
 === Sim Kwan Tiong Damien
-image::damien.jpeg[width="150", align="left"]
+image::Damienskt.jpeg[width="150", align="left"]
 {empty}[http://github.com/Damienskt[github]]
 
 Role: Developer, Integration
