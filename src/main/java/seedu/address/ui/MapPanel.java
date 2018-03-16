@@ -43,13 +43,13 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
             }
         });
         t.start();
-        setMapOptions();
+        actualMap = setMapOptions();
     }
 
     /**
      * Set the map options for initialisation of {@code actualMap}
      */
-    private void setMapOptions() {
+    private GoogleMap setMapOptions() {
         LatLong center = new LatLong(1.3607962, 103.8109208);
         MapOptions options = new MapOptions();
         options.center(center)
@@ -63,7 +63,7 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
                 .zoomControl(false)
                 .mapType(MapTypeIdEnum.ROADMAP);
 
-        actualMap = mapView.createMap(options);
+        return mapView.createMap(options);
     }
 
     public GoogleMapView getMapView() {
