@@ -34,11 +34,11 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
 
     @Override
     public void mapInitialized() {
-        Thread t = new Thread( () -> {
+        Thread t = new Thread(() -> {
             try {
                 Thread.sleep(3000);
                 Platform.runLater(() -> mapView.getMap().hideDirectionsPane());
-            } catch( Exception ex ) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
@@ -50,7 +50,7 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
      * Set the map options for initialisation of {@code actualMap}
      */
     private void setMapOptions() {
-        LatLong center = new LatLong(1.3607962,103.8109208);
+        LatLong center = new LatLong(1.3607962, 103.8109208);
         MapOptions options = new MapOptions();
         options.center(center)
                 .mapMarker(true)
