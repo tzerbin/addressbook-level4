@@ -8,30 +8,21 @@ import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.service.directions.DirectionStatus;
-import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
-import com.lynden.gmapsfx.service.directions.DirectionsResult;
-import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
-import com.lynden.gmapsfx.service.elevation.ElevationResult;
-import com.lynden.gmapsfx.service.elevation.ElevationServiceCallback;
-import com.lynden.gmapsfx.service.elevation.ElevationStatus;
-import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
-import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
-import com.lynden.gmapsfx.service.geocoding.GeocodingService;
-import com.lynden.gmapsfx.service.geocoding.GeocodingServiceCallback;
 
 import javafx.application.Platform;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEvent;
-import seedu.address.commons.core.LogsCenter;
 
+/**
+ * The panel for google maps. Construct the maps view which is return by calling
+ * getMapView() to MainWindow which attaches it to mapPanelPlaceHolder. After which it initialises the map contents
+ * mapInitialised()
+ */
 public class MapPanel extends UiPart<Region> implements MapComponentInitializedListener {
 
-    private GoogleMapView mapView;
-    private GoogleMap actualMap;
     private static final String FXML = "MapsPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-    private DirectionsRenderer renderer;
+    private GoogleMap actualMap;
+    private GoogleMapView mapView;
 
     public MapPanel() {
         super(FXML);
@@ -42,6 +33,7 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
         mapView.getWebview().getEngine().setOnAlert((WebEvent<String> event) -> {
         });
     }
+
     @Override
     public void mapInitialized() {
         Thread t = new Thread( () -> {
@@ -54,9 +46,14 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
             }
         });
         t.start();
-        //Once the map has been loaded by the Webview, initialize the map details.
-        LatLong center = new LatLong(1.3607962,103.8109208);
+        setMapOptions();
+    }
 
+    /**
+     * Set the map options for initialisation of {@code actualMap}
+     */
+    private void setMapOptions() {
+        LatLong center = new LatLong(1.3607962,103.8109208);
         MapOptions options = new MapOptions();
         options.center(center)
                 .mapMarker(true)
@@ -67,7 +64,7 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
                 .scaleControl(false)
                 .streetViewControl(false)
                 .zoomControl(false)
-                .mapType(MapTypeIdEnum.ROADMAP);//map type
+                .mapType(MapTypeIdEnum.ROADMAP);
 
         actualMap = mapView.createMap(options);
     }
