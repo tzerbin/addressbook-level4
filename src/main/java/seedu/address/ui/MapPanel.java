@@ -20,7 +20,7 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
 
     private static final String FXML = "MapsPanel.fxml";
     private GoogleMap actualMap;
-    private GoogleMapView mapView;
+    public static GoogleMapView mapView;
 
     public MapPanel() {
         super(FXML);
