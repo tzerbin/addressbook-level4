@@ -37,7 +37,6 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
         Thread t = new Thread( () -> {
             try {
                 Thread.sleep(3000);
-                System.out.println("Calling showDirections from Java");
                 Platform.runLater(() -> mapView.getMap().hideDirectionsPane());
             } catch( Exception ex ) {
                 ex.printStackTrace();
