@@ -19,6 +19,9 @@ import javafx.scene.web.WebEvent;
 public class MapPanel extends UiPart<Region> implements MapComponentInitializedListener {
 
     private static final String FXML = "MapsPanel.fxml";
+    public static final double LATITUDE_SG = 1.3607962;
+    public static final double LONGITUDE_SG = 103.8109208;
+    public static final int DEFAULT_ZOOM_LEVEL = 10;
     public static GoogleMap actualMap;
     private GoogleMapView mapView;
 
@@ -50,17 +53,17 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
      * Set the map options for initialisation of {@code actualMap}
      */
     private GoogleMap setMapOptions() {
-        LatLong center = new LatLong(1.3607962, 103.8109208);
+        LatLong center = new LatLong(LATITUDE_SG, LONGITUDE_SG);
         MapOptions options = new MapOptions();
         options.center(center)
                 .mapMarker(true)
-                .zoom(10)
+                .zoom(DEFAULT_ZOOM_LEVEL)
                 .overviewMapControl(false)
                 .panControl(false)
                 .rotateControl(false)
                 .scaleControl(false)
                 .streetViewControl(false)
-                .zoomControl(false)
+                .zoomControl(true)
                 .mapType(MapTypeIdEnum.ROADMAP);
 
         return mapView.createMap(options);
