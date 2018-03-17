@@ -19,8 +19,8 @@ import javafx.scene.web.WebEvent;
 public class MapPanel extends UiPart<Region> implements MapComponentInitializedListener {
 
     private static final String FXML = "MapsPanel.fxml";
-    private GoogleMap actualMap;
-    public static GoogleMapView mapView;
+    public static GoogleMap actualMap;
+    private GoogleMapView mapView;
 
     public MapPanel() {
         super(FXML);

@@ -2,14 +2,11 @@ package seedu.address.logic.commands.map;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.ui.MapPanel.mapView;
+import static seedu.address.ui.MapPanel.actualMap;
 
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.object.Animation;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
@@ -21,21 +18,23 @@ import seedu.address.model.person.Address;
 
 public class ShowLocationCommand extends Command implements MapComponentInitializedListener{
 
-    public static final String COMMAND_WORD = "showlocation";
+    public static final String COMMAND_WORD = "showLocation";
     public static final String COMMAND_ALIAS = "sl";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows the location of address in the map.\n"
             + "Parameters: "
-            + PREFIX_LOCATION + "LOCATION\n"
+            + PREFIX_LOCATION + "LOCATION (Name of location or postal code)\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_LOCATION + "Punggol Central";
+            + PREFIX_LOCATION + "Punggol Central\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_LOCATION + "820296";
 
     public static final String MESSAGE_SUCCESS = "Location is being shown in map(identified by marker)!";
 
     private final Address address;
+    private static Marker location;
 
-    private GoogleMap newMap;
     /**
      * Creates an AddAppointmentCommand with the following parameters
      * @param address The created appointment
@@ -53,15 +52,25 @@ public class ShowLocationCommand extends Command implements MapComponentInitiali
 
     @Override
     public void mapInitialized() {
-        newMap = setMapOptions();
 
+        removeExistingMarker();
         LatLong center = getLatLong();
 
-        Marker location = getMarker(center);
+        location = getMarker(center);
 
-        newMap.addMarker(location);
-        newMap.setCenter(center);
-        newMap.setZoom(15);
+        setMarkerOnMap(center, location);
+    }
+
+    private void removeExistingMarker() {
+        if(location!=null) {
+            actualMap.removeMarker(location);
+        }
+    }
+
+    private void setMarkerOnMap(LatLong center, Marker location) {
+        actualMap.addMarker(location);
+        actualMap.setCenter(center);
+        actualMap.setZoom(15);
     }
 
     private Marker getMarker(LatLong center) {
@@ -78,21 +87,4 @@ public class ShowLocationCommand extends Command implements MapComponentInitiali
         return new LatLong(convertToLatLng.getLat(), convertToLatLng.getLong());
     }
 
-    /**
-     * Set the map options for initialisation of {@code actualMap}
-     */
-    private GoogleMap setMapOptions() {
-
-        MapOptions options = new MapOptions();
-        options.mapMarker(true)
-                .overviewMapControl(false)
-                .panControl(false)
-                .rotateControl(false)
-                .scaleControl(false)
-                .streetViewControl(false)
-                .zoomControl(false)
-                .mapType(MapTypeIdEnum.ROADMAP);//map type
-
-        return mapView.createMap(options);
-    }
 }

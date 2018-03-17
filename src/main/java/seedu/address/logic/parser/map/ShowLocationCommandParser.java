@@ -26,16 +26,13 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand>{
      */
     @Override
     public ShowLocationCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultiMap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_HOUR, PREFIX_MINUTE, PREFIX_DAY, PREFIX_LOCATION);
-        if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
-                || !argMultiMap.getPreamble().isEmpty()) {
+        if (args.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ShowLocationCommand.MESSAGE_USAGE));
         }
 
         try {
-            Address address = ParserUtil.parseAddress(argMultiMap.getValue(PREFIX_ADDRESS)).get();
+            Address address = ParserUtil.parseAddress(args);
             return new ShowLocationCommand(address);
         } catch (IllegalValueException ive) {
             throw new ParseException(

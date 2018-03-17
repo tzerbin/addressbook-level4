@@ -8,6 +8,9 @@ import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
+/**
+ * Converts address to LatLng form.
+ */
 public class Geocoding {
 
     /**
@@ -16,6 +19,7 @@ public class Geocoding {
     public static final String API_KEY = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
     private GeoApiContext context;
     private static LatLng location;
+
     /**
      * Initialises access to google server
      */
@@ -25,6 +29,11 @@ public class Geocoding {
                 .build();
     }
 
+    /**
+     * Send request to google server to obtain {@code results}
+     * Where that {@code location} is extracted in LatLng form.
+     * @param address
+     */
     public void initialiseLatLngFromAddress(String address) {
         try {
             GeocodingResult[] results =  GeocodingApi.geocode(context,
