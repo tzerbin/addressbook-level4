@@ -36,9 +36,10 @@ public class Appointment extends Entry {
      */
     private static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public Appointment(String title, int startHour, int startMinute) {
+    public Appointment(String title, int startHour, int startMinute, String location) {
         super(requireNonNull(title));
         this.changeStartTime(LocalTime.of(startHour, startMinute));
+        this.setLocation(location);
     }
 
     public static boolean isValidHour(String test) {
@@ -49,6 +50,23 @@ public class Appointment extends Entry {
     }
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
+    }
+
+    @Override
+    public boolean equals (Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Appointment)) {
+            return false;
+        }
+
+        Appointment otherAppt = (Appointment) other;
+        return otherAppt.getTitle().equals(this.getTitle())
+                && otherAppt.getLocation().equals(this.getLocation())
+                && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
+                && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute());
     }
 
 }

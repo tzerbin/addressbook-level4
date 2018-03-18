@@ -26,7 +26,7 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_NAME + "APPOINTMENT NAME "
             + PREFIX_HOUR + "START HOUR "
             + PREFIX_MINUTE + "START MINUTE "
-            + PREFIX_DAY + "START DAY"
+            + PREFIX_DAY + "START DAY "
             + PREFIX_LOCATION + "LOCATION\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Oscars 2018 "
@@ -57,5 +57,12 @@ public class AddAppointmentCommand extends Command {
         CelebCalendar cal = (CelebCalendar) model.getCelebCalendars().get(calendarIndex);
         cal.addEntry(appt);
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof AddAppointmentCommand
+                && appt.equals(((AddAppointmentCommand) other).appt));
     }
 }
