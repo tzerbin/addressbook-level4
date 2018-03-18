@@ -3,6 +3,7 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalTime;
+import java.util.Objects;
 
 import com.calendarfx.model.Entry;
 
@@ -36,9 +37,10 @@ public class Appointment extends Entry {
      */
     private static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public Appointment(String title, int startHour, int startMinute) {
+    public Appointment(String title, int startHour, int startMinute, String location) {
         super(requireNonNull(title));
         this.changeStartTime(LocalTime.of(startHour, startMinute));
+        this.setLocation(location);
     }
 
     public static boolean isValidHour(String test) {
@@ -49,6 +51,23 @@ public class Appointment extends Entry {
     }
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
+    }
+
+    @Override
+    public boolean equals (Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Appointment)) {
+            return false;
+        }
+
+        Appointment otherAppt = (Appointment) other;
+        return Objects.equals(otherAppt.getTitle(), this.getTitle())
+                && Objects.equals(otherAppt.getLocation(), this.getLocation())
+                && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
+                && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute());
     }
 
 }
