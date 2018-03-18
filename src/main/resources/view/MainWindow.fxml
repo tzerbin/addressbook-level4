@@ -11,11 +11,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.Pane?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/celeb_manager.jpg" />
   </icons>
   <scene>
     <Scene>
@@ -52,11 +51,13 @@
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="personListPanelPlaceholder" maxHeight="270.0" VBox.vgrow="ALWAYS" styleClass="pane-with-thick-border"/>
+              <StackPane fx:id="personListPanelPlaceholder" maxHeight="270.0" VBox.vgrow="ALWAYS"
+                         styleClass="pane-with-thick-border"/>
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="mapPanelPlaceholder" maxHeight="270.0" VBox.vgrow="ALWAYS" styleClass="pane-with-thick-border">
+              <StackPane fx:id="mapPanelPlaceholder" maxHeight="270.0" VBox.vgrow="ALWAYS"
+                         styleClass="pane-with-thick-border">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
