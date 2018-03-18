@@ -64,8 +64,33 @@ public class AddAppointmentCommandParserTest {
     }
 
     @Test
-    public void parse_optionalFieldsMissing_success() {
+    public void parse_locationFieldMissing_success() {
+        Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
+                .withStartHour(VALID_START_HOUR_OSCAR).withStartMinute(VALID_START_MINUTE_OSCAR).build();
+        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_HOUR_DESC_OSCAR
+                        + APPT_START_MIN_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, 0));
+    }
 
+    @Test
+    public void parse_hourFieldMissing_success() {
+        Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
+                .withStartMinute(VALID_START_MINUTE_OSCAR).build();
+        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_MIN_DESC_OSCAR,
+                new AddAppointmentCommand(expectedAppointment, 0));
+    }
+
+    @Test
+    public void parse_minuteFieldMissing_success() {
+        Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
+                .withStartHour(VALID_START_HOUR_OSCAR).build();
+        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_HOUR_DESC_OSCAR,
+                new AddAppointmentCommand(expectedAppointment, 0));
+    }
+
+    @Test
+    public void parseMinuteAndHourFieldMissing_success() {
+        Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR).build();
+        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, 0));
     }
 
     @Test

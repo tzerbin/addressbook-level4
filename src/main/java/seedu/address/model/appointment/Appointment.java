@@ -3,6 +3,7 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalTime;
+import java.util.Objects;
 
 import com.calendarfx.model.Entry;
 
@@ -63,8 +64,8 @@ public class Appointment extends Entry {
         }
 
         Appointment otherAppt = (Appointment) other;
-        return otherAppt.getTitle().equals(this.getTitle())
-                && otherAppt.getLocation().equals(this.getLocation())
+        return Objects.equals(otherAppt.getTitle(), this.getTitle())
+                && Objects.equals(otherAppt.getLocation(), this.getLocation())
                 && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
                 && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute());
     }

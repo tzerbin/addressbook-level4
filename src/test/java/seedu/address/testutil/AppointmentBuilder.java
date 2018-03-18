@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.time.LocalTime;
+
 import seedu.address.model.appointment.Appointment;
 
 /**
@@ -8,9 +10,9 @@ import seedu.address.model.appointment.Appointment;
 public class AppointmentBuilder {
 
     public static final String DEFAULT_NAME = "Oscars 2018";
-    public static final String DEFAULT_LOCATION = "Hollywood";
-    public static final int DEFAULT_START_HOUR = 12;
-    public static final int DEFAULT_START_MINUTE = 0;
+    public static final String DEFAULT_LOCATION = null;
+    public static final int DEFAULT_START_HOUR = LocalTime.now().getHour();
+    public static final int DEFAULT_START_MINUTE = LocalTime.now().getMinute();
 
     private String name;
     private String location;
