@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -26,13 +27,17 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand>{
      */
     @Override
     public ShowLocationCommand parse(String args) throws ParseException {
-        if (args.isEmpty()) {
+
+        ArgumentMultimap argMultiMap =
+                ArgumentTokenizer.tokenize(args, PREFIX_ADDRESS);
+        if (!arePrefixesPresent(argMultiMap, PREFIX_ADDRESS)
+                || !argMultiMap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ShowLocationCommand.MESSAGE_USAGE));
         }
 
         try {
-            Address address = ParserUtil.parseAddress(args);
+            Address address = ParserUtil.parseAddress(argMultiMap.getValue(PREFIX_ADDRESS)).get();
             return new ShowLocationCommand(address);
         } catch (IllegalValueException ive) {
             throw new ParseException(

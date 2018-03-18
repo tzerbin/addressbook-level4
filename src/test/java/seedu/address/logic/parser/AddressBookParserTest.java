@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 
@@ -30,7 +31,9 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -187,6 +190,24 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_showLocation() throws Exception {
+        Person person = new PersonBuilder().build();
+        Address address = person.getAddress();
+        ShowLocationCommand command = (ShowLocationCommand) parser.parseCommand(
+                ShowLocationCommand.COMMAND_WORD + " " + PREFIX_ADDRESS + address.toString());
+        assertEquals(new ShowLocationCommand(address), command);
+    }
+
+    @Test
+    public void parseCommand_showLocationAlias() throws Exception {
+        Person person = new PersonBuilder().build();
+        Address address = person.getAddress();
+        ShowLocationCommand command = (ShowLocationCommand) parser.parseCommand(
+                ShowLocationCommand.COMMAND_ALIAS + " " + PREFIX_ADDRESS + address.toString());
+        assertEquals(new ShowLocationCommand(address), command);
     }
 
     @Test

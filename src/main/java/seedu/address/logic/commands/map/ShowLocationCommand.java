@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.map;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.ui.MapPanel.actualMap;
 
@@ -12,11 +13,13 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.RemoveTagCommand;
+import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.maps.Geocoding;
 import seedu.address.model.person.Address;
 
-public class ShowLocationCommand extends Command implements MapComponentInitializedListener{
+public class ShowLocationCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "showLocation";
     public static final String COMMAND_ALIAS = "sl";
@@ -24,11 +27,11 @@ public class ShowLocationCommand extends Command implements MapComponentInitiali
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows the location of address in the map.\n"
             + "Parameters: "
-            + PREFIX_LOCATION + "LOCATION (Name of location or postal code)\n"
+            + PREFIX_ADDRESS + "LOCATION (Name of location or postal code)\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_LOCATION + "Punggol Central\n"
+            + PREFIX_ADDRESS + "Punggol Central\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_LOCATION + "820296";
+            + PREFIX_ADDRESS + "820296";
 
     public static final String MESSAGE_SUCCESS = "Location is being shown in map(identified by marker)!";
 
@@ -45,12 +48,18 @@ public class ShowLocationCommand extends Command implements MapComponentInitiali
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    protected CommandResult executeUndoableCommand() throws CommandException {
         mapInitialized();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ShowLocationCommand // instanceof handles nulls
+                && this.address.equals(((ShowLocationCommand) other).address));
+    }
+
     public void mapInitialized() {
 
         removeExistingMarker();
