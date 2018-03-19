@@ -20,6 +20,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCalendarByCommand;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.logic.parser.calendar.AddAppointmentCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -105,6 +106,10 @@ public class AddressBookParser {
         case RemoveTagCommand.COMMAND_WORD:
         case RemoveTagCommand.COMMAND_ALIAS:
             return new RemoveTagCommandParser().parse(arguments);
+
+        case ViewCalendarByCommand.COMMAND_WORD:
+        case ViewCalendarByCommand.COMMAND_ALIAS:
+            return new ViewCalendarByCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

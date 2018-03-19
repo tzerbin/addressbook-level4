@@ -6,7 +6,9 @@ import java.time.LocalTime;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
 
+import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
+import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 
 /**
  * The panel for the Calendar. Constructs a calendar view and attaches to it a CalendarSource.
@@ -46,5 +48,23 @@ public class CalendarPanel {
 
     public CalendarView getCalendarView() {
         return calendarView;
+    }
+
+    @Subscribe
+    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
+        switch(event.calendarViewPage) {
+            case "day":
+                calendarView.showDayPage();
+                break;
+            case "week":
+                calendarView.showWeekPage();
+                break;
+            case "month":
+                calendarView.showMonthPage();
+                break;
+            case "year":
+                calendarView.showYearPage();
+                break;
+        }
     }
 }
