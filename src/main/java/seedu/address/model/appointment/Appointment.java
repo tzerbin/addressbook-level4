@@ -2,7 +2,11 @@ package seedu.address.model.appointment;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Objects;
 
 import com.calendarfx.model.Entry;
@@ -12,24 +16,23 @@ import com.calendarfx.model.Entry;
  */
 public class Appointment extends Entry {
 
-    public static final String MESSAGE_HOUR_CONSTRAINTS =
-            "Hour should be either a 1 digit number or a 2 digit number between 00 and 23";
-
-    public static final String MESSAGE_MINUTE_CONSTRAINTS =
-            "Minute should be either a 1 digit number or a 2 digit number between 00 and 59";
-
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Appointment names should only contain alphanumeric characters and spaces, and it should not be blank";
 
-    /*
-     * Characters must be either 0-9, 00-19 or 20-23
-     */
-    private static final String HOUR_VALIDATION_REGEX = "^(([0-1]?[0-9])|(2[0-3]))$";
+    public static final String MESSAGE_TIME_CONSTRAINTS =
+            "Time should be a 2 digit number between 00 to 23 followed by a :"
+            + " followed by a 2 digit number beetween 00 to 59. Some examples include "
+            + "08:45, 13:45, 00:30";
+    public static final String MESSAGE_DATE_CONSTRAINTS =
+            "Date should be a 2 digit number between 01 to 31 followed by a -"
+            + " followed by a 2 digit number between 01 to 12 followed by a -"
+            + " followed by a 4 digit number describing a year. Some months might have less than 31 days."
+            + " Some examples include: 13-12-2018, 02-05-2019, 28-02-2018";
 
-    /*
-     * Characters must be either 0-9, or 00-59
-     */
-    private static final String MINUTE_VALIDATION_REGEX = "^([0-5]?[0-9])$";
+    public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-uuuu")
+            .withResolverStyle(ResolverStyle.STRICT); // prevent incorrect dates
 
     /*
      * The first character of the name must not be a whitespace,
@@ -37,18 +40,26 @@ public class Appointment extends Entry {
      */
     private static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public Appointment(String title, int startHour, int startMinute, String location) {
+
+    // Minimum duration for an appointment is at least 1 minute
+    private static final Duration minDuration = Duration.ofMinutes(1);
+
+    public Appointment(String title, LocalTime startTime, LocalDate startDate,
+                       String location, LocalTime endTime, LocalDate endDate) {
         super(requireNonNull(title));
-        this.changeStartTime(LocalTime.of(startHour, startMinute));
+        requireNonNull(startTime);
+        requireNonNull(startDate);
+        requireNonNull(endTime);
+        requireNonNull(endDate);
+
+        this.setMinimumDuration(minDuration);
+        this.changeStartTime(startTime);
+        this.changeStartDate(startDate);
+        this.changeEndTime(endTime);
+        this.changeEndDate(endDate);
         this.setLocation(location);
     }
 
-    public static boolean isValidHour(String test) {
-        return test.matches(HOUR_VALIDATION_REGEX);
-    }
-    public static boolean isValidMinute(String test) {
-        return test.matches(MINUTE_VALIDATION_REGEX);
-    }
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }

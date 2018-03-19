@@ -834,6 +834,10 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 **MAJOR**
 
+*Integrating Calendars*: Able to create, list, edit and delete appointments for the celebrities in calendars within the application. (By Muruges)
+
+*Adding attendees and POCs*: Able to add a list of celebrities and a list of other Points of Contact for each appointment. (By Muruges)
+
 *Location on map*: Able to show the location of appointments using address in maps, to allow the
 celebrity manager to locate specifically the location of appointment. (By Damien)
 
@@ -846,6 +850,9 @@ information into storage. (By Tzer Bin)
 *Reminder of appointments*: Able to draft an email template to remind persons associated with the appointment and fill in the addressees' emails automatically. (By Jinyi)
 
 **MINOR**
+
+*Viewing Calendars and appointments*: Able to view the existing calendars and the appointments present, replacing the +
+browser panel. (By Muruges)
 
 *Visual Themes*: Able to allow user to customize visual themes of the application. (By Tzer Bin)
 
