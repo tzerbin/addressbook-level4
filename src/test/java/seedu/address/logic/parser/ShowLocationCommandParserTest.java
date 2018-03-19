@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.map.ShowLocationCommandParser;
+import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Address;
 
 public class ShowLocationCommandParserTest {
@@ -21,8 +23,8 @@ public class ShowLocationCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsRemoveTagCommand() {
-        Address address = new Address(VALID_ADDRESS_BOB);
-        assertParseSuccess(parser, " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB, new ShowLocationCommand(address));
+        MapAddress address = new MapAddress(VALID_ADDRESS_MAP_BOB);
+        assertParseSuccess(parser, " " + PREFIX_ADDRESS + VALID_ADDRESS_MAP_BOB, new ShowLocationCommand(address));
     }
 
     @Test

@@ -2,15 +2,16 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_BOB;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.map.ShowLocationCommand;
-import seedu.address.model.person.Address;
+import seedu.address.model.map.MapAddress;
+
 /**
  * Contains integration tests and unit tests for
  * {@code ShowLocationCommand}.
@@ -28,14 +29,14 @@ public class ShowLocationCommandTest {
 
     @Test
     public void equals() {
-        ShowLocationCommand showLocationFirstCommand = prepareCommand(new Address(VALID_ADDRESS_BOB));
-        ShowLocationCommand showLocationSecondCommand = prepareCommand(new Address(VALID_ADDRESS_AMY));
+        ShowLocationCommand showLocationFirstCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB));
+        ShowLocationCommand showLocationSecondCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_AMY));
 
         // same object -> returns true
         assertTrue(showLocationFirstCommand.equals(showLocationFirstCommand));
 
         // same tag -> returns true
-        ShowLocationCommand showLocationFirstCommandCopy = prepareCommand(new Address(VALID_ADDRESS_BOB));
+        ShowLocationCommand showLocationFirstCommandCopy = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB));
         assertTrue(showLocationFirstCommand.equals(showLocationFirstCommandCopy));
 
         // different types -> returns false
@@ -51,7 +52,7 @@ public class ShowLocationCommandTest {
     /**
      * Returns a {@code showLocationCommand} with the parameter {@code address}.
      */
-    private ShowLocationCommand prepareCommand(Address address) {
+    private ShowLocationCommand prepareCommand(MapAddress address) {
         ShowLocationCommand showLocationCommand = new ShowLocationCommand(address);
         return showLocationCommand;
     }

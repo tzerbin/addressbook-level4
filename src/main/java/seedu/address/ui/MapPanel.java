@@ -13,16 +13,16 @@ import javafx.scene.web.WebEvent;
 
 /**
  * The panel for google maps. Construct the maps view which is return by calling
- * getMapView() to MainWindow which attaches it to mapPanelPlaceHolder. After which it initialises the map contents
+ * getMapView() to MainWindow which attaches it to mapPanelPlaceHolder. After which it initialises the Map contents
  * mapInitialised()
  */
 public class MapPanel extends UiPart<Region> implements MapComponentInitializedListener {
 
-    private static final String FXML = "MapsPanel.fxml";
     public static final double LATITUDE_SG = 1.3607962;
     public static final double LONGITUDE_SG = 103.8109208;
     public static final int DEFAULT_ZOOM_LEVEL = 10;
-    public static GoogleMap actualMap;
+    private static final String FXML = "MapsPanel.fxml";
+    private static GoogleMap actualMap;
     private GoogleMapView mapView;
 
     public MapPanel() {
@@ -50,7 +50,7 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
     }
 
     /**
-     * Set the map options for initialisation of {@code actualMap}
+     * Set the Map options for initialisation of {@code actualMap}
      */
     private GoogleMap setMapOptions() {
         LatLong center = new LatLong(LATITUDE_SG, LONGITUDE_SG);
@@ -71,5 +71,9 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
 
     public GoogleMapView getMapView() {
         return mapView;
+    }
+
+    public static GoogleMap getMap() {
+        return actualMap;
     }
 }

@@ -3,8 +3,6 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import seedu.address.logic.maps.Geocoding;
-
 /**
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
@@ -12,8 +10,7 @@ import seedu.address.logic.maps.Geocoding;
 public class Address {
 
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
-            "Addresses can take any values, it should not be blank and should be " +
-                    "a valid location address or postal code";
+            "Person addresses can take any values, it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -35,13 +32,10 @@ public class Address {
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid person address.
      */
     public static boolean isValidAddress(String test) {
-        boolean isValid;
-        Geocoding testAddress = new Geocoding();
-        isValid=testAddress.checkIfAddressCanBeFound(test);
-        return test.matches(ADDRESS_VALIDATION_REGEX) && isValid;
+        return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
     @Override

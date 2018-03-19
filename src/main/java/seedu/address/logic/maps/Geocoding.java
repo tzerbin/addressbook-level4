@@ -17,8 +17,8 @@ public class Geocoding {
      * API Key required for requesting service from google server
      */
     public static final String API_KEY = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
-    private GeoApiContext context;
     private static LatLng location;
+    private GeoApiContext context;
 
     /**
      * Initialises access to google server
@@ -51,7 +51,7 @@ public class Geocoding {
     private void getLocation(GeocodingResult[] results) {
         try {
             location = results[0].geometry.location;
-        }catch(ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw e;
         }
     }
@@ -64,6 +64,11 @@ public class Geocoding {
         return location.lng;
     }
 
+    /**
+     * Checks if the {@code address} can be found in google server
+     * @param address
+     * @return boolean
+     */
     public boolean checkIfAddressCanBeFound(String address) {
 
         try {
