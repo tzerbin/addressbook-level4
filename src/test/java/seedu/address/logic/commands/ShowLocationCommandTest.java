@@ -11,7 +11,10 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.person.Address;
-
+/**
+ * Contains integration tests and unit tests for
+ * {@code ShowLocationCommand}.
+ */
 public class ShowLocationCommandTest {
 
     @Rule

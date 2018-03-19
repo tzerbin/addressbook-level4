@@ -19,7 +19,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.maps.Geocoding;
 import seedu.address.model.person.Address;
 
-public class ShowLocationCommand extends UndoableCommand {
+/**
+ * Update the map by adding a marker to the location of address
+ * and delete existing marker if it exist
+ */
+public class ShowLocationCommand extends Command {
 
     public static final String COMMAND_WORD = "showLocation";
     public static final String COMMAND_ALIAS = "sl";
@@ -48,7 +52,7 @@ public class ShowLocationCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() {
         mapInitialized();
         return new CommandResult(MESSAGE_SUCCESS);
     }

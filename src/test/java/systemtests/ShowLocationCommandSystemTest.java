@@ -40,20 +40,11 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
          */
         newAddress = new Address("National University of Singapore");
         assertCommandSuccess(newAddress);
-        /* Case: undo removing tag friends from the list -> tag friends restored */
 
-        String command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: redo removing tag friends from the list -> tag friends added again */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
         /* ----------------------------------- Perform invalid removeTag operations --------------------------------- */
 
         /* Case: missing address -> rejected */
-        command = ShowLocationCommand.COMMAND_WORD + "";
+        String command = ShowLocationCommand.COMMAND_WORD + "";
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -70,14 +61,12 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Executes the {@code RemoveTagCommand} that removes {@code toRemove} from the model and asserts that the,<br>
+     * Executes the {@code ShowLocationCommand} that asserts that the,<br>
      * 1. Command box displays an empty string.<br>
      * 2. Command box has the default style class.<br>
-     * 3. Result display box displays the success message of executing {@code RemoveTagCommand} with the details of
-     * {@code toRemove}.<br>
-     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
-     * the original empty model.<br>
-     * 5. Browser url and selected card remain unchanged.<br>
+     * 3. Result display box displays the success message of executing {@code ShowLocationCommand}.<br>
+     * 4. Shows the location marker of {@code address} in Maps GUI.<br>
+     * 5. Calendar panel and selected card remain unchanged.<br>
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -86,18 +75,19 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(Address address) {
         assertCommandSuccess(ShowLocationCommand.COMMAND_WORD + " " + PREFIX_ADDRESS + address.toString());
     }
+
     /**
      * Performs the same verification as {@code assertCommandSuccess(Tag)}. Executes {@code command}
      * instead.
      * @see RemoveTagCommandSystemTest#assertCommandSuccess(Tag)
      */
-
     private void assertCommandSuccess(String command) {
         Model expectedModel = getModel();
         String expectedResultMessage = ShowLocationCommand.MESSAGE_SUCCESS;
 
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
+
     /**
      * Performs the same verification as {@code assertCommandSuccess(String, Tag)} except asserts that
      * the,<br>
@@ -111,8 +101,9 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertResultDisplayAndCommandBoxShowsDefaultStyle();
- //       assertStatusBarUnchangedExceptSyncStatus();
+       // assertStatusBarUnchangedExceptSyncStatus();
     }
+
     /**
      * Executes {@code command} and asserts that the,<br>
      * 1. Command box displays {@code command}.<br>
@@ -133,5 +124,4 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
-
 }
