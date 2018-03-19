@@ -15,7 +15,7 @@ import seedu.address.model.appointment.ReadOnlyAppointmentList;
  */
 @XmlRootElement(name = "appointmentlist")
 public class XmlSerializableAppointmentList {
-    
+
     @XmlElement
     private List<XmlAdaptedAppointment> appointments;
 
@@ -40,9 +40,9 @@ public class XmlSerializableAppointmentList {
      */
     public AppointmentList toModelType() throws IllegalValueException {
         AppointmentList appointmentList = new AppointmentList();
-        //for (XmlAdaptedAppointment a : appointments) {
-            //appointmentList.addAppointment(a.toModelType());
-        //}
+        // for (XmlAdaptedAppointment a : appointments) {
+        // appointmentList.addAppointment(a.toModelType());
+        // }
         return appointmentList;
     }
 

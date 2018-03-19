@@ -47,15 +47,21 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public String getAppointmentListFilePath() { return appointmentListFilePath; }
+    public String getAppointmentListFilePath() {
+        return appointmentListFilePath;
+    }
 
     public void setAppointmentListFilePath(String appointmentListFilePath) {
         this.appointmentListFilePath = appointmentListFilePath;
     }
-    
-    public String getAppointmentListName() { return appointmentListName; }
-    
-    public void setAppointmentListName(String appointmentListName) { this.appointmentListName = appointmentListName; }
+
+    public String getAppointmentListName() {
+        return appointmentListName;
+    }
+
+    public void setAppointmentListName(String appointmentListName) {
+        this.appointmentListName = appointmentListName;
+    }
 
     @Override
     public boolean equals(Object other) {

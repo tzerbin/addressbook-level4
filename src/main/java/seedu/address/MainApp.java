@@ -64,7 +64,7 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        AppointmentListStorage appointmentListStorage = 
+        AppointmentListStorage appointmentListStorage =
                 new XmlAppointmentListStorage(userPrefs.getAppointmentListFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage, appointmentListStorage);
 
