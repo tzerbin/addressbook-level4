@@ -36,13 +36,13 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, Appointme
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
-    
+
     @Override
     String getAppointmentListFilePath();
-    
+
     @Override
     Optional<ReadOnlyAppointmentList> readAppointmentList() throws DataConversionException, IOException;
-    
+
     @Override
     void saveAppointmentList(ReadOnlyAppointmentList appointmentList) throws IOException;
 }

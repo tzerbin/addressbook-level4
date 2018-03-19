@@ -97,8 +97,10 @@ public class StorageManager extends ComponentManager implements Storage {
 
     // ================ AppointmentList methods ==============================
     @Override
-    public String getAppointmentListFilePath() { return appointmentListStorage.getAppointmentListFilePath(); }
-    
+    public String getAppointmentListFilePath() {
+        return appointmentListStorage.getAppointmentListFilePath();
+    }
+
     @Override
     public Optional<ReadOnlyAppointmentList> readAppointmentList() throws DataConversionException, IOException {
         return readAppointmentList(appointmentListStorage.getAppointmentListFilePath());
@@ -110,7 +112,7 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.fine("Attempting to read data from file: " + filePath);
         return appointmentListStorage.readAppointmentList(filePath);
     }
-    
+
     @Override
     public void saveAppointmentList(ReadOnlyAppointmentList appointmentList) throws IOException {
         saveAppointmentList(appointmentList, appointmentListStorage.getAppointmentListFilePath());
