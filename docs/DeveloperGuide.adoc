@@ -834,7 +834,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 **MAJOR**
 
-*Integrating Calendars*: Able to create, list, edit and delete appointments in calendars within the application. (By Muruges)
+*Integrating Calendars*: Able to create, list, edit and delete appointments for the celebrities in calendars within the application. (By Muruges)
 
 *Adding attendees and POCs*: Able to add a list of celebrities and a list of other Points of Contact for each appointment. (By Muruges)
 
