@@ -854,6 +854,8 @@ information into storage. (By Tzer Bin)
 
 *Change of calendar view*: Able to switch among weekly, monthly and yearly calendar view. (By Jinyi)
 
+*Removal of tag*: Able to remove a tag from each person with it in the address book. (By Jinyi)
+
 [appendix]
 
 == User Stories
