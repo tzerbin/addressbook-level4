@@ -36,9 +36,9 @@ public class Geocoding {
      */
     public void initialiseLatLngFromAddress(String address) {
         try {
-            GeocodingResult[] results =  GeocodingApi.geocode(context,
+            GeocodingResult[] results = GeocodingApi.geocode(context,
                     address).await();
-            location = results[0].geometry.location;
+            getLocation(results);
         } catch (ApiException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -48,11 +48,37 @@ public class Geocoding {
         }
     }
 
+    private void getLocation(GeocodingResult[] results) {
+        try {
+            location = results[0].geometry.location;
+        }catch(ArrayIndexOutOfBoundsException e) {
+            throw e;
+        }
+    }
+
     public double getLat() {
         return location.lat;
     }
 
     public double getLong() {
         return location.lng;
+    }
+
+    public boolean checkIfAddressCanBeFound(String address) {
+
+        try {
+            GeocodingResult[] results = GeocodingApi.geocode(context,
+                    address).await();
+            getLocation(results);
+        } catch (ApiException e) {
+            return false;
+        } catch (InterruptedException e) {
+            return false;
+        } catch (IOException e) {
+            return false;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+        return true;
     }
 }

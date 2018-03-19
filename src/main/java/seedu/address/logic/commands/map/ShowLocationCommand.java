@@ -37,7 +37,7 @@ public class ShowLocationCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_ADDRESS + "820296";
 
-    public static final String MESSAGE_SUCCESS = "Location is being shown in map(identified by marker)!";
+    public static final String MESSAGE_SUCCESS = "Location is being shown in map (identified by marker)!";
 
     private final Address address;
     private static Marker location;

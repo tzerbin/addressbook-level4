@@ -2,15 +2,9 @@ package seedu.address.logic.parser.map;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_HOUR;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MINUTE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
@@ -40,8 +34,7 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand>{
             Address address = ParserUtil.parseAddress(argMultiMap.getValue(PREFIX_ADDRESS)).get();
             return new ShowLocationCommand(address);
         } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
+            throw new ParseException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
     }
 }
