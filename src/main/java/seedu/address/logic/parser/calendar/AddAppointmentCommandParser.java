@@ -59,12 +59,14 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 
             if (startTimeInput.isPresent()) {
                 startTime = startTimeInput.get();
+                endTime = startTimeInput.get();
             }
             if (endTimeInput.isPresent()) {
                 endTime = endTimeInput.get();
             }
             if (startDateInput.isPresent()) {
                 startDate = startDateInput.get();
+                endDate = startDateInput.get();
             }
             if (endDateInput.isPresent()) {
                 endDate = endDateInput.get();

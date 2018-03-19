@@ -66,6 +66,7 @@ public class AppointmentBuilder {
      */
     public AppointmentBuilder withStartTime(String startTime) {
         this.startTime = LocalTime.parse(startTime, Appointment.TIME_FORMAT);
+        this.endTime = this.startTime;
         return this;
     }
 
@@ -74,6 +75,7 @@ public class AppointmentBuilder {
      */
     public AppointmentBuilder withStartDate(String startDate) {
         this.startDate = LocalDate.parse(startDate, Appointment.DATE_FORMAT);
+        this.endDate = this.startDate;
         return this;
     }
 
