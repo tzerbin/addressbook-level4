@@ -1,7 +1,8 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC1;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 
@@ -43,7 +44,7 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
 
         /* ----------------------------------- Perform invalid removeTag operations --------------------------------- */
 
-        /* Case: missing address -> rejected */
+        /* Case: missing address and prefix-> rejected */
         String command = ShowLocationCommand.COMMAND_WORD + "";
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
 
@@ -52,8 +53,12 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: correct prefix but missing address -> rejected */
-        command = ShowLocationCommand.COMMAND_WORD + " " + INVALID_ADDRESS_DESC;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
+        command = ShowLocationCommand.COMMAND_WORD + INVALID_ADDRESS_DESC1;
+        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+
+        /* Case: correct prefix but invalid address -> rejected */
+        command = ShowLocationCommand.COMMAND_WORD + INVALID_ADDRESS_DESC2;
+        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: missing address prefix -> rejected */
         command = ShowLocationCommand.COMMAND_WORD + " " + VALID_ADDRESS_BOB;
