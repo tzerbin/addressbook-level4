@@ -128,7 +128,7 @@ public class ParserUtil {
         requireNonNull(address);
         String trimmedAddress = address.trim();
         if (!MapAddress.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(MapAddress.MESSAGE_ADDRESS_CONSTRAINTS_MAPS);
+            throw new IllegalValueException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
         }
         return new MapAddress(trimmedAddress);
     }

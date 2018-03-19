@@ -1,4 +1,4 @@
-package seedu.address.logic.maps;
+package seedu.address.logic.map;
 
 import java.io.IOException;
 

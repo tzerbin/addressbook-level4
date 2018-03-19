@@ -37,7 +37,7 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
             MapAddress address = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_MAP_ADDRESS)).get();
             return new ShowLocationCommand(address);
         } catch (IllegalValueException ive) {
-            throw new ParseException(MapAddress.MESSAGE_ADDRESS_CONSTRAINTS_MAPS);
+            throw new ParseException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
         }
     }
 }

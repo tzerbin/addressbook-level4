@@ -12,7 +12,7 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.maps.Geocoding;
+import seedu.address.logic.map.Geocoding;
 import seedu.address.model.map.MapAddress;
 
 /**

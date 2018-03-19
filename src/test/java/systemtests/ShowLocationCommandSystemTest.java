@@ -1,18 +1,17 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC1;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_MAP_DESC1;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_MAP_DESC2;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_BOB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAP_ADDRESS;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.Model;
+import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Address;
 import seedu.address.model.tag.Tag;
 
@@ -27,19 +26,19 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         /* Case: show location using address (block and street name) of a place
          * -> location marker shown in map
          */
-        Address newAddress = new Address(VALID_ADDRESS_BOB);
+        MapAddress newAddress = new MapAddress(VALID_ADDRESS_MAP_BOB);
         assertCommandSuccess(newAddress);
 
         /* Case: show location using postal code of a place
          * -> location marker shown in map
          */
-        newAddress = new Address("820296");
+        newAddress = new MapAddress("820296");
         assertCommandSuccess(newAddress);
 
         /* Case: show location using name of a place (e.g National University of Singapore)
          * -> location marker shown in map
          */
-        newAddress = new Address("National University of Singapore");
+        newAddress = new MapAddress("National University of Singapore");
         assertCommandSuccess(newAddress);
 
         /* ----------------------------------- Perform invalid removeTag operations --------------------------------- */
@@ -49,19 +48,19 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "showslocation " + VALID_ADDRESS_BOB;
+        command = "showslocation " + VALID_ADDRESS_MAP_BOB;
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: correct prefix but missing address -> rejected */
-        command = ShowLocationCommand.COMMAND_WORD + INVALID_ADDRESS_DESC1;
-        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        command = ShowLocationCommand.COMMAND_WORD + INVALID_ADDRESS_MAP_DESC2;
+        assertCommandFailure(command, MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
 
         /* Case: correct prefix but invalid address -> rejected */
-        command = ShowLocationCommand.COMMAND_WORD + INVALID_ADDRESS_DESC2;
-        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        command = ShowLocationCommand.COMMAND_WORD + INVALID_ADDRESS_MAP_DESC1;
+        assertCommandFailure(command, MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
 
         /* Case: missing address prefix -> rejected */
-        command = ShowLocationCommand.COMMAND_WORD + " " + VALID_ADDRESS_BOB;
+        command = ShowLocationCommand.COMMAND_WORD + " " + VALID_ADDRESS_MAP_BOB;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
     }
 
@@ -77,8 +76,8 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(Address address) {
-        assertCommandSuccess(ShowLocationCommand.COMMAND_WORD + " " + PREFIX_ADDRESS + address.toString());
+    private void assertCommandSuccess(MapAddress address) {
+        assertCommandSuccess(ShowLocationCommand.COMMAND_WORD + " " + PREFIX_MAP_ADDRESS + address.toString());
     }
 
     /**
