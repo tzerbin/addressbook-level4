@@ -846,9 +846,13 @@ the celebrity manager who usually has the responsibility to drive to be familiar
 *Storage of appointments*: Able to parse appointments information from storage, and save new and edited appointment
 information into storage. (By Tzer Bin)
 
+*Reminder of appointments*: Able to draft an email template to remind persons associated with the appointment and fill in the addressees' emails automatically. (By Jinyi)
+
 **MINOR**
 
 *Visual Themes*: Able to allow user to customize visual themes of the application. (By Tzer Bin)
+
+*Change of calendar view*: Able to switch among weekly, monthly and yearly calendar view. (By Jinyi)
 
 [appendix]
 
