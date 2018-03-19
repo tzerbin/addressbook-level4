@@ -96,6 +96,7 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     // ================ AppointmentList methods ==============================
+
     @Override
     public String getAppointmentListFilePath() {
         return appointmentListStorage.getAppointmentListFilePath();
