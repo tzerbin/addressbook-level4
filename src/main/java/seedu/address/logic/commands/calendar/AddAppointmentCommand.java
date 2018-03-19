@@ -1,11 +1,10 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_HOUR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MINUTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -18,21 +17,19 @@ import seedu.address.model.calendar.CelebCalendar;
  */
 public class AddAppointmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "addap";
+    public static final String COMMAND_WORD = "addAppointment";
     public static final String COMMAND_ALIAS = "aa";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to the celebrity calendar. "
             + "Parameters: "
             + PREFIX_NAME + "APPOINTMENT NAME "
-            + PREFIX_HOUR + "START HOUR "
-            + PREFIX_MINUTE + "START MINUTE "
-            + PREFIX_DAY + "START DAY "
+            + PREFIX_START_TIME + "START TIME "
+            + PREFIX_START_DATE + "START DATE "
             + PREFIX_LOCATION + "LOCATION\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Oscars 2018 "
-            + PREFIX_HOUR + "18 "
-            + PREFIX_MINUTE + "00 "
-            + PREFIX_DAY + "23 "
+            + PREFIX_START_TIME + "18:00 "
+            + PREFIX_START_DATE + "23/04/2018 "
             + PREFIX_LOCATION + "Hollywood";
 
     public static final String MESSAGE_SUCCESS = "Added appointment successfully";

@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import seedu.address.model.appointment.Appointment;
@@ -11,19 +12,25 @@ public class AppointmentBuilder {
 
     public static final String DEFAULT_NAME = "Oscars 2018";
     public static final String DEFAULT_LOCATION = null;
-    public static final int DEFAULT_START_HOUR = LocalTime.now().getHour();
-    public static final int DEFAULT_START_MINUTE = LocalTime.now().getMinute();
+    public static final LocalTime DEFAULT_START_TIME = LocalTime.now();
+    public static final LocalDate DEFAULT_START_DATE = LocalDate.now();
+    public static final LocalTime DEFAULT_END_TIME = LocalTime.now();
+    public static final LocalDate DEFAULT_END_DATE = LocalDate.now();
 
     private String name;
     private String location;
-    private int startHour;
-    private int startMinute;
+    private LocalTime startTime;
+    private LocalDate startDate;
+    private LocalTime endTime;
+    private LocalDate endDate;
 
     public AppointmentBuilder() {
         name = DEFAULT_NAME;
         location = DEFAULT_LOCATION;
-        startHour = DEFAULT_START_HOUR;
-        startMinute = DEFAULT_START_MINUTE;
+        startTime = DEFAULT_START_TIME;
+        startDate = DEFAULT_START_DATE;
+        endDate = DEFAULT_END_DATE;
+        endTime = DEFAULT_END_TIME;
     }
 
     /**
@@ -32,8 +39,10 @@ public class AppointmentBuilder {
     public AppointmentBuilder(Appointment apptToCopy) {
         name = apptToCopy.getTitle();
         location = apptToCopy.getLocation();
-        startHour = apptToCopy.getStartTime().getHour();
-        startMinute = apptToCopy.getStartTime().getMinute();
+        startTime = apptToCopy.getStartTime();
+        startDate = apptToCopy.getStartDate();
+        endTime = apptToCopy.getEndTime();
+        endDate = apptToCopy.getEndDate();
     }
 
     /**
@@ -53,22 +62,38 @@ public class AppointmentBuilder {
     }
 
     /**
-     * Sets the {@code startHour} of the {@code Appointment} that we are building.
+     * Sets the {@code startTime} of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withStartHour(String startHour) {
-        this.startHour = Integer.parseInt(startHour);
+    public AppointmentBuilder withStartTime(String startTime) {
+        this.startTime = LocalTime.parse(startTime, Appointment.TIME_FORMAT);
         return this;
     }
 
     /**
-     * Sets the {@code startMinute} of the {@code Appointment} that we are building.
+     * Sets the {@code startDate} of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withStartMinute(String startminute) {
-        this.startMinute = Integer.parseInt(startminute);
+    public AppointmentBuilder withStartDate(String startDate) {
+        this.startDate = LocalDate.parse(startDate, Appointment.DATE_FORMAT);
+        return this;
+    }
+
+    /**
+     * Sets the {@code endTime} of the {@code Appointment} that we are building.
+     */
+    public AppointmentBuilder withEndTime(String endTime) {
+        this.endTime = LocalTime.parse(endTime, Appointment.TIME_FORMAT);
+        return this;
+    }
+
+    /**
+     * Sets the {@code endDate} of the {@code Appointment} that we are building.
+     */
+    public AppointmentBuilder withEndDate(String endDate) {
+        this.endDate = LocalDate.parse(endDate, Appointment.DATE_FORMAT);
         return this;
     }
 
     public Appointment build() {
-        return new Appointment(name, startHour, startMinute, location);
+        return new Appointment(name, startTime, startDate, location, endTime, endDate);
     }
 }

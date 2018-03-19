@@ -5,11 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_HOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MINUTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -64,24 +66,32 @@ public class CommandTestUtil {
     public static final String VALID_APPOINTMENT_NAME_GRAMMY = "Grammy Awards";
     public static final String VALID_APPOINTMENT_LOCATION_OSCAR = "Hollywood";
     public static final String VALID_APPOINTMENT_LOCATION_GRAMMY = "New York";
-    public static final String VALID_START_HOUR_OSCAR = "12";
-    public static final String VALID_START_HOUR_GRAMMY = "18";
-    public static final String VALID_START_MINUTE_OSCAR = "30";
-    public static final String VALID_START_MINUTE_GRAMMY = "00";
+    public static final String VALID_START_TIME_OSCAR = "12:30";
+    public static final String VALID_START_TIME_GRAMMY = "18:00";
+    public static final String VALID_START_DATE_OSCAR = "12-12-2018";
+    public static final String VALID_START_DATE_GRAMMY = "10-10-2019";
+    public static final String VALID_END_TIME_OSCAR = "13:30";
+    public static final String VALID_END_TIME_GRAMMY = "19:00";
+    public static final String VALID_END_DATE_OSCAR = "12-12-2018";
+    public static final String VALID_END_DATE_GRAMMY = "10-10-2019";
 
     public static final String APPT_NAME_DESC_OSCAR = " " + PREFIX_NAME + VALID_APPOINTMENT_NAME_OSCAR;
     public static final String APPT_NAME_DESC_GRAMMY = " " + PREFIX_NAME + VALID_APPOINTMENT_NAME_GRAMMY;
     public static final String APPT_LOCATION_DESC_OSCAR = " " + PREFIX_LOCATION + VALID_APPOINTMENT_LOCATION_OSCAR;
     public static final String APPT_LOCATION_DESC_GRAMMY = " " + PREFIX_LOCATION + VALID_APPOINTMENT_LOCATION_GRAMMY;
-    public static final String APPT_START_HOUR_DESC_OSCAR = " " + PREFIX_HOUR + VALID_START_HOUR_OSCAR;
-    public static final String APPT_START_HOUR_DESC_GRAMMY = " " + PREFIX_HOUR + VALID_START_HOUR_GRAMMY;
-    public static final String APPT_START_MIN_DESC_OSCAR = " " + PREFIX_MINUTE + VALID_START_MINUTE_OSCAR;
-    public static final String APPT_START_MIN_DESC_GRAMMY = " " + PREFIX_MINUTE + VALID_START_MINUTE_GRAMMY;
+    public static final String APPT_START_TIME_DESC_OSCAR = " " + PREFIX_START_TIME + VALID_START_TIME_OSCAR;
+    public static final String APPT_START_TIME_DESC_GRAMMY = " " + PREFIX_START_TIME + VALID_START_TIME_GRAMMY;
+    public static final String APPT_START_DATE_DESC_OSCAR = " " + PREFIX_START_DATE + VALID_START_DATE_OSCAR;
+    public static final String APPT_START_DATE_DESC_GRAMMY = " " + PREFIX_START_DATE + VALID_START_DATE_GRAMMY;
+    public static final String APPT_END_TIME_DESC_OSCAR = " " + PREFIX_END_TIME + VALID_END_TIME_OSCAR;
+    public static final String APPT_END_TIME_DESC_GRAMMY = " " + PREFIX_END_TIME + VALID_END_TIME_GRAMMY;
+    public static final String APPT_END_DATE_DESC_OSCAR = " " + PREFIX_END_DATE + VALID_END_DATE_OSCAR;
+    public static final String APPT_END_DATE_DESC_GRAMMY = " " + PREFIX_END_DATE + VALID_END_DATE_GRAMMY;
 
     public static final String INVALID_APPT_NAME_DESC = " " + PREFIX_NAME + "Dinner & Dance"; // '&' not allowed in name
     public static final String INVALID_APPT_LOCATION_DESC = " " + PREFIX_LOCATION + "#03-04"; // '#' not allowed in name
-    public static final String INVALID_START_HOUR = " " + PREFIX_HOUR + "25"; // hour cannot be more than 23
-    public static final String INVALID_START_MIN = " " + PREFIX_MINUTE + "65"; // min cannot be more than 59
+    public static final String INVALID_START_TIME = " " + PREFIX_START_TIME + "23:61"; // Minute cannot be more than 60
+    public static final String INVALID_START_DATE = " " + PREFIX_START_DATE + "31-02-2018"; // There is no Feb 31st
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -31,6 +34,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -169,51 +173,55 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String hour} into an {@code Integer}.
+     * Parses a {@code String time} into a {@code LocalTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code hour} is invalid.
+     * @throws IllegalValueException if the given {@code time} is invalid.
      */
-    public static Integer parseHour(String hour) throws IllegalValueException {
-        requireNonNull(hour);
-        String trimmedHour = hour.trim();
-        if (!Appointment.isValidHour(trimmedHour)) {
-            throw new IllegalValueException(Appointment.MESSAGE_HOUR_CONSTRAINTS);
+    public static LocalTime parseTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        try {
+            LocalTime lt = LocalTime.parse(time, Appointment.TIME_FORMAT);
+            return lt;
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_TIME_CONSTRAINTS);
         }
-        return new Integer(trimmedHour);
     }
 
     /**
-     * Parses a {@code Optional<String> hour} into an {@code Optional<Integer>} if {@code hour} is present.
+     * Parses a {@code Optional<LocalTime> time} into an {@code Optional<LocalTime>} if {@code time} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Integer> parseHour(Optional<String> hour) throws IllegalValueException {
-        requireNonNull(hour);
-        return hour.isPresent() ? Optional.of(parseHour(hour.get())) : Optional.empty();
+    public static Optional<LocalTime> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String minute} into an {@code Integer}.
+     * Parses a {@code String date} into a {@code LocalDate}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code minute} is invalid.
+     * @throws IllegalValueException if the given {@code date} is invalid.
      */
-    public static Integer parseMinute(String minute) throws IllegalValueException {
-        requireNonNull(minute);
-        String trimmedMinute = minute.trim();
-        if (!Appointment.isValidMinute(trimmedMinute)) {
-            throw new IllegalValueException(Appointment.MESSAGE_MINUTE_CONSTRAINTS);
+    public static LocalDate parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        try {
+            LocalDate ld = LocalDate.parse(date, Appointment.DATE_FORMAT);
+            return ld;
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_DATE_CONSTRAINTS);
         }
-        return new Integer(trimmedMinute);
     }
 
     /**
-     * Parses a {@code Optional<String> minute} into an {@code Optional<Integer>} if {@code minute} is present.
+     * Parses a {@code Optional<LocalDate> date} into an {@code Optional<LocalDate>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Integer> parseMinute(Optional<String> minute) throws IllegalValueException {
-        requireNonNull(minute);
-        return minute.isPresent() ? Optional.of(parseMinute(minute.get())) : Optional.empty();
+    public static Optional<LocalDate> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 
     /**
