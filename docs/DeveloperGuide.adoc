@@ -844,7 +844,7 @@ location to allow the celebrity manager to plan appointments and trips more effe
 the celebrity manager who usually has the responsibility to drive to be familiarised with the travel route. (By Damien)
 
 *Storage of appointments*: Able to parse appointments information from storage, and save new and edited appointment 
-information into storage. (By Tzer Bin)  
+information into storage. (By Tzer Bin)
 
 **MINOR**
 
