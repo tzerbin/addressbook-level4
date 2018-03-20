@@ -599,12 +599,12 @@ Suppose the current address book has two types of tags, `friends` and `husband`.
 The snippet below shows the state of `PersonListPanel`:
 
 .Image of `PersonListPanel` before executing `removeTag friends`
-image::BeforeRemoveTag.png[width=""]+
+image::BeforeRemoveTag.png[width=""]
 
 After the successful execution of `removeTag friends`, `PersonListPanel` will be updated to the diagram below:
 
 .Image of `PersonListPanel` after executing `removeTag friends`
-image::AfterRemoveTag.png[width=""]+
+image::AfterRemoveTag.png[width=""]
 
 The following sequence diagram shows how the command works:
 
