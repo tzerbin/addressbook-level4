@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Celeb Scheduler - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,9 +11,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103W14-B4/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W14-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-W14-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -28,7 +28,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your Celeb Scheduler.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -50,7 +50,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Some commands have an alias, which you can also use to execute the command e.g. to add a person to the address book, you can type either `add n/John Doe` or `a n/John Doe`.
+* Some commands have an alias, which you can also use to execute the command e.g. to add a person to Celeb Scheuler, you can type either `add n/John Doe` or `a n/John Doe`.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -63,7 +63,7 @@ Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to Celeb Scheduler. +
 Alias: `a` +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
@@ -75,15 +75,38 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding an appointment: `addAppointment`
+
+Adds an appointment to Celeb Scheduler. +
+Alias: `aa`
+Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
+
+Examples:
+
+* `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
+* `add n/Dentist Appointmnt l/Dental Clinic st/15:45`
+
+****
+* Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
+it must be prefixed with a 0 (e.g. 03/07/...).
+* Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
+or minute is a 1 digit number, you need to prefix it with a 0 (e.g. 09:05)
+* You can omit one or more of the time, date and location fields when using this command.
+****
+
+===  Editing an appointment `[coming in v1.3]`
+
+===  Deleting an appointment `[coming in v1.3]`
+
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in Celeb Scheduler. +
 Alias: `l` +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person in Celeb Scheduler. +
 Alias: `e` +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
@@ -125,7 +148,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from Celeb Scheduler. +
 Alias: `d` +
 Format: `delete INDEX`
 
@@ -139,7 +162,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in Celeb Scheduler.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -160,7 +183,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in Celeb Scheduler.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -179,13 +202,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores Celeb Scheduler to the state before the previous _undoable_ command was executed. +
 Alias: `u` +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Celeb Scheduler's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -230,7 +253,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from Celeb Scheduler. +
 Alias: `c` +
 Format: `clear`
 
@@ -242,22 +265,22 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Celeb Scheduler data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 === Removing a tag : `removeTag`
 
-Removes the specified tag from every person with it in the address book and shows the number of person(s) affected by this operation. +
+Removes the specified tag from every person with it in Celeb Scheduler and shows the number of person(s) affected by this operation. +
 Alias: `rt` +
 Format: `removeTag TAG`
 
 [TIP]
-You can remove a tag that does not exist in the address book and it will show 0 person gets affected.
+You can remove a tag that does not exist in Celeb Scheduler and it will show 0 person gets affected.
 
 Examples:
 
 * `removeTag friends` +
-Removes the tag, "friends" from every person with it in the address book and shows the number of person(s) affected.
+Removes the tag, "friends" from every person with it in Celeb Scheduler and shows the number of person(s) affected.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
@@ -268,7 +291,7 @@ _{explain how the user can enable/disable data encryption}_
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Celeb Scheduler folder.
 
 == Command Summary
 
