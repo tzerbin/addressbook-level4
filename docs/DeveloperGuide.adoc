@@ -596,15 +596,17 @@ This is because this operation removes the tag from each person with it, and thu
 address book should have the tag, and hence the unused tag should be removed from `tags` inside the address book.
 
 Suppose the current address book has two types of tags, `friends` and `husband`.
-The snippet below shows the state of `tags`:
+The snippet below shows the state of `PersonListPanel`:
 
 .Image of `PersonListPanel` before executing `removeTag friends`
 image::BeforeRemoveTag.png[width=""]
+
 
 After the successful execution of `removeTag friends`, `PersonListPanel` will be updated to the diagram below:
 
 .Image of `PersonListPanel` after executing `removeTag friends`
 image::AfterRemoveTag.png[width=""]
+
 
 The following sequence diagram shows how the command works:
 
