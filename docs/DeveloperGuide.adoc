@@ -560,7 +560,7 @@ Right now, the addAppointment command takes in up to 6 parameters. They are:
 The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:
 
 [source,java]
----
+----
 public AddAppointmentCommand parse(String args) throws ParseException {
     ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
             PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE);
@@ -606,12 +606,12 @@ public AddAppointmentCommand parse(String args) throws ParseException {
     }
     ...
 }
----
+----
 
 The format for all the fields are located inside of `Appointment` and are as follows:
 
 [source,java]
----
+----
 public class Appointment extends Entry {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
@@ -633,7 +633,7 @@ public class Appointment extends Entry {
             .withResolverStyle(ResolverStyle.STRICT); // prevent incorrect dates
     ...
 }
----
+----
 
 The snippet below shows the state of the Celeb Scheduler app before input of the `AddAppointmentCommand`:
 
