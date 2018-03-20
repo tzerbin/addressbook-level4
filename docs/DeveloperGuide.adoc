@@ -500,8 +500,8 @@ image::BeforeInput.png[width="400"]
 
 After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to the diagram below:
 
-.Image of Map Panel default state
-image::BeforeInput.png[width="400"]
+.Image of Map Panel after command input
+image::AfterShowLocationInput.png[width="400"]
 
 Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker
 
