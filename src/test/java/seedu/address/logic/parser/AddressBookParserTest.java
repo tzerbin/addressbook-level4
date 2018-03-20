@@ -7,6 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_AMY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAP_ADDRESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 
@@ -198,7 +199,7 @@ public class AddressBookParserTest {
     public void parseCommand_showLocation() throws Exception {
         MapAddress address = new MapAddress(VALID_ADDRESS_MAP_AMY);
         ShowLocationCommand command = (ShowLocationCommand) parser.parseCommand(
-                ShowLocationCommand.COMMAND_WORD + " " + PREFIX_ADDRESS + address.toString());
+                ShowLocationCommand.COMMAND_WORD + " " + PREFIX_MAP_ADDRESS + address.toString());
         assertEquals(new ShowLocationCommand(address), command);
     }
 
@@ -206,7 +207,7 @@ public class AddressBookParserTest {
     public void parseCommand_showLocationAlias() throws Exception {
         MapAddress address = new MapAddress(VALID_ADDRESS_MAP_AMY);
         ShowLocationCommand command = (ShowLocationCommand) parser.parseCommand(
-                ShowLocationCommand.COMMAND_ALIAS + " " + PREFIX_ADDRESS + address.toString());
+                ShowLocationCommand.COMMAND_ALIAS + " " + PREFIX_MAP_ADDRESS + address.toString());
         assertEquals(new ShowLocationCommand(address), command);
     }
 
