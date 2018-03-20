@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores addressbook and appointment list data in an XML file
  */
 public class XmlFileStorage {
     /**
@@ -36,4 +36,27 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Saves the given appointment list data to the specified file.
+     */
+    public static void saveAppointmentListToFile(File file, XmlSerializableAppointmentList appointmentList)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, appointmentList);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage());
+        }
+    }
+
+    /**
+     * Returns appointment list in the file or an empty appointment list
+     */
+    public static XmlSerializableAppointmentList loadAppointmentListFromSaveFile(File file)
+            throws DataConversionException, FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableAppointmentList.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
 }
