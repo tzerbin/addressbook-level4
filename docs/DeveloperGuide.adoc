@@ -598,13 +598,13 @@ address book should have the tag, and hence the unused tag should be removed fro
 Suppose the current address book has two types of tags, `friends` and `husband`.
 The snippet below shows the state of `tags`:
 
-.Image of `tags` with `friends` tag and `husband` tag
-image::BeforeRemoveTag.png[width="400"]
+.Image of `PersonListPanel` before executing `removeTag friends`
+image::BeforeRemoveTag.png[width=""]
 
-After the successful execution of `removeTag friends`, `tags` will be updated to the diagram below:
+After the successful execution of `removeTag friends`, `PersonListPanel` will be updated to the diagram below:
 
-.Image of `tags` after the execution of `removeTag friends`
-image::AfterRemoveTag.png[width="400"]
+.Image of `PersonListPanel` after executing `removeTag friends`
+image::AfterRemoveTag.png[width=""]
 
 The following sequence diagram shows how the command works:
 
@@ -622,7 +622,7 @@ image::RemoveTagSequenceDiagram.png[width=""]
 ** Cons: Does not invalidate the removal and can thus be confusing to users whether this removal is legal.
 * **Alternative 3:** Output error and invalid command format
 ** Pros: Follows the common logical convention and makes it clear to users that the removal is not legal.
-** Cons: Requires he creation of additional exception class and exception handling methods.
+** Cons: Requires the creation of additional exception class and exception handling methods.
 
 == Documentation
 This section shows you how to document your project effectively.
