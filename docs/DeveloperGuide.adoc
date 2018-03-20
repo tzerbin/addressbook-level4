@@ -242,6 +242,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Appointment List data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -408,7 +409,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::showlocation[]
-=== ShowLocation feature
+=== ShowLocation Feature
 ==== Current Implementation
 
 The ShowLocation mechanism is facilitated by the `ShowLocationCommand`, which resides inside `Logic`. It supports the viewing of location
@@ -527,6 +528,65 @@ image::ShowLocationSequenceDiagram.png[width=""]
 * **Alternative 2:** Use `Address`
 ** Pros: Reduces the amount of code/class in the project
 ** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
+
+=== Appointment Storage Feature
+==== Current Implementation
+The storing of appointment is facilitated by the `XmlAppointmentListStorage` class, which resides in the `Storage` component.
+It supports the retrieval and storage for appointments made by the user.
+
+During start-up of application, the storage component will be initialized by the `MainApp`, which retrieves information from the specified file path in `UserPrefs`.
+
+The following code snippet shows how the storage component will be initialized by the `MainApp`. 
+[source,java]
+----
+public void init() throws Exception {
+        // initializes application.
+
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        AppointmentListStorage appointmentListStorage =
+                new XmlAppointmentListStorage(userPrefs.getAppointmentListFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, appointmentListStorage);
+
+        // initializes other component in the application.
+    }
+----
+
+In the `XmlAppointmentListStorage` class, it allows developers to use methods:
+
+* `readAppointmentList`, to retrieve a `ReadOnlyAppointmentList`
+** This is done by checking if the file exist, and load the list from `XmlSerializableAppointmentList`.
+* `saveAppointmentList`, to write information into `filePath` specified in `userPrefs`
+** This is done by creating a new file and rewriting to the list in `XmlSerializableAppointmentList`.
+
+While the `XmlAppointmentListStorage` class allows access to data stored on the hard disk, the `XmlSerializableAppointmentList` class represents the data of the appointment list for the calendar.
+In `XmlSerializableAppointmentList`, it contains a `List` of XML formats of appointments `XmlAdaptedAppointment`.
+`XmlAdaptedAppointment` will then contain essential information of different `Appointment` in `AppointmentList` in the `Model` component, which includes:
+
+* `title` of appointment
+* `interval` of appointment indicating its starting and ending time
+* `fullDay` tag of appointment indicating whether if appointment is a full-day event
+* `calendarName` of which the appointment is allocated to
+* `location` of appointment that is going to happen
+
+==== Design Considerations
+===== Aspect: Implementing of `AppointmentListStorage`
+* **Alternative 1 (current choice):** Adapting existing `AddressBookStorage`
+** Pros: Allows similar structure that can be maintained easily in `Storage` component
+** Cons: Prevents major overhaul in future if necessary
+* **Alternative 2:** Redefining `AppointmentListStorage`
+** Pros: Allows flexibility in implementation
+** Cons: Confuses developer with different requirements for a single component
+
+===== Aspect: Usage of data structures for `Appointment`
+* **Alternative 1 (current choice):** Using a single `List`
+** Pros: Allows simplicity
+** Cons: Slows the application if there are too many appointments
+* **Alternative 2:** Using a single `Set` such as `TreeSet`
+** Pros: Lowers impact in speed when there are many appointments
+** Cons: Complicates implementation when speed is not an issue
+
 
 == Documentation
 This section shows you how to document your project effectively.
