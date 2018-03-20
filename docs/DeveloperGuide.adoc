@@ -536,7 +536,7 @@ It supports the retrieval and storage for appointments made by the user.
 
 During start-up of application, the storage component will be initialized by the `MainApp`, which retrieves information from the specified file path in `UserPrefs`.
 
-The following code snippet shows how the storage component will be initialized by the `MainApp`. 
+The following code snippet shows how the storage component will be initialized by the `MainApp`.
 [source,java]
 ----
 public void init() throws Exception {
