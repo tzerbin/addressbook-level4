@@ -528,6 +528,102 @@ image::ShowLocationSequenceDiagram.png[width=""]
 ** Pros: Reduces the amount of code/class in the project
 ** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
 
+// tag::removeTag[]
+=== RemoveTag feature
+==== Current Implementation
+
+This RemoveTag mechanism is facilitated by `RemoveTagCommand` which resides inside `Logic` and `removeTag` which resides in `AddressBook`.
+`RemoveTagCommand` removes a specified tag from each person in the address book, and prints out how many persons are affected by this removal.
+The following diagram shows the inheritance diagram for `RemoveTagCommand`:
+
+.Inheritance diagram for Command
+image::RemoveTagCommandClassDiagram.png[width=""]
+
+As you can see from the diagram, `RemoveTagCommand` inherits from the `UndoableCommand`.
+Similar to the other undoable commands like `DeleteCommand`, it supports the undo/redo feature.
+
+Unlike `DeleteCommand` that can raise `PersonNotFoundException` when the `index` of the `person` to be deleted does not exist,
+`RemoveTagCommand` can remove a non-existing tag from the address book, but implicitly tell the user that the tag does not exist
+by showing that, the number of persons affected by the removal is 0.
+
+The snippet code below shows the implementation of `executeUndoableCommand` in `RemoveTagCommand`:
+
+[source,java]
+----
+public class RemoveTagCommand extends UndoableCommand {
+    ...
+    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Removed Tag %1$s and %2$s person(s) affected.";
+    ...
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(tagToRemove);
+        int numberOfAffectedPersons = model.removeTag(tagToRemove);
+        return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, tagToRemove, numberOfAffectedPersons));
+    }
+
+    ...
+}
+----
+
+The snippet code below shows the implementation of `removeTag` in `AddressBook`:
+
+[source,java]
+----
+public class AddressBook {
+    /**
+     * Removes {@code tag} from all persons in this {@code AddressBook}.
+     * @returns the number of {@code person}s with this {@code tag} removed.
+     */
+    public int removeTag(Tag tag) {
+        int count = 0;
+        for (Person person: persons) {
+            if (person.removeTag(tag)) {
+                count++;
+            }
+        }
+        if (count > 0) {
+            removeUnusedTags();
+        }
+        return count;
+    }
+    ...
+}
+----
+
+Note that `removeUnusedTags` is called inside `removeTag` when there is at least one person affected by the removal.
+This is because this operation removes the tag from each person with it, and thus after the operation, no person in the
+address book should have the tag, and hence the unused tag should be removed from `tags` inside the address book.
+
+Suppose the current address book has two types of tags, `friends` and `husband`.
+The snippet below shows the state of `tags`:
+
+.Image of `tags` with `friends` tag and `husband` tag
+image::BeforeRemoveTag.png[width="400"]
+
+After the successful execution of `removeTag friends`, `tags` will be updated to the diagram below:
+
+.Image of `tags` after the execution of `removeTag friends`
+image::AfterRemoveTag.png[width="400"]
+
+The following sequence diagram shows how the command works:
+
+.Sequence diagram of removeTag command
+image::RemoveTagSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Command result for removal of non-existing `tag`
+* **Alternative 1 (current choice):** Output `tag` is removed and 0 person affected
+** Pros: Easy to implement.
+** Cons: Does not make it explicit to users that the `tag` being removed does not exist in the address book.
+* **Alternative 2:** Output the `tag` cannot be removed
+** Pros: Makes it clear to users that the `tag` does not exist and thus cannot be removed.
+** Cons: Does not invalidate the removal and can thus be confusing to users whether this removal is legal.
+* **Alternative 3:** Output error and invalid command format
+** Pros: Follows the common logical convention and makes it clear to users that the removal is not legal.
+** Cons: Requires he creation of additional exception class and exception handling methods.
+
 == Documentation
 This section shows you how to document your project effectively.
 
