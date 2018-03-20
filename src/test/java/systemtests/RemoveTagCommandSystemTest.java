@@ -86,7 +86,7 @@ public class RemoveTagCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Tag toRemove) {
         Model expectedModel = getModel();
         int numPersonsAffected = expectedModel.removeTag(toRemove);
-        String expectedResultMessage = String.format(RemoveTagCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedResultMessage = String.format(RemoveTagCommand.MESSAGE_DELETE_TAG_SUCCESS,
                                                     toRemove,
                                                     numPersonsAffected);
 
