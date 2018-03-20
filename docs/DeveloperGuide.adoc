@@ -830,7 +830,41 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
+=== Feature Contribution
+
+**MAJOR**
+
+*Integrating Calendars*: Able to create, list, edit and delete appointments for the celebrities in calendars within the application. (By Muruges)
+
+*Adding attendees and POCs*: Able to add a list of celebrities and a list of other Points of Contact for each appointment. (By Muruges)
+
+*Location on map*: Able to show the location of appointments using address in maps, to allow the
+celebrity manager to locate specifically the location of appointment. (By Damien)
+
+*Route on map*: Able to show the rough route used to calculate the distance and time of travel, this allows
+the celebrity manager who usually has the responsibility to drive to be familiarised with the travel route. (By Damien)
+
+*Storage of appointments*: Able to parse appointments information from storage, and save new and edited appointment
+information into storage. (By Tzer Bin)
+
+*Reminder of appointments*: Able to draft an email template to remind persons associated with the appointment and fill in the addressees' emails automatically. (By Jinyi)
+
+**MINOR**
+
+*Viewing Calendars and appointments*: Able to view the existing calendars and the appointments present, replacing the +
+browser panel. (By Muruges)
+
+*Visual Themes*: Able to allow user to customize visual themes of the application. (By Tzer Bin)
+
+*Change of calendar view*: Able to switch among weekly, monthly and yearly calendar view. (By Jinyi)
+
+*Removal of tag*: Able to remove a tag from each person with it in the address book. (By Jinyi)
+
+*Distance and time of travel between 2 location*: Able to calculate the distance and time required to travel between
+two location to allow the celebrity manager to plan appointments and trips more effectively. (By Damien)
+
 [appendix]
+
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
