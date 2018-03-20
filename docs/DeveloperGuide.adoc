@@ -162,7 +162,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the Celeb Scheduler data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -430,7 +430,7 @@ Similar to the other commands like `FindCommand` it will not be identified by th
 
 This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
 the due to the difference in address specification details as the `Address` model is too specific for the command to work.
-An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
+An example would be the details of unit number (e.g 11-111) which will not be valid for this command.
 
 The main diffrence between both model is shown below in the two diagrams.
 
@@ -528,6 +528,13 @@ image::ShowLocationSequenceDiagram.png[width=""]
 ** Pros: Reduces the amount of code/class in the project
 ** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
 
+=== AddAppointment feature
+==== Current Implementation
+
+The AddAppointment mechanism is facilitated by the `AddAppointmentCommand`, which resides inside `Logic`. It supports the adding of an appointment to an existing calendar.
+The appointment, if added successfully, can be viewed in our `CalendarPanel` UI. This is done by retrieving the list of calendars stored in our `CalendarPanel`
+and then adding the appointment to one or more of these calendars.
+
 == Documentation
 This section shows you how to document your project effectively.
 
@@ -619,7 +626,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 == Dev Ops
 
 Dev Ops is a software engineering culture and practice that aims at unifying software development (Dev) and software operations (Ops).
-Dev Ops advocates automation and monitoring at all steps of software construction. This section illustrates how we adopt this practice in developing AddressBook.
+Dev Ops advocates automation and monitoring at all steps of software construction. This section illustrates how we adopt this practice in developing Celeb Scheduler.
 
 === Build Automation
 
@@ -1072,7 +1079,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Celeb Scheduler` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -1080,9 +1087,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Celeb Scheduler shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Celeb Scheduler deletes the person
 +
 Use case ends.
 
@@ -1096,7 +1103,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Celeb Scheduler shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1104,9 +1111,9 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User keys in a partially complete command which only has one match in the AddressBook
-2.  AddressBook shows the matched complete command
-3.  User presses tab to let AddressBook auto-fill the rest of the command
+1.  User keys in a partially complete command which only has one match in the Celeb Scheduler
+2.  Celeb Scheduler shows the matched complete command
+3.  User presses tab to let Celeb Scheduler auto-fill the rest of the command
 
 +
 Use case ends.
@@ -1118,7 +1125,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to undo
-2.  AddressBook undoes the latest executed command that mutates the data
+2.  Celeb Scheduler undoes the latest executed command that mutates the data
 
 +
 Use case ends.
@@ -1129,7 +1136,7 @@ Use case ends.
 * 2a. There is no executed command that mutates the data
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1138,7 +1145,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to redo
-2.  AddressBook redoes the latest executed undo command
+2.  Celeb Scheduler redoes the latest executed undo command
 
 +
 Use case ends.
@@ -1149,7 +1156,7 @@ Use case ends.
 * 2a. There is no executed undo command.
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1158,7 +1165,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to email to a contact
-2.  AddressBook opens the platform of the emailing website
+2.  Celeb Scheduler opens the platform of the emailing website
 
 +
 Use case ends.
@@ -1169,7 +1176,7 @@ Use case ends.
 * 1a. Contact does not exist.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1178,7 +1185,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to list contacts by a tag
-2.  AddressBook lists out contacts with the specified tag
+2.  Celeb Scheduler lists out contacts with the specified tag
 
 +
 Use case ends.
@@ -1196,9 +1203,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to blacklist phone number
-2.  AddressBook requests the user to confirm black list
+2.  Celeb Scheduler requests the user to confirm black list
 3.  User confirms
-4.  AddressBook adds the phone number to black list
+4.  Celeb Scheduler adds the phone number to black list
 
 +
 Use case ends.
@@ -1209,7 +1216,7 @@ Use case ends.
 * 1a. Phone number is invalid.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1220,7 +1227,7 @@ Use case ends
 * 3b. User enters an invalid confirmation.
 +
 [none]
-** 3b1. AddressBook shows an error message.
+** 3b1. Celeb Scheduler shows an error message.
 +
 Use case resumes at 2.
 
@@ -1229,7 +1236,7 @@ Use case resumes at 2.
 *MSS*
 
 1.  User inputs the new dimension for a specific UI
-2.  AddressBook updates the size of the UI indicated
+2.  Celeb Scheduler updates the size of the UI indicated
 
 +
 Use case ends.
@@ -1240,7 +1247,7 @@ Use case ends.
 * 1a. New dimensions has conflict with overall dimension of the whole UI.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1249,7 +1256,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to add an appointment
-2.  AddressBook adds the appointment to the calendar
+2.  Celeb Scheduler adds the appointment to the calendar
 
 +
 Use case ends.
@@ -1260,14 +1267,14 @@ Use case ends.
 * 1a. Appointment to add consist of incorrect details or format.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
 * 2a. Added appointment clashes with existing appointment.
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1276,7 +1283,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to view an appointment
-2.  AddressBook shows the appointment details
+2.  Celeb Scheduler shows the appointment details
 
 +
 Use case ends.
@@ -1287,7 +1294,7 @@ Use case ends.
 * 1a. Appointment does not exist.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1296,7 +1303,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to remind appointment
-2.  AddressBook sends a pre-drafted email containing appointment details to the attendees
+2.  Celeb Scheduler sends a pre-drafted email containing appointment details to the attendees
 
 +
 Use case ends.
@@ -1307,7 +1314,7 @@ Use case ends.
 * 1a. Appointment does not exist.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1316,7 +1323,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to remove a specified appointment
-2.  AddressBook removes the appointment
+2.  Celeb Scheduler removes the appointment
 
 +
 Use case ends.
@@ -1327,7 +1334,7 @@ Use case ends.
 * 1a. Appointment does not exist.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1336,7 +1343,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to edit a specified appointment
-2.  AddressBook changes appointment details and displays new appointment details to user
+2.  Celeb Scheduler changes appointment details and displays new appointment details to user
 +
 Use case ends.
 
@@ -1346,7 +1353,7 @@ Use case ends.
 * 1a. Appointment does not exist.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1354,7 +1361,7 @@ Use case ends.
 * 1b.  Information entered for edit is invalid.
 +
 [none]
-** 1b1. AddressBook shows an error message.
+** 1b1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1363,7 +1370,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to set an alarm for a specified appointment at a specified time
-2.  AddressBook sends reminder whenever the user opens it after the specified time till appointment timing
+2.  Celeb Scheduler sends reminder whenever the user opens it after the specified time till appointment timing
 
 +
 Use case ends.
@@ -1374,7 +1381,7 @@ Use case ends.
 * 1a. Appointment does not exist.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1383,7 +1390,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to cancel an alarm for a specified appointment
-2.  AddressBook cancels the alarm
+2.  Celeb Scheduler cancels the alarm
 
 
 +
@@ -1395,7 +1402,7 @@ Use case ends.
 * 1a. Appointment does not exist.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1403,7 +1410,7 @@ Use case ends.
 * 1b. No alarm is set for the specified appointment.
 +
 [none]
-** 1b1. AddressBook shows an error message.
+** 1b1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1412,7 +1419,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to consolidate payments within a specific period
-2.  AddressBook outputs payments made and pending
+2.  Celeb Scheduler outputs payments made and pending
 
 +
 Use case ends.
@@ -1423,7 +1430,7 @@ Use case ends.
 * 1a. The period specified is invalid.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Celeb Scheduler shows an error message.
 +
 Use case ends.
 
@@ -1431,7 +1438,7 @@ Use case ends.
 * 2a. There is no payment within the specified period.
 +
 [none]
-** 2a1. AddressBook shows a message that says no payment.
+** 2a1. Celeb Scheduler shows a message that says no payment.
 +
 Use case ends.
 
@@ -1440,12 +1447,12 @@ Use case ends.
 *MSS*
 
 1.  User requests to access appointments.
-2.  AddressBook provide the list of appointments User has.
+2.  Celeb Scheduler provide the list of appointments User has.
 3.  User requests to associate relevant parties to one of the appointments from the list.
-4.  AddressBook requests input of the relevant parties’ names.
+4.  Celeb Scheduler requests input of the relevant parties’ names.
 5.  User enters the names of the parties.
-6.  AddressBook adds the names to the appointments.
-7.  AddressBook provides confirmation.
+6.  Celeb Scheduler adds the names to the appointments.
+7.  Celeb Scheduler provides confirmation.
 +
 Use case ends.
 
@@ -1455,7 +1462,7 @@ Use case ends.
 * 4a. User provides contact that is not in contact list.
 +
 [none]
-** 4a1. AddressBook requests User to create a new contact.
+** 4a1. Celeb Scheduler requests User to create a new contact.
 +
 [none]
 ** 4a2. User adds new contact (refer to Add New Contact use case).
@@ -1466,7 +1473,7 @@ Use case resumes from step 5.
 * a. At any time, user chooses to cancel
 +
 [none]
-** a1. AddressBook provides status.
+** a1. Celeb Scheduler provides status.
 +
 Use case ends.
 
@@ -1475,12 +1482,12 @@ Use case ends.
 *MSS*
 
 1.  User requests to access appointments.
-2.  AddressBook provide the list of appointments User has.
+2.  Celeb Scheduler provide the list of appointments User has.
 3.  User requests to associate points of contacts to one of the appointments from the list.
-4.  AddressBook requests input of the points of contact’ names.
+4.  Celeb Scheduler requests input of the points of contact’ names.
 5.  User enters the names of the parties.
-6.  AddressBook adds the names to the appointments.
-7.  AddressBook provides confirmation.
+6.  Celeb Scheduler adds the names to the appointments.
+7.  Celeb Scheduler provides confirmation.
 
 +
 Use case ends.
@@ -1490,7 +1497,7 @@ Use case ends.
 * 4a. User provides contact that is not in contact list.
 +
 [none]
-** 4a1. AddressBook requests User to create a new contact.
+** 4a1. Celeb Scheduler requests User to create a new contact.
 +
 [none]
 ** 4a2. User adds new contact (refer to Add New Contact use case).
@@ -1501,7 +1508,7 @@ Use case resumes from step 5.
 * a. At any time, user chooses to cancel
 +
 [none]
-** a1. AddressBook provides status.
+** a1. Celeb Scheduler provides status.
 +
 Use case ends.
 
@@ -1510,12 +1517,12 @@ Use case ends.
 *MSS*
 
 1.  User requests to access appointments.
-2.  AddressBook provide the list of appointments User has.
+2.  Celeb Scheduler provide the list of appointments User has.
 3.  User requests to associate payments to one of the appointments from the list.
-4.  AddressBook requests input of the payment amount.
+4.  Celeb Scheduler requests input of the payment amount.
 5.  User enters the payment amount.
-6.  AddressBook adds payment amount to the appointments.
-7.  AddressBook provides confirmation.
+6.  Celeb Scheduler adds payment amount to the appointments.
+7.  Celeb Scheduler provides confirmation.
 
 +
 Use case ends.
@@ -1526,7 +1533,7 @@ Use case ends.
 * 4a. User provides invalid input.
 +
 [none]
-** 4a1. AddressBook requests User to provide valid input.
+** 4a1. Celeb Scheduler requests User to provide valid input.
 +
 [none]
 ** 4a2. User enters new input.
@@ -1539,7 +1546,7 @@ Use case resumes from step 5.
 * a. At any time, user chooses to cancel
 +
 [none]
-** a1. AddressBook provides status.
+** a1. Celeb Scheduler provides status.
 +
 Use case ends.
 
@@ -1552,7 +1559,7 @@ Use case ends.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be usable by people with no knowledge about command line input
 .  Should respond to any user command within 10 seconds
-.  Should be backward compatible with data produced by earlier versions of the AddressBook
+.  Should be backward compatible with data produced by earlier versions of the Celeb Scheduler
 .  Should come with automated unit tests and open source code
 .  Should favor DOS style commands over Unix-style commands
 
