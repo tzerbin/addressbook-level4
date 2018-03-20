@@ -259,6 +259,20 @@ Examples:
 * `removeTag friends` +
 Removes the tag, "friends" from every person with it in the address book and shows the number of person(s) affected.
 
+=== Show location on map : `showLocation`
+
+Shows the specific location in the map interface, by marking the latitude and longitude with a location marker. +
+Alias: `sl` +
+Format: `showLocation ma/MapAddress`
+
+[TIP]
+The format of the address can be in postal code, road name, location name and building name.
+
+Examples:
+
+* `showlocation ma/Punggol` +
+Updates the map by re-centering to the new location 'Punggol' and adding a location marker to it.
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
