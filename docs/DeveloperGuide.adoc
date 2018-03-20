@@ -430,9 +430,9 @@ Similar to the other commands like `FindCommand` it will not be identified by th
 
 This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
 the due to the difference in address specification details as the `Address` model is too specific for the command to work.
-An example would be the details of unit number (e.g 11-111) which will not be valid for this command.
+An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
 
-The main diffrence between both model is shown below in the two diagrams.
+The main difference between both model is shown below in the two diagrams.
 
 The snippet code below shows the diagram of `Address` model:
 
@@ -533,7 +533,118 @@ image::ShowLocationSequenceDiagram.png[width=""]
 
 The AddAppointment mechanism is facilitated by the `AddAppointmentCommand`, which resides inside `Logic`. It supports the adding of an appointment to an existing calendar.
 The appointment, if added successfully, can be viewed in our `CalendarPanel` UI. This is done by retrieving the list of calendars stored in our `CalendarPanel`
-and then adding the appointment to one or more of these calendars.
+and then adding the appointment to one or more of these calendars. This command extends `Command` so it *does not support the undo/redo feature*.
+
+To be able to create appointments, add them to calendars and view the calendar with the added appointments, the external CalendarFX package is used. The API for all the CalendarFX classes and methods used can be found http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[here].
+
+* For the calendar, the `CelebCalendar` class is used, which extends the default `Calendar` class from CalendarFX used to describe a calendar.
+
+* For the appointment, the `Appointment` class is used, which is extended from `Entry`, the default class used to represent an entry in a `Calendar` in CalendarFX.
+
+* All `CelebCalendar` instances reside in an instance of `CalendarSource`, the class used to store a group of calendars in CalendarFX.
+
+* This instance of `CalendarSource` is atttached to our `CalendarView` which is the GUI for our calendar.
+
+[NOTE]
+Inheritance from the base classes of the external package is done so that we can add in additional methods as necessary.
+
+Right now, the addAppointment command takes in up to 6 parameters. They are:
+
+* Appointment name [Compulsory field]
+* Location
+* Start Date
+* Start Time
+* End Date
+* End Time
+
+The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:
+
+[source,java]
+---
+public AddAppointmentCommand parse(String args) throws ParseException {
+    ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
+            PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE);
+
+    if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
+            || !argMultiMap.getPreamble().isEmpty()) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    try {
+        String appointmentName = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_NAME)).get();
+        Optional<LocalTime> startTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_START_TIME));
+        Optional<LocalDate> startDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_START_DATE));
+        Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
+        Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
+        Optional<String> locationInput = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_LOCATION));
+
+        String location = null;
+        LocalTime startTime = LocalTime.now();
+        LocalDate startDate = LocalDate.now();
+        LocalTime endTime = LocalTime.now();
+        LocalDate endDate = LocalDate.now();
+
+        if (startTimeInput.isPresent()) {
+            startTime = startTimeInput.get();
+            endTime = startTimeInput.get();
+        }
+        if (endTimeInput.isPresent()) {
+            endTime = endTimeInput.get();
+        }
+        if (startDateInput.isPresent()) {
+            startDate = startDateInput.get();
+            endDate = startDateInput.get();
+        }
+        if (endDateInput.isPresent()) {
+            endDate = endDateInput.get();
+        }
+        if (locationInput.isPresent()) {
+            location = locationInput.get();
+        }
+        ...
+    }
+    ...
+}
+---
+
+The format for all the fields are located inside of `Appointment` and are as follows:
+
+[source,java]
+---
+public class Appointment extends Entry {
+
+    public static final String MESSAGE_NAME_CONSTRAINTS =
+            "Appointment names should only contain alphanumeric characters and spaces, and it should not be blank"; // used for name and location
+
+    public static final String MESSAGE_TIME_CONSTRAINTS =
+            "Time should be a 2 digit number between 00 to 23 followed by a :"
+            + " followed by a 2 digit number beetween 00 to 59. Some examples include "
+            + "08:45, 13:45, 00:30";
+    public static final String MESSAGE_DATE_CONSTRAINTS =
+            "Date should be a 2 digit number between 01 to 31 followed by a -"
+            + " followed by a 2 digit number between 01 to 12 followed by a -"
+            + " followed by a 4 digit number describing a year. Some months might have less than 31 days."
+            + " Some examples include: 13-12-2018, 02-05-2019, 28-02-2018";
+
+    public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-uuuu")
+            .withResolverStyle(ResolverStyle.STRICT); // prevent incorrect dates
+    ...
+}
+---
+
+The snippet below shows the state of the Celeb Scheduler app before input of the `AddAppointmentCommand`:
+
+.Image of Celeb Scheduler without any appointments
+image::BeforeAddAppointment.png[width="800"]
+
+After input of the command we will have:
+
+.Image of Celeb Scheduler with newly added appointment
+image::AfterAddAppointment.png[width="800"]
+
 
 == Documentation
 This section shows you how to document your project effectively.
