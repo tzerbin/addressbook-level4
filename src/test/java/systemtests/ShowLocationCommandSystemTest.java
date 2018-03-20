@@ -12,7 +12,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.Model;
 import seedu.address.model.map.MapAddress;
-import seedu.address.model.person.Address;
 import seedu.address.model.tag.Tag;
 
 public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
@@ -21,7 +20,7 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
     public void showLocation() {
         Model model = getModel();
 
-        /* ----------------------------------- Perform valid showLocation operations ----------------------------------- */
+        /* ------------------------------ Perform valid showLocation operations --------------------------------- */
 
         /* Case: show location using address (block and street name) of a place
          * -> location marker shown in map
@@ -105,7 +104,6 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertResultDisplayAndCommandBoxShowsDefaultStyle();
-       // assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
