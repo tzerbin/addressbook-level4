@@ -19,7 +19,7 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Parameters: TAG (must be a non-empty string)\n"
             + "Example: " + COMMAND_WORD + " friends";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Removed Tag %1$s and %2$s person(s) affected.";
+    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Removed Tag %1$s and %2$s person(s) affected.";
 
     public final Tag tagToRemove;
 
@@ -33,7 +33,7 @@ public class RemoveTagCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(tagToRemove);
         int numberOfAffectedPersons = model.removeTag(tagToRemove);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, tagToRemove, numberOfAffectedPersons));
+        return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, tagToRemove, numberOfAffectedPersons));
     }
 
     @Override
