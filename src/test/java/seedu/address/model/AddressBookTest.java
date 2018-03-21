@@ -45,16 +45,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void removeTag_nonExistentTag_addressBookUnchanged() {
-        addressBookWithAmy.removeTag(new Tag(VALID_TAG_HUSBAND));
-
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).build();
-
-        assertEquals(expectedAddressBook, addressBookWithAmy);
-    }
-
-    @Test
-    public void removeTag_existentTag_tagRemoved() {
+    public void removeTag_existentTag_tagRemoved() throws Exception {
         addressBookWithBobAndAmy.removeTag(new Tag(VALID_TAG_FRIEND));
 
         Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
