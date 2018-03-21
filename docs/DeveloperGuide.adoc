@@ -1293,6 +1293,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user | see the location of a given appointment |  plan for travel
 
+|`* * *` |user | see the best route of travel between two locations |  plan for the shortest travel
+
+|`* * *` |user | know the estimated distance and time of travel between two locations |  plan for my schedules more effectively
+
 |`* * *` |celebrity manager | associate the appointment with relevant celebrities and parties |  view who are involved
 
 |`* * *` |celebrity manager | associate the appointment with relevant contacts |  contact the relevant parties easily
