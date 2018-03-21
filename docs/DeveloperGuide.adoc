@@ -1277,6 +1277,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user | edit appointment timings |  change the time of the appointment when I need to re-schedule
 
+|`* * *` |user | save appointment |  retrieve information of the appointments made
+
 |`* * *` |user | change appointment location |  change the venue if the original one is not available
 
 |`* * *` |user | change people involved in appointment |  add new people involved or remove people no longer involved
