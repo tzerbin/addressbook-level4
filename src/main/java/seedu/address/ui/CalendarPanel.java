@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
@@ -10,9 +11,14 @@ import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
+import javafx.scene.web.WebView;
+import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.Person;
 
 /**
  * The panel for the Calendar. Constructs a calendar view and attaches to it a CalendarSource.
@@ -30,6 +36,9 @@ public class CalendarPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private CalendarView calendarView;
+
+    @FXML
+    private WebView browser;
 
     public CalendarPanel(CalendarSource calendarSource) {
         super(FXML);
@@ -87,5 +96,35 @@ public class CalendarPanel extends UiPart<Region> {
                     break;
             }
         });
+    }
+
+    //methods from BrowserPanel
+    private void loadPersonPage(Person person) {
+        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    }
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    /**
+     * Loads a default HTML file with a background that matches the general theme.
+     */
+    private void loadDefaultPage() {
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        loadPage(defaultPage.toExternalForm());
+    }
+
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        browser = null;
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
     }
 }
