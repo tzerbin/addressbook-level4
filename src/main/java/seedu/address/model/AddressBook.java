@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.EditCommand.createEditedPerson;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,12 +12,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -80,15 +83,41 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Removes {@code tag} from all persons in this {@code AddressBook}.
      * @returns the number of {@code person}s with this {@code tag} removed.
      */
-    public int removeTag(Tag tag) {
-        int count = 0;
-        for (Person person: persons) {
-            if (person.removeTag(tag)) {
-                count++;
+    public int removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
+        boolean tagExists = false;
+        for (Tag existingTag: tags) {
+            if (existingTag.equals(tag)) {
+                tagExists = true;
             }
         }
-        if (count > 0) {
-            removeUnusedTags();
+        if (!tagExists) {
+            throw new TagNotFoundException();
+        }
+
+        int count = 0;
+        //is it possible to have two people with everything the same except for tag?
+        for (Person person: persons) {
+            if (person.hasTag(tag)) {
+                //get the new tag set with the specified tag removed
+                Set<Tag> oldTags = person.getTags();
+                Set<Tag> newTags = new HashSet<>();
+                for (Tag tagToKeep: oldTags) {
+                    if (tagToKeep.equals(tag)) {
+                        continue;
+                    }
+                    newTags.add(tagToKeep);
+                }
+
+                //create a new person with the specified tag removed to replace the person
+                EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+                editPersonDescriptor.setTags(newTags);
+                Person editedPerson = createEditedPerson(person, editPersonDescriptor);
+                Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+                persons.setPerson(person, syncedEditedPerson);
+                removeUnusedTags();
+
+                count++;
+            }
         }
         return count;
     }
