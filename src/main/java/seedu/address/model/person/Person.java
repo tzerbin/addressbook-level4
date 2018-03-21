@@ -65,8 +65,8 @@ public class Person {
      */
     public boolean hasTag(Tag targetTag) {
         Set<Tag> newTags = tags.toSet();
-        for(Tag tag: newTags) {
-            if(tag.equals(targetTag)) {
+        for (Tag tag: newTags) {
+            if (tag.equals(targetTag)) {
                 return true;
             }
         }

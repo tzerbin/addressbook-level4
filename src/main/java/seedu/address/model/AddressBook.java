@@ -85,12 +85,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public int removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
         boolean tagExists = false;
-        for(Tag existingTag: tags) {
-            if(existingTag.equals(tag)) {
+        for (Tag existingTag: tags) {
+            if (existingTag.equals(tag)) {
                 tagExists = true;
             }
         }
-        if(!tagExists) {
+        if (!tagExists) {
             throw new TagNotFoundException();
         }
 
@@ -101,8 +101,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                 //get the new tag set with the specified tag removed
                 Set<Tag> oldTags = person.getTags();
                 Set<Tag> newTags = new HashSet<>();
-                for(Tag tagToKeep: oldTags) {
-                    if(tagToKeep.equals(tag)) {
+                for (Tag tagToKeep: oldTags) {
+                    if (tagToKeep.equals(tag)) {
                         continue;
                     }
                     newTags.add(tagToKeep);
