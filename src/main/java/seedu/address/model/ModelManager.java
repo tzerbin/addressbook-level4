@@ -45,11 +45,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         celebCalendarSource = new CalendarSource("Celeb Calendar Source");
-
-
-//        CelebCalendar testCalendar1 = new CelebCalendar("Paul McCartney");
-//        CelebCalendar testCalendar2 = new CelebCalendar("John Lennon");
-//        celebCalendarSource.getCalendars().addAll(testCalendar1, testCalendar2);
         initializeCalendarSource(celebCalendarSource);
     }
 
@@ -89,6 +84,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
     public void addCelebrity(Person person) throws DuplicatePersonException {
         addressBook.addCelebrity(person);
         celebCalendarSource.getCalendars().add(new CelebCalendar(person));
