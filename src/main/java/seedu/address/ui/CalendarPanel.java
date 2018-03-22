@@ -19,7 +19,8 @@ public class CalendarPanel {
 
     public CalendarPanel(CalendarSource calendarSource) {
         CalendarView calendarView = new CalendarView();
-        calendarView.getCalendarSources().addAll(calendarSource);
+        calendarView.getCalendarSources().clear(); // there is an existing default source when creating the view
+        calendarView.getCalendarSources().add(calendarSource);
         calendarView.setRequestedTime(LocalTime.now());
 
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
