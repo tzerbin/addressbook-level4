@@ -27,7 +27,7 @@ import seedu.address.model.person.Person;
  */
 public class CalendarPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "";
+    public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
             "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
@@ -38,10 +38,11 @@ public class CalendarPanel extends UiPart<Region> {
     private CalendarView calendarView;
 
     @FXML
-    private WebView browser;
+    private WebView calendar;
 
     public CalendarPanel(CalendarSource calendarSource) {
         super(FXML);
+        registerAsAnEventHandler(this);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
@@ -70,8 +71,6 @@ public class CalendarPanel extends UiPart<Region> {
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
         this.calendarView = calendarView;
-
-        registerAsAnEventHandler(this);
     }
 
     public CalendarView getCalendarView() {
@@ -104,7 +103,7 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        Platform.runLater(() -> calendar.getEngine().load(url));
     }
 
     /**
@@ -119,7 +118,7 @@ public class CalendarPanel extends UiPart<Region> {
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
-        browser = null;
+        calendar = null;
     }
 
     @Subscribe

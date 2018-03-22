@@ -35,7 +35,6 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private CalendarPanel calendarPanel;
     private MapPanel mapPanel;
     private PersonListPanel personListPanel;
@@ -200,7 +199,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe
