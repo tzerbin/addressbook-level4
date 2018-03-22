@@ -33,10 +33,10 @@ public class AddAppointmentCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Oscars 2018 "
             + PREFIX_START_TIME + "18:00 "
-            + PREFIX_START_DATE + "23/04/2018 "
+            + PREFIX_START_DATE + "23-04-2018 "
             + PREFIX_LOCATION + "Hollywood "
             + PREFIX_END_TIME + "20:00 "
-            + PREFIX_END_DATE + "23/04/2018";
+            + PREFIX_END_DATE + "23-04-2018";
 
     public static final String MESSAGE_SUCCESS = "Added appointment successfully";
 

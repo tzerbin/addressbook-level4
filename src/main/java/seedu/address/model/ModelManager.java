@@ -44,11 +44,13 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        celebCalendarSource = new CalendarSource("Test Celeb Calendar Source");
+        celebCalendarSource = new CalendarSource("Celeb Calendar Source");
 
-        CelebCalendar testCalendar1 = new CelebCalendar("Paul McCartney");
-        CelebCalendar testCalendar2 = new CelebCalendar("John Lennon");
-        celebCalendarSource.getCalendars().addAll(testCalendar1, testCalendar2);
+
+//        CelebCalendar testCalendar1 = new CelebCalendar("Paul McCartney");
+//        CelebCalendar testCalendar2 = new CelebCalendar("John Lennon");
+//        celebCalendarSource.getCalendars().addAll(testCalendar1, testCalendar2);
+        initializeCalendarSource(celebCalendarSource);
     }
 
     public ModelManager() {
@@ -145,6 +147,17 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    /**
+     * Populates our CalendarSource by creating a calendar for every celebrity in our addressbook
+     */
+    private void initializeCalendarSource(CalendarSource calSource) {
+        requireNonNull(addressBook);
+        ObservableList<Person> celebrities = addressBook.getCelebritiesList();
+        for (Person celebrity : celebrities) {
+            calSource.getCalendars().add(new CelebCalendar(celebrity));
+        }
     }
 
 }

@@ -109,6 +109,7 @@ public class MainWindow extends UiPart<Stage> {
          * not work when the focus is in them because the key event is consumed by
          * the TextInputControl(s).
          *
+         *
          * For now, we add following event filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
@@ -126,9 +127,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+         browserPlaceholder.getChildren().add(browserPanel.getRoot());
         CalendarPanel calendarPanel = new CalendarPanel(calendarSource);
-        // browserPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+//        browserPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
         mapPanel = new MapPanel();
         mapPanelPlaceholder.getChildren().add(mapPanel.getMapView());
