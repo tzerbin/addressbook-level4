@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
@@ -152,6 +151,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a celebrity to the celebrity list in the address book.
+     */
+    public void addCelebrity(Person p) throws DuplicatePersonException {
+        celebrities.add(p);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
@@ -176,7 +182,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Filters through a list of persons and returns those with a celebrity tag
      */
-    public ArrayList<Person> filterCelebrities(List<Person> persons) {
+    private ArrayList<Person> filterCelebrities(List<Person> persons) {
         ArrayList<Person> celebrities = new ArrayList<>();
         for (Person p : persons) {
             if (p.isCelebrity()) {
