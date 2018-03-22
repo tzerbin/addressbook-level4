@@ -4,7 +4,7 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.CalendarPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.StatusBarFooter.TOTAL_PERSONS_STATUS;
@@ -17,12 +17,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import guitests.guihandles.CalendarPanelHandle;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
+import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -40,7 +40,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.testutil.TypicalPersons;
-import seedu.address.ui.CalendarPanel;
+import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CommandBox;
 import seedu.address.ui.ResultDisplay;
 
@@ -78,7 +78,7 @@ public abstract class AddressBookSystemTest {
         styleOfResultDisplayError = mainWindowHandle.getResultDisplay().getClassStyle();
         styleOfResultDisplayError.add(ResultDisplay.STYLE_ERROR_CLASS);
 
-        waitUntilBrowserLoaded(getCalendarPanel());
+        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -118,8 +118,8 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public CalendarPanelHandle getCalendarPanel() {
-        return mainWindowHandle.getCalendarPanel();
+    public BrowserPanelHandle getBrowserPanel() {
+        return mainWindowHandle.getBrowserPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -142,7 +142,7 @@ public abstract class AddressBookSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        waitUntilBrowserLoaded(getCalendarPanel());
+        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -192,12 +192,12 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code CalendarPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getCalendarPanel().rememberUrl();
+        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         statusBarFooterHandle.rememberPersonsStatusTotal();
@@ -207,39 +207,39 @@ public abstract class AddressBookSystemTest {
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
      * of the previously selected person.
-     * @see CalendarPanelHandle#isUrlChanged()
+     * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getCalendarPanel().isUrlChanged());
+        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see CalendarPanelHandle#isUrlChanged()
+     * @see BrowserPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(CalendarPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
+            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl, getCalendarPanel().getLoadedUrl());
+        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
-     * @see CalendarPanelHandle#isUrlChanged()
+     * @see BrowserPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getCalendarPanel().isUrlChanged());
+        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
@@ -311,7 +311,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getCalendarPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(String.format(TOTAL_PERSONS_STATUS, getModel().getAddressBook().getPersonList().size()),
                     getStatusBarFooter().getTotalPersonsStatus());
