@@ -39,18 +39,23 @@ public class CalendarPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private CalendarSource calendarSource;
     private CalendarView calendarView;
 
     @FXML
     private WebView browser;
 
-    public CalendarPanel(CalendarSource calendarSource) {
+    public CalendarPanel(CalendarSource calendarSource, CalendarView calendarView) {
         super(FXML);
+        this.calendarSource = calendarSource;
+        this.calendarView = calendarView;
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        CalendarView calendarView = new CalendarView();
+        registerAsAnEventHandler(this);
+
+        // To set up the calendar view.
         calendarView.getCalendarSources().addAll(calendarSource);
         calendarView.setRequestedTime(LocalTime.now());
 
@@ -73,9 +78,6 @@ public class CalendarPanel extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
-        this.calendarView = calendarView;
-
-        registerAsAnEventHandler(this);
     }
 
     public CalendarView getCalendarView() {
@@ -83,24 +85,8 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event)
-            throws CalendarViewNotChangedException {
+    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
         String calendarViewPage = event.calendarViewPage;
-
-        //check if current calendarView is the same as the view to be changed to
-        if (calendarViewPage.contentEquals("day") &&
-                calendarView.getSelectedPage() == calendarView.getDayPage()) {
-            throw new CalendarViewNotChangedException();
-        } else if (calendarViewPage.contentEquals("week") &&
-                calendarView.getSelectedPage() == calendarView.getWeekPage()) {
-            throw new CalendarViewNotChangedException();
-        } else if (calendarViewPage.contentEquals("month") &&
-                calendarView.getSelectedPage() == calendarView.getMonthPage()) {
-            throw new CalendarViewNotChangedException();
-        } else if (calendarViewPage.contentEquals("year") &&
-                calendarView.getSelectedPage() == calendarView.getYearPage()) {
-            throw new CalendarViewNotChangedException();
-        }
 
         Platform.runLater(() -> {
             switch (calendarViewPage) {
@@ -158,8 +144,3 @@ public class CalendarPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 }
-
-/**
- * Signals that the operation doesn't change calendar view to a different view.
- */
-class CalendarViewNotChangedException extends Exception {}

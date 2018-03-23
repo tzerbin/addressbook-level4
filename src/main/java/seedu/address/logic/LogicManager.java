@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
+import com.calendarfx.view.CalendarView;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
@@ -66,5 +67,10 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public CalendarSource getCelebCalendarSource() {
         return model.getCelebCalendarSource();
+    }
+
+    @Override
+    public CalendarView getCelebCalendarView() {
+        return model.getCelebCalendarView();
     }
 }

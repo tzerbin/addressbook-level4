@@ -27,12 +27,8 @@ public class ViewCalendarByCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-        try {
-            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(calendarViewPage));
-        } catch (Exception e) {
-            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_CALENDARVIEW, calendarViewPage));
-        }
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(calendarViewPage));
         return new CommandResult(String.format(MESSAGE_SUCCESS, calendarViewPage));
     }
 

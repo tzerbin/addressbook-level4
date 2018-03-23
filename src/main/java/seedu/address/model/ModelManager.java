@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
+import com.calendarfx.view.CalendarView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -29,9 +30,14 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private static final String CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
+    private static final String DEFAULT_CALENDAR_NAME = "Default Calendar";
+
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
+    private final CalendarView celebCalendarView;
+    private final Calendar defaultCalendar;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,11 +50,12 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        celebCalendarSource = new CalendarSource("Test Celeb Calendar Source");
+        celebCalendarSource = new CalendarSource(CALENDAR_SOURCE_NAME);
+        celebCalendarView = new CalendarView();
 
-        CelebCalendar testCalendar1 = new CelebCalendar("Paul McCartney");
-        CelebCalendar testCalendar2 = new CelebCalendar("John Lennon");
-        celebCalendarSource.getCalendars().addAll(testCalendar1, testCalendar2);
+        defaultCalendar = new Calendar(DEFAULT_CALENDAR_NAME);
+
+        celebCalendarSource.getCalendars().addAll(defaultCalendar);
     }
 
     public ModelManager() {
@@ -110,6 +117,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public CalendarSource getCelebCalendarSource() {
         return celebCalendarSource;
+    }
+
+    @Override
+    public CalendarView getCelebCalendarView() {
+        return celebCalendarView;
     }
 
     //=========== Filtered Person List Accessors =============================================================

@@ -3,6 +3,7 @@ package seedu.address.logic;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
+import com.calendarfx.view.CalendarView;
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -33,4 +34,7 @@ public interface Logic {
 
     /** Returns the CalendarSource of the CelebCalendars */
     CalendarSource getCelebCalendarSource();
+
+    /** Returns the CalendarView of the CelebCalendars */
+    CalendarView getCelebCalendarView();
 }

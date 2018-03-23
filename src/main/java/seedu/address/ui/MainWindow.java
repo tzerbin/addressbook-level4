@@ -41,9 +41,6 @@ public class MainWindow extends UiPart<Stage> {
     private Config config;
     private UserPrefs prefs;
 
-    // Source of calendars for calendar UI container
-    private CalendarSource calendarSource;
-
     @FXML
     private StackPane calendarPlaceholder;
 
@@ -73,7 +70,6 @@ public class MainWindow extends UiPart<Stage> {
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
-        this.calendarSource = logic.getCelebCalendarSource();
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -125,7 +121,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        calendarPanel = new CalendarPanel(calendarSource);
+        calendarPanel = new CalendarPanel(logic.getCelebCalendarSource(), logic.getCelebCalendarView());
         calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
         mapPanel = new MapPanel();
