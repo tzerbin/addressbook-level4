@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Lists all persons in the address book to the user.
@@ -16,6 +17,7 @@ public class ViewCalendarByCommand extends Command {
             + "Parameters: CALENDARVIEWPAGE (must be one of day, week, month, year. Not case-sensitive)\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
+    public static final String MESSAGE_NO_CHANGE_IN_CALENDARVIEW = "Calender is currently in %1$s view";
     public static final String MESSAGE_SUCCESS = "Opened calendar view: %1$s";
 
     private final String calendarViewPage;
@@ -25,8 +27,12 @@ public class ViewCalendarByCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(calendarViewPage));
+    public CommandResult execute() throws CommandException {
+        try {
+            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(calendarViewPage));
+        } catch (Exception e) {
+            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_CALENDARVIEW, calendarViewPage));
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, calendarViewPage));
     }
 
