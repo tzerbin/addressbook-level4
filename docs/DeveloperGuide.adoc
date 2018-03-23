@@ -1291,11 +1291,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user | add appointments to a calendar | schedule different appointments without time clash
 
-|`* * *` |user | see the location of a given appointment |  plan for travel
+|`* * *` |user | see the location of a given appointment in a map |  plan for travel
 
-|`* * *` |user | see the best route of travel between two locations |  plan for the shortest travel
+|`* * *` |user | see various landmarks around the location in a road map |  understand better the roads around the location
 
-|`* * *` |user | know the estimated distance and time of travel between two locations |  plan for my schedules more effectively
+|`* * *` |user | see various landmarks around the location in a satelite map |  see in real time the actual layout of the surrounding
+
+|`* * *` |user | zoom in and out of the map of given location |  view the location in different level of details
+
+|`* * *` |user | drag the start and end location to a more specific area in the case the results given is not accurate |  plan for a more accurate route of travel
+
+|`* * *` |user | see the best route of travel between two locations in a map |  plan for the shortest travel
+
+|`* * *` |user | know if two locations can be reached by driving |  forsee any problems and plan ahead
+
+|`* * *` |user | know the estimated distance between two locations |  plan for my schedules more effectively
+
+|`* * *` |user | know the estimated time of travel between two locations |  plan for my schedules more effectively
 
 |`* * *` |celebrity manager | associate the appointment with relevant celebrities and parties |  view who are involved
 
