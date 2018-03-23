@@ -13,6 +13,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.appointment.ReadOnlyAppointmentList;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -22,12 +23,16 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private AppointmentListStorage appointmentListStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage,
+                          UserPrefsStorage userPrefsStorage,
+                          AppointmentListStorage appointmentListStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.appointmentListStorage = appointmentListStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -91,5 +96,35 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    // ================ AppointmentList methods ==============================
+
+    @Override
+    public String getAppointmentListFilePath() {
+        return appointmentListStorage.getAppointmentListFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyAppointmentList> readAppointmentList() throws DataConversionException, IOException {
+        return readAppointmentList(appointmentListStorage.getAppointmentListFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyAppointmentList> readAppointmentList(String filePath) throws DataConversionException,
+                                                                                         IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return appointmentListStorage.readAppointmentList(filePath);
+    }
+
+    @Override
+    public void saveAppointmentList(ReadOnlyAppointmentList appointmentList) throws IOException {
+        saveAppointmentList(appointmentList, appointmentListStorage.getAppointmentListFilePath());
+    }
+
+    @Override
+    public void saveAppointmentList(ReadOnlyAppointmentList appointmentList, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        appointmentListStorage.saveAppointmentList(appointmentList, filePath);
     }
 }

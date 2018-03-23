@@ -1,13 +1,15 @@
 package seedu.address.logic.parser.calendar;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_HOUR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MINUTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -32,8 +34,9 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
      */
     @Override
     public AddAppointmentCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultiMap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_HOUR, PREFIX_MINUTE, PREFIX_DAY, PREFIX_LOCATION);
+        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
+                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE);
+
         if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
                 || !argMultiMap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -42,27 +45,37 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 
         try {
             String appointmentName = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_NAME)).get();
-            Optional<Integer> hourInput = ParserUtil.parseHour(argMultiMap.getValue(PREFIX_HOUR));
-            Optional<Integer> minuteInput = ParserUtil.parseMinute(argMultiMap.getValue(PREFIX_MINUTE));
+            Optional<LocalTime> startTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_START_TIME));
+            Optional<LocalDate> startDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_START_DATE));
+            Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
+            Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
             Optional<String> locationInput = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_LOCATION));
 
             String location = null;
-            int hour = LocalTime.now().getHour();
-            int minute = LocalTime.now().getMinute();
+            LocalTime startTime = LocalTime.now();
+            LocalDate startDate = LocalDate.now();
+            LocalTime endTime = LocalTime.now();
+            LocalDate endDate = LocalDate.now();
 
-            if (hourInput.isPresent()) {
-                hour = hourInput.get();
+            if (startTimeInput.isPresent()) {
+                startTime = startTimeInput.get();
+                endTime = startTimeInput.get();
             }
-
-            if (minuteInput.isPresent()) {
-                minute = minuteInput.get();
+            if (endTimeInput.isPresent()) {
+                endTime = endTimeInput.get();
             }
-
+            if (startDateInput.isPresent()) {
+                startDate = startDateInput.get();
+                endDate = startDateInput.get();
+            }
+            if (endDateInput.isPresent()) {
+                endDate = endDateInput.get();
+            }
             if (locationInput.isPresent()) {
                 location = locationInput.get();
             }
 
-            Appointment appt = new Appointment(appointmentName, hour, minute, location);
+            Appointment appt = new Appointment(appointmentName, startTime, startDate, location, endTime, endDate);
             return new AddAppointmentCommand(appt, 0); // Let index be 0 for now since we only have one cal
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
