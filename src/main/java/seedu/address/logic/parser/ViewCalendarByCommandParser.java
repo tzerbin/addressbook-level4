@@ -20,7 +20,7 @@ public class ViewCalendarByCommandParser implements Parser<ViewCalendarByCommand
     public ViewCalendarByCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         String[] arguments = trimmedArgs.split("\\s+");
-        if(! isValidArgument(arguments)) {
+        if (!isValidArgument(arguments)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCalendarByCommand.MESSAGE_USAGE));
         }
@@ -28,13 +28,17 @@ public class ViewCalendarByCommandParser implements Parser<ViewCalendarByCommand
         return new ViewCalendarByCommand(arguments[0].toLowerCase());
     }
 
-    public boolean isValidArgument(String[] arguments) {
-        if(arguments.length != 1) {
+    /**
+     * Takes in {@code String[]} of arguments
+     * @returns true if the argument is valid, ie: only 1 argument, and argument is one of {day, week, month, year}
+     */
+    private boolean isValidArgument(String[] arguments) {
+        if (arguments.length != 1) {
             return false;
         }
         String argument = arguments[0];
-        for(String validArgument: VALID_ARGUMENT) {
-            if(validArgument.equalsIgnoreCase(argument)) {
+        for (String validArgument: VALID_ARGUMENT) {
+            if (validArgument.equalsIgnoreCase(argument)) {
                 return true;
             }
         }

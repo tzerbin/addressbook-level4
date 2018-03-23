@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDARVIEW;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -9,6 +11,7 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,6 +21,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
 
 /**
@@ -81,19 +85,27 @@ public class CalendarPanel extends UiPart<Region> {
     @Subscribe
     private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
         Platform.runLater(() -> {
-            switch(event.calendarViewPage) {
-                case "day":
-                    calendarView.showDayPage();
-                    break;
-                case "week":
-                    calendarView.showWeekPage();
-                    break;
-                case "month":
-                    calendarView.showMonthPage();
-                    break;
-                case "year":
-                    calendarView.showYearPage();
-                    break;
+            switch (event.calendarViewPage) {
+
+            case "day":
+                calendarView.showDayPage();
+                break;
+            case "week":
+                calendarView.showWeekPage();
+                break;
+            case "month":
+                calendarView.showMonthPage();
+                break;
+            case "year":
+                calendarView.showYearPage();
+                break;
+
+            default:
+                try {
+                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
