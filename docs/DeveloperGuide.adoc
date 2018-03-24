@@ -354,7 +354,7 @@ image::RemoveTagSequenceDiagram.png[width=""]
 === Undo/Redo Command Feature
 ==== Current Implementation
 
-The undo command allows users to reverse the effect of the previous command, and the redo command allows the users to reverse the effects of undoing commands. 
+The undo command allows users to reverse the effect of the previous command, and the redo command allows the users to reverse the effects of undoing commands.
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack` in `LogicManager` class. It supports undoing and redoing of commands that modifies the state of the address book, such as `add` and `edit`.
 
