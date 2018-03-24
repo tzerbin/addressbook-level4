@@ -6,7 +6,6 @@ matrix:
 script: >-
     ./config/travis/run-checks.sh &&
     travis_retry ./gradlew clean checkstyleMain checkstyleTest headless allTests coverage coveralls asciidoctor copyDummySearchPage
-
 deploy:
   skip_cleanup: true
   provider: script
@@ -26,4 +25,4 @@ before_cache:
 cache:
   directories:
     - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+- $HOME/.gradle/wrapper/
