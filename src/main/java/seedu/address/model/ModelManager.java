@@ -15,6 +15,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -50,6 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         celebCalendarSource = new CalendarSource(CALENDAR_SOURCE_NAME);
+        initializeCalendarSource(celebCalendarSource);
         defaultCalendar = new Calendar(DEFAULT_CALENDAR_NAME);
         currentCelebCalendarViewPage = "day";
 
@@ -85,8 +87,17 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        if (person.isCelebrity()) {
+            addCelebrity(person);
+        }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addCelebrity(Person person) throws DuplicatePersonException {
+        addressBook.addCelebrity(person);
+        celebCalendarSource.getCalendars().add(new CelebCalendar(person));
     }
 
     @Override
@@ -160,6 +171,17 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    /**
+     * Populates our CalendarSource by creating a calendar for every celebrity in our addressbook
+     */
+    private void initializeCalendarSource(CalendarSource calSource) {
+        requireNonNull(addressBook);
+        ObservableList<Person> celebrities = addressBook.getCelebritiesList();
+        for (Person celebrity : celebrities) {
+            calSource.getCalendars().add(new CelebCalendar(celebrity));
+        }
     }
 
 }

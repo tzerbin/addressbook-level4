@@ -25,6 +25,9 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    /** Adds the given celebrity */
+    void addCelebrity(Person celebrity) throws DuplicatePersonException;
+
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
