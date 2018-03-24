@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.calendarfx.model.CalendarSource;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
@@ -35,17 +34,14 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarPanel calendarPanel;
     private MapPanel mapPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
-    // Source of calendars for calendar UI container
-    private CalendarSource calendarSource;
-
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -73,7 +69,6 @@ public class MainWindow extends UiPart<Stage> {
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
-        this.calendarSource = logic.getCelebCalendarSource();
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -126,10 +121,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        CalendarPanel calendarPanel = new CalendarPanel(calendarSource);
-        // browserPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+        calendarPanel = new CalendarPanel(logic.getCelebCalendarSource());
+        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
         mapPanel = new MapPanel();
         mapPanelPlaceholder.getChildren().add(mapPanel.getMapView());
@@ -202,7 +195,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe

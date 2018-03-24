@@ -15,7 +15,6 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -29,9 +28,15 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private static final String CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
+    private static final String DEFAULT_CALENDAR_NAME = "Default Calendar";
+
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
+    private final Calendar defaultCalendar;
+
+    private String currentCelebCalendarViewPage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,8 +49,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        celebCalendarSource = new CalendarSource("Celeb Calendar Source");
-        initializeCalendarSource(celebCalendarSource);
+        celebCalendarSource = new CalendarSource(CALENDAR_SOURCE_NAME);
+        defaultCalendar = new Calendar(DEFAULT_CALENDAR_NAME);
+        currentCelebCalendarViewPage = "day";
+
+        celebCalendarSource.getCalendars().addAll(defaultCalendar);
     }
 
     public ModelManager() {
@@ -106,7 +114,12 @@ public class ModelManager extends ComponentManager implements Model {
         return numPersonsAffected;
     }
 
-    //=========== Celeb Calendar Accessors =============================================================
+    @Override
+    public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
+        currentCelebCalendarViewPage = newCurrentCelebCalendarViewPage;
+    }
+
+    //=========== Celeb Calendar Accessors ===================================================================
 
     @Override
     public ObservableList<Calendar> getCelebCalendars() {
@@ -116,6 +129,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public CalendarSource getCelebCalendarSource() {
         return celebCalendarSource;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarViewPage() {
+        return currentCelebCalendarViewPage;
     }
 
     //=========== Filtered Person List Accessors =============================================================
