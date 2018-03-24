@@ -33,4 +33,7 @@ public interface Logic {
 
     /** Fetches the CalendarSource of the CelebCalendars */
     CalendarSource getCelebCalendarSource();
+
+    /** Fetches the CalendarSource of the StorageCalendar */
+    CalendarSource getStorageCalendarSource();
 }

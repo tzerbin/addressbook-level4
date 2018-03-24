@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -15,7 +16,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.calendar.CelebCalendar;
+import seedu.address.model.calendar.StorageCalendar;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -32,7 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
-    private final Calendar storageCalendar;
+    private final CalendarSource storageCalendarSource;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,9 +47,13 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
         celebCalendarSource = new CalendarSource("Celeb Calendar Source");
-        initializeCalendarSource(celebCalendarSource);
-        storageCalendar = new Calendar("Storage Calendar");
+        initializeCelebCalendarSource(celebCalendarSource);
+
+        storageCalendarSource = new CalendarSource("Storage Calendar Source");
+        initializeStorageCalendarSource(storageCalendarSource);
+
     }
 
     public ModelManager() {
@@ -78,9 +84,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
         if (person.isCelebrity()) {
             addCelebrity(person);
+        } else {
+            addressBook.addPerson(person);
         }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
@@ -88,8 +95,13 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void addCelebrity(Person person) throws DuplicatePersonException {
-        addressBook.addCelebrity(person);
-        celebCalendarSource.getCalendars().add(new CelebCalendar(person));
+        Celebrity celebrity = addressBook.addCelebrity(person);
+        celebCalendarSource.getCalendars().add(celebrity.getCelebCalendar());
+    }
+
+    @Override
+    public ArrayList<Celebrity> getCelebrities() {
+        return addressBook.getCelebritiesList();
     }
 
     @Override
@@ -121,8 +133,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Calendar getStorageCalendar() {
-        return storageCalendar;
+    public StorageCalendar getStorageCalendar() {
+        return (StorageCalendar) storageCalendarSource.getCalendars().get(0);
+    }
+
+    @Override
+    public CalendarSource getStorageCalendarSource() {
+        return storageCalendarSource;
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -161,14 +178,21 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Populates our CalendarSource by creating a calendar for every celebrity in our addressbook
+     * Populates our CelebCalendar CalendarSource by creating a calendar for every celebrity in our addressbook
      */
-    private void initializeCalendarSource(CalendarSource calSource) {
+    private void initializeCelebCalendarSource(CalendarSource calSource) {
         requireNonNull(addressBook);
-        ObservableList<Person> celebrities = addressBook.getCelebritiesList();
-        for (Person celebrity : celebrities) {
-            calSource.getCalendars().add(new CelebCalendar(celebrity));
+        ArrayList<Celebrity> celebrities = addressBook.getCelebritiesList();
+        for (Celebrity celebrity : celebrities) {
+            calSource.getCalendars().add(celebrity.getCelebCalendar());
         }
+    }
+
+    /**
+     * Initialize StorageCalendar CalendarSource
+     */
+    private void initializeStorageCalendarSource(CalendarSource calSource) {
+        calSource.getCalendars().add(new StorageCalendar("Storage Calendar"));
     }
 
 }

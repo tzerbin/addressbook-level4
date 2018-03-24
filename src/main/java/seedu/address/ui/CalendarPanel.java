@@ -17,10 +17,11 @@ public class CalendarPanel {
 
     private CalendarView calendarView;
 
-    public CalendarPanel(CalendarSource calendarSource) {
+    public CalendarPanel(CalendarSource celebCalendarSource, CalendarSource storageCalendarSource) {
         CalendarView calendarView = new CalendarView();
         calendarView.getCalendarSources().clear(); // there is an existing default source when creating the view
-        calendarView.getCalendarSources().add(calendarSource);
+        calendarView.getCalendarSources().add(celebCalendarSource);
+        calendarView.getCalendarSources().add(storageCalendarSource);
         calendarView.setRequestedTime(LocalTime.now());
 
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {

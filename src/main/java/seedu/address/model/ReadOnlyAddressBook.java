@@ -1,6 +1,9 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
+
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -22,9 +25,8 @@ public interface ReadOnlyAddressBook {
     ObservableList<Tag> getTagList();
 
     /**
-     * Returns an unmodifiable view of the celebrities list.
-     * This list will not contain any duplicate celebrities.
+     * Returns the celebrities list.
      */
-    ObservableList<Person> getCelebritiesList();
+    ArrayList<Celebrity> getCelebritiesList();
 
 }
