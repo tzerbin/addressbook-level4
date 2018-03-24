@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.calendarfx.model.CalendarSource;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
@@ -121,7 +120,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        calendarPanel = new CalendarPanel(logic.getCelebCalendarSource(), logic.getCelebCalendarView());
+        calendarPanel = new CalendarPanel(logic.getCelebCalendarSource());
         calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
         mapPanel = new MapPanel();

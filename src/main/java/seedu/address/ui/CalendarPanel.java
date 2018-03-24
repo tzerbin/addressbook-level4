@@ -37,18 +37,20 @@ public class CalendarPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
 
+    private static String currentCalendarViewPage = "day";
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private CalendarSource calendarSource;
-    private CalendarView calendarView;
+    private CalendarSource celebCalendarSource;
+    private CalendarView celebCalendarView;
 
     @FXML
     private WebView browser;
 
-    public CalendarPanel(CalendarSource calendarSource, CalendarView calendarView) {
+    public CalendarPanel(CalendarSource calendarSource) {
         super(FXML);
-        this.calendarSource = calendarSource;
-        this.calendarView = calendarView;
+        this.celebCalendarSource = calendarSource;
+        this.celebCalendarView = new CalendarView();
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
@@ -56,16 +58,16 @@ public class CalendarPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
 
         // To set up the calendar view.
-        calendarView.getCalendarSources().addAll(calendarSource);
-        calendarView.setRequestedTime(LocalTime.now());
+        celebCalendarView.getCalendarSources().addAll(celebCalendarSource);
+        celebCalendarView.setRequestedTime(LocalTime.now());
 
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override
             public void run() {
                 while (true) {
                     Platform.runLater(() -> {
-                        calendarView.setToday(LocalDate.now());
-                        calendarView.setTime(LocalTime.now());
+                        celebCalendarView.setToday(LocalDate.now());
+                        celebCalendarView.setTime(LocalTime.now());
                     });
                     try {
                         sleep(10000);
@@ -81,7 +83,11 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     public CalendarView getCalendarView() {
-        return calendarView;
+        return celebCalendarView;
+    }
+
+    public static String getCurrentCalendarViewPage() {
+        return currentCalendarViewPage;
     }
 
     @Subscribe
@@ -92,16 +98,20 @@ public class CalendarPanel extends UiPart<Region> {
             switch (calendarViewPage) {
 
             case "day":
-                calendarView.showDayPage();
+                celebCalendarView.showDayPage();
+                currentCalendarViewPage = "day";
                 break;
             case "week":
-                calendarView.showWeekPage();
+                celebCalendarView.showWeekPage();
+                currentCalendarViewPage = "week";
                 break;
             case "month":
-                calendarView.showMonthPage();
+                celebCalendarView.showMonthPage();
+                currentCalendarViewPage = "month";
                 break;
             case "year":
-                calendarView.showYearPage();
+                celebCalendarView.showYearPage();
+                currentCalendarViewPage = "year";
                 break;
 
             default:

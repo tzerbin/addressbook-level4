@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
-import com.calendarfx.view.CalendarView;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -47,9 +46,6 @@ public interface Model {
 
     /** Fetches the CalendarSource of the CelebCalendars. */
     CalendarSource getCelebCalendarSource();
-
-    /** Returns the CalendarView of the CelebCalendars. */
-    CalendarView getCelebCalendarView();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

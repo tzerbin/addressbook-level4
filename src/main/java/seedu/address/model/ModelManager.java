@@ -9,14 +9,12 @@ import java.util.logging.Logger;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
-import com.calendarfx.view.CalendarView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -36,7 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
-    private final CalendarView celebCalendarView;
+    //private final CalendarView celebCalendarView;
     private final Calendar defaultCalendar;
 
     /**
@@ -51,8 +49,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         celebCalendarSource = new CalendarSource(CALENDAR_SOURCE_NAME);
-        celebCalendarView = new CalendarView();
-
         defaultCalendar = new Calendar(DEFAULT_CALENDAR_NAME);
 
         celebCalendarSource.getCalendars().addAll(defaultCalendar);
@@ -117,11 +113,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public CalendarSource getCelebCalendarSource() {
         return celebCalendarSource;
-    }
-
-    @Override
-    public CalendarView getCelebCalendarView() {
-        return celebCalendarView;
     }
 
     //=========== Filtered Person List Accessors =============================================================

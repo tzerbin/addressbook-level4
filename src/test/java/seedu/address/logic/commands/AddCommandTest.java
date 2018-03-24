@@ -139,7 +139,6 @@ public class AddCommandTest {
             return null;
         }
 
-
         @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
