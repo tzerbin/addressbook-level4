@@ -73,6 +73,14 @@ public class Person {
         return false;
     }
 
+    /**
+     * Returns if the person is tagged as a celebrity
+     */
+    public boolean isCelebrity() {
+        Tag celeb = new Tag("celebrity");
+        return this.hasTag(celeb);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

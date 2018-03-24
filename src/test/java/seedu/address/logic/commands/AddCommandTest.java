@@ -117,6 +117,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addCelebrity(Person celebrity) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deletePerson(Person target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
