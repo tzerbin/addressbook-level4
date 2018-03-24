@@ -50,6 +50,9 @@ public interface Model {
     /** Fetches the CalendarSource of the CelebCalendars */
     CalendarSource getCelebCalendarSource();
 
+    /** Fetches the Calendar used to store Appointments */
+    Calendar getStorageCalendar();
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

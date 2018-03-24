@@ -140,7 +140,13 @@ public class AddCommandTest {
 
         @Override
         public CalendarSource getCelebCalendarSource() {
-            fail("This  method should not be called.");
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Calendar getStorageCalendar() {
+            fail("This method should not be called.");
             return null;
         }
 

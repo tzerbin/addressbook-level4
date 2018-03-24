@@ -32,6 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
+    private final Calendar storageCalendar;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         celebCalendarSource = new CalendarSource("Celeb Calendar Source");
         initializeCalendarSource(celebCalendarSource);
+        storageCalendar = new Calendar("Storage Calendar");
     }
 
     public ModelManager() {
@@ -116,6 +118,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public CalendarSource getCelebCalendarSource() {
         return celebCalendarSource;
+    }
+
+    @Override
+    public Calendar getStorageCalendar() {
+        return storageCalendar;
     }
 
     //=========== Filtered Person List Accessors =============================================================
