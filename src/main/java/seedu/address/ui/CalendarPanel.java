@@ -56,6 +56,7 @@ public class CalendarPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
 
         // To set up the calendar view.
+        celebCalendarView.getCalendarSources().clear();
         celebCalendarView.getCalendarSources().addAll(celebCalendarSource);
         celebCalendarView.setRequestedTime(LocalTime.now());
 
