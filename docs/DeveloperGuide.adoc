@@ -1310,17 +1310,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see various landmarks around a specific location in a road map |understand better the roads around the location
 
-|`* * *` |user |see various landmarks around a specific location in a satelite map |see in real time the actual layout of the surrounding
+|`* * *` |user |see various landmarks around a specific location in a satellite map |see in real time the actual layout of the surrounding
 
 |`* * *` |user |zoom in and out of the map of given location in a map |view the location in different level of details
 
-|`* * *` |user |see the best route of travel by driving between two locations in a map |plan for the shortest travel
+|`* * *` |celebrity manager who chauffeurs celebrities |see the best route of travel by driving between two locations in a map |plan for the shortest travel
 
-|`* * *` |user |know if two locations can be reached by driving |foresee any problems and plan ahead
+|`* * *` |celebrity manager who chauffeurs celebrities |know if two locations can be reached by driving |foresee any problems and plan ahead
 
-|`* * *` |user |know the estimated distance between two locations by driving |plan for my schedules more effectively
+|`* * *` |celebrity manager who chauffeurs celebrities |know the estimated distance between two locations by driving |cater enough time for travelling to avoid being late
 
-|`* * *` |user |know the estimated time of travel between two locations by driving |plan for my schedules more effectively
+|`* * *` |celebrity manager who chauffeurs celebrities |know the estimated time of travel between two locations by driving |reduce the time of travel to reach an appointment location
 
 |`* * *` |celebrity manager |associate the appointment with relevant celebrities and parties |view who are involved
 
