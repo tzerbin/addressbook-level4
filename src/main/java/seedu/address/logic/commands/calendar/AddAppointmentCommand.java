@@ -8,14 +8,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
-import java.util.ArrayList;
-
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
-import seedu.address.model.person.Celebrity;
 
 /**
  * Adds an appointment to a calendar.
@@ -59,8 +56,8 @@ public class AddAppointmentCommand extends Command {
     public CommandResult execute() throws CommandException {
         StorageCalendar cal = model.getStorageCalendar();
         cal.addEntry(appt);
-        ArrayList<Celebrity> celebrities = model.getCelebrities();
-        appt.updateEntries(celebrities);
+        // ArrayList<Celebrity> celebrities = model.getCelebrities();
+        // appt.updateEntries(celebrities);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
