@@ -31,10 +31,15 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
+    private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
+
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
     private final CalendarSource storageCalendarSource;
+
+    private String currentCelebCalendarViewPage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -48,11 +53,15 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
-        celebCalendarSource = new CalendarSource("Celeb Calendar Source");
+        celebCalendarSource = new CalendarSource(CELEB_CALENDAR_SOURCE_NAME);
         initializeCelebCalendarSource(celebCalendarSource);
 
-        storageCalendarSource = new CalendarSource("Storage Calendar Source");
+        storageCalendarSource = new CalendarSource(STORAGE_CALENDAR_SOURCE_NAME);
         initializeStorageCalendarSource(storageCalendarSource);
+
+
+        currentCelebCalendarViewPage = "day";
+
 
     }
 
@@ -120,7 +129,12 @@ public class ModelManager extends ComponentManager implements Model {
         return numPersonsAffected;
     }
 
-    //=========== Celeb Calendar Accessors =============================================================
+    @Override
+    public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
+        currentCelebCalendarViewPage = newCurrentCelebCalendarViewPage;
+    }
+
+    //=========== Celeb Calendar Accessors ===================================================================
 
     @Override
     public ObservableList<Calendar> getCelebCalendars() {
@@ -140,6 +154,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public CalendarSource getStorageCalendarSource() {
         return storageCalendarSource;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarViewPage() {
+        return currentCelebCalendarViewPage;
     }
 
     //=========== Filtered Person List Accessors =============================================================

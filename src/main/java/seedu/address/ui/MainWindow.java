@@ -35,7 +35,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarPanel calendarPanel;
     private MapPanel mapPanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -45,8 +45,9 @@ public class MainWindow extends UiPart<Stage> {
     private CalendarSource celebCalendarSource;
     private CalendarSource storageCalendarSource;
 
+
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -128,10 +129,10 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
         CalendarPanel calendarPanel = new CalendarPanel(celebCalendarSource, storageCalendarSource);
-        // browserPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+
+        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
         mapPanel = new MapPanel();
         mapPanelPlaceholder.getChildren().add(mapPanel.getMapView());
@@ -204,7 +205,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        calendarPanel.freeResources();
     }
 
     @Subscribe

@@ -31,7 +31,7 @@ public interface Logic {
     /** Returns the list of CelebCalendars stored */
     ObservableList<Calendar> getCelebCalendars();
 
-    /** Fetches the CalendarSource of the CelebCalendars */
+    /** Returns the CalendarSource of the CelebCalendars */
     CalendarSource getCelebCalendarSource();
 
     /** Fetches the CalendarSource of the StorageCalendar */
