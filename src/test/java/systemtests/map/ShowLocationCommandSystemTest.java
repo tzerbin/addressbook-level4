@@ -12,9 +12,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.Model;
 import seedu.address.model.map.MapAddress;
-import seedu.address.model.tag.Tag;
 import systemtests.AddressBookSystemTest;
-import systemtests.RemoveTagCommandSystemTest;
 
 public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
 

@@ -13,7 +13,6 @@ import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
-import com.lynden.gmapsfx.javascript.object.LatLong;
 
 /**
  * Calculates distance and travel duration between two location.

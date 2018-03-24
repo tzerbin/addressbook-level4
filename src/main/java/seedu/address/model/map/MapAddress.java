@@ -56,7 +56,8 @@ public class MapAddress {
      */
     public static boolean isValidAddressForEstimatingRoute(String start, String end) {
         boolean isValid = true;
-        LatLng startLatLng, endLatLng;
+        LatLng startLatLng;
+        LatLng endLatLng;
         DistanceEstimate checkValid = new DistanceEstimate();
         Geocoding latLong = new Geocoding();
         latLong.initialiseLatLngFromAddress(start);
@@ -64,7 +65,7 @@ public class MapAddress {
         latLong.initialiseLatLngFromAddress(end);
         endLatLng = latLong.getLatLng();
         checkValid.calculateDistanceMatrix(startLatLng, endLatLng, TravelMode.DRIVING);
-        if(checkValid.getTravelTime().equals("null")) {
+        if (checkValid.getTravelTime().equals("null")) {
             isValid = false;
         }
         return isValid;

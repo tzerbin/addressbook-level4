@@ -2,7 +2,6 @@ package seedu.address.logic.parser.map;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_BOB;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAP_ADDRESS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -10,7 +9,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.map.ShowLocationCommand;
-import seedu.address.logic.parser.map.ShowLocationCommandParser;
 import seedu.address.model.map.MapAddress;
 
 public class ShowLocationCommandParserTest {
@@ -26,12 +24,6 @@ public class ShowLocationCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_invalidArgs_invalidPrefix_throwsParseException() {
-        assertParseFailure(parser, " " + PREFIX_ADDRESS + VALID_ADDRESS_MAP_BOB,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowLocationCommand.MESSAGE_USAGE));
     }
 }

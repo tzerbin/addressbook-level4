@@ -1,24 +1,18 @@
 package systemtests.map;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_MAP_DESC1;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_MAP_DESC2;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_MAP_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MAP_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_MAP_ADDRESS;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.map.EstimateRouteCommand;
-import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.Model;
 import seedu.address.model.map.MapAddress;
-import seedu.address.model.tag.Tag;
 import systemtests.AddressBookSystemTest;
-import systemtests.RemoveTagCommandSystemTest;
 
 public class EstimateRouteCommandSystemTest extends AddressBookSystemTest {
 
@@ -49,11 +43,12 @@ public class EstimateRouteCommandSystemTest extends AddressBookSystemTest {
         endAddress = new MapAddress("Punggol");
         assertCommandSuccess(startAddress, endAddress);
 
-        /* ----------------------------------- Perform invalid estimateRoute operations --------------------------------- */
+        /* ------------------------------ Perform invalid estimateRoute operations --------------------------------- */
 
         /* Case: missing MapAddress and prefix-> rejected */
         String command = EstimateRouteCommand.COMMAND_WORD + "";
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EstimateRouteCommand.MESSAGE_USAGE));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EstimateRouteCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
         command = "estimateroute " + PREFIX_START_MAP_ADDRESS + VALID_ADDRESS_MAP_BOB
@@ -71,7 +66,8 @@ public class EstimateRouteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing MapAddress prefix -> rejected */
         command = EstimateRouteCommand.COMMAND_WORD + " " + VALID_ADDRESS_MAP_BOB + " " + VALID_ADDRESS_MAP_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, EstimateRouteCommand.MESSAGE_USAGE));
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EstimateRouteCommand.MESSAGE_USAGE));
     }
 
     /**

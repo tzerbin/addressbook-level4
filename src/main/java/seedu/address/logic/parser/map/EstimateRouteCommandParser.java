@@ -16,7 +16,9 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.map.MapAddress;
 
-
+/**
+ * Reads {@code args} and checks if the input has all the necessary values
+ */
 public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the EstimateRouteCommand
@@ -37,7 +39,7 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
         try {
             MapAddress start = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_START_MAP_ADDRESS)).get();
             MapAddress end = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_END_MAP_ADDRESS)).get();
-            if(!MapAddress.isValidAddressForEstimatingRoute(start.toString(), end.toString())) {
+            if (!MapAddress.isValidAddressForEstimatingRoute(start.toString(), end.toString())) {
                 throw new InvalidAddress("");
             }
             return new EstimateRouteCommand(start, end);

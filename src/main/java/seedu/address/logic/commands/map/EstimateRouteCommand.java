@@ -9,19 +9,12 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.service.directions.DirectionStatus;
-import com.lynden.gmapsfx.service.directions.DirectionsRequest;
-import com.lynden.gmapsfx.service.directions.DirectionsResult;
-import com.lynden.gmapsfx.service.directions.DirectionsService;
-import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
-import com.lynden.gmapsfx.service.directions.TravelModes;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.map.DistanceEstimate;
 import seedu.address.logic.map.Geocoding;
 import seedu.address.model.map.MapAddress;
-import seedu.address.ui.MapPanel;
 
 /**
  * Estimates the distance and travel time required between two location
@@ -45,13 +38,13 @@ public class EstimateRouteCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Mode of transport: DRIVING\n";
 
-    private final LatLng startLatLng, endLatLng;
-    private final GoogleMap map;
-    private static DirectionsRequest directionRequest;
     private static MapAddress startLocation = null;
     private static MapAddress endLocation = null;
     private static String distOfTravel;
     private static String timeOfTravel;
+    private final LatLng startLatLng;
+    private final LatLng endLatLng;
+    private final GoogleMap map;
 
     /**
      * Initialises the different class attributes of EstimateRouteCommand

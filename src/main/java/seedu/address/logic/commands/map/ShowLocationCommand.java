@@ -103,10 +103,10 @@ public class ShowLocationCommand extends Command {
     }
 
     public static Marker getCurrentMarker() {
-        if(location != null) {
+        if (location != null) {
             return location;
-        }
-        else
+        } else {
             return null;
+        }
     }
 }
