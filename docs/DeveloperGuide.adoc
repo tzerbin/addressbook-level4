@@ -609,7 +609,7 @@ After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to t
 .Image of Map Panel after command input
 image::AfterShowLocationInput.png[width="400"]
 
-Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker
+Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
 
 [.underline]*Sequence of events*
 
@@ -626,14 +626,14 @@ image::ShowLocationSequenceDiagram.png[width=""]
 ** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
 * **Alternative 2:** Extend `UndoableCommand`
 ** Pros: Allows for command to have the undo/redo function.
-** Cons: Requires more work that may not fit in with our timeline
+** Cons: Requires more work that may not fit in with our timeline.
 
 ===== Aspect: Use of address model
 * **Alternative 1 (current choice):** Use `MapAddress`
-** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion
-** Cons: Both model are very similar
+** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion.
+** Cons: Both model are very similar.
 * **Alternative 2:** Use `Address`
-** Pros: Reduces the amount of code/class in the project
+** Pros: Reduces the amount of code/class in the project.
 ** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
 
 === AddAppointment feature
