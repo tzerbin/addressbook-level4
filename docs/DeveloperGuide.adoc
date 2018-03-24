@@ -1655,48 +1655,45 @@ The Design and looks of the software
 [appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the app manually.
+Given below are instructions to test the App manually.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launch
+This section includes instructions to test the launch and re-launch of the App. +
+For each subsequent launch, window size and location should be the same as the settings before closing the App for previous launch.
 
 . Initial launch
 
 .. Download the jar file
 .. Copy into an empty folder
 .. Double-click the jar file +
-   _Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum._
-
-. Saving window preferences
-
+   _Expected: Celeb Scheduler shows the GUI with a set of sample contacts._
+[NOTE]
+    The window size may not be optimum.
 .. Resize the window to an optimum size
 .. Move the window to a different location
 .. Close the window
-.. Re-launch the app by double-clicking the jar file +
-   _Expected: The most recent window size and location is retained._
 
-_{ more test cases ... }_
+. Subsequent launch
+.. Re-launch the App by double-clicking the jar file +
+   _Expected: The most recent window size and location are retained._
 
 === Deleting a person
+This section includes instructions to test the delete command of the App.
+[NOTE]
+Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
+.. Type `delete 1` in command box and press enter +
    _Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated._
-.. Test case: `delete 0` +
+.. Type `delete 0` in command box and press enter +
    _Expected: No person is deleted. Error details shown in the status message. Status bar remains the same._
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Type other incorrect delete command such as `delete`, `delete x` (where x is larger than the list size) in command box and press enter +
    _Expected: Similar to previous._
-
-_{ more test cases ... }_
 
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
