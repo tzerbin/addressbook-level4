@@ -3,7 +3,6 @@ package seedu.address.model.calendar;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +23,17 @@ public class StorageCalendar extends Calendar {
         super(title);
     }
 
+    public LocalDate getEarliestDate() {
+        return LocalDateTime.ofInstant(this.getEarliestTimeUsed(), ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public LocalDate getLatestDate() {
+        return LocalDateTime.ofInstant(this.getLatestTimeUsed(), ZoneId.systemDefault()).toLocalDate();
+    }
+
     public List<Appointment> getAllAppointments() {
-        LocalDate startDate = LocalDateTime.ofInstant(this.getEarliestTimeUsed(), ZoneOffset.UTC).toLocalDate();
-        LocalDate endDate = LocalDateTime.ofInstant(this.getLatestTimeUsed(), ZoneOffset.UTC).toLocalDate();
+        LocalDate startDate = getEarliestDate();
+        LocalDate endDate = getLatestDate();
         return getAppointmentsWithinDate(startDate, endDate);
     }
 
