@@ -1273,91 +1273,77 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |have a calendar inside the address book |know the date and day
+|`* * *` |user | remove appointments to a calendar |  keep my scheduling neat and tidy
 
-|`* * *` |user |have multiple calendar views by day, week, and month |check appointments in different time frames
+|`* * *` |user | edit appointment timings |  change the time of the appointment when I need to re-schedule
 
-|`* * *` |user |remove appointments to a calendar | keep my scheduling neat and tidy
+|`* * *` |user | save appointment |  retrieve information of the appointments made
 
-|`* * *` |user |edit appointment timings |change the time of the appointment when I need to re-schedule
+|`* * *` |user | change appointment location |  change the venue if the original one is not available
 
-|`* * *` |user |save appointment |retrieve information of the appointments made
+|`* * *` |user | change people involved in appointment |  add new people involved or remove people no longer involved
 
-|`* * *` |user |change appointment location |change the venue if the original one is not available
+|`* * *` |user | have notifications or reminder for urgent upcoming events that I need to take note of |  set my priorities straight
 
-|`* * *` |user |change people involved in appointment |add new people involved or remove people no longer involved
+|`* * *` |user |undo a previous command | remove the change made by mistake
 
-|`* * *` |user |have notifications or reminder for urgent upcoming events that I need to take note of |set my priorities straight
+|`* * *` |user |redo a previous command | restore the change removed by mistake
 
-|`* * *` |user |undo a previous command |remove the change made by mistake
+|`* * *` |user | add appointments to a calendar | schedule different appointments without time clash
 
-|`* * *` |user |redo a previous command |restore the change removed by mistake
+|`* * *` |user | see the location of a given appointment |  plan for travel
 
-|`* * *` |user |add appointments to a calendar |schedule different appointments without time clash
+|`* * *` |user | see the best route of travel between two locations |  plan for the shortest travel
 
-|`* * *` |user |see the location of a given appointment in a map |plan for travel
+|`* * *` |user | know the estimated distance and time of travel between two locations |  plan for my schedules more effectively
 
-|`* * *` |user |see various landmarks around a specific location in a road map |understand better the roads around the location
+|`* * *` |celebrity manager | associate the appointment with relevant celebrities and parties |  view who are involved
 
-|`* * *` |user |see various landmarks around a specific location in a satelite map |see in real time the actual layout of the surrounding
+|`* * *` |celebrity manager | associate the appointment with relevant contacts |  contact the relevant parties easily
 
-|`* * *` |user |zoom in and out of the map of given location in a map |view the location in different level of details
+|`* * *` |celebrity manager | associate certain appointments with payment |  know if payment is needed for next appointment
 
-|`* * *` |user |see the best route of travel by driving between two locations in a map |plan for the shortest travel
-
-|`* * *` |user |know if two locations can be reached by driving |foresee any problems and plan ahead
-
-|`* * *` |user |know the estimated distance between two locations by driving |plan for my schedules more effectively
-
-|`* * *` |user |know the estimated time of travel between two locations by driving |plan for my schedules more effectively
-
-|`* * *` |celebrity manager |associate the appointment with relevant celebrities and parties |view who are involved
-
-|`* * *` |celebrity manager |associate the appointment with relevant contacts |contact the relevant parties easily
-
-|`* * *` |celebrity manager |associate certain appointments with payment |know if payment is needed for next appointment
-
-|`* * *` |celebrity manager |have multiple schedule calendars |manage more than 1 different schedules in the event my client is a idol group
+|`* * *` |celebrity manager | have multiple schedule calendars |  manage more than 1 different schedules in the event my client is a idol group
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user with many persons having long names in the address book |auto-fill the name as I key in the command |key in a person’s name without spelling out all names completely
+|`* *` |user with many persons having long names in the address book |auto-fill the name as I key in the command | key in a person’s name without spelling out all names completely
 
-|`* *` |user |be able to email directly from the address book |do not need to use another platform to do so
+|`* *` |user | be able to email directly from the address book | do not need to use another platform to do so
 
-|`* *` |user with many international contacts |group contacts by country code |see my contacts from different countries
+|`* *` |user with many international contacts | group contacts by country code | see my contacts from different countries
 
-|`* *` |user |change the size of different windows of the address book application UI |it looks pleasing to the eyes
+|`* *` |user | change the size of different windows of the address book application UI | it looks pleasing to the eyes
 
-|`* *` |user who contacts different parties involved in an appointment |draft the message about appointment details automatically |don’t have to do it
+|`* *` |user who contacts different parties involved in an appointment | draft the message about appointment details automatically | don’t have to do it
 
-|`* *` |user who frequently contacts certain people |sort the contacts by contacting frequency |find those people I frequently contact easily
+|`* *` |user who frequently contacts certain people | sort the contacts by contacting frequency |  find those people I frequently contact easily
 
-|`* *` |user |change the colour scheme of the application |looks pleasing to my eyes
+|`* *` |user | change the colour scheme of the application |  looks pleasing to my eyes
 
-|`* *` |user who has very bad eyesight |change the look and feel of the application such as font size and type |look at the font properly
+|`* *` |user who has very bad eyesight | change the look and feel of the application such as font size and type |  look at the font properly
 
-|`* *` |user | blacklist phone numbers |get rid of spams from other software.
+|`* *` |user | blacklist phone numbers |  get rid of spams from other software.
 
-|`* *` |celebrity manager |consolidate payments for a certain period |know if there is any outstanding payment
+|`* *` |celebrity manager | consolidate payments for a certain period |   know if there is any outstanding payment
 
-|`* *` |celebrity manager |group celebrities up by their different talent (acting, singing, hosting etc.) |find suitable celebrities for event quickly.
+|`* *` |celebrity manager | group celebrities up by their different talent (acting, singing, hosting etc.) |  find suitable celebrities for event quickly.
 
-|`* *` |celebrity manager managing a same group of celebrities|add event to the group of celebrities at the same time |save time
+|`* *` |celebrity manager managing a same group of celebrities| add event to the group of celebrities at the same time |  save time
 
-|`* *` |celebrity manager |obtain information or details about the upcoming schedule (show) |keep my client informed and prepared on the content
+|`* *` |celebrity manager |  obtain information or details about the upcoming schedule (show) | keep my client informed and prepared on the content
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*` |user of previous versions of the address book |transfer my contacts to the new version |don’t have to add the contacts one-by-one again
+|`*` |user of previous versions of the address book |transfer my contacts to the new version | don’t have to add the contacts one-by-one again
 
-|`*` |user with poor eyesight |the address book to read out the contacts to me |use it more efficiently
+|`*` |user with poor eyesight | the address book to read out the contacts to me | use it more efficiently
 
-|`*` |user who is time conscious |see the time and date |plan schedules faster
+|`*` |user who is time conscious |  see the time and date |  plan schedules faster
 
-|`*` |user |output the contacts to a separate list |have a backup copy of the contacts
+|`*` |user | output the contacts to a separate list |  have a backup copy of the contacts
 
-|`*` |celebrity manager |check the celebrities I blacklisted |organize the blacklist
+|`*` |celebrity manager | check the celebrities I blacklisted |  organize the blacklist
 
 |=======================================================================
 
