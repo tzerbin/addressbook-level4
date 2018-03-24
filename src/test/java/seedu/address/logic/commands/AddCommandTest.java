@@ -140,6 +140,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public String getCurrentCelebCalendarViewPage() {
+            fail("This  method should not be called.");
+            return null;
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -154,6 +160,11 @@ public class AddCommandTest {
         public int removeTag(Tag tag) {
             fail("This method should not be called.");
             return -1;
+        }
+
+        @Override
+        public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
+            fail("This method should not be called.");
         }
     }
 

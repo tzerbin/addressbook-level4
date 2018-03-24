@@ -5,7 +5,6 @@ import java.util.Arrays;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.ui.CalendarPanel;
 
 /**
  * Switches the calendar view to another view specified by the user.
@@ -33,9 +32,10 @@ public class ViewCalendarByCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (calendarViewPage.contentEquals(CalendarPanel.getCurrentCalendarViewPage())) {
+        if (calendarViewPage.contentEquals(model.getCurrentCelebCalendarViewPage())) {
             throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_CALENDARVIEW, calendarViewPage));
         }
+        model.setCelebCalendarViewPage(calendarViewPage);
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(calendarViewPage));
         return new CommandResult(String.format(MESSAGE_SUCCESS, calendarViewPage));
     }

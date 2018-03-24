@@ -34,8 +34,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
-    //private final CalendarView celebCalendarView;
     private final Calendar defaultCalendar;
+
+    private String currentCelebCalendarViewPage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -50,6 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         celebCalendarSource = new CalendarSource(CALENDAR_SOURCE_NAME);
         defaultCalendar = new Calendar(DEFAULT_CALENDAR_NAME);
+        currentCelebCalendarViewPage = "day";
 
         celebCalendarSource.getCalendars().addAll(defaultCalendar);
     }
@@ -103,7 +105,12 @@ public class ModelManager extends ComponentManager implements Model {
         return numPersonsAffected;
     }
 
-    //=========== Celeb Calendar Accessors =============================================================
+    @Override
+    public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
+        currentCelebCalendarViewPage = newCurrentCelebCalendarViewPage;
+    }
+
+    //=========== Celeb Calendar Accessors ===================================================================
 
     @Override
     public ObservableList<Calendar> getCelebCalendars() {
@@ -113,6 +120,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public CalendarSource getCelebCalendarSource() {
         return celebCalendarSource;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarViewPage() {
+        return currentCelebCalendarViewPage;
     }
 
     //=========== Filtered Person List Accessors =============================================================

@@ -37,8 +37,6 @@ public class CalendarPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
 
-    private static String currentCalendarViewPage = "day";
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private CalendarSource celebCalendarSource;
@@ -86,10 +84,6 @@ public class CalendarPanel extends UiPart<Region> {
         return celebCalendarView;
     }
 
-    public static String getCurrentCalendarViewPage() {
-        return currentCalendarViewPage;
-    }
-
     @Subscribe
     private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
         String calendarViewPage = event.calendarViewPage;
@@ -99,19 +93,15 @@ public class CalendarPanel extends UiPart<Region> {
 
             case "day":
                 celebCalendarView.showDayPage();
-                currentCalendarViewPage = "day";
                 break;
             case "week":
                 celebCalendarView.showWeekPage();
-                currentCalendarViewPage = "week";
                 break;
             case "month":
                 celebCalendarView.showMonthPage();
-                currentCalendarViewPage = "month";
                 break;
             case "year":
                 celebCalendarView.showYearPage();
-                currentCalendarViewPage = "year";
                 break;
 
             default:
