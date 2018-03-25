@@ -217,7 +217,7 @@ It describe the overall structure of the `Logic` component and how a single comm
 
 [[fig-LogicClassDiagram]]
 .Class Diagram of the `Logic` component
-image::LogicClassDiagram.png[width="800"] 
+image::LogicClassDiagram.png[width="800"]
 
 .Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
