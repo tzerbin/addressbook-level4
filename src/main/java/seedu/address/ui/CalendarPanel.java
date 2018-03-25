@@ -8,8 +8,10 @@ import java.time.LocalTime;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.view.AgendaView;
 import com.calendarfx.view.CalendarView;
 
+import com.calendarfx.view.page.DayPage;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
@@ -19,6 +21,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -39,16 +42,19 @@ public class CalendarPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private CalendarSource celebCalendarSource;
     private CalendarView celebCalendarView;
+
+    private final CalendarSource celebCalendarSource;
+    private final CalendarSource storageCalendarSource;
 
     @FXML
     private WebView browser;
 
-    public CalendarPanel(CalendarSource calendarSource) {
+    public CalendarPanel(CalendarSource celebCalendarSource, CalendarSource storageCalendarSource) {
         super(FXML);
-        this.celebCalendarSource = calendarSource;
         this.celebCalendarView = new CalendarView();
+        this.celebCalendarSource = celebCalendarSource;
+        this.storageCalendarSource = storageCalendarSource;
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
@@ -57,8 +63,10 @@ public class CalendarPanel extends UiPart<Region> {
 
         // To set up the calendar view.
         celebCalendarView.getCalendarSources().clear(); // there is an existing default source when creating the view
-        celebCalendarView.getCalendarSources().addAll(celebCalendarSource);
+        celebCalendarView.getCalendarSources().add(celebCalendarSource);
         celebCalendarView.setRequestedTime(LocalTime.now());
+        celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
+        celebCalendarView.showDayPage();
 
         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override
@@ -90,9 +98,13 @@ public class CalendarPanel extends UiPart<Region> {
         String calendarViewPage = event.calendarViewPage;
 
         Platform.runLater(() -> {
+            celebCalendarView.showDate(LocalDate.now());
+            celebCalendarView.getCalendarSources().clear();
+            celebCalendarView.getCalendarSources().add(celebCalendarSource);
             switch (calendarViewPage) {
 
             case "day":
+                celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
                 celebCalendarView.showDayPage();
                 break;
             case "week":
@@ -112,6 +124,19 @@ public class CalendarPanel extends UiPart<Region> {
                     e.printStackTrace();
                 }
             }
+        });
+    }
+
+    @Subscribe
+    private void handleAgendaViewPageRequestEvent(AgendaViewPageRequestEvent event) {
+        Platform.runLater(() -> {
+            celebCalendarView.getCalendarSources().clear();
+            celebCalendarView.getCalendarSources().add(storageCalendarSource);
+
+            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.AGENDA_ONLY);
+            AgendaView agendaView = celebCalendarView.getDayPage().getAgendaView();
+            agendaView.setLookAheadPeriodInDays(event.getStartEndDateDifference());
+            celebCalendarView.showDate(event.getStartDate());
         });
     }
 

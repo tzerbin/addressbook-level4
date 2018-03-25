@@ -12,7 +12,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.calendar.CelebCalendar;
+import seedu.address.model.calendar.StorageCalendar;
 
 /**
  * Adds an appointment to a calendar.
@@ -40,25 +40,24 @@ public class AddAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Added appointment successfully";
 
-    private final int calendarIndex;
     private final Appointment appt;
 
     /**
-     * Creates an AddAppointmentCommand with the following parameters
+     * Creates an AddAppointmentCommand with the following parameter
      * @param appt The created appointment
-     * @param calendarIndex The index of the calendar we want to add to
      */
-    public AddAppointmentCommand(Appointment appt, int calendarIndex) {
+    public AddAppointmentCommand(Appointment appt) {
         requireNonNull(appt);
-        this.calendarIndex = calendarIndex; // just use first calendar for now since we only created one calendar
         this.appt = appt;
     }
 
 
     @Override
     public CommandResult execute() throws CommandException {
-        CelebCalendar cal = (CelebCalendar) model.getCelebCalendars().get(calendarIndex);
+        StorageCalendar cal = model.getStorageCalendar();
         cal.addEntry(appt);
+        // ArrayList<Celebrity> celebrities = model.getCelebrities();
+        // appt.updateEntries(celebrities);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

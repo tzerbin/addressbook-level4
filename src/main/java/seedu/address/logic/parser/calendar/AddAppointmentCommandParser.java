@@ -76,7 +76,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             }
 
             Appointment appt = new Appointment(appointmentName, startTime, startDate, location, endTime, endDate);
-            return new AddAppointmentCommand(appt, 0); // Let index be 0 for now since we only have one cal
+            return new AddAppointmentCommand(appt); // Let index be 0 for now since we only have one cal
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

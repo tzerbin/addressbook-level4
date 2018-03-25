@@ -24,6 +24,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.calendar.StorageCalendar;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -122,6 +124,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ArrayList<Celebrity> getCelebrities() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deletePerson(Person target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -140,7 +148,19 @@ public class AddCommandTest {
 
         @Override
         public CalendarSource getCelebCalendarSource() {
-            fail("This  method should not be called.");
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public StorageCalendar getStorageCalendar() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public CalendarSource getStorageCalendarSource() {
+            fail("This method should not be called.");
             return null;
         }
 

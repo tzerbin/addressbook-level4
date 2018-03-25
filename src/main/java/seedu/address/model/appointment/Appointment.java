@@ -7,12 +7,19 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.calendarfx.model.Entry;
 
+import seedu.address.model.person.Celebrity;
+
 /**
  * Wraps all data required for an appointment, inheriting from a class of our calendar library
+ * Each appointment also creates child entries for every celebrity associated with the appointment
+ * and then attaches the entries to their respective calendars while keeping a reference to them
+ * in an ArrayList of Entries. Appointments are stored in our StorageCalendar.
  */
 public class Appointment extends Entry {
 
@@ -44,6 +51,8 @@ public class Appointment extends Entry {
     // Minimum duration for an appointment is at least 1 minute
     private static final Duration minDuration = Duration.ofMinutes(1);
 
+    private List<Entry> childEntryList;
+
     public Appointment(String title, LocalTime startTime, LocalDate startDate,
                        String location, LocalTime endTime, LocalDate endDate) {
         super(requireNonNull(title));
@@ -58,6 +67,7 @@ public class Appointment extends Entry {
         this.changeEndTime(endTime);
         this.changeEndDate(endDate);
         this.setLocation(location);
+        this.childEntryList = new ArrayList<>();
     }
 
     public static boolean isValidName(String test) {
@@ -79,6 +89,47 @@ public class Appointment extends Entry {
                 && Objects.equals(otherAppt.getLocation(), this.getLocation())
                 && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
                 && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute());
+    }
+
+    /**
+     * Removes old child entries and creates a new child entry for every celebrity
+     * and then stores it in childEntryList.
+     */
+    public void updateEntries(ArrayList<Celebrity> celebrities) {
+        clearChildEntries();
+        childEntryList.clear();
+
+        for (Celebrity celebrity : celebrities) {
+            childEntryList.add(createChildEntry(celebrity));
+        }
+    }
+
+    /**
+     * Creates new childEntry for a given celebrity and sets the entry to point
+     * to the celebrity's calendar.
+     */
+    private Entry createChildEntry(Celebrity celebrity) {
+        Entry childEntry = new Entry(this.getTitle());
+
+        childEntry.setMinimumDuration(minDuration);
+        childEntry.changeStartTime(this.getStartTime());
+        childEntry.changeEndTime(this.getEndTime());
+        childEntry.changeStartDate(this.getStartDate());
+        childEntry.changeEndDate(this.getEndDate());
+        childEntry.setLocation(this.getLocation());
+        childEntry.setCalendar(celebrity.getCelebCalendar());
+
+        return childEntry;
+    }
+
+    /**
+     * Remove all existing child entries
+     */
+    private void clearChildEntries() {
+        for (Entry e : childEntryList) {
+            // removed entries from the calendars
+            e.setCalendar(null);
+        }
     }
 
 }

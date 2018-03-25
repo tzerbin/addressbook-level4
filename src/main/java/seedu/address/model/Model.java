@@ -1,11 +1,14 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.calendar.StorageCalendar;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -26,7 +29,10 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /** Adds the given celebrity */
-    void addCelebrity(Person celebrity) throws DuplicatePersonException;
+    void addCelebrity(Person person) throws DuplicatePersonException;
+
+    /** Gets the list of celebrities */
+    ArrayList<Celebrity> getCelebrities();
 
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
@@ -49,6 +55,12 @@ public interface Model {
 
     /** Fetches the CalendarSource of the CelebCalendars. */
     CalendarSource getCelebCalendarSource();
+
+    /** Fetches the StorageCalendar used to store Appointments */
+    StorageCalendar getStorageCalendar();
+
+    /** Fetches CalendarSource containing the StorageCalendar */
+    CalendarSource getStorageCalendarSource();
 
     /** Returns a String that represents the current calendar view page. */
     String getCurrentCelebCalendarViewPage();
