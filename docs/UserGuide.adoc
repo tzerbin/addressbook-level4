@@ -67,11 +67,11 @@ For each of the command in our app, their formats follow some general patterns a
 
 The following are all the commands available to you, the user:
 
-=== Viewing help : `help`
+=== Viewing help : `help` [Since v1.0]
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` [Since v1.0]
 
 Adds a person to CelebManager. +
 Alias: `a` +
@@ -114,13 +114,13 @@ Format: `listAppointment`
 
 ===  Deleting an appointment `[coming in v1.3]`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` [Since v1.0]
 
 Shows a list of all persons in CelebManager. +
 Alias: `l` +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` [Since v1.0]
 
 Edits an existing person in CelebManager. +
 Alias: `e` +
@@ -141,7 +141,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Changing the calendar view: 'viewCalendarBy'
+=== Changing the calendar view: `viewCalendarBy` [Since v1.3]
 
 Changes the calendar view to a different one specified by the user. +
 Alias: `vcb` +
@@ -157,7 +157,7 @@ Examples:
 * `viewCalendarBy week` +
 Changes the calendar view to weekly view.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` [Since v1.0]
 
 Finds persons whose names contain any of the given keywords. +
 Alias: `f` +
@@ -178,7 +178,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` [Since v1.0]
 
 Deletes the specified person from CelebManager. +
 Alias: `d` +
@@ -199,7 +199,7 @@ Deletes the 2nd person in CelebManager.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` [Since v1.0]
 
 Selects the person identified by the index number used in the last person listing. +
 Alias: `s` +
@@ -220,7 +220,7 @@ Selects the 2nd person in CelebManager.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history` [Since v1.0]
 
 Lists all the commands that you have entered in reverse chronological order. +
 Alias: `h` +
@@ -232,7 +232,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` [Since v1.0]
 
 Restores CelebManager to the state before the previous _undoable_ command was executed. +
 Alias: `u` +
@@ -259,7 +259,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` [Since v1.0]
 
 Reverses the most recent `undo` command. +
 Alias: `r` +
@@ -283,24 +283,24 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` [Since v1.0]
 
 Clears all entries from CelebManager. +
 Alias: `c` +
 Format: `clear`
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` [Since v1.0]
 
 Exits the program. +
 Alias: `x` +
 Format: `exit`
 
-=== Saving the data
+=== Saving the data [Since v1.0]
 
 CelebManager data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Removing a tag : `removeTag`
+=== Removing a tag : `removeTag` [Since v1.2]
 
 Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this operation. +
 Alias: `rt` +
@@ -311,7 +311,7 @@ Examples:
 * `removeTag friends` +
 Removes the tag, "friends" from every person with it in CelebManager and shows the number of person(s) affected.
 
-=== Show location on map : `showLocation`
+=== Show location on map : `showLocation` [Since v1.2]
 
 Shows the specific location in the map interface, by marking the latitude and longitude with a location marker. +
 Alias: `sl` +
