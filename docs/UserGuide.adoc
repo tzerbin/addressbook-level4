@@ -78,12 +78,12 @@ Alias: `a` +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags, including 0.
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Adding an appointment: `addAppointment` [Since v1.2]
 
@@ -98,9 +98,9 @@ Examples:
 
 ****
 * Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
-it must be prefixed with a 0 (e.g. 03/07/...).
+it must be prefixed with a 0 (e.g. `03/07/2017`).
 * Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
-or minute is a 1 digit number, you need to prefix it with a 0 (e.g. 09:05)
+or minute is a 1 digit number, you need to prefix it with a 0 (e.g. `09:05`).
 * You can omit one or more of the time, date and location fields when using this command.
 ****
 
@@ -127,7 +127,7 @@ Alias: `e` +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* `1`, `2`, `3`, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -164,19 +164,19 @@ Alias: `f` +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 ****
 
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
+Returns `john` and `John Doe`.
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having names `Betsy`, `Tim`, or `John`.
 
 === Deleting a person : `delete` [Since v1.0]
 
@@ -187,7 +187,7 @@ Format: `delete INDEX`
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1`, `2`, `3`, ...
 ****
 
 Examples:
@@ -208,7 +208,7 @@ Format: `select INDEX`
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1`, `2`, `3`, ...
 ****
 
 Examples:
@@ -240,7 +240,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify CelebManager's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify CelebManager's content (`add`, `delete`, `edit`, `clear`, etc).
 ====
 
 Examples:
@@ -309,7 +309,7 @@ Format: `removeTag TAG`
 Examples:
 
 * `removeTag friends` +
-Removes the tag, "friends" from every person with it in CelebManager and shows the number of person(s) affected.
+Removes the tag, `friends` from every person with it in CelebManager and shows the number of person(s) affected.
 
 === Show location on map : `showLocation` [Since v1.2]
 
@@ -318,18 +318,12 @@ Alias: `sl` +
 Format: `showLocation ma/MapAddress`
 
 [TIP]
-The format of the address can be in postal code, road name, location name and building name.
+The address can be a postal code, road name, location name or building name.
 
 Examples:
 
 * `showlocation ma/Punggol` +
-Updates the map by re-centering to the new location 'Punggol' and adding a location marker to it.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Updates the map by re-centering to the new location `Punggol` and adding a location marker to it.
 
 == FAQ - Frequently Asked Questions
 
