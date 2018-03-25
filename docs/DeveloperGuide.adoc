@@ -1,4 +1,4 @@
-= Celeb Scheduler - Developer Guide
+= CelebManager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -517,6 +517,8 @@ The following picture shows the marker that is used to identify the location in 
 .Location Marker
 image::LocationMarker.png[width="50"]
 
+[.underline]*Inheritance of command*
+
 The following diagram shows the inheritance diagram for `ShowLocationCommand`:
 
 .Inheritance diagram for Command
@@ -525,9 +527,12 @@ image::ShowLocationLogicCommandClassDiagram.png[width=""]
 As you can see from the diagram, `ShowLocationCommand` inherits from the Command class and is not part of the Undoable Command.
 Similar to the other commands like `FindCommand` it will not be identified by the undo/redo feature.
 
+[.underline]*Use of model*
+
 This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
 the due to the difference in address specification details as the `Address` model is too specific for the command to work.
 An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
+
 
 The main difference between both model is shown below in the two diagrams.
 
@@ -583,10 +588,14 @@ The difference to note is the `isValidAddress` method, where `Address` only chec
 checks for *blank space and the validity of location in google server*. Thus, making the command more restrictive to location,
  road, block name and postal code. Any details more than that would result in a higher possibility of it being invalid.
 
+[.underline]*Library used*
+
 This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library. The `GMAPFX API` is used to create the
 `Geocoding` function, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
 is then used by the command to find the exact location in the `MapPanel`. The `Google Maps Web Services API` allows the
 command to re-center and mark the new location which is then shown to the user.
+
+[.underline]*Visual changes*
 
 Every new input of this command will remove the previous location marker and add the new marker into the map.
 
@@ -600,7 +609,9 @@ After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to t
 .Image of Map Panel after command input
 image::AfterShowLocationInput.png[width="400"]
 
-Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker
+Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
+
+[.underline]*Sequence of events*
 
 The following sequence diagram shows how the command works:
 
@@ -615,14 +626,14 @@ image::ShowLocationSequenceDiagram.png[width=""]
 ** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
 * **Alternative 2:** Extend `UndoableCommand`
 ** Pros: Allows for command to have the undo/redo function.
-** Cons: Requires more work that may not fit in with our timeline
+** Cons: Requires more work that may not fit in with our timeline.
 
 ===== Aspect: Use of address model
 * **Alternative 1 (current choice):** Use `MapAddress`
-** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion
-** Cons: Both model are very similar
+** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion.
+** Cons: Both model are very similar.
 * **Alternative 2:** Use `Address`
-** Pros: Reduces the amount of code/class in the project
+** Pros: Reduces the amount of code/class in the project.
 ** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
 
 === AddAppointment feature
@@ -811,18 +822,18 @@ Chose AsciiDoc(markup language) over markdown language format because it provide
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
+Refer to <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
+Refer to <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
 
 === Converting Documentation to PDF format
 
 Use https://www.google.com/chrome/browser/desktop/[Google Chrome] to convert documents to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+Here are the steps to convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
@@ -891,28 +902,28 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 == Dev Ops
 
 Dev Ops is a software engineering culture and practice that aims at unifying software development (Dev) and software operations (Ops).
-Dev Ops advocates automation and monitoring at all steps of software construction. This section illustrates how we adopt this practice in developing Celeb Scheduler.
+Dev Ops advocates automation and monitoring at all steps of software construction. This section illustrates how we adopt this practice in developing CelebManager.
 
 === Build Automation
 
 We use Gradle for build automation. +
-See <<UsingGradle#, UsingGradle.adoc>> for more details.
+Refer to <<UsingGradle#, UsingGradle.adoc>> for more details.
 
 === Continuous Integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. +
-See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+Refer to <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
-See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+Refer to <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
 
 We use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look
 like when a pull request is merged. +
-See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+Refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 === Making a Release
 
@@ -1301,11 +1312,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see the best route of travel by driving between two locations in a map |plan for the fastest travel
 
-|`* * *` |user |know if two locations can be reached by driving |foresee any problems and plan ahead
+|`* * *` |celebrity manager who chauffeurs celebrities |see the best route of travel by driving between two locations in a map |plan for the shortest travel
 
-|`* * *` |user |know the estimated distance between two locations by driving |plan for my schedules more effectively
+|`* * *` |celebrity manager who chauffeurs celebrities |know if two locations can be reached by driving |foresee any problems and plan ahead
 
-|`* * *` |user |know the estimated time of travel between two locations by driving |plan for my schedules more effectively
+|`* * *` |celebrity manager who chauffeurs celebrities |know the estimated distance between two locations by driving |cater enough time for travelling to avoid being late
+
+|`* * *` |celebrity manager who chauffeurs celebrities |know the estimated time of travel between two locations by driving |reduce the time of travel to reach an appointment location
 
 |`* * *` |celebrity manager |have multiple calendars to display appointments for different celebrities |manage multiple celebrities' appointments
 
@@ -1336,7 +1349,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `Celeb Scheduler` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `CelebManager` and the *Actor* is the `user`, unless specified otherwise)
 
 === Use case: Delete person
 
@@ -1346,6 +1359,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 2.  Celeb Scheduler shows a list of persons.
 3.  User requests to delete a specific person in the list.
 4.  Celeb Scheduler deletes the person.
+
 +
 Use case ends.
 
@@ -1359,7 +1373,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. Celeb Scheduler shows an error message.
+** 3a1. CelebManager shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1379,7 +1393,7 @@ Use case ends.
 * 2a. There is no executed command that mutates the data.
 +
 [none]
-** 2a1. Celeb Scheduler shows an error message.
+** 2a1. CelebManager shows an error message.
 +
 Use case ends.
 
@@ -1399,7 +1413,7 @@ Use case ends.
 * 2a. There is no executed undo command.
 +
 [none]
-** 2a1. Celeb Scheduler shows an error message.
+** 2a1. CelebManager shows an error message.
 +
 Use case ends.
 
