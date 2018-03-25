@@ -1,4 +1,4 @@
-= &#x2728; Celeb Manager &#x2728;
+= &#x2728; CelebManager &#x2728;
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-W14-B4/main[image:https://travis-ci.org/CS2103JAN2018-W14-B4/main.svg?branch=master[Build Status]]
