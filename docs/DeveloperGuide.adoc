@@ -162,7 +162,7 @@ The _Sequence Diagram_ below (Figure 3) shows how the components interact for th
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Celeb Scheduler data is changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the CelebManager data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below (Figure 4) shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -260,7 +260,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 == Implementation
 
-This section describes some noteworthy features that are implemented in Celeb Scheduler.
+This section describes some noteworthy features that are implemented in CelebManager.
 
 // tag::removeTag[]
 === RemoveTag Feature
@@ -1019,7 +1019,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [width="90%",cols="15%,<20%,<30%,<40%",options="header",]
 |=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
+|Priority |As a ... |I want to ... |so that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
 |`* * *` |user |add a new person |access contacting information of the person from the App
@@ -1100,9 +1100,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons.
-2.  Celeb Scheduler shows a list of persons.
+2.  CelebManager shows a list of persons.
 3.  User requests to delete a specific person in the list.
-4.  Celeb Scheduler deletes the person.
+4.  CelebManager deletes the person.
 
 +
 Use case ends.
@@ -1126,7 +1126,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to undo.
-2.  Celeb Scheduler undoes the latest executed command that mutates the data.
+2.  CelebManager undoes the latest executed command that mutates the data.
 
 +
 Use case ends.
@@ -1146,7 +1146,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to redo.
-2.  Celeb Scheduler redoes the latest executed undo command.
+2.  CelebManager redoes the latest executed undo command.
 
 +
 Use case ends.
@@ -1166,7 +1166,7 @@ Use case ends.
 *MSS*
 
 1. User requests to remove a tag.
-2. Celeb Scheduler removes the tag from any person having it.
+2. CelebManager removes the tag from any person having it.
 
 +
 Use case ends.
@@ -1177,7 +1177,7 @@ Use case ends.
 * 1a. The tag does not exist.
 +
 [none]
-** 1a1. Celeb Scheduler shows an error message.
+** 1a1. CelebManager shows an error message.
 +
 Use case ends.
 
@@ -1186,7 +1186,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to add an appointment.
-2.  Celeb Scheduler adds the appointment to the currently displayed calendar.
+2.  CelebManager adds the appointment to the currently displayed calendar.
 
 +
 Use case ends.
@@ -1197,14 +1197,14 @@ Use case ends.
 * 1a. Appointment to add has incorrect details or format.
 +
 [none]
-** 1a1. Celeb Scheduler shows an error message.
+** 1a1. CelebManager shows an error message.
 +
 Use case ends.
 
 * 2a. Appointment to add clashes with existing appointment.
 +
 [none]
-** 2a1. Celeb Scheduler shows an error message.
+** 2a1. CelebManager shows an error message.
 +
 Use case ends.
 
@@ -1213,7 +1213,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to view appointment.
-2.  Celeb Scheduler shows the appointment's details.
+2.  CelebManager shows the appointment's details.
 
 +
 Use case ends.
@@ -1224,7 +1224,7 @@ Use case ends.
 * 1a. Appointment to view does not exist.
 +
 [none]
-** 1a1. Celeb Scheduler shows an error message.
+** 1a1. CelebManager shows an error message.
 +
 Use case ends.
 
@@ -1233,7 +1233,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to list appointments from a start date to an end date.
-2.  Celeb Scheduler shows a list of appointments within the date range (inclusive).
+2.  CelebManager shows a list of appointments within the date range (inclusive).
 
 +
 Use case ends.
@@ -1244,7 +1244,7 @@ Use case ends.
 * 1a. The dates are invalid or in wrong format.
 +
 [none]
-** 1a1. Celeb Scheduler outputs an error message.
+** 1a1. CelebManager outputs an error message.
 +
 Use case ends.
 
@@ -1252,7 +1252,7 @@ Use case ends.
 * 2a. There is no appointment to show in the date range.
 +
 [none]
-** 2a1. Celeb Scheduler outputs a message that says no appointment in the specified date range.
+** 2a1. CelebManager outputs a message that says no appointment in the specified date range.
 +
 Use case ends.
 
@@ -1261,9 +1261,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to list appointments from a start date to an end date.
-2.  Celeb Scheduler shows a list of appointments within the date range (inclusive).
+2.  CelebManager shows a list of appointments within the date range (inclusive).
 3.  User requests to delete a specific appointment in the list.
-4.  Celeb Scheduler deletes the appointment.
+4.  CelebManager deletes the appointment.
 +
 Use case ends.
 
@@ -1273,7 +1273,7 @@ Use case ends.
 * 1a. The dates are invalid or in wrong format.
 +
 [none]
-** 1a1. Celeb Scheduler outputs an error message.
+** 1a1. CelebManager outputs an error message.
 +
 Use case ends.
 
@@ -1281,14 +1281,14 @@ Use case ends.
 * 2a. There is no appointment to show in the date range.
 +
 [none]
-** 2a1. Celeb Scheduler outputs a message that says no appointment in the specified date range.
+** 2a1. CelebManager outputs a message that says no appointment in the specified date range.
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. Celeb Scheduler shows an error message.
+** 3a1. CelebManager shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1297,9 +1297,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list appointments from a start date to an end date.
-2.  Celeb Scheduler shows a list of appointments within the date range (inclusive).
+2.  CelebManager shows a list of appointments within the date range (inclusive).
 3.  User requests to edit a specified appointment.
-4.  Celeb Scheduler changes appointment details and displays new appointment details to user.
+4.  CelebManager changes appointment details and displays new appointment details to user.
 +
 Use case ends.
 
@@ -1309,7 +1309,7 @@ Use case ends.
 * 1a. The dates are invalid or in wrong format.
 +
 [none]
-** 1a1. Celeb Scheduler outputs an error message.
+** 1a1. CelebManager outputs an error message.
 +
 Use case ends.
 
@@ -1317,7 +1317,7 @@ Use case ends.
 * 2a. There is no appointment to show in the date range.
 +
 [none]
-** 2a1. Celeb Scheduler outputs a message that says no appointment in the specified date range.
+** 2a1. CelebManager outputs a message that says no appointment in the specified date range.
 +
 Use case ends.
 
@@ -1325,7 +1325,7 @@ Use case ends.
 * 3a.  The given index is invalid.
 +
 [none]
-** 3a1. Celeb Scheduler shows an error message.
+** 3a1. CelebManager shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1333,7 +1333,7 @@ Use case resumes at step 2.
 * 3b.  Information entered for edit is invalid.
 +
 [none]
-** 3b1. Celeb Scheduler shows an error message.
+** 3b1. CelebManager shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1345,7 +1345,7 @@ Use case resumes at step 2.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should be usable by people with no knowledge about command line input.
 .  Should respond to any user command within 10 seconds.
-.  Should be backward compatible with data produced by earlier versions of the Celeb Scheduler.
+.  Should be backward compatible with data produced by earlier versions of the CelebManager.
 .  Should come with automated unit tests and open source code.
 .  Should favor DOS style commands over Unix-style commands.
 
@@ -1364,7 +1364,7 @@ A calendar that contains all appointments a celebrity managed by the user has
 [[calendar-view]] Calendar view::
 The way in which appointments are displayed in calendar +
 [TIP]
-Celeb Scheduler currently supports displaying by day, week, month and year.
+CelebManager currently supports displaying by day, week, month and year.
 
 [[appointment]] Appointment::
 A meeting between contacts at a specific time, date and location +
@@ -1399,7 +1399,7 @@ For each subsequent launch, window size and location should be the same as the s
 .. Download the jar file
 .. Copy into an empty folder
 .. Double-click the jar file +
-   _Expected: Celeb Scheduler shows the GUI with a set of sample contacts._
+   _Expected: CelebManager shows the GUI with a set of sample contacts._
 [NOTE]
     The window size may not be optimum.
 .. Resize the window to an optimum size
