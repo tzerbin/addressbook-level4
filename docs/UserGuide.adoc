@@ -17,7 +17,7 @@ By: `CS2103JAN2018-W14-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Celeb Scheduler (CS) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule with ease*. More importantly, CS is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the feature of *managing contacts, organising schedules, emailing (Coming in v2.0) and trip planning*. You are at the right place as CS would be the best platform for you, with its integration of address book, calendar and visual maps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+CelebManager (CM) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule with ease*. More importantly, CM is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the feature of *managing contacts, organising schedules, emailing (Coming in v2.0) and trip planning*. You are at the right place as CM would be the best platform for you, with its integration of address book, calendar and visual maps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -28,9 +28,12 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Celeb Scheduler.
+.  Copy the file to the folder you want to use as the home folder for your CelebManager.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+The image below shows the current GUI of CelebManager.
++
+.GUI of CelebManager
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -50,7 +53,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Some commands have an alias, which you can also use to execute the command e.g. to add a person to Celeb Scheuler, you can type either `add n/John Doe` or `a n/John Doe`.
+* Some commands have an alias, which you can also use to execute the command e.g. to add a person to CelebManager, you can type either `add n/John Doe` or `a n/John Doe`.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -63,7 +66,7 @@ Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to Celeb Scheduler. +
+Adds a person to CelebManager. +
 Alias: `a` +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
@@ -77,7 +80,7 @@ Examples:
 
 === Adding an appointment: `addAppointment` [Since v1.2]
 
-Adds an appointment to Celeb Scheduler. +
+Adds an appointment to CelebManager. +
 Alias: `aa` +
 Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
 
@@ -96,7 +99,7 @@ or minute is a 1 digit number, you need to prefix it with a 0 (e.g. 09:05)
 
 === Listing appointments: `listAppointment` [Since v1.3]
 
-Lists all appointments in our Celeb Scheduler. +
+Lists all appointments in our CelebManager. +
 Alias: `la` +
 Format: `listAppointment`
 
@@ -106,13 +109,13 @@ Format: `listAppointment`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in Celeb Scheduler. +
+Shows a list of all persons in CelebManager. +
 Alias: `l` +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in Celeb Scheduler. +
+Edits an existing person in CelebManager. +
 Alias: `e` +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
@@ -154,7 +157,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from Celeb Scheduler. +
+Deletes the specified person from CelebManager. +
 Alias: `d` +
 Format: `delete INDEX`
 
@@ -168,7 +171,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in Celeb Scheduler.
+Deletes the 2nd person in CelebManager.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -189,7 +192,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in Celeb Scheduler.
+Selects the 2nd person in CelebManager.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -208,13 +211,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores Celeb Scheduler to the state before the previous _undoable_ command was executed. +
+Restores CelebManager to the state before the previous _undoable_ command was executed. +
 Alias: `u` +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify Celeb Scheduler's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify CelebManager's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -259,7 +262,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from Celeb Scheduler. +
+Clears all entries from CelebManager. +
 Alias: `c` +
 Format: `clear`
 
@@ -271,22 +274,22 @@ Format: `exit`
 
 === Saving the data
 
-Celeb Scheduler data are saved in the hard disk automatically after any command that changes the data. +
+CelebManager data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 === Removing a tag : `removeTag`
 
-Removes the specified tag from every person with it in Celeb Scheduler and shows the number of person(s) affected by this operation. +
+Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this operation. +
 Alias: `rt` +
 Format: `removeTag TAG`
 
 [TIP]
-You can remove a tag that does not exist in Celeb Scheduler and it will show 0 person gets affected.
+You can remove a tag that does not exist in CelebManager and it will show 0 person gets affected.
 
 Examples:
 
 * `removeTag friends` +
-Removes the tag, "friends" from every person with it in Celeb Scheduler and shows the number of person(s) affected.
+Removes the tag, "friends" from every person with it in CelebManager and shows the number of person(s) affected.
 
 === Show location on map : `showLocation`
 
