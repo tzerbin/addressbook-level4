@@ -17,13 +17,19 @@ By: `CS2103JAN2018-W14-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-CelebManager (CM) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule with ease*. More importantly, CM is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the feature of *managing contacts, organising schedules, emailing (Coming in v2.0) and trip planning*. You are at the right place as CM would be the best platform for you, with its integration of address book, calendar and visual maps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+CelebManager (CM) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule
+with ease*. More importantly, CM is *optimized for those who prefer to work with a Command Line Interface* (CLI) while
+still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the
+feature of *managing contacts, organising schedules, emailing (Coming in v2.0) and trip planning*. You are at the right
+place as CM would be the best platform for you, with its integration of address book, calendar and visual maps.
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
 Follow this series of steps to have the CelebManager app quickly up and running on your computer.
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. The link to the latest version of Java can be found
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. The link to the latest version of Java
+can be found
 https://java.com/en/download/[here].
 +
 [NOTE]
@@ -39,36 +45,35 @@ The image below (Figure 1) shows the current GUI of CelebManager.
 .GUI of CelebManager
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
-
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to <<Features>> for details of each command.
+.  Type `help` in the command box and press kbd:[Enter] to execute it. A help window should be opened.
++
+[TIP]
+Refer to <<Features>> for details of all commands available in CelebManager and their example usage.
 
 [[Features]]
 == Features
 
-For each of the command in our app, their formats follow some general patterns as mentioned in the text box below.
+For each of the command in CelebManager, their formats follow some general patterns as mentioned in the text box below.
 
 ====
 *Command Format*
 
-* Some commands have an alias, which you can also use to execute the command e.g. to add a person to CelebManager, you can type either `add n/John Doe` or `a n/John Doe`.
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Some commands have an alias, which you can also use to execute the command e.g. to add a person to CelebManager,
+you can type either `add n/John Doe` or `a n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
+can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also
+acceptable.
 ====
 
-The following are all the commands available to you, the user:
+The following are all the commands available to you:
 
 === Viewing help : `help` [Since v1.0]
 
+Shows a help window that contains this User Guide. +
 Format: `help`
 
 === Adding a person: `add` [Since v1.0]
@@ -98,9 +103,9 @@ Examples:
 
 ****
 * Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
-it must be prefixed with a 0 (e.g. `03/07/2017`).
+it must be prefixed with a 0, e.g. `03/07/2017`.
 * Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
-or minute is a 1 digit number, you need to prefix it with a 0 (e.g. `09:05`).
+or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
 * You can omit one or more of the time, date and location fields when using this command.
 ****
 
@@ -127,7 +132,8 @@ Alias: `e` +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* `1`, `2`, `3`, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+The index *must be a positive integer* `1`, `2`, `3`, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -149,7 +155,8 @@ Format: `viewCalendarBy VIEW`
 
 ****
 * Changes the calendar view to the specified `VIEW`.
-* `VIEW` must be `day`, `week`, `month` or `year`.
+* `VIEW` *must be* `day`, `week`, `month` or `year`.
+* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to weekly calendar view.
 ****
 
 Examples:
@@ -168,7 +175,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`.
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
+`Bo Yang`.
 ****
 
 Examples:
@@ -228,7 +236,8 @@ Format: `history`
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command
+box.
 ====
 
 // tag::undoredo[]
@@ -302,7 +311,8 @@ There is no need to save manually.
 
 === Removing a tag : `removeTag` [Since v1.2]
 
-Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this operation. +
+Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this
+operation. +
 Alias: `rt` +
 Format: `removeTag TAG`
 
@@ -328,11 +338,14 @@ Updates the map by re-centering to the new location `Punggol` and adding a locat
 == FAQ - Frequently Asked Questions
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CelebManager folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous CelebManager folder.
 
 == Command Summary
 
-The following are summarized versions of all the commands introduced above, with their command format and an example highlighting the usage.
+The following are summarized versions of all the commands introduced above, with their command format and an example
+highlighting the usage. An optional field is enclosed within a pair of `[]`. A field that can be repeatedly entered
+with different input values is followed by `...`.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
@@ -341,17 +354,20 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
+* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
+[et/END_TIME]`
 e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
 * *List Appointments* : `listAppointment`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
-* *RemoveTag* : `removeTag TAG` +
+* *Remove Tag* : `removeTag TAG` +
 e.g.`removeTag friends`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *View Calendar By* : `viewCalendarBy VIEW` +
+e.g.`viewCalendarBy week`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
