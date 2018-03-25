@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -15,11 +16,13 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.calendar.CelebCalendar;
+import seedu.address.model.calendar.StorageCalendar;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -28,9 +31,15 @@ import seedu.address.model.tag.Tag;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
+    private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
+
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
+    private final CalendarSource storageCalendarSource;
+
+    private String currentCelebCalendarViewPage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -43,11 +52,17 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        celebCalendarSource = new CalendarSource("Test Celeb Calendar Source");
 
-        CelebCalendar testCalendar1 = new CelebCalendar("Paul McCartney");
-        CelebCalendar testCalendar2 = new CelebCalendar("John Lennon");
-        celebCalendarSource.getCalendars().addAll(testCalendar1, testCalendar2);
+        celebCalendarSource = new CalendarSource(CELEB_CALENDAR_SOURCE_NAME);
+        initializeCelebCalendarSource(celebCalendarSource);
+
+        storageCalendarSource = new CalendarSource(STORAGE_CALENDAR_SOURCE_NAME);
+        initializeStorageCalendarSource(storageCalendarSource);
+
+
+        currentCelebCalendarViewPage = "day";
+
+
     }
 
     public ModelManager() {
@@ -78,9 +93,24 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
+        if (person.isCelebrity()) {
+            addCelebrity(person);
+        } else {
+            addressBook.addPerson(person);
+        }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addCelebrity(Person person) throws DuplicatePersonException {
+        Celebrity celebrity = addressBook.addCelebrity(person);
+        celebCalendarSource.getCalendars().add(celebrity.getCelebCalendar());
+    }
+
+    @Override
+    public ArrayList<Celebrity> getCelebrities() {
+        return addressBook.getCelebritiesList();
     }
 
     @Override
@@ -93,13 +123,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public int removeTag(Tag tag) {
+    public int removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
         int numPersonsAffected = addressBook.removeTag(tag);
         indicateAddressBookChanged();
         return numPersonsAffected;
     }
 
-    //=========== Celeb Calendar Accessors =============================================================
+    @Override
+    public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
+        currentCelebCalendarViewPage = newCurrentCelebCalendarViewPage;
+    }
+
+    //=========== Celeb Calendar Accessors ===================================================================
 
     @Override
     public ObservableList<Calendar> getCelebCalendars() {
@@ -109,6 +144,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public CalendarSource getCelebCalendarSource() {
         return celebCalendarSource;
+    }
+
+    @Override
+    public StorageCalendar getStorageCalendar() {
+        return (StorageCalendar) storageCalendarSource.getCalendars().get(0);
+    }
+
+    @Override
+    public CalendarSource getStorageCalendarSource() {
+        return storageCalendarSource;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarViewPage() {
+        return currentCelebCalendarViewPage;
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -144,6 +194,24 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+    /**
+     * Populates our CelebCalendar CalendarSource by creating a calendar for every celebrity in our addressbook
+     */
+    private void initializeCelebCalendarSource(CalendarSource calSource) {
+        requireNonNull(addressBook);
+        ArrayList<Celebrity> celebrities = addressBook.getCelebritiesList();
+        for (Celebrity celebrity : celebrities) {
+            calSource.getCalendars().add(celebrity.getCelebCalendar());
+        }
+    }
+
+    /**
+     * Initialize StorageCalendar CalendarSource
+     */
+    private void initializeStorageCalendarSource(CalendarSource calSource) {
+        calSource.getCalendars().add(new StorageCalendar("Storage Calendar"));
     }
 
 }

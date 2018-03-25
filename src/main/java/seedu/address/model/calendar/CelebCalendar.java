@@ -3,10 +3,12 @@ package seedu.address.model.calendar;
 import com.calendarfx.model.Calendar;
 
 /**
- * Wraps all data required for our Calendar, inheriting from a Class of our calendar library
+ * Stores the entries for a single celebrity
  */
 public class CelebCalendar extends Calendar {
-    public CelebCalendar(String celebName) {
-        super(celebName);
+
+    public CelebCalendar(String name) {
+        super(name);
     }
+
 }

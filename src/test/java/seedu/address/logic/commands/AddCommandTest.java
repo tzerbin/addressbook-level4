@@ -24,6 +24,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.calendar.StorageCalendar;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -117,6 +119,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addCelebrity(Person celebrity) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ArrayList<Celebrity> getCelebrities() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deletePerson(Person target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -135,10 +148,27 @@ public class AddCommandTest {
 
         @Override
         public CalendarSource getCelebCalendarSource() {
-            fail("This  method should not be called.");
+            fail("This method should not be called.");
             return null;
         }
 
+        @Override
+        public StorageCalendar getStorageCalendar() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public CalendarSource getStorageCalendarSource() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public String getCurrentCelebCalendarViewPage() {
+            fail("This  method should not be called.");
+            return null;
+        }
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
@@ -155,6 +185,11 @@ public class AddCommandTest {
         public int removeTag(Tag tag) {
             fail("This method should not be called.");
             return -1;
+        }
+
+        @Override
+        public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
+            fail("This method should not be called.");
         }
     }
 

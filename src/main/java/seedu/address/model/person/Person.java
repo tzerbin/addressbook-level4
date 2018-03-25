@@ -60,16 +60,25 @@ public class Person {
     }
 
     /**
-     * Removes a {@code tag} if it is in the tag list of this {@code person}.
-     * @returns true if this {@code person} has the specified {@code tag}, else false.
+     * Returns {@code true} if the {@code person} has the specified {@code tag},
+     * else false.
      */
-    public boolean removeTag(Tag toRemove) {
+    public boolean hasTag(Tag targetTag) {
         Set<Tag> newTags = tags.toSet();
-        boolean containsTheTag = newTags.remove(toRemove);
-        if (containsTheTag) {
-            tags.setTags(newTags);
+        for (Tag tag: newTags) {
+            if (tag.equals(targetTag)) {
+                return true;
+            }
         }
-        return containsTheTag;
+        return false;
+    }
+
+    /**
+     * Returns {@code true} if the person is tagged as a celebrity
+     */
+    public boolean isCelebrity() {
+        Tag celeb = new Tag("celebrity");
+        return this.hasTag(celeb);
     }
 
     @Override

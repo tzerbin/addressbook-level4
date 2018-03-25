@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
@@ -45,16 +46,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void removeTag_nonExistentTag_addressBookUnchanged() {
-        addressBookWithAmy.removeTag(new Tag(VALID_TAG_HUSBAND));
-
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(AMY).build();
-
-        assertEquals(expectedAddressBook, addressBookWithAmy);
-    }
-
-    @Test
-    public void removeTag_existentTag_tagRemoved() {
+    public void removeTag_existentTag_tagRemoved() throws Exception {
         addressBookWithBobAndAmy.removeTag(new Tag(VALID_TAG_FRIEND));
 
         Person bobWithoutFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
@@ -124,6 +116,7 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ArrayList<Celebrity> celebrities = new ArrayList<>();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
@@ -138,6 +131,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ArrayList<Celebrity> getCelebritiesList() {
+            return celebrities;
         }
     }
 

@@ -67,4 +67,9 @@ public class LogicManager extends ComponentManager implements Logic {
     public CalendarSource getCelebCalendarSource() {
         return model.getCelebCalendarSource();
     }
+
+    @Override
+    public CalendarSource getStorageCalendarSource() {
+        return model.getStorageCalendarSource();
+    }
 }

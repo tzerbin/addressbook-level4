@@ -20,7 +20,9 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCalendarByCommand;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
+import seedu.address.logic.commands.calendar.ListAppointmentCommand;
 import seedu.address.logic.commands.map.EstimateRouteCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.calendar.AddAppointmentCommandParser;
@@ -110,6 +112,10 @@ public class AddressBookParser {
         case RemoveTagCommand.COMMAND_ALIAS:
             return new RemoveTagCommandParser().parse(arguments);
 
+        case ViewCalendarByCommand.COMMAND_WORD:
+        case ViewCalendarByCommand.COMMAND_ALIAS:
+            return new ViewCalendarByCommandParser().parse(arguments);
+
         case ShowLocationCommand.COMMAND_WORD:
         case ShowLocationCommand.COMMAND_ALIAS:
             return new ShowLocationCommandParser().parse(arguments);
@@ -117,6 +123,10 @@ public class AddressBookParser {
         case EstimateRouteCommand.COMMAND_WORD:
         case EstimateRouteCommand.COMMAND_ALIAS:
             return new EstimateRouteCommandParser().parse(arguments);
+
+        case ListAppointmentCommand.COMMAND_WORD:
+        case ListAppointmentCommand.COMMAND_ALIAS:
+            return new ListAppointmentCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
