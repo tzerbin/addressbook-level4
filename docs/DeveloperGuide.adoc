@@ -529,8 +529,7 @@ Similar to the other commands like `FindCommand` it will not be identified by th
 
 [.underline]*Use of model*
 
-This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
-the due to the difference in address specification details as the `Address` model is too specific for the command to work.
+This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to the difference in address specification details as the `Address` model is too specific for the command to work.
 An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
 
 
@@ -557,6 +556,7 @@ public class Address {
     ...
 }
 ----
+
 
 The snippet code below shows the diagram of `MapAddress` model:
 
