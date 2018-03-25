@@ -60,7 +60,7 @@ public class Person {
     }
 
     /**
-     * @returns {@code true} if the {@code person} has the specified {@code tag},
+     * Returns {@code true} if the {@code person} has the specified {@code tag},
      * else false.
      */
     public boolean hasTag(Tag targetTag) {
@@ -74,7 +74,7 @@ public class Person {
     }
 
     /**
-     * Returns if the person is tagged as a celebrity
+     * Returns {@code true} if the person is tagged as a celebrity
      */
     public boolean isCelebrity() {
         Tag celeb = new Tag("celebrity");

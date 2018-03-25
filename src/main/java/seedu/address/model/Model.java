@@ -44,11 +44,14 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    /** Fetches the list of CelebCalendars */
+    /** Fetches the list of CelebCalendars. */
     ObservableList<Calendar> getCelebCalendars();
 
-    /** Fetches the CalendarSource of the CelebCalendars */
+    /** Fetches the CalendarSource of the CelebCalendars. */
     CalendarSource getCelebCalendarSource();
+
+    /** Returns a String that represents the current calendar view page. */
+    String getCurrentCelebCalendarViewPage();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
@@ -59,7 +62,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /**Removes the given {@code tag} from all {@code person}s. */
+    /** Removes the given {@code tag} from all {@code person}s. */
     int removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
 
+    /** Changes the currentCelebCalendarViewPage. */
+    void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage);
 }
