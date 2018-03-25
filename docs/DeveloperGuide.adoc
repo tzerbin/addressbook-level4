@@ -25,7 +25,7 @@ an overview of the architecture and the different features present and how they 
 
 === Prerequisites
 
-Before we get started on the setup, there are a few prerequisites to have a successful setup. They are,
+Before we get started on the setup, there are a few prerequisites to have a successful setup. They are:
 
 . *JDK* +
 Our programming language of choice is Java in this project. To be able to work with java,
