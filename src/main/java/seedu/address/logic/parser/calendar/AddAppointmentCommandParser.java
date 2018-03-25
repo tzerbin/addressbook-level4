@@ -24,7 +24,6 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
-import sun.net.www.ParseUtil;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object
