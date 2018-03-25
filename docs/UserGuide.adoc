@@ -327,3 +327,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *ShowLocation* : `showLocation ma/LOCATION`
