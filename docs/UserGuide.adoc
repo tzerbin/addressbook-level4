@@ -94,12 +94,12 @@ Examples:
 
 Adds an appointment to CelebManager. +
 Alias: `aa` +
-Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
+Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEB_INDEX]...`
 
 Examples:
 
-* `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
-* `add n/Dentist Appointment l/Dental Clinic st/15:45`
+* `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00 c/2 c/4`
+* `add n/Dentist Appointment l/Dental Clinic st/15:45 c/1`
 
 ****
 * Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
@@ -107,6 +107,7 @@ it must be prefixed with a 0, e.g. `03/07/2017`.
 * Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
 or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
 * You can omit one or more of the time, date and location fields when using this command.
+* You can have zero or more celebrities for whom you want to add this appointment to their calendars with the `c/` fields.
 ****
 
 === Listing appointments: `listAppointment` [Since v1.3]
@@ -354,8 +355,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
-[et/END_TIME]`
+* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEB_INDEX]...` +
 e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
 * *List Appointments* : `listAppointment`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
