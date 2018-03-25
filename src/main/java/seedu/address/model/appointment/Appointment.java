@@ -95,7 +95,7 @@ public class Appointment extends Entry {
      * Removes old child entries and creates a new child entry for every celebrity
      * and then stores it in childEntryList.
      */
-    public void updateEntries(ArrayList<Celebrity> celebrities) {
+    public void updateEntries(List<Celebrity> celebrities) {
         clearChildEntries();
         childEntryList.clear();
 
