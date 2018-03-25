@@ -21,7 +21,7 @@ this developer guide will serve as a helpful reference and source of "how-to" in
 when contributing to this project. Included are guides on how to set-up the project locally,
 an overview of the architecture and the different features present and how they are implemented.
 
-== Setting up
+== Setting Up
 
 This section will discuss the setting up of project for development.
 
@@ -125,7 +125,7 @@ Before starting to work on the project after successful configurations, you are 
 
 The *_Architecture Diagram_* given below explains the high-level design of the project.
 
-.Architecture Diagram
+.Architecture diagram
 image::Architecture.png[width="600"]
 
 ////
@@ -159,7 +159,7 @@ The components are:
 ////
 For example, the `Logic` component (see Figure 2) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
-.Class Diagram of the Logic Component
+.Class diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
 [discrete]
@@ -170,10 +170,10 @@ image::LogicClassDiagram.png[width="800"]
 === Common Classes
 Common class files, such as `EventsCenter`, are used by multiple components are in the `seedu.addressbook.commons` package.
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _sequence diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 Note that the `Model` simply raises a `AddressBookChangedEvent` when the CelebManager data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-.Sequence Diagram for `delete 1` command (1)
+.Sequence diagram for `delete 1` command (1)
 image::SDforDeletePerson.png[width="800"]
 
 
@@ -181,7 +181,7 @@ The diagram below shows how the `EventsCenter` reacts to that event, which resul
 The status bar of the UI is also updated to reflect the 'Last Updated' time.
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them.
 
-.Sequence Diagram for `delete 1` command (2)
+.Sequence diagram for `delete 1` command (2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
 === Architecture Components
@@ -191,7 +191,7 @@ image::SDforDeletePersonEventHandling.png[width="800"]
 
 The following diagram shows the class diagram of the `UI` component.
 
-.Class Diagram of the `UI` component
+.Class diagram of the `UI` component
 image::UiClassDiagram.png[width="800"]
 
 *API*: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
@@ -216,7 +216,7 @@ The following diagrams shows the structure of the `Logic` component, and details
 It describe the overall structure of the `Logic` component and how a single command such as `XYZCommand` and other commands are structured respectively.
 
 [[fig-LogicClassDiagram]]
-.Class Diagram of the `Logic` component
+.Class diagram of the `Logic` component
 image::LogicClassDiagram.png[width="800"]
 
 .Structure of commands in the `Logic` component
@@ -233,7 +233,7 @@ When the user types in a new command to be parsed:
 
 The following diagram shows the sequence diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
-.Sequence Diagram for the `delete 1` command
+.Sequence diagram for the `delete 1` command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
@@ -242,7 +242,7 @@ image::DeletePersonSdForLogic.png[width="800"]
 The following diagram shows the class diagram of the `Model` component.
 It describes the overall structure of the `Model` component, along with all its sub-components.
 
-.Class Diagram of the `Model` component
+.Class diagram of the `Model` component
 image::ModelClassDiagram.png[width="800"]
 
 *API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -260,7 +260,7 @@ The `Model` component:
 The following diagram shows the class diagram of the `Storage` component.
 It describes how the overall structure of the `Storage` component and its different sub-components.
 
-.Class Diagram of the `Storage` component
+.Class diagram of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
 
 *API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
@@ -287,7 +287,7 @@ The following figure shows the inheritance diagram for `RemoveTagCommand`:
 .Inheritance diagram for `Command`
 image::RemoveTagCommandClassDiagram.png[width=""]
 
-As you can see from the diagram, `RemoveTagCommand` inherits from the `UndoableCommand`.
+The `RemoveTagCommand` class inherits from the `UndoableCommand` class.
 Similar to the other undoable commands like `DeleteCommand`, it supports the undo/redo feature.
 
 Unlike `DeleteCommand` that can raise `PersonNotFoundException` when the `index` of the `person` to be deleted does not exist,
@@ -854,26 +854,26 @@ image::ShowLocationSequenceDiagram.png[width=""]
 == Documentation
 This section shows you how to document your project effectively.
 
-Use AsciiDoc a lightweight markup language for writing documentation.
+You can use AsciiDoc, a lightweight markup language, for writing documentation.
 
 [NOTE]
-Chose AsciiDoc(markup language) over markdown language format because it provides more flexibility with regards to formatting.
+AsciiDoc(markup language) is chosen over markdown language format because it provides more flexibility with regards to formatting.
 
 
-=== Editing Documentation
+=== Editing of Documentation
 
-Refer to <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
+Please refer to <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing of Documentation
 
-Refer to <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
+Please refer to <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting of Documentation to PDF format
 
-Use https://www.google.com/chrome/browser/desktop/[Google Chrome] to convert documents to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+You can use https://www.google.com/chrome/browser/desktop/[Google Chrome] to convert documents to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format:
+To convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
@@ -890,7 +890,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 Testing is very important as it allows us to find application defects that were made during development, and it should be done constantly. It can be expensive if software testing is done only in the later stages of development, as a bug may affect different components of the project.
 
-=== Types of tests
+=== Types of Tests
 
 There are two types of tests that we can run during the development of the project:
 
@@ -917,10 +917,10 @@ There are three ways to run tests.
 [NOTE]
 GUI tests can be run in _headless_ mode due to the https://github.com/TestFX/TestFX[TestFX] library. GUI tests do not show up on the screen in headless mode, which allows you to work on other matters while tests are running.
 
-[TIP]
+[NOTE]
 Using Gradle (headless) is the most reliable way to run tests. Other testing methods may fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-[TIP]
+[NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
 *Method 2: Using Gradle*
@@ -933,57 +933,59 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 * To run a subset of tests, right-click on a test package or a test class, and choose `Run 'Tests in '<test package or test class>''`.
 
 
-=== Troubleshooting Testing
+=== Test Troubleshooting
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+////
 == Dev Ops
 
 Dev Ops is a software engineering culture and practice that aims at unifying software development (Dev) and software operations (Ops).
 Dev Ops advocates automation and monitoring at all steps of software construction. This section illustrates how we adopt this practice in developing CelebManager.
+////
 
 === Build Automation
 
-We use Gradle for build automation. +
+Please use Gradle for build automation. +
 Refer to <<UsingGradle#, UsingGradle.adoc>> for more details.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. +
+Please use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. +
 Refer to <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
+Please use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
 Refer to <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
 
-We use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look
+Please use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look
 like when a pull request is merged. +
-Refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+Please refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Application Release
 
-We do the following steps to create a new release:
+To do the following steps to create a new release, you can:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number, e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Dependencies Management
 
-We automate _dependencies_ on third-party libraries using Gradle.
+Management of dependencies on third-party libraries is done using Gradle.
 There is no need to include those libraries in the repo or download them manually.
 
 [[GetStartedProgramming]]
 [appendix]
 == Product Scope
 
-*Target user profile*:
+The *target user profile*:
 
 * has a need to manage a significant number of contacts
 * prefers desktop apps over other types
@@ -1425,7 +1427,7 @@ For each subsequent launch, window size and location should be the same as the s
    _Expected: The most recent window size and location are retained._
 
 === Deleting a person
-This section includes instructions to test the delete command of the App.
+This section includes instructions to test the delete command of the application.
 [NOTE]
 Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
@@ -1436,8 +1438,10 @@ Prerequisites: List all persons using the `list` command. Multiple persons in th
 .. Type other incorrect delete command such as `delete`, `delete x` (where x is larger than the list size) in command box and press enter +
    _Expected: Similar to previous._
 
+////
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+////
