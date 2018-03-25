@@ -204,10 +204,6 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        calendarPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
