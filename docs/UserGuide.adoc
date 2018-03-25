@@ -94,7 +94,7 @@ Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIM
 Examples:
 
 * `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
-* `add n/Dentist Appointmnt l/Dental Clinic st/15:45`
+* `add n/Dentist Appointment l/Dental Clinic st/15:45`
 
 ****
 * Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
@@ -140,6 +140,22 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Changing the calendar view: 'viewCalendarBy'
+
+Changes the calendar view to a different one specified by the user. +
+Alias: `vcb` +
+Format: `viewCalendarBy VIEW`
+
+****
+* Changes the calendar view to the specified `VIEW`.
+* `VIEW` must be `day`, `week`, `month` or `year`.
+****
+
+Examples:
+
+* `viewCalendarBy week` +
+Changes the calendar view to weekly view.
 
 === Locating persons by name: `find`
 
@@ -289,9 +305,6 @@ There is no need to save manually.
 Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this operation. +
 Alias: `rt` +
 Format: `removeTag TAG`
-
-[TIP]
-You can remove a tag that does not exist in CelebManager and it will show 0 person gets affected.
 
 Examples:
 
