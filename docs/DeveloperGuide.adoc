@@ -21,38 +21,39 @@ this developer guide will serve as a helpful reference and source of "how-to" in
 when contributing to this project. Included are guides on how to set-up the project locally,
 an overview of the architecture and the different features present and how they are implemented.
 
-== Setting up
+== Setting Up
+
+This section will discuss the setting up of project for development.
 
 === Prerequisites
 
-Before we get started on the setup, there are a few prerequisites to have a successful setup. They are:
+To get started, there are a few prerequisites to have a successful setup. They are:
 
-. *JDK* +
-Our programming language of choice is Java in this project. To be able to work with java,
-you will need to have Java Development Kit (JDK) installed. You must install version `1.8.0_60` or later.
+. *JDK* (Java Development Kit) +
+Our programming language of choice is Java in this project.
+To be able to work with java, you will need to have JDK installed. You must install version `1.8.0_60` or later. +
 You can get the JDK from: +
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-Some components of this app will not work +
-with earlier versions of Java 8.
+Some components of this app will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE +
-It is possible to setup without IntelliJ specifically and other IDEs might be used, but it is much simpler
-to carry it out in IntelliJ. All the steps for setup from here on out will be specific to IntelliJ. We highly recommend
-that you too use IntelliJ unless you have prior experience in working with gradle projects. You can get IntelliJ from: +
+. *IntelliJ Integrated Development Environment* (IDE) +
+It is possible to setup with other IDEs, but it is much simpler to carry it out in IntelliJ.
+All the steps for setup in this document will be specific to IntelliJ.
+We highly recommend that you too use IntelliJ unless you have prior experience in working with gradle projects.
+You can get IntelliJ from: +
 https://www.jetbrains.com/idea/
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ has Gradle and JavaFx plugins installed by default. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Local Project Setup
 
-If you want to contribute to this project, you will need to work with a local copy of this project. To do so:
+To contribute to this project, you will need to work with a local copy of this project. To do so:
 
 . Fork this repo, and clone the fork to your computer.
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
@@ -66,18 +67,20 @@ If you want to contribute to this project, you will need to work with a local co
 . Open a console and run the command `gradlew processResources`. (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Setup Verification
 
 To ensure that you have setup the project correctly: +
 
 . Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Setup Configurations
 
-==== Configuring the coding style
+==== Coding Style Configurations
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards].
+IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours.
+To rectify:
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
 . Select `Editor` > `Code Style` > `Java`.
@@ -86,105 +89,119 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Alternatively, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
+==== Documentation Configurations
 
-After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W14-B4/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W14-B4/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W14-B4/main` repository.
+If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W14-B4/main` repository), you should replace the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Continuous Integration (CI) Configurations
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+There are two CI configurations that you can set up.
 
-After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
+To set up Travis for performing CI for your fork, please refer to <<UsingTravis#, UsingTravis.adoc>>.
+Optionally, to set up AppVeyor for performing CI, please refer to <<UsingAppVeyor#, UsingAppVeyor.adoc>>.
+
+[NOTE]
+Travis is an Unix-based software, while AppVeyor is a Windows-based software.
+Having both Travis CI and AppVeyor CI ensures your App works on both Unix-based platforms and Windows-based platforms.
+
+You should also set up coverage reporting for your team fork. Please refer to <<UsingCoveralls#, UsingCoveralls.adoc>>.
 
 [NOTE]
 Coverage reporting could be useful for a team repository that hosts the final version but it is not that useful for your personal fork.
 
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
-
-[NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
-
-==== Getting started with coding
-
-When you are ready to start coding:
-
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
 
 == Design
 
-[[Design-Architecture]]
-=== Architecture
+Before starting to work on the project after successful configurations, you are encouraged to:
 
-.Architecture Diagram
+1. Understand the overall design (<<Design-Architecture>>).
+2. Understand the product scope (<<GetStartedProgramming>>).
+
+[[Design-Architecture]]
+=== Software Architecture
+
+The *_Architecture Diagram_* given below explains the high-level design of the project.
+
+.Architecture diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above (Figure 1) explains the high-level design of the App. Given below is a quick overview of each component.
-
+////
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+////
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for the following:
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializing the components in the correct sequence and connects them up with each other at application launch.
+* Shutting down the components and invokes cleanup method where necessary.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level. These are:
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple components.
+Two of these classes are vital at the architecture level. These are:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` is used by components to communicate with other components using events.
+* `LogsCenter` is used by many classes to write log messages to the application's log file.
 
-The rest of the App consists of four components. They are:
+[NOTE]
+`EventsCenter` is written using the https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
+It is a form of event-driven design.
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+The rest of the App consists of four components, each defining its _API_ in an interface, and exposing its functionality using a `{Component Name}Manager` class.
+The components are:
 
-Each of the four components,
+* <<Design-Ui,*`UI`*>>: The user interface of the application.
+* <<Design-Logic,*`Logic`*>>: The command executor of the application.
+* <<Design-Model,*`Model`*>>: The container for in-memory data of the application.
+* <<Design-Storage,*`Storage`*>>: The driver for reading and writing data of the application.
 
-* defines its _API_ in an `interface` with the same name as the Component.
-* exposes its functionality using a `{Component Name}Manager` class.
-
+////
 For example, the `Logic` component (see Figure 2) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
-.Class Diagram of the Logic Component
+.Class diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
 [discrete]
-==== Events-Driven nature of the design
+==== Event-driven Design
+////
 
-The _Sequence Diagram_ below (Figure 3) shows how the components interact for the scenario where the user issues the command `delete 1`.
+[[Design-Commons]]
+=== Common Classes
+Common class files, such as `EventsCenter`, are used by multiple components are in the `seedu.addressbook.commons` package.
 
-.Component interactions for `delete 1` command (part 1)
+The _sequence diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+Note that the `Model` simply raises a `AddressBookChangedEvent` when the CelebManager data is changed, instead of asking the `Storage` to save the updates to the hard disk.
+
+.Sequence diagram for `delete 1` command (1)
 image::SDforDeletePerson.png[width="800"]
 
-[NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the CelebManager data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below (Figure 4) shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below shows how the `EventsCenter` reacts to that event, which results in the updates being saved to the hard disk.
+The status bar of the UI is also updated to reflect the 'Last Updated' time.
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them.
 
-.Component interactions for `delete 1` command (part 2)
+.Sequence diagram for `delete 1` command (2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
-[NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
-
-The sections below describe each component in greater detail.
+=== Architecture Components
 
 [[Design-Ui]]
-=== UI component
+==== UI Component
 
-.Structure of the UI Component
+The following diagram shows the class diagram of the `UI` component.
+
+.Class diagram of the `UI` component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-From the diagram above (Figure 5), we can see that the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc.
+All these classes inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework.
+The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
+For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
 The `UI` component,
 
@@ -193,44 +210,44 @@ The `UI` component,
 * responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
-=== Logic component
+==== Logic Component
+
+The following diagrams shows the structure of the `Logic` component, and details on `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
+It describe the overall structure of the `Logic` component and how a single command such as `XYZCommand` and other commands are structured respectively.
 
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Class diagram of the `Logic` component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+.Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-The diagrams above (Figures 6 & 7) describe the overall structure of the `Logic` component and
-how a single command such as `XYZCommand` and other commands are structured respectively. When the user types
-in a new command to be parsed, the following happen:
+When the user types in a new command to be parsed:
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
+.  The `Logic` uses the `AddressBookParser` class to parse the user command.
+.  A `Command` object is then executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+.  The result of the command execution is then encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below (Figure 8) is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+The following diagram shows the sequence diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Sequence diagram for the `delete 1` command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
-=== Model component
+==== Model Component
 
-.Structure of the Model Component
+The following diagram shows the class diagram of the `Model` component.
+It describes the overall structure of the `Model` component, along with all its sub-components.
+
+.Class diagram of the `Model` component
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The diagram above (Figure 9) describes the overall structure of the `Model` component, along with all
-its sub-components.
-
-The `Model` component,
+The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
@@ -238,25 +255,22 @@ The `Model` component,
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
-=== Storage component
+==== Storage Component
 
-.Structure of the Storage Component
+The following diagram shows the class diagram of the `Storage` component.
+It describes how the overall structure of the `Storage` component and its different sub-components.
+
+.Class diagram of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The diagram above (Figure 10) describes how the overall structure of the `Storage` component and its different sub-components.
+The `Storage` component:
 
-The `Storage` component,
+* saves `UserPref` objects in json format and read it back.
+* saves contacts data in xml format and read it back.
+* saves appointments data in xml format and read it back.
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
-* can save the Appointment List data in xml format and read it back.
-
-[[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 == Implementation
 
@@ -273,7 +287,7 @@ The following figure shows the inheritance diagram for `RemoveTagCommand`:
 .Inheritance diagram for `Command`
 image::RemoveTagCommandClassDiagram.png[width=""]
 
-As you can see from the diagram, `RemoveTagCommand` inherits from the `UndoableCommand`.
+The `RemoveTagCommand` class inherits from the `UndoableCommand` class.
 Similar to the other undoable commands like `DeleteCommand`, it supports the undo/redo feature.
 
 Unlike `DeleteCommand` that can raise `PersonNotFoundException` when the `index` of the `person` to be deleted does not exist,
@@ -840,26 +854,26 @@ image::ShowLocationSequenceDiagram.png[width=""]
 == Documentation
 This section shows you how to document your project effectively.
 
-Use AsciiDoc a lightweight markup language for writing documentation.
+You can use AsciiDoc, a lightweight markup language, for writing documentation.
 
 [NOTE]
-Chose AsciiDoc(markup language) over markdown language format because it provides more flexibility with regards to formatting.
+AsciiDoc(markup language) is chosen over markdown language format because it provides more flexibility with regards to formatting.
 
 
-=== Editing Documentation
+=== Editing of Documentation
 
-Refer to <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
+Please refer to <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing of Documentation
 
-Refer to <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
+Please refer to <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting of Documentation to PDF format
 
-Use https://www.google.com/chrome/browser/desktop/[Google Chrome] to convert documents to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+You can use https://www.google.com/chrome/browser/desktop/[Google Chrome] to convert documents to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format:
+To convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
@@ -876,7 +890,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 Testing is very important as it allows us to find application defects that were made during development, and it should be done constantly. It can be expensive if software testing is done only in the later stages of development, as a bug may affect different components of the project.
 
-=== Types of tests
+=== Types of Tests
 
 There are two types of tests that we can run during the development of the project:
 
@@ -903,10 +917,10 @@ There are three ways to run tests.
 [NOTE]
 GUI tests can be run in _headless_ mode due to the https://github.com/TestFX/TestFX[TestFX] library. GUI tests do not show up on the screen in headless mode, which allows you to work on other matters while tests are running.
 
-[TIP]
+[NOTE]
 Using Gradle (headless) is the most reliable way to run tests. Other testing methods may fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-[TIP]
+[NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
 *Method 2: Using Gradle*
@@ -919,57 +933,59 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 * To run a subset of tests, right-click on a test package or a test class, and choose `Run 'Tests in '<test package or test class>''`.
 
 
-=== Troubleshooting Testing
+=== Test Troubleshooting
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+////
 == Dev Ops
 
 Dev Ops is a software engineering culture and practice that aims at unifying software development (Dev) and software operations (Ops).
 Dev Ops advocates automation and monitoring at all steps of software construction. This section illustrates how we adopt this practice in developing CelebManager.
+////
 
 === Build Automation
 
-We use Gradle for build automation. +
+Please use Gradle for build automation. +
 Refer to <<UsingGradle#, UsingGradle.adoc>> for more details.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. +
+Please use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. +
 Refer to <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
+Please use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
 Refer to <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
 
-We use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look
+Please use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look
 like when a pull request is merged. +
-Refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+Please refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Application Release
 
-We do the following steps to create a new release:
+To do the following steps to create a new release, you can:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number, e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Dependencies Management
 
-We automate _dependencies_ on third-party libraries using Gradle.
+Management of dependencies on third-party libraries is done using Gradle.
 There is no need to include those libraries in the repo or download them manually.
 
 [[GetStartedProgramming]]
 [appendix]
 == Product Scope
 
-*Target user profile*:
+The *target user profile*:
 
 * has a need to manage a significant number of contacts
 * prefers desktop apps over other types
@@ -1411,7 +1427,7 @@ For each subsequent launch, window size and location should be the same as the s
    _Expected: The most recent window size and location are retained._
 
 === Deleting a person
-This section includes instructions to test the delete command of the App.
+This section includes instructions to test the delete command of the application.
 [NOTE]
 Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
@@ -1422,8 +1438,10 @@ Prerequisites: List all persons using the `list` command. Multiple persons in th
 .. Type other incorrect delete command such as `delete`, `delete x` (where x is larger than the list size) in command box and press enter +
    _Expected: Similar to previous._
 
+////
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+////
