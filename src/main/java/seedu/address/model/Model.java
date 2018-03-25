@@ -1,11 +1,14 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.calendar.StorageCalendar;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +28,12 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    /** Adds the given celebrity */
+    void addCelebrity(Person person) throws DuplicatePersonException;
+
+    /** Gets the list of celebrities */
+    ArrayList<Celebrity> getCelebrities();
+
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;
 
@@ -41,11 +50,20 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    /** Fetches the list of CelebCalendars */
+    /** Fetches the list of CelebCalendars. */
     ObservableList<Calendar> getCelebCalendars();
 
-    /** Fetches the CalendarSource of the CelebCalendars */
+    /** Fetches the CalendarSource of the CelebCalendars. */
     CalendarSource getCelebCalendarSource();
+
+    /** Fetches the StorageCalendar used to store Appointments */
+    StorageCalendar getStorageCalendar();
+
+    /** Fetches CalendarSource containing the StorageCalendar */
+    CalendarSource getStorageCalendarSource();
+
+    /** Returns a String that represents the current calendar view page. */
+    String getCurrentCelebCalendarViewPage();
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
@@ -56,7 +74,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
-    /**Removes the given {@code tag} from all {@code person}s. */
+    /** Removes the given {@code tag} from all {@code person}s. */
     int removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
 
+    /** Changes the currentCelebCalendarViewPage. */
+    void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage);
 }

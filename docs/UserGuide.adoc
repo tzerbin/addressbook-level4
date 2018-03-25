@@ -75,10 +75,10 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Adding an appointment: `addAppointment`
+=== Adding an appointment: `addAppointment` [Since v1.2]
 
 Adds an appointment to Celeb Scheduler. +
-Alias: `aa`
+Alias: `aa` +
 Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
 
 Examples:
@@ -93,6 +93,12 @@ it must be prefixed with a 0 (e.g. 03/07/...).
 or minute is a 1 digit number, you need to prefix it with a 0 (e.g. 09:05)
 * You can omit one or more of the time, date and location fields when using this command.
 ****
+
+=== Listing appointments: `listAppointment` [Since v1.3]
+
+Lists all appointments in our Celeb Scheduler. +
+Alias: `la` +
+Format: `listAppointment`
 
 ===  Editing an appointment `[coming in v1.3]`
 
@@ -316,6 +322,9 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
+e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
+* *List Appointments* : `listAppointment`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
@@ -327,3 +336,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *ShowLocation* : `showLocation ma/LOCATION`

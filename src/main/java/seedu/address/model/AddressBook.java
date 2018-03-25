@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.createEditedPerson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -29,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final ArrayList<Celebrity> celebrities;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -40,6 +43,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        celebrities = new ArrayList<>();
     }
 
     public AddressBook() {}
@@ -58,6 +62,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setCelebrities(List<Celebrity> celebrities) throws DuplicatePersonException {
+        this.celebrities.addAll(celebrities);
+    }
+
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -71,13 +80,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
+        List<Celebrity> syncedCelebrityList = filterCelebrities(syncedPersonList);
 
         try {
             setPersons(syncedPersonList);
+            setCelebrities(syncedCelebrityList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
     }
+
 
     /**
      * Removes {@code tag} from all persons in this {@code AddressBook}.
@@ -140,6 +152,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a copy of the given celebrity and returns it.
+     */
+    public Celebrity addCelebrity(Person person) throws DuplicatePersonException {
+        Celebrity celebrity = (Celebrity) syncWithMasterTagList(person);
+        persons.add(celebrity);
+        celebrities.add(celebrity);
+        return celebrity;
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
      *
@@ -159,6 +181,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
         removeUnusedTags();
+    }
+
+    /**
+     * Filters through a list of persons and returns those with a celebrity tag
+     */
+    private ArrayList<Celebrity> filterCelebrities(List<Person> persons) {
+        ArrayList<Celebrity> celebrities = new ArrayList<>();
+        for (Person p : persons) {
+            if (p.isCelebrity()) {
+                celebrities.add((Celebrity) p);
+            }
+        }
+        return celebrities;
     }
 
     /**
@@ -185,6 +220,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return usedTags;
     }
 
+
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
@@ -202,8 +238,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
+        Person updatedPerson = new Person(
                 person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+
+        if (updatedPerson.isCelebrity()) {
+            updatedPerson = new Celebrity(updatedPerson);
+        }
+        return updatedPerson;
     }
 
     /**
@@ -244,16 +285,22 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ArrayList<Celebrity> getCelebritiesList() {
+        return celebrities;
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.celebrities.equals(((AddressBook) other).celebrities);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, celebrities);
     }
 }

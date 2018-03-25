@@ -35,17 +35,19 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarPanel calendarPanel;
     private MapPanel mapPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     // Source of calendars for calendar UI container
-    private CalendarSource calendarSource;
+    private CalendarSource celebCalendarSource;
+    private CalendarSource storageCalendarSource;
+
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -73,7 +75,8 @@ public class MainWindow extends UiPart<Stage> {
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
-        this.calendarSource = logic.getCelebCalendarSource();
+        this.celebCalendarSource = logic.getCelebCalendarSource();
+        this.storageCalendarSource = logic.getStorageCalendarSource();
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -109,6 +112,7 @@ public class MainWindow extends UiPart<Stage> {
          * not work when the focus is in them because the key event is consumed by
          * the TextInputControl(s).
          *
+         *
          * For now, we add following event filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
@@ -125,10 +129,10 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        CalendarPanel calendarPanel = new CalendarPanel(calendarSource);
-        // browserPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+
+        CalendarPanel calendarPanel = new CalendarPanel(celebCalendarSource, storageCalendarSource);
+
+        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
         mapPanel = new MapPanel();
         mapPanelPlaceholder.getChildren().add(mapPanel.getMapView());
@@ -198,10 +202,6 @@ public class MainWindow extends UiPart<Stage> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe
