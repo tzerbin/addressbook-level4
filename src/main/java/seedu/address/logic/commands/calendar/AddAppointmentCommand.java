@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -69,8 +71,8 @@ public class AddAppointmentCommand extends Command {
         cal.addEntry(appt);
         appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
 
-        // ArrayList<Celebrity> celebrities = model.getCelebrities();
-        // appt.updateEntries(celebrities);
+        // reset calendar view to dayview
+        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent("day"));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

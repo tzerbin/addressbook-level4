@@ -105,6 +105,15 @@ public class Appointment extends Entry {
     }
 
     /**
+     * Removes all child entries and then removes the appointment itself from
+     * the StorageCalendar.
+     */
+    public void removeAppointment() {
+        clearChildEntries();
+        this.setCalendar(null);
+    }
+
+    /**
      * Creates new childEntry for a given celebrity and sets the entry to point
      * to the celebrity's calendar.
      */
