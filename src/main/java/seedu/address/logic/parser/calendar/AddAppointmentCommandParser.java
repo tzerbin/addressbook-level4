@@ -1,6 +1,7 @@
 package seedu.address.logic.parser.calendar;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
@@ -12,7 +13,9 @@ import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
+import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -35,7 +38,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
     @Override
     public AddAppointmentCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
-                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE);
+                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY);
 
         if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
                 || !argMultiMap.getPreamble().isEmpty()) {
@@ -50,6 +53,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
             Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
             Optional<String> locationInput = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_LOCATION));
+            Set<Index> celebrityIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_CELEBRITY));
 
             String location = null;
             LocalTime startTime = LocalTime.now();
@@ -76,7 +80,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             }
 
             Appointment appt = new Appointment(appointmentName, startTime, startDate, location, endTime, endDate);
-            return new AddAppointmentCommand(appt); // Let index be 0 for now since we only have one cal
+            return new AddAppointmentCommand(appt, celebrityIndices);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
