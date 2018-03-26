@@ -23,8 +23,8 @@ public class ListAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed appointments successfully.";
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private static LocalDate startDate;
+    private static LocalDate endDate;
 
     public ListAppointmentCommand() {
 
@@ -47,5 +47,13 @@ public class ListAppointmentCommand extends Command {
         EventsCenter.getInstance().post(new AgendaViewPageRequestEvent(startDate, endDate));
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    public static LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public static LocalDate getStartDate () {
+        return startDate;
     }
 }

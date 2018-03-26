@@ -51,5 +51,4 @@ public class StorageCalendar extends Calendar {
         return appointments;
 
     }
-
 }
