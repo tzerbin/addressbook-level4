@@ -193,11 +193,16 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
-    @FXML
-    public void handleAppointmentList(List<Appointment> appointments) {
+    private void handleAppointmentList(List<Appointment> appointments) {
         AppointmentListWindow apptListWindow = new AppointmentListWindow(appointments);
         calendarPlaceholder.getChildren().clear();
         calendarPlaceholder.getChildren().add(apptListWindow.getRoot());
+    }
+
+    private void handleCalendarViewChange(String calendarViewPage) {
+        calendarPlaceholder.getChildren().clear();
+        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+        calendarPanel.handleChangeCalendarViewPageRequestEvent(calendarViewPage);
     }
 
     void show() {
@@ -223,11 +228,10 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @Subscribe
-    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
+    private void handleChangeViewEvent(ChangeCalendarViewPageRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        calendarPlaceholder.getChildren().clear();
-        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
-        calendarPanel.handleChangeCalendarViewPageRequestEvent(event);
+        handleCalendarViewChange(event.calendarViewPage);
+
     }
 
     @Subscribe

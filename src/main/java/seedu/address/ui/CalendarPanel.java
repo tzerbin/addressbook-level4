@@ -8,7 +8,6 @@ import java.time.LocalTime;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.CalendarSource;
-import com.calendarfx.view.AgendaView;
 import com.calendarfx.view.CalendarView;
 
 import com.calendarfx.view.page.DayPage;
@@ -21,8 +20,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
-import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
@@ -93,14 +90,11 @@ public class CalendarPanel extends UiPart<Region> {
         return celebCalendarView;
     }
 
-    public void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
-        String calendarViewPage = event.calendarViewPage;
-
-        Platform.runLater(() -> {
-            celebCalendarView.showDate(LocalDate.now());
-            celebCalendarView.getCalendarSources().clear();
-            celebCalendarView.getCalendarSources().add(celebCalendarSource);
-            switch (calendarViewPage) {
+    public void handleChangeCalendarViewPageRequestEvent(String calendarViewPage) {
+        celebCalendarView.showDate(LocalDate.now());
+        celebCalendarView.getCalendarSources().clear();
+        celebCalendarView.getCalendarSources().add(celebCalendarSource);
+        switch (calendarViewPage) {
 
             case "day":
                 celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
@@ -122,21 +116,7 @@ public class CalendarPanel extends UiPart<Region> {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-            }
-        });
-    }
-
-    @Subscribe
-    private void handleAgendaViewPageRequestEvent(AgendaViewPageRequestEvent event) {
-        Platform.runLater(() -> {
-            celebCalendarView.getCalendarSources().clear();
-            celebCalendarView.getCalendarSources().add(storageCalendarSource);
-
-            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.AGENDA_ONLY);
-            AgendaView agendaView = celebCalendarView.getDayPage().getAgendaView();
-            agendaView.setLookAheadPeriodInDays(event.getStartEndDateDifference());
-            celebCalendarView.showDate(event.getStartDate());
-        });
+        }
     }
 
     //methods from BrowserPanel
