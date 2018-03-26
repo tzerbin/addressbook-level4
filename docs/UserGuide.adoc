@@ -71,164 +71,21 @@ acceptable.
 
 The following are all the commands available to you:
 
-=== Viewing help : `help` [Since v1.0]
+=== General Features
 
-Shows a help window that contains this User Guide. +
-Format: `help`
+==== Clearing all entries : `clear` [Since v1.0]
 
-=== Adding a person: `add` [Since v1.0]
+Clears all entries from CelebManager. +
+Alias: `c` +
+Format: `clear`
 
-Adds a person to CelebManager. +
-Alias: `a` +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+==== Exiting the program : `exit` [Since v1.0]
 
-[TIP]
-A person can have any number of tags, including 0.
+Exits the program. +
+Alias: `x` +
+Format: `exit`
 
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-=== Adding an appointment: `addAppointment` [Since v1.2]
-
-Adds an appointment to CelebManager. +
-Alias: `aa` +
-Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
-
-Examples:
-
-* `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
-* `add n/Dentist Appointment l/Dental Clinic st/15:45`
-
-****
-* Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
-it must be prefixed with a 0, e.g. `03/07/2017`.
-* Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
-or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
-* You can omit one or more of the time, date and location fields when using this command.
-****
-
-=== Listing appointments: `listAppointment` [Since v1.3]
-
-Lists all appointments in our CelebManager. +
-Alias: `la` +
-Format: `listAppointment`
-
-===  Editing an appointment `[coming in v1.3]`
-
-===  Deleting an appointment `[coming in v1.3]`
-
-=== Listing all persons : `list` [Since v1.0]
-
-Shows a list of all persons in CelebManager. +
-Alias: `l` +
-Format: `list`
-
-=== Editing a person : `edit` [Since v1.0]
-
-Edits an existing person in CelebManager. +
-Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
-The index *must be a positive integer* `1`, `2`, `3`, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Changing the calendar view: `viewCalendarBy` [Since v1.3]
-
-Changes the calendar view to a different one specified by the user. +
-Alias: `vcb` +
-Format: `viewCalendarBy VIEW`
-
-****
-* Changes the calendar view to the specified `VIEW`.
-* `VIEW` *must be* `day`, `week`, `month` or `year`.
-* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to weekly calendar view.
-****
-
-Examples:
-
-* `viewCalendarBy week` +
-Changes the calendar view to weekly view.
-
-=== Locating persons by name: `find` [Since v1.0]
-
-Finds persons whose names contain any of the given keywords. +
-Alias: `f` +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`.
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`.
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
-`Bo Yang`.
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`.
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`.
-
-=== Deleting a person : `delete` [Since v1.0]
-
-Deletes the specified person from CelebManager. +
-Alias: `d` +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1`, `2`, `3`, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in CelebManager.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select` [Since v1.0]
-
-Selects the person identified by the index number used in the last person listing. +
-Alias: `s` +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1`, `2`, `3`, ...
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in CelebManager.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history` [Since v1.0]
+==== Listing entered commands : `history` [Since v1.0]
 
 Lists all the commands that you have entered in reverse chronological order. +
 Alias: `h` +
@@ -240,8 +97,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 box.
 ====
 
+==== Viewing help : `help` [Since v1.0]
+
+Shows a help window that contains this User Guide. +
+Format: `help`
+
 // tag::undoredo[]
-=== Undoing previous command : `undo` [Since v1.0]
+==== Undoing previous command : `undo` [Since v1.0]
 
 Restores CelebManager to the state before the previous _undoable_ command was executed. +
 Alias: `u` +
@@ -268,7 +130,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo` [Since v1.0]
+==== Redoing the previously undone command : `redo` [Since v1.0]
 
 Reverses the most recent `undo` command. +
 Alias: `r` +
@@ -292,36 +154,199 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear` [Since v1.0]
-
-Clears all entries from CelebManager. +
-Alias: `c` +
-Format: `clear`
-
-=== Exiting the program : `exit` [Since v1.0]
-
-Exits the program. +
-Alias: `x` +
-Format: `exit`
-
-=== Saving the data [Since v1.0]
+==== Saving the data [Since v1.0]
 
 CelebManager data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Removing a tag : `removeTag` [Since v1.2]
+{sp} +
+
+=== Address Book Features
+
+==== Adding a person: `add` [Since v1.0]
+
+Adds a person to CelebManager. +
+Alias: `a` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags, including 0.
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+==== Deleting a person : `delete` [Since v1.0]
+
+Deletes the specified person from CelebManager. +
+Alias: `d` +
+Format: `delete INDEX`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1`, `2`, `3`, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in CelebManager.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+==== Selecting a person : `select` [Since v1.0]
+
+Selects the person identified by the index number used in the last person listing. +
+Alias: `s` +
+Format: `select INDEX`
+
+****
+* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1`, `2`, `3`, ...
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in CelebManager.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+
+==== Editing a person : `edit` [Since v1.0]
+
+Edits an existing person in CelebManager. +
+Alias: `e` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+The index *must be a positive integer* `1`, `2`, `3`, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+==== Listing all persons : `list` [Since v1.0]
+
+Shows a list of all persons in CelebManager. +
+Alias: `l` +
+Format: `list`
+
+==== Locating persons by name: `find` [Since v1.0]
+
+Finds persons whose names contain any of the given keywords. +
+Alias: `f` +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
+`Bo Yang`.
+****
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`.
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`.
+
+==== Removing a tag : `removeTag` [Since v1.2]
 
 Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this
 operation. +
 Alias: `rt` +
 Format: `removeTag TAG`
 
+****
+* Removes the tag from every person with it in CelebManager.
+* `TAG` removed *must not be* `celebrity`.
+****
+
 Examples:
 
 * `removeTag friends` +
 Removes the tag, `friends` from every person with it in CelebManager and shows the number of person(s) affected.
+* `removeTag celebrity` +
+Does not modify CelebManager and outputs an error message.
 
-=== Show location on map : `showLocation` [Since v1.2]
+{sp} +
+
+=== Appointment Features
+
+==== Adding an appointment: `addAppointment` [Since v1.2]
+
+Adds an appointment to CelebManager. +
+Alias: `aa` +
+Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
+
+Examples:
+
+* `addAppointment n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
+* `addAppointment n/Dentist Appointment l/Dental Clinic st/15:45`
+
+****
+* Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
+it must be prefixed with a 0, e.g. `03/07/2017`.
+* Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
+or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
+* You can omit one or more of the time, date and location fields when using this command.
+****
+
+====  Editing an appointment `[coming in v1.3]`
+
+====  Deleting an appointment `[coming in v1.3]`
+
+==== Listing appointments: `listAppointment` [Since v1.3]
+
+Lists all appointments in our CelebManager. +
+Alias: `la` +
+Format: `listAppointment`
+
+{sp} +
+
+=== Calendar Features
+
+==== Changing the calendar view: `viewCalendarBy` [Since v1.3]
+
+Changes the calendar view to a different one specified by the user. +
+Alias: `vcb` +
+Format: `viewCalendarBy VIEW`
+
+****
+* Changes the calendar view to the specified `VIEW`.
+* `VIEW` *must be* `day`, `week`, `month` or `year`.
+* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to weekly calendar view.
+****
+
+Examples:
+
+* `viewCalendarBy week` +
+Changes the calendar view to weekly view.
+
+{sp} +
+
+=== Map Features
+
+==== Show location on map : `showLocation` [Since v1.2]
 
 Shows the specific location in the map interface, by marking the latitude and longitude with a location marker. +
 Alias: `sl` +
@@ -343,32 +368,32 @@ data of your previous CelebManager folder.
 
 == Command Summary
 
-The following are summarized versions of all the commands introduced above, with their command format and an example
-highlighting the usage. An optional field is enclosed within a pair of `[]`. A field that can be repeatedly entered
-with different input values is followed by `...`.
+The following are summarized versions of all the commands introduced above displayed in alphabetical order. The commands
+are displayed with their respective command format and an example highlighting the usage. An optional field is enclosed
+within a pair of `[]`. A field that can be repeatedly entered with different input values is followed by `...`.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
+[et/END_TIME]` +
+e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
-[et/END_TIME]`
-e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
-* *List Appointments* : `listAppointment`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
+* *History* : `history`
+* *List* : `list`
+* *List Appointments* : `listAppointment`
+* *Redo* : `redo`
 * *Remove Tag* : `removeTag TAG` +
 e.g.`removeTag friends`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *ShowLocation* : `showLocation ma/LOCATION`
+* *Undo* : `undo`
 * *View Calendar By* : `viewCalendarBy VIEW` +
 e.g.`viewCalendarBy week`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *ShowLocation* : `showLocation ma/LOCATION`
