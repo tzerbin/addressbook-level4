@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.calendarfx.model.CalendarSource;
@@ -16,10 +18,13 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowAppointmentListEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.appointment.Appointment;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -130,7 +135,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
 
-        CalendarPanel calendarPanel = new CalendarPanel(celebCalendarSource, storageCalendarSource);
+        calendarPanel = new CalendarPanel(celebCalendarSource, storageCalendarSource);
 
         calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
@@ -188,6 +193,13 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    @FXML
+    public void handleAppointmentList(List<Appointment> appointments) {
+        AppointmentListWindow apptListWindow = new AppointmentListWindow(appointments);
+        calendarPlaceholder.getChildren().clear();
+        calendarPlaceholder.getChildren().add(apptListWindow.getRoot());
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -208,5 +220,19 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarPlaceholder.getChildren().clear();
+        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+        calendarPanel.handleChangeCalendarViewPageRequestEvent(event);
+    }
+
+    @Subscribe
+    private void handleShowAppointmentListEvent(ShowAppointmentListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleAppointmentList(event.getAppointments());
     }
 }

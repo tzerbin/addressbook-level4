@@ -93,8 +93,7 @@ public class CalendarPanel extends UiPart<Region> {
         return celebCalendarView;
     }
 
-    @Subscribe
-    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
+    public void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
         String calendarViewPage = event.calendarViewPage;
 
         Platform.runLater(() -> {

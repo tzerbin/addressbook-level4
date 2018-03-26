@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
+import seedu.address.commons.events.ui.ShowAppointmentListEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -45,6 +46,8 @@ public class ListAppointmentCommand extends Command {
 
         model.setCelebCalendarViewPage("agenda");
         EventsCenter.getInstance().post(new AgendaViewPageRequestEvent(startDate, endDate));
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(model.getStorageCalendar().
+                getAppointmentsWithinDate(startDate, endDate)));
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
