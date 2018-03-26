@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.calendarfx.model.Calendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -202,21 +203,12 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
-     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
+     * Asserts that only the card at {@code expectedSelectedCardIndex} is selected.
      * @see CalendarPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(CalendarPanel.SEARCH_PAGE_URL
-                    + selectedCardName.replaceAll(" ", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
