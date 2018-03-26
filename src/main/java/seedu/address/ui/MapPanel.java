@@ -2,10 +2,14 @@ package seedu.address.ui;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.object.DirectionsPane;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
+import com.lynden.gmapsfx.service.directions.DirectionsRequest;
+import com.lynden.gmapsfx.service.directions.DirectionsService;
 
 import javafx.application.Platform;
 import javafx.scene.layout.Region;
@@ -23,8 +27,12 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
     public static final int DEFAULT_ZOOM_LEVEL = 10;
     private static final String FXML = "MapsPanel.fxml";
     private static GoogleMap actualMap;
-
     private GoogleMapView mapView;
+    private static DirectionsPane directions;
+    private static DirectionsRenderer renderer;
+    private static DirectionsService directionService;
+    private static DirectionsRequest directionRequest;
+
     public MapPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
@@ -46,7 +54,9 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
             }
         });
         t.start();
+        directionService = new DirectionsService();
         actualMap = setMapOptions();
+        directions = mapView.getDirec();
     }
 
     /**
@@ -73,5 +83,23 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
 
     public static GoogleMap getMap() {
         return actualMap;
+    }
+    public static DirectionsRequest getDirectionRequest() {
+        return directionRequest;
+    }
+    public static DirectionsService getDirectionService() {
+        return directionService;
+    }
+    public static DirectionsRenderer getDirectionRenderer() {
+        if(renderer == null) {
+            renderer = new DirectionsRenderer(true, actualMap, directions);
+        }
+        return renderer;
+    }
+    public static void clearRoute() {
+        if(renderer != null) {
+            renderer.clearDirections();
+            renderer = new DirectionsRenderer(true, actualMap, directions);
+        }
     }
 }

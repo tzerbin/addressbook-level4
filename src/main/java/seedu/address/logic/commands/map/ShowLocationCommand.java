@@ -9,11 +9,13 @@ import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.service.directions.DirectionsRenderer;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.map.Geocoding;
 import seedu.address.model.map.MapAddress;
+import seedu.address.ui.MapPanel;
 
 /**
  * Update the Map by adding a marker to the location of map address
@@ -38,6 +40,7 @@ public class ShowLocationCommand extends Command {
     private static Marker location;
     private final MapAddress address;
     private final GoogleMap map;
+    private DirectionsRenderer renderer;
 
     /**
      * Creates an AddAppointmentCommand with the following parameters
@@ -47,6 +50,7 @@ public class ShowLocationCommand extends Command {
         requireNonNull(address);
         this.address = address;
         map = getMap();
+        MapPanel.clearRoute();
     }
 
     @Override
@@ -103,10 +107,10 @@ public class ShowLocationCommand extends Command {
     }
 
     public static Marker getCurrentMarker() {
-        if (location != null) {
+        if(location != null) {
             return location;
-        } else {
-            return null;
         }
+        else
+            return null;
     }
 }

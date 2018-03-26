@@ -9,23 +9,30 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.Marker;
+import com.lynden.gmapsfx.service.directions.DirectionStatus;
+import com.lynden.gmapsfx.service.directions.DirectionsRequest;
+import com.lynden.gmapsfx.service.directions.DirectionsResult;
+import com.lynden.gmapsfx.service.directions.DirectionsService;
+import com.lynden.gmapsfx.service.directions.DirectionsServiceCallback;
+import com.lynden.gmapsfx.service.directions.TravelModes;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.map.DistanceEstimate;
 import seedu.address.logic.map.Geocoding;
 import seedu.address.model.map.MapAddress;
+import seedu.address.ui.MapPanel;
 
 /**
  * Estimates the distance and travel time required between two location
  */
-public class EstimateRouteCommand extends Command {
+public class EstimateRouteCommand extends Command implements DirectionsServiceCallback {
 
     public static final String COMMAND_WORD = "estimateRoute";
     public static final String COMMAND_ALIAS = "er";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Calculates estimated distance and time of travel of two locations.\n"
+            + ": Shows the estimated route in the Map and the distance and time required.\n"
             + "Parameters: "
             + PREFIX_START_MAP_ADDRESS + "START LOCATION (Name of location or postal code) "
             + PREFIX_END_MAP_ADDRESS + "END LOCATION (Name of location or postal code)\n"
@@ -36,15 +43,18 @@ public class EstimateRouteCommand extends Command {
             + PREFIX_START_MAP_ADDRESS + "820296 "
             + PREFIX_END_MAP_ADDRESS + "118420";
 
-    public static final String MESSAGE_SUCCESS = "Mode of transport: DRIVING\n";
+    public static final String MESSAGE_SUCCESS = "Route is being shown in Map, with start point at marker A"
+            + " and end point at marker B!\n"
+            + "Mode of transport: DRIVING\n";
 
+    private final LatLng startLatLng, endLatLng;
+    private final GoogleMap map;
+    private static DirectionsRequest directionRequest;
     private static MapAddress startLocation = null;
     private static MapAddress endLocation = null;
     private static String distOfTravel;
     private static String timeOfTravel;
-    private final LatLng startLatLng;
-    private final LatLng endLatLng;
-    private final GoogleMap map;
+    private DirectionsService directionService;
 
     /**
      * Initialises the different class attributes of EstimateRouteCommand
@@ -60,10 +70,12 @@ public class EstimateRouteCommand extends Command {
         this.endLatLng = getLatLong(endLocation);
         map = getMap();
         removeExistingMarker();
+        directionService = MapPanel.getDirectionService();
     }
 
     @Override
     public CommandResult execute() {
+        addRouteToMap();
         setDistAndTimeOfTravel();
         return new CommandResult(MESSAGE_SUCCESS + getStringOfDistanceAndTime());
     }
@@ -81,11 +93,16 @@ public class EstimateRouteCommand extends Command {
     }
 
     @Override
+    public void directionsReceived(DirectionsResult results, DirectionStatus status) {
+        status.equals(DirectionStatus.OK);
+    }
+
+    @Override
     public boolean equals(Object other) {
-        return (other == this) // short circuit if same object
+        return other == this // short circuit if same object
                 || (other instanceof EstimateRouteCommand // instanceof handles nulls
-                && this.startLatLng.toString().equals(((EstimateRouteCommand) other).startLatLng.toString())
-                && this.endLatLng.toString().equals(((EstimateRouteCommand) other).endLatLng.toString()));
+                && this.startLocation.equals(((EstimateRouteCommand) other).startLocation)
+                && this.endLocation.equals(((EstimateRouteCommand) other).endLocation));
     }
 
     /**
@@ -96,6 +113,16 @@ public class EstimateRouteCommand extends Command {
         if (location != null) {
             map.removeMarker(location);
         }
+    }
+
+    private void addRouteToMap() {
+        MapPanel.clearRoute();
+        directionRequest = MapPanel.getDirectionRequest();
+        directionRequest = new DirectionsRequest(
+                startLatLng.toString(),
+                endLatLng.toString(),
+                TravelModes.DRIVING);
+        directionService.getRoute(directionRequest, this, MapPanel.getDirectionRenderer());
     }
 
     /**
