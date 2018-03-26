@@ -1,8 +1,6 @@
 package seedu.address.logic.commands.calendar;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_END_MAP_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_MAP_ADDRESS;
 
 import java.time.LocalDate;
 import java.util.List;
