@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDARVIEW;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
@@ -16,16 +15,14 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.event.Event;
-import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebView;
-import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Celebrity;
 
 /**
  * The panel for the Calendar. Constructs a calendar view and attaches to it a CalendarSource.
@@ -33,10 +30,6 @@ import seedu.address.model.person.Person;
  * calendarPlaceholder.
  */
 public class CalendarPanel extends UiPart<Region> {
-
-    public static final String DEFAULT_PAGE = "";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -46,9 +39,6 @@ public class CalendarPanel extends UiPart<Region> {
 
     private final CalendarSource celebCalendarSource;
     private final CalendarSource storageCalendarSource;
-
-    @FXML
-    private WebView browser;
 
     public CalendarPanel(CalendarSource celebCalendarSource, CalendarSource storageCalendarSource) {
         super(FXML);
@@ -62,6 +52,10 @@ public class CalendarPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
 
         // To set up the calendar view.
+        setUpCelebCalendarView();
+    }
+
+    private void setUpCelebCalendarView() {
         celebCalendarView.getCalendarSources().clear(); // there is an existing default source when creating the view
         celebCalendarView.getCalendarSources().add(celebCalendarSource);
         celebCalendarView.setRequestedTime(LocalTime.now());
@@ -87,6 +81,18 @@ public class CalendarPanel extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
+
+        hideButtons();
+    }
+
+    private void hideButtons() {
+        celebCalendarView.setShowSearchField(false);
+        celebCalendarView.setShowSourceTrayButton(false);
+        celebCalendarView.setShowAddCalendarButton(false);
+        celebCalendarView.setShowPrintButton(false);
+        celebCalendarView.setShowPageToolBarControls(false);
+        celebCalendarView.setShowPageSwitcher(false);
+        celebCalendarView.setShowToolBar(false);
     }
 
     public CalendarView getCalendarView() {
@@ -140,26 +146,22 @@ public class CalendarPanel extends UiPart<Region> {
         });
     }
 
-    //methods from BrowserPanel
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    private void showCalendarOf(Celebrity celebrity) {
+        Platform.runLater(() -> {
+
+        });
     }
 
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+    //keep this method to load calendar if the selected person is a celeb
+    @Subscribe
+    private void handlePersonPanelSelectionChangedToCelebrityEvent(PersonPanelSelectionChangedToCelebrityEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showCalendarOf((Celebrity) event.getNewSelection().person);
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleCalendarChangeRequestEvent(ChangeCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        showCalendarOf(event.celebrity);
     }
 }
