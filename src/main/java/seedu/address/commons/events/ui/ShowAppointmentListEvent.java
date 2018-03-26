@@ -5,6 +5,9 @@ import java.util.List;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.appointment.Appointment;
 
+/**
+ * Event to be raised when listappointment command is invoked.
+ */
 public class ShowAppointmentListEvent extends BaseEvent {
 
     private final List<Appointment> appointments;

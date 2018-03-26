@@ -90,32 +90,37 @@ public class CalendarPanel extends UiPart<Region> {
         return celebCalendarView;
     }
 
+    /**
+     * Method to handle the event for changing calendar view. Changes to either day,
+     * week, month or year view.
+     * @param calendarViewPage
+     */
     public void handleChangeCalendarViewPageRequestEvent(String calendarViewPage) {
         celebCalendarView.showDate(LocalDate.now());
         celebCalendarView.getCalendarSources().clear();
         celebCalendarView.getCalendarSources().add(celebCalendarSource);
         switch (calendarViewPage) {
 
-            case "day":
-                celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
-                celebCalendarView.showDayPage();
-                break;
-            case "week":
-                celebCalendarView.showWeekPage();
-                break;
-            case "month":
-                celebCalendarView.showMonthPage();
-                break;
-            case "year":
-                celebCalendarView.showYearPage();
-                break;
+        case "day":
+            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
+            celebCalendarView.showDayPage();
+            break;
+        case "week":
+            celebCalendarView.showWeekPage();
+            break;
+        case "month":
+            celebCalendarView.showMonthPage();
+            break;
+        case "year":
+            celebCalendarView.showYearPage();
+            break;
 
-            default:
-                try {
-                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+        default:
+            try {
+                throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 

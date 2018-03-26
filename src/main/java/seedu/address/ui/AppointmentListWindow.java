@@ -13,6 +13,9 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import seedu.address.model.appointment.Appointment;
 
+/**
+ * Our window to display our list of appointments using appointment cards
+ */
 public class AppointmentListWindow extends UiPart<Region> {
 
     private static final String FXML = "AppointmentListWindow.fxml";
@@ -34,11 +37,14 @@ public class AppointmentListWindow extends UiPart<Region> {
     private void setConnections(ObservableList<Appointment> appointmentList) {
         ObservableList<AppointmentCard> mappedList = EasyBind.map(
                 appointmentList, (appointment) -> new AppointmentCard(appointment,
-                        appointmentList.indexOf(appointment) +1));
+                        appointmentList.indexOf(appointment) + 1));
         appointmentListView.setItems(mappedList);
         appointmentListView.setCellFactory(listview -> new AppointmentListViewCell());
     }
 
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code AppointmentCard}.
+     */
     class AppointmentListViewCell extends ListCell<AppointmentCard> {
 
         @Override

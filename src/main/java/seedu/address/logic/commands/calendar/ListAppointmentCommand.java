@@ -44,8 +44,8 @@ public class ListAppointmentCommand extends Command {
         endDate = model.getStorageCalendar().getLatestDate();
 
         model.setCelebCalendarViewPage("agenda");
-        EventsCenter.getInstance().post(new ShowAppointmentListEvent(model.getStorageCalendar().
-                getAppointmentsWithinDate(startDate, endDate)));
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(model.getStorageCalendar()
+                .getAppointmentsWithinDate(startDate, endDate)));
 
         return new CommandResult(MESSAGE_SUCCESS);
     }
