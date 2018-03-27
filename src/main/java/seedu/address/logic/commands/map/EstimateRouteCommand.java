@@ -102,8 +102,8 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof EstimateRouteCommand // instanceof handles nulls
-                && this.startLocation.equals(((EstimateRouteCommand) other).startLocation)
-                && this.endLocation.equals(((EstimateRouteCommand) other).endLocation));
+                && this.startLatLng.toString().equals(((EstimateRouteCommand) other).startLatLng.toString())
+                && this.endLatLng.toString().equals(((EstimateRouteCommand) other).endLatLng.toString()));
     }
 
     /**
