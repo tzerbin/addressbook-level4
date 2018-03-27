@@ -1,9 +1,9 @@
 package seedu.address.storage;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
@@ -38,13 +38,14 @@ public class XmlAdaptedAppointment {
     /**
      * Constructs an {@code XmlAdaptedAppointment} with the given appointment details.
      */
-    public XmlAdaptedAppointment(String title, LocalTime startTime, LocalDate startDate, MapAddress mapAddress, LocalTime endTime, LocalDate endDate) {
+    public XmlAdaptedAppointment(String title, LocalTime startTime, LocalDate startDate, MapAddress mapAddress,
+                                 LocalTime endTime, LocalDate endDate) {
         this.title = title;
         this.startDate = startDate.toString();
         this.startTime = startTime.toString();
         this.endDate = endDate.toString();
         this.endTime = endTime.toString();
-        
+
         if (mapAddress != null) {
             location = mapAddress.toString();
         }
@@ -61,7 +62,7 @@ public class XmlAdaptedAppointment {
         startTime = source.getStartTime().toString();
         endDate = source.getEndDate().toString();
         endTime = source.getEndTime().toString();
-        
+
         if (source.getMapAddress() != null) {
             location = source.getMapAddress().toString();
         }
@@ -73,7 +74,7 @@ public class XmlAdaptedAppointment {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Appointment toModelType() throws IllegalValueException {
-        
+
         if (title == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, String.class.getSimpleName()));
         }
@@ -81,37 +82,46 @@ public class XmlAdaptedAppointment {
             throw new IllegalValueException(Appointment.MESSAGE_NAME_CONSTRAINTS);
         }
         final String appointmentName = new String(title);
-        
+
         if (startTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LocalTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    LocalTime.class.getSimpleName()));
         }
         final LocalTime startTimeCreated = LocalTime.parse(startTime);
 
         if (startDate == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LocalTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    LocalTime.class.getSimpleName()));
         }
         final LocalDate startDateCreated = LocalDate.parse(startDate);
 
         if (endTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LocalTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    LocalTime.class.getSimpleName()));
         }
         final LocalTime endTimeCreated = LocalTime.parse(endTime);
 
         if (endDate == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, LocalTime.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    LocalTime.class.getSimpleName()));
         }
         final LocalDate endDateCreated = LocalDate.parse(endDate);
-        
+
         MapAddress mapAddressCreated = null;
-        if(location != null) {
+        if (location != null) {
             if (!MapAddress.isValidAddress(location)) {
                 throw new IllegalValueException(String.format(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS));
             }
-            
+
             mapAddressCreated = new MapAddress(location);
         }
-        
-        return new Appointment(appointmentName, startTimeCreated, startDateCreated, mapAddressCreated, endTimeCreated, endDateCreated);
+
+        return new Appointment(appointmentName,
+                               startTimeCreated,
+                               startDateCreated,
+                               mapAddressCreated,
+                               endTimeCreated,
+                               endDateCreated);
     }
 
     @Override
