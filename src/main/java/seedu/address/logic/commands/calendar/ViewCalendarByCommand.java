@@ -1,9 +1,11 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.calendar;
 
 import java.util.Arrays;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -43,7 +45,7 @@ public class ViewCalendarByCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FindCommand // instanceof handles nulls
+                || (other instanceof ViewCalendarByCommand // instanceof handles nulls
                 && this.calendarViewPage.equals(((ViewCalendarByCommand) other).calendarViewPage)); // state check
     }
 }
