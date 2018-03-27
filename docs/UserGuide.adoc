@@ -346,6 +346,14 @@ Changes the calendar view to weekly view.
 
 === Map Features
 
+Figure 2 is a snippet of the `MapPanel` which show the results of all map related features.
+
+.Default State of `MapPanel`
+image::BeforeInputMap.png[width="400"]
+
+[NOTE]
+Do not click on the `Google` logo or `Terms of Use` button.
+
 ==== Estimate route on map : `estimateRoute` [Since v1.3]
 
 Shows the estimated route in the map interface and displays the estimated distance and time of travel in result display. +
@@ -360,7 +368,7 @@ Examples:
 * `estimateRoute sma/Punggol ema/NUS` +
 Updates the map by re-centering to the new route of `Punggol` and `NUS`.
 
-The snippet in Figure 2 shows the map before updated after the command input.
+The snippet in Figure 3 shows the map before updated after the command input.
 
 .State of `MapPanel` after `CommandInput`
 image::AfterEstimateRouteInput.png[width="400"]
@@ -379,7 +387,7 @@ Examples:
 * `showlocation ma/Punggol` +
 Updates the map by re-centering to the new location `Punggol` and adding a location marker to it.
 
-The snippet in Figure 3 shows the map before updated after the command input.
+The snippet in Figure 4 shows the map before updated after the command input.
 
 .State of `MapPanel` after `CommandInput`
 image::AfterShowLocationInput.png[width="400"]

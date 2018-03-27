@@ -819,7 +819,7 @@ Every new input of this command will remove the previous location marker and add
 The snippet below shows the state of `MapPanel` before input of `ShowLocation` command:
 
 .Default State of `MapPanel`
-image::BeforeInput.png[width="400"]
+image::BeforeInputMap.png[width="400"]
 
 After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to the diagram below:
 
