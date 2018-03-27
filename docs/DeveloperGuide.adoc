@@ -809,9 +809,9 @@ The difference to note is the `isValidAddress` method, where `Address` only chec
 checks for *blank space and the validity of location in google server*. Thus, making the command more restrictive to location,
  road, block name and postal code. Any details more than that would result in a higher possibility of it being invalid.
 
-This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library. The `GMAPFX API` is used to create the
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library. The `Google Maps Web Services API` is used to create the
 `Geocoding` function, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
-is then used by the command to find the exact location in the `MapPanel`. The `Google Maps Web Services API` allows the
+is then used by the command to find the exact location in the `MapPanel`. The `GMAPSFX API` allows the
 command to re-center and mark the new location which is then shown to the user.
 
 Every new input of this command will remove the previous location marker and add the new marker into the map.
@@ -876,16 +876,16 @@ Similar to the other commands like `FindCommand` it will not be identified by th
 This command is similar to the `ShowLocation` feature which does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to the difference in address specification details as the `Address` model is too specific for the command to work.
 An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
 
-This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library.
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
-The `GMAPFX API` is used to create the
-`Geocoding` function, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
-is then used by the command to find the exact location in the `MapPanel`. `GMAPSFX` is also used to create the `DistanceEstimate` function, which allows
+The `GMAPSFX` is used to create the `MapPanel` which allows the
+command to re-center the map view, create the route, mark the start and end location which is then shown to the user.
+
+The `Google Maps Web Services API` is used to create the
+`Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
+is then used by the command to find the exact location in the `MapPanel`. `Google Maps Web Services API` is also used to create the `DistanceEstimate` class, which allows
 the calculation of estimated time and distance of travel between two location by driving. `DistanceMatrix` is also used to check if two locations
 can be reached by driving.
-
-The `Google Maps Web Services API` allows the
-command to re-center the map view, create the route, mark the start and end location which is then shown to the user.
 
 Every new input of this command will remove the previous route and add the new route into the map.
 
