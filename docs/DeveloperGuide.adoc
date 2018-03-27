@@ -892,7 +892,7 @@ Every new input of this command will remove the previous route and add the new r
 The snippet below shows the state of `MapPanel` before input of `estimateRoute` command:
 
 .Default State of `MapPanel`
-image::BeforeInput.png[width="400"]
+image::BeforeInputMap.png[width="400"]
 
 After the input of "estimateRoute sma/Punggol ema/NUS" the `MapPanel` will be updated to the diagram below:
 
@@ -904,7 +904,7 @@ Any subsequent inputs will remove any existing marker or route and update the `M
 The following sequence diagram shows how the command works:
 
 .Sequence Diagram of `estimateRoute` Command
-image::ShowLocationSequenceDiagram.png[width=""]
+image::EstimateRouteSequenceDiagram.png[width=""]
 
 ==== Design Considerations
 
