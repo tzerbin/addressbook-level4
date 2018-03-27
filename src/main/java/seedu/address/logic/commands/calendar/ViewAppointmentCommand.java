@@ -13,6 +13,10 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.map.MapAddress;
 
+/**
+ * Display the appointment details in the display panel
+ * based on the index given
+ */
 public class ViewAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "viewAppointment";
     public static final String COMMAND_ALIAS = "va";
@@ -26,12 +30,16 @@ public class ViewAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Selected appointment details (location shown in map):\n";
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Appointment selectedAppointment;
     private int chosenIndex;
     private List<Appointment> listOfAppointment;
-    private Appointment selectedAppointment;
+    private LocalDate endDate;
+    private LocalDate startDate;
 
+    /**
+     * Takes in a zero-based index {@code index}
+     * @param index
+     */
     public ViewAppointmentCommand (int index) {
         chosenIndex = index;
         startDate = ListAppointmentCommand.getStartDate();
@@ -41,9 +49,10 @@ public class ViewAppointmentCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         StorageCalendar storageCalendar = model.getStorageCalendar();
-        listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate,endDate);
+        listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate, endDate);
         selectedAppointment = listOfAppointment.get(chosenIndex);
-        ShowLocationCommand showLocation = new ShowLocationCommand(new MapAddress(listOfAppointment.get(chosenIndex).getLocation()));
+        ShowLocationCommand showLocation = new ShowLocationCommand(
+                new MapAddress(listOfAppointment.get(chosenIndex).getLocation()));
         showLocation.execute();
         return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
     }
@@ -53,7 +62,7 @@ public class ViewAppointmentCommand extends Command {
                 + "Start Date: " + selectedAppointment.getStartDate() + "\n"
                 + "Start Time: " + selectedAppointment.getStartTime() + "\n"
                 + "End Date: " + selectedAppointment.getEndDate() + "\n"
-                + "End Time: " + selectedAppointment.getEndTime()+ "\n"
+                + "End Time: " + selectedAppointment.getEndTime() + "\n"
                 + "Location: " + selectedAppointment.getLocation();
     }
 }
