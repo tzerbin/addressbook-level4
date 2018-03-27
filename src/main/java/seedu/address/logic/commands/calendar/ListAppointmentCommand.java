@@ -23,6 +23,8 @@ public class ListAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed appointments successfully.";
 
+    public static final String MESSAGE_NO_APPTS_ERROR = "No appointments to list!";
+
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -40,6 +42,9 @@ public class ListAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        if (!model.getStorageCalendar().hasAtLeastOneAppointment()) {
+            throw new CommandException(MESSAGE_NO_APPTS_ERROR);
+        }
         startDate = model.getStorageCalendar().getEarliestDate();
         endDate = model.getStorageCalendar().getLatestDate();
 

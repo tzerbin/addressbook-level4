@@ -25,6 +25,10 @@ public class StorageCalendar extends Calendar {
         super(title);
     }
 
+    public boolean hasAtLeastOneAppointment() {
+        return this.getEarliestTimeUsed() != null;
+    }
+
     public LocalDate getEarliestDate() {
         return LocalDateTime.ofInstant(this.getEarliestTimeUsed(), ZoneId.systemDefault()).toLocalDate();
     }
