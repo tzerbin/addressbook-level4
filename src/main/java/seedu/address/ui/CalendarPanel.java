@@ -23,7 +23,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
 import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
-
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Celebrity;
