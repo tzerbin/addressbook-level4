@@ -49,6 +49,8 @@ public class MainWindow extends UiPart<Stage> {
     private CalendarSource celebCalendarSource;
     private CalendarSource storageCalendarSource;
 
+    private boolean isCalendarShown;
+
 
     @FXML
     private StackPane calendarPlaceholder;
@@ -81,6 +83,8 @@ public class MainWindow extends UiPart<Stage> {
         this.prefs = prefs;
         this.celebCalendarSource = logic.getCelebCalendarSource();
         this.storageCalendarSource = logic.getStorageCalendarSource();
+
+        isCalendarShown = true;
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -192,15 +196,28 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    /**
+     * Creates appointmentListWindow and replaces calendarPanel with it
+     */
     private void handleAppointmentList(List<Appointment> appointments) {
         AppointmentListWindow apptListWindow = new AppointmentListWindow(appointments);
+        isCalendarShown = false;
         calendarPlaceholder.getChildren().clear();
         calendarPlaceholder.getChildren().add(apptListWindow.getRoot());
     }
 
+    /**
+     * Replaces appointmentListWindow with calendarPanel if necessary,
+     * and then handles the changing of calendarview command.
+     * @param calendarViewPage
+     */
     private void handleCalendarViewChange(String calendarViewPage) {
-        calendarPlaceholder.getChildren().clear();
-        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+        if (!isCalendarShown) {
+            // the second operation here is slow so we only do if necessary
+            calendarPlaceholder.getChildren().clear();
+            calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+            isCalendarShown = true;
+        }
         calendarPanel.handleChangeCalendarViewPageRequestEvent(calendarViewPage);
     }
 
