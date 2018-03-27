@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -40,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final CalendarSource storageCalendarSource;
 
     private String currentCelebCalendarViewPage;
+    private String currentCelebCalendarOwner;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -61,8 +63,7 @@ public class ModelManager extends ComponentManager implements Model {
 
 
         currentCelebCalendarViewPage = "day";
-
-
+        currentCelebCalendarOwner = "";
     }
 
     public ModelManager() {
@@ -132,6 +133,27 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
         currentCelebCalendarViewPage = newCurrentCelebCalendarViewPage;
+    }
+
+    @Override
+    public List<Celebrity> getCelebrityWithName(String name) {
+        List<Celebrity> matchedCelebrities = new ArrayList<>();
+        for (Celebrity celebrity: getCelebrities()) {
+            if (celebrity.getName().toString().contains(name)) {
+                matchedCelebrities.add(celebrity);
+            }
+        }
+        return matchedCelebrities;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarOwner() {
+        return currentCelebCalendarOwner;
+    }
+
+    @Override
+    public void setCelebCalendarOwner(String celerity) {
+        this.currentCelebCalendarOwner = celerity;
     }
 
     //=========== Celeb Calendar Accessors ===================================================================

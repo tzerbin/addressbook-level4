@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
 
+import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.AgendaView;
 import com.calendarfx.view.CalendarView;
@@ -14,6 +15,8 @@ import com.calendarfx.view.page.DayPage;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.collections.ObservableMap;
 import javafx.event.Event;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -21,7 +24,9 @@ import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
+import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Celebrity;
 
 /**
@@ -85,6 +90,7 @@ public class CalendarPanel extends UiPart<Region> {
         hideButtons();
     }
 
+    /** Hide all buttons in the calendar */
     private void hideButtons() {
         celebCalendarView.setShowSearchField(false);
         celebCalendarView.setShowSourceTrayButton(false);
@@ -146,9 +152,19 @@ public class CalendarPanel extends UiPart<Region> {
         });
     }
 
+    /** Shows the calendar of the specified {@code celebrity} */
     private void showCalendarOf(Celebrity celebrity) {
+        CelebCalendar celebCalendarToShow = celebrity.getCelebCalendar();
+        ObservableMap<Calendar, BooleanProperty> calendars =
+                celebCalendarView.getSourceView().getCalendarVisibilityMap();
         Platform.runLater(() -> {
-
+            for (Calendar calendar: calendars.keySet()) {
+                if (!calendar.equals(celebCalendarToShow)) {
+                    celebCalendarView.getSourceView().setCalendarVisibility(calendar, false);
+                } else {
+                    celebCalendarView.getSourceView().setCalendarVisibility(calendar, true);
+                }
+            }
         });
     }
 
@@ -163,5 +179,22 @@ public class CalendarPanel extends UiPart<Region> {
     private void handleCalendarChangeRequestEvent(ChangeCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showCalendarOf(event.celebrity);
+    }
+
+    /** Shows a combined calendar that contains {@code appointment}s for all {@code celebrity}s */
+    private void showAllCalendars() {
+        ObservableMap<Calendar, BooleanProperty> calendars =
+                celebCalendarView.getSourceView().getCalendarVisibilityMap();
+        Platform.runLater(() -> {
+            for (Calendar calendar: calendars.keySet()) {
+                celebCalendarView.getSourceView().setCalendarVisibility(calendar, true);
+            }
+        });
+    }
+
+    @Subscribe
+    private void handleShowCombinedCalendarViewRequestEvent(ShowCombinedCalendarViewRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showAllCalendars();
     }
 }
