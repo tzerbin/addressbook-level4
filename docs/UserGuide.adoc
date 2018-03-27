@@ -346,7 +346,7 @@ Changes the calendar view to weekly view.
 
 === Map Features
 
-==== Estimate route on map : `estimateRoute` [Since v1.2]
+==== Estimate route on map : `estimateRoute` [Since v1.3]
 
 Shows the estimated route in the map interface and displays the estimated distance and time of travel in result display. +
 Alias: `er` +
@@ -359,6 +359,11 @@ Examples:
 
 * `estimateRoute sma/Punggol ema/NUS` +
 Updates the map by re-centering to the new route of `Punggol` and `NUS`.
+
+The snippet in Figure 2 shows the map before updated after the command input.
+
+.State of `MapPanel` after `CommandInput`
+image::AfterEstimateRouteInput.png[width="400"]
 
 ==== Show location on map : `showLocation` [Since v1.2]
 
@@ -373,6 +378,11 @@ Examples:
 
 * `showlocation ma/Punggol` +
 Updates the map by re-centering to the new location `Punggol` and adding a location marker to it.
+
+The snippet in Figure 3 shows the map before updated after the command input.
+
+.State of `MapPanel` after `CommandInput`
+image::AfterShowLocationInput.png[width="400"]
 
 == FAQ - Frequently Asked Questions
 

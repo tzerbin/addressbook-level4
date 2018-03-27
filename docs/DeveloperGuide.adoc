@@ -897,7 +897,7 @@ image::BeforeInput.png[width="400"]
 After the input of "estimateRoute sma/Punggol ema/NUS" the `MapPanel` will be updated to the diagram below:
 
 .State of `MapPanel` after `CommandInput`
-image::AfterShowLocationInput.png[width="400"]
+image::AfterEstimateRouteInput.png[width="400"]
 
 Any subsequent inputs will remove any existing marker or route and update the `MapPanel` with the new route.
 
