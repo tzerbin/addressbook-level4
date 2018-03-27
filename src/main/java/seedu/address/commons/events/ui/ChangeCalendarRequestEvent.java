@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.Celebrity;
 
 /**
- * Indicates a request to change to another calendar view page
+ * Indicates a request to show another celebrity's calendar
  */
 public class ChangeCalendarRequestEvent extends BaseEvent {
 
