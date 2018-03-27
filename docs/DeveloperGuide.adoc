@@ -16,39 +16,43 @@ By: `CS2103JAN2018-W14-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Overview
 
-Whether you are a new developer or a long time contributor to the CelebManager Project,
-this developer guide will serve as a helpful reference and source of "how-to" information
-when contributing to this project. Included are guides on how to set-up the project locally,
-an overview of the architecture and the different features present and how they are implemented.
+CelebManager is a software application that aims to allow celebrity managers to maintain schedule of celebrities under them. CelebManager is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a Graphical User Interface (GUI) for visual feedback.
 
-== Setting Up
+In this software, the users should be able to:
+
+* Manage contacts
+* Manage appointments
+* Manage calendars
+* Plan efficient routes
+
+This developer guide aims to allow you to develop and maintain the software with information on how the software is designed and implemented. Information on how the software should be developed and maintained is also in this documentation.
+
+
+== Setup
 
 This section will discuss the setting up of project for development.
 
 === Prerequisites
 
-To get started, there are a few prerequisites to have a successful setup. They are:
+There are two prerequisites before you can work on this software.
 
-. *JDK* (Java Development Kit) +
-Our programming language of choice is Java in this project.
-To be able to work with java, you will need to have JDK installed. You must install version `1.8.0_60` or later. +
+. *Java Development Kit* (JDK) +
+The Java programming language is used in this project. To be able to work with this project, you will need to have JDK version `1.8.0_60` installed.
 You can get the JDK from: +
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 +
 [NOTE]
-Some components of this app will not work with earlier versions of Java 8.
+Some components of this software will not work with earlier versions of Java 8.
 +
 
 . *IntelliJ Integrated Development Environment* (IDE) +
-It is possible to setup with other IDEs, but it is much simpler to carry it out in IntelliJ.
-All the steps for setup in this document will be specific to IntelliJ.
-We highly recommend that you too use IntelliJ unless you have prior experience in working with gradle projects.
+This software is developed as a Gradle project, which requires you to work on the software using a IDE. While it is possible to work with any IDE that supports Gradle Projects, this guide will use IntelliJ as a basis.
 You can get IntelliJ from: +
 https://www.jetbrains.com/idea/
 +
 [NOTE]
-IntelliJ has Gradle and JavaFx plugins installed by default. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+IntelliJ make use of Gradle and JavaFx plugins, and the project will need these plugins. +
+If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
 === Local Project Setup
