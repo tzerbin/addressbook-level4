@@ -47,13 +47,14 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
             + " and end point at marker B!\n"
             + "Mode of transport: DRIVING\n";
 
-    private final LatLng startLatLng, endLatLng;
-    private final GoogleMap map;
     private static DirectionsRequest directionRequest;
     private static MapAddress startLocation = null;
     private static MapAddress endLocation = null;
     private static String distOfTravel;
     private static String timeOfTravel;
+    private final LatLng endLatLng;
+    private final LatLng startLatLng;
+    private final GoogleMap map;
     private DirectionsService directionService;
 
     /**
@@ -115,6 +116,9 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
         }
     }
 
+    /**
+     * Update {@code MapPanel} to show new route
+     */
     private void addRouteToMap() {
         MapPanel.clearRoute();
         directionRequest = MapPanel.getDirectionRequest();

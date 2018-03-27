@@ -26,12 +26,12 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
     public static final double LONGITUDE_SG = 103.8109208;
     public static final int DEFAULT_ZOOM_LEVEL = 10;
     private static final String FXML = "MapsPanel.fxml";
-    private static GoogleMap actualMap;
-    private GoogleMapView mapView;
     private static DirectionsPane directions;
     private static DirectionsRenderer renderer;
     private static DirectionsService directionService;
     private static DirectionsRequest directionRequest;
+    private static GoogleMap actualMap;
+    private GoogleMapView mapView;
 
     public MapPanel() {
         super(FXML);
@@ -91,13 +91,17 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
         return directionService;
     }
     public static DirectionsRenderer getDirectionRenderer() {
-        if(renderer == null) {
+        if (renderer == null) {
             renderer = new DirectionsRenderer(true, actualMap, directions);
         }
         return renderer;
     }
+
+    /**
+     * Clear any existing route in MapPanel
+     */
     public static void clearRoute() {
-        if(renderer != null) {
+        if (renderer != null) {
             renderer.clearDirections();
             renderer = new DirectionsRenderer(true, actualMap, directions);
         }
