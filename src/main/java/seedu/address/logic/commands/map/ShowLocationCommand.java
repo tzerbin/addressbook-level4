@@ -80,6 +80,9 @@ public class ShowLocationCommand extends Command {
         setMarkerOnMap(center, location);
     }
 
+    /**
+     * Remove any existing marker {@code location} to Map
+     */
     private void removeExistingMarker() {
         if (location != null) {
             map.removeMarker(location);

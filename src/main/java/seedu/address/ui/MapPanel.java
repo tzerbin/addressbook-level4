@@ -98,7 +98,7 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
     }
 
     /**
-     * Clear any existing route in MapPanel
+     * Clear any existing route in MapPanel bby clearing {@code renderer}
      */
     public static void clearRoute() {
         if (renderer != null) {

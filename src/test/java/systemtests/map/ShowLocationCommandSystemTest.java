@@ -39,7 +39,7 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         newAddress = new MapAddress("National University of Singapore");
         assertCommandSuccess(newAddress);
 
-        /* ----------------------------------- Perform invalid removeTag operations --------------------------------- */
+        /* ----------------------------------- Perform invalid showLocation operations --------------------------------- */
 
         /* Case: missing MapAddress and prefix-> rejected */
         String command = ShowLocationCommand.COMMAND_WORD + "";
@@ -91,7 +91,7 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Tag)} except asserts that
+     * Performs the same verification as {@code assertCommandSuccess(String)} except asserts that
      * the,<br>
      * 1. Result display box displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
