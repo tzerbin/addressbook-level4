@@ -346,6 +346,20 @@ Changes the calendar view to weekly view.
 
 === Map Features
 
+==== Estimate route on map : `estimateRoute` [Since v1.2]
+
+Shows the estimated route in the map interface and displays the estimated distance and time of travel in result display. +
+Alias: `er` +
+Format: `estimateRoute sma/MapAddress ema/MapAddress`
+
+[TIP]
+The address can be a postal code, road name, location name or building name.
+
+Examples:
+
+* `estimateRoute sma/Punggol ema/NUS` +
+Updates the map by re-centering to the new route of `Punggol` and `NUS`.
+
 ==== Show location on map : `showLocation` [Since v1.2]
 
 Shows the specific location in the map interface, by marking the latitude and longitude with a location marker. +
@@ -382,6 +396,7 @@ e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:0
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Estimate Route* : `estimateRoute sma/LOCATION ema/LOCATION`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Help* : `help`
@@ -393,7 +408,7 @@ e.g. `find James Jake`
 e.g.`removeTag friends`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *ShowLocation* : `showLocation ma/LOCATION`
+* *Show Location* : `showLocation ma/LOCATION`
 * *Undo* : `undo`
 * *View Calendar By* : `viewCalendarBy VIEW` +
 e.g.`viewCalendarBy week`
