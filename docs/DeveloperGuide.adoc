@@ -813,9 +813,9 @@ The difference to note is the `isValidAddress` method, where `Address` only chec
 checks for *blank space and the validity of location in google server*. Thus, making the command more restrictive to location,
  road, block name and postal code. Any details more than that would result in a higher possibility of it being invalid.
 
-This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library. The `GMAPFX API` is used to create the
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library. The `Google Maps Web Services API` is used to create the
 `Geocoding` function, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
-is then used by the command to find the exact location in the `MapPanel`. The `Google Maps Web Services API` allows the
+is then used by the command to find the exact location in the `MapPanel`. The `GMAPSFX API` allows the
 command to re-center and mark the new location which is then shown to the user.
 
 Every new input of this command will remove the previous location marker and add the new marker into the map.
@@ -823,7 +823,7 @@ Every new input of this command will remove the previous location marker and add
 The snippet below shows the state of `MapPanel` before input of `ShowLocation` command:
 
 .Default State of `MapPanel`
-image::BeforeInput.png[width="400"]
+image::BeforeInputMap.png[width="400"]
 
 After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to the diagram below:
 
@@ -840,6 +840,79 @@ image::ShowLocationSequenceDiagram.png[width=""]
 ==== Design Considerations
 
 ===== Aspect: Implementation of `showLocationCommand`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline
+
+===== Aspect: Use of address model
+* **Alternative 1 (current choice):** Use `MapAddress`
+** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion
+** Cons: Both model are very similar
+* **Alternative 2:** Use `Address`
+** Pros: Reduces the amount of code/class in the project
+** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
+
+// tag::estimateRoute[]
+=== EstimateRoute Feature
+==== Current Implementation
+
+The EstimateRoute mechanism is facilitated by the `EstimateRouteCommand`, which resides inside `Logic`. It supports the viewing of estimated route
+in the `MapPanel` UI by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the new route. This command inherits from `Command` so it *does not support the undo/redo feature*.
+
+
+
+The following figure shows the marker that is used to identify the start and end location in the `MapPanel`:
+
+.Location marker
+image::LocationMarker.png[width="50"]
+
+The following diagram shows the inheritance diagram for `EstimateRouteCommand`:
+
+.Inheritance diagram for `Command`
+image::ShowLocationLogicCommandClassDiagram.png[width=""]
+
+As you can see from the diagram, `EstimateRouteCommand` inherits from the Command class and is not part of the Undoable Command.
+Similar to the other commands like `FindCommand` it will not be identified by the undo/redo feature.
+
+This command is similar to the `ShowLocation` feature which does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to the difference in address specification details as the `Address` model is too specific for the command to work.
+An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
+
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
+
+The `GMAPSFX` is used to create the `MapPanel` which allows the
+command to re-center the map view, create the route, mark the start and end location which is then shown to the user.
+
+The `Google Maps Web Services API` is used to create the
+`Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
+is then used by the command to find the exact location in the `MapPanel`. `Google Maps Web Services API` is also used to create the `DistanceEstimate` class, which allows
+the calculation of estimated time and distance of travel between two location by driving. `DistanceMatrix` is also used to check if two locations
+can be reached by driving.
+
+Every new input of this command will remove the previous route and add the new route into the map.
+
+The snippet below shows the state of `MapPanel` before input of `estimateRoute` command:
+
+.Default State of `MapPanel`
+image::BeforeInputMap.png[width="400"]
+
+After the input of "estimateRoute sma/Punggol ema/NUS" the `MapPanel` will be updated to the diagram below:
+
+.State of `MapPanel` after `CommandInput`
+image::AfterEstimateRouteInput.png[width="400"]
+
+Any subsequent inputs will remove any existing marker or route and update the `MapPanel` with the new route.
+
+The following sequence diagram shows how the command works:
+
+.Sequence Diagram of `estimateRoute` Command
+image::EstimateRouteSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `estimateCommand`
 * **Alternative 1 (current choice):** Extend `Command`
 ** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
 ** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
