@@ -1,4 +1,4 @@
-= Celeb Scheduler - User Guide
+= CelebManager - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -17,178 +17,75 @@ By: `CS2103JAN2018-W14-B4`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Celeb Scheduler (CS) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule with ease*. More importantly, CS is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the feature of *managing contacts, organising schedules, emailing (Coming in v2.0) and trip planning*. You are at the right place as CS would be the best platform for you, with its integration of address book, calendar and visual maps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+CelebManager (CM) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule
+with ease*. More importantly, CM is *optimized for those who prefer to work with a Command Line Interface* (CLI) while
+still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the
+feature of *managing contacts, organising schedules, emailing (Coming in v2.0) and trip planning*. You are at the right
+place as CM would be the best platform for you, with its integration of address book, calendar and visual maps.
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+Follow this series of steps to have the CelebManager app quickly up and running on your computer.
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. The link to the latest version of Java
+can be found
+https://java.com/en/download/[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Celeb Scheduler.
+.  Copy the file to the folder you want to use as the home folder for your CelebManager.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+The image below (Figure 1) shows the current GUI of CelebManager.
++
+.GUI of CelebManager
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
-
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to <<Features>> for details of each command.
+.  Type `help` in the command box and press kbd:[Enter] to execute it. A help window should be opened.
++
+[TIP]
+Refer to <<Features>> for details of all commands available in CelebManager and their example usage.
 
 [[Features]]
 == Features
 
+For each of the command in CelebManager, their formats follow some general patterns as mentioned in the text box below.
+
 ====
 *Command Format*
 
-* Some commands have an alias, which you can also use to execute the command e.g. to add a person to Celeb Scheuler, you can type either `add n/John Doe` or `a n/John Doe`.
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Some commands have an alias, which you can also use to execute the command e.g. to add a person to CelebManager,
+you can type either `add n/John Doe` or `a n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
+can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also
+acceptable.
 ====
 
-=== Viewing help : `help`
+The following are all the commands available to you:
 
-Format: `help`
+=== General Features
 
-=== Adding a person: `add`
+==== Clearing all entries : `clear` [Since v1.0]
 
-Adds a person to Celeb Scheduler. +
-Alias: `a` +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Clears all entries from CelebManager. +
+Alias: `c` +
+Format: `clear`
 
-[TIP]
-A person can have any number of tags (including 0)
+==== Exiting the program : `exit` [Since v1.0]
 
-Examples:
+Exits the program. +
+Alias: `x` +
+Format: `exit`
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-=== Adding an appointment: `addAppointment`
-
-Adds an appointment to Celeb Scheduler. +
-Alias: `aa`
-Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
-
-Examples:
-
-* `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
-* `add n/Dentist Appointmnt l/Dental Clinic st/15:45`
-
-****
-* Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
-it must be prefixed with a 0 (e.g. 03/07/...).
-* Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
-or minute is a 1 digit number, you need to prefix it with a 0 (e.g. 09:05)
-* You can omit one or more of the time, date and location fields when using this command.
-****
-
-===  Editing an appointment `[coming in v1.3]`
-
-===  Deleting an appointment `[coming in v1.3]`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in Celeb Scheduler. +
-Alias: `l` +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in Celeb Scheduler. +
-Alias: `e` +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Alias: `f` +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from Celeb Scheduler. +
-Alias: `d` +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in Celeb Scheduler.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Alias: `s` +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in Celeb Scheduler.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
+==== Listing entered commands : `history` [Since v1.0]
 
 Lists all the commands that you have entered in reverse chronological order. +
 Alias: `h` +
@@ -196,19 +93,25 @@ Format: `history`
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command
+box.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Viewing help : `help` [Since v1.0]
 
-Restores Celeb Scheduler to the state before the previous _undoable_ command was executed. +
+Shows a help window that contains this User Guide. +
+Format: `help`
+
+// tag::undoredo[]
+==== Undoing previous command : `undo` [Since v1.0]
+
+Restores CelebManager to the state before the previous _undoable_ command was executed. +
 Alias: `u` +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify Celeb Scheduler's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify CelebManager's content (`add`, `delete`, `edit`, `clear`, etc).
 ====
 
 Examples:
@@ -227,7 +130,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo` [Since v1.0]
 
 Reverses the most recent `undo` command. +
 Alias: `r` +
@@ -251,66 +154,229 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Saving the data [Since v1.0]
 
-Clears all entries from Celeb Scheduler. +
-Alias: `c` +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Alias: `x` +
-Format: `exit`
-
-=== Saving the data
-
-Celeb Scheduler data are saved in the hard disk automatically after any command that changes the data. +
+CelebManager data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Removing a tag : `removeTag`
+{sp} +
 
-Removes the specified tag from every person with it in Celeb Scheduler and shows the number of person(s) affected by this operation. +
+=== Address Book Features
+
+==== Adding a person: `add` [Since v1.0]
+
+Adds a person to CelebManager. +
+Alias: `a` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags, including 0.
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+==== Deleting a person : `delete` [Since v1.0]
+
+Deletes the specified person from CelebManager. +
+Alias: `d` +
+Format: `delete INDEX`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1`, `2`, `3`, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in CelebManager.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+==== Selecting a person : `select` [Since v1.0]
+
+Selects the person identified by the index number used in the last person listing. +
+Alias: `s` +
+Format: `select INDEX`
+
+****
+* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1`, `2`, `3`, ...
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in CelebManager.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+
+==== Editing a person : `edit` [Since v1.0]
+
+Edits an existing person in CelebManager. +
+Alias: `e` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+The index *must be a positive integer* `1`, `2`, `3`, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+==== Listing all persons : `list` [Since v1.0]
+
+Shows a list of all persons in CelebManager. +
+Alias: `l` +
+Format: `list`
+
+==== Locating persons by name: `find` [Since v1.0]
+
+Finds persons whose names contain any of the given keywords. +
+Alias: `f` +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
+`Bo Yang`.
+****
+
+Examples:
+
+* `find John` +
+Returns `john` and `John Doe`.
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`.
+
+==== Removing a tag : `removeTag` [Since v1.2]
+
+Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this
+operation. +
 Alias: `rt` +
 Format: `removeTag TAG`
 
-[TIP]
-You can remove a tag that does not exist in Celeb Scheduler and it will show 0 person gets affected.
+****
+* Removes the tag from every person with it in CelebManager.
+* `TAG` removed *must not be* `celebrity`.
+****
 
 Examples:
 
 * `removeTag friends` +
-Removes the tag, "friends" from every person with it in Celeb Scheduler and shows the number of person(s) affected.
+Removes the tag, `friends` from every person with it in CelebManager and shows the number of person(s) affected.
+* `removeTag celebrity` +
+Does not modify CelebManager and outputs an error message.
 
-=== Show location on map : `showLocation`
+{sp} +
+
+=== Appointment Features
+
+==== Adding an appointment: `addAppointment` [Since v1.2]
+
+Adds an appointment to CelebManager. +
+Alias: `aa` +
+Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
+
+Examples:
+
+* `addAppointment n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
+* `addAppointment n/Dentist Appointment l/Dental Clinic st/15:45`
+
+****
+* Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
+it must be prefixed with a 0, e.g. `03/07/2017`.
+* Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
+or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
+* You can omit one or more of the time, date and location fields when using this command.
+****
+
+====  Editing an appointment `[coming in v1.3]`
+
+====  Deleting an appointment `[coming in v1.3]`
+
+==== Listing appointments: `listAppointment` [Since v1.3]
+
+Lists all appointments in our CelebManager. +
+Alias: `la` +
+Format: `listAppointment`
+
+{sp} +
+
+=== Calendar Features
+
+==== Changing the calendar view: `viewCalendarBy` [Since v1.3]
+
+Changes the calendar view to a different one specified by the user. +
+Alias: `vcb` +
+Format: `viewCalendarBy VIEW`
+
+****
+* Changes the calendar view to the specified `VIEW`.
+* `VIEW` *must be* `day`, `week`, `month` or `year`.
+* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to weekly calendar view.
+****
+
+Examples:
+
+* `viewCalendarBy week` +
+Changes the calendar view to weekly view.
+
+{sp} +
+
+=== Map Features
+
+==== Show location on map : `showLocation` [Since v1.2]
 
 Shows the specific location in the map interface, by marking the latitude and longitude with a location marker. +
 Alias: `sl` +
 Format: `showLocation ma/MapAddress`
 
 [TIP]
-The format of the address can be in postal code, road name, location name and building name.
+The address can be a postal code, road name, location name or building name.
 
 Examples:
 
 * `showlocation ma/Punggol` +
-Updates the map by re-centering to the new location 'Punggol' and adding a location marker to it.
+Updates the map by re-centering to the new location `Punggol` and adding a location marker to it.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
-
-== FAQ
+== FAQ - Frequently Asked Questions
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Celeb Scheduler folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous CelebManager folder.
 
 == Command Summary
 
+The following are summarized versions of all the commands introduced above displayed in alphabetical order. The commands
+are displayed with their respective command format and an example highlighting the usage. An optional field is enclosed
+within a pair of `[]`. A field that can be repeatedly entered with different input values is followed by `...`.
+
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
+[et/END_TIME]` +
+e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -318,13 +384,16 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
-* *RemoveTag* : `removeTag TAG` +
+* *History* : `history`
+* *List* : `list`
+* *List Appointments* : `listAppointment`
+* *Redo* : `redo`
+* *Remove Tag* : `removeTag TAG` +
 e.g.`removeTag friends`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
 * *ShowLocation* : `showLocation ma/LOCATION`
+* *Undo* : `undo`
+* *View Calendar By* : `viewCalendarBy VIEW` +
+e.g.`viewCalendarBy week`

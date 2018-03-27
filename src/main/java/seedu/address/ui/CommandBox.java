@@ -116,6 +116,7 @@ public class CommandBox extends UiPart<Region> {
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage(), false));
         }
+
     }
 
     /**

@@ -95,13 +95,22 @@ public class Appointment extends Entry {
      * Removes old child entries and creates a new child entry for every celebrity
      * and then stores it in childEntryList.
      */
-    public void updateEntries(ArrayList<Celebrity> celebrities) {
+    public void updateEntries(List<Celebrity> celebrities) {
         clearChildEntries();
         childEntryList.clear();
 
         for (Celebrity celebrity : celebrities) {
             childEntryList.add(createChildEntry(celebrity));
         }
+    }
+
+    /**
+     * Removes all child entries and then removes the appointment itself from
+     * the StorageCalendar.
+     */
+    public void removeAppointment() {
+        clearChildEntries();
+        this.setCalendar(null);
     }
 
     /**

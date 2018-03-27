@@ -28,14 +28,19 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_OSCA
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.testutil.AppointmentBuilder;
 
 public class AddAppointmentCommandParserTest {
     private AddAppointmentCommandParser parser = new AddAppointmentCommandParser();
+    private Set<Index> emptyIndexSet = new HashSet<>();
 
     @Test
     public void parse_allFieldsPresent_success() {
@@ -48,43 +53,43 @@ public class AddAppointmentCommandParserTest {
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
                         + APPT_START_TIME_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR
                         + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
 
         // multiple names - last name accepted
         assertParseSuccess(parser, APPT_NAME_DESC_GRAMMY + APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
                         + APPT_START_TIME_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR
                         + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
 
         // multiple locations - last location accepted
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_GRAMMY + APPT_LOCATION_DESC_OSCAR
                         + APPT_START_TIME_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR
                         + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
 
         // multiple start times - last start times accepted
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
                         + APPT_START_TIME_DESC_GRAMMY + APPT_START_TIME_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR
                         + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
 
         // multiple start dates - last start date accepted
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
                         + APPT_START_DATE_DESC_GRAMMY + APPT_START_DATE_DESC_OSCAR
                         + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
 
         // multiple end times - last end time accepted
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
                         + APPT_END_TIME_DESC_GRAMMY + APPT_START_TIME_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR
                         + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
 
         // multiple end dates - last end date accepted
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
                         + APPT_END_DATE_DESC_GRAMMY + APPT_START_DATE_DESC_OSCAR
                         + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
@@ -94,7 +99,7 @@ public class AddAppointmentCommandParserTest {
                 .withEndTime(VALID_END_TIME_OSCAR).withEndDate(VALID_END_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
                         + APPT_START_DATE_DESC_OSCAR + APPT_END_TIME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
@@ -104,7 +109,7 @@ public class AddAppointmentCommandParserTest {
                 .withEndDate(VALID_END_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR + APPT_END_TIME_DESC_OSCAR
                         + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
@@ -114,7 +119,7 @@ public class AddAppointmentCommandParserTest {
                 .withEndDate(VALID_END_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR + APPT_END_TIME_DESC_OSCAR
                         + APPT_END_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
@@ -122,7 +127,7 @@ public class AddAppointmentCommandParserTest {
         Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
                 .withEndTime(VALID_END_TIME_OSCAR).withEndDate(VALID_END_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_END_TIME_DESC_OSCAR
-                + APPT_END_DATE_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment));
+                + APPT_END_DATE_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
@@ -132,7 +137,7 @@ public class AddAppointmentCommandParserTest {
                 .withEndDate(VALID_END_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
                         + APPT_START_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
@@ -142,7 +147,7 @@ public class AddAppointmentCommandParserTest {
                 .withStartDate(VALID_START_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_END_TIME_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
                         + APPT_START_DATE_DESC_OSCAR,
-                new AddAppointmentCommand(expectedAppointment));
+                new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
@@ -150,13 +155,13 @@ public class AddAppointmentCommandParserTest {
         Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
                 .withStartTime(VALID_START_TIME_OSCAR).withStartDate(VALID_START_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
-                + APPT_START_DATE_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment));
+                + APPT_START_DATE_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test
     public void parseAllTimeAndDateFieldsMissing_success() {
         Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR).build();
-        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment));
+        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, emptyIndexSet));
     }
 
     @Test

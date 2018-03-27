@@ -20,4 +20,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_START_DATE = new Prefix("sd/");
     public static final Prefix PREFIX_END_DATE = new Prefix("ed/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
+    public static final Prefix PREFIX_CELEBRITY = new Prefix("c/");
 }
