@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import com.calendarfx.model.Entry;
 
+import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
 
 /**
@@ -52,9 +53,10 @@ public class Appointment extends Entry {
     private static final Duration minDuration = Duration.ofMinutes(1);
 
     private List<Entry> childEntryList;
+    private MapAddress mapAddress;
 
     public Appointment(String title, LocalTime startTime, LocalDate startDate,
-                       String location, LocalTime endTime, LocalDate endDate) {
+                       MapAddress mapAddress, LocalTime endTime, LocalDate endDate) {
         super(requireNonNull(title));
         requireNonNull(startTime);
         requireNonNull(startDate);
@@ -66,7 +68,13 @@ public class Appointment extends Entry {
         this.changeStartDate(startDate);
         this.changeEndTime(endTime);
         this.changeEndDate(endDate);
-        this.setLocation(location);
+
+        this.mapAddress = mapAddress;
+        if (mapAddress == null) {
+            this.setLocation(null);
+        } else {
+            this.setLocation(mapAddress.toString());
+        }
         this.childEntryList = new ArrayList<>();
     }
 
@@ -86,7 +94,7 @@ public class Appointment extends Entry {
 
         Appointment otherAppt = (Appointment) other;
         return Objects.equals(otherAppt.getTitle(), this.getTitle())
-                && Objects.equals(otherAppt.getLocation(), this.getLocation())
+                && Objects.equals(otherAppt.getMapAddress(), this.getMapAddress())
                 && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
                 && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute());
     }
@@ -145,4 +153,10 @@ public class Appointment extends Entry {
         }
     }
 
+    /**
+     * Returns the MapAddress of the Appointment.
+     */
+    public MapAddress getMapAddress() {
+        return mapAddress;
+    }
 }
