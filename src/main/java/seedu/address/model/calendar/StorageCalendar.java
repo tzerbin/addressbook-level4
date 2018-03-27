@@ -44,7 +44,7 @@ public class StorageCalendar extends Calendar {
     }
 
     public List<Appointment> getAppointmentsWithinDate(LocalDate startDate, LocalDate endDate) {
-        List<Appointment> appointments = new ArrayList<>();
+        List<Appointment> appointmentsWithinDate = new ArrayList<>();
         Map<LocalDate, List<Entry<?>>> dateListMap = this.findEntries(startDate, endDate, ZoneId.systemDefault());
         SortedSet<LocalDate> sortedKeySet = new TreeSet<>(dateListMap.keySet());
 
@@ -54,13 +54,13 @@ public class StorageCalendar extends Calendar {
                 Appointment currentAppt = (Appointment) e;
                 // because same entry might show up on different dates
                 if (!storedAppointments.contains(currentAppt)) {
-                    appointments.add(currentAppt);
+                    appointmentsWithinDate.add(currentAppt);
                     storedAppointments.add(currentAppt);
                 }
             }
         }
 
-        return appointments;
+        return appointmentsWithinDate;
 
     }
 
