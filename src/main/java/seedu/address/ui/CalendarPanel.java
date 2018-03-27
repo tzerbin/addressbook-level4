@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
-import com.calendarfx.view.AgendaView;
 import com.calendarfx.view.CalendarView;
 
 import com.calendarfx.view.page.DayPage;
@@ -20,11 +19,7 @@ import javafx.collections.ObservableMap;
 import javafx.event.Event;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
-import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
-import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
-import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Celebrity;
@@ -105,51 +100,38 @@ public class CalendarPanel extends UiPart<Region> {
         return celebCalendarView;
     }
 
-    @Subscribe
-    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
-        String calendarViewPage = event.calendarViewPage;
+    /**
+     * Method to handle the event for changing calendar view. Changes to either day,
+     * week, month or year view.
+     * @param calendarViewPage
+     */
+    public void handleChangeCalendarViewPageRequestEvent(String calendarViewPage) {
+        celebCalendarView.showDate(LocalDate.now());
+        celebCalendarView.getCalendarSources().clear();
+        celebCalendarView.getCalendarSources().add(celebCalendarSource);
+        switch (calendarViewPage) {
 
-        Platform.runLater(() -> {
-            celebCalendarView.showDate(LocalDate.now());
-            celebCalendarView.getCalendarSources().clear();
-            celebCalendarView.getCalendarSources().add(celebCalendarSource);
-            switch (calendarViewPage) {
+        case "day":
+            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
+            celebCalendarView.showDayPage();
+            break;
+        case "week":
+            celebCalendarView.showWeekPage();
+            break;
+        case "month":
+            celebCalendarView.showMonthPage();
+            break;
+        case "year":
+            celebCalendarView.showYearPage();
+            break;
 
-            case "day":
-                celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
-                celebCalendarView.showDayPage();
-                break;
-            case "week":
-                celebCalendarView.showWeekPage();
-                break;
-            case "month":
-                celebCalendarView.showMonthPage();
-                break;
-            case "year":
-                celebCalendarView.showYearPage();
-                break;
-
-            default:
-                try {
-                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+        default:
+            try {
+                throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
-    }
-
-    @Subscribe
-    private void handleAgendaViewPageRequestEvent(AgendaViewPageRequestEvent event) {
-        Platform.runLater(() -> {
-            celebCalendarView.getCalendarSources().clear();
-            celebCalendarView.getCalendarSources().add(storageCalendarSource);
-
-            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.AGENDA_ONLY);
-            AgendaView agendaView = celebCalendarView.getDayPage().getAgendaView();
-            agendaView.setLookAheadPeriodInDays(event.getStartEndDateDifference());
-            celebCalendarView.showDate(event.getStartDate());
-        });
+        }
     }
 
     /** Shows the calendar of the specified {@code celebrity} */
