@@ -76,6 +76,7 @@ public class AddAppointmentCommand extends Command {
         appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
 
         // reset calendar view to dayview
+        model.setCelebCalendarViewPage("day");
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent("day"));
         return new CommandResult(MESSAGE_SUCCESS);
     }
