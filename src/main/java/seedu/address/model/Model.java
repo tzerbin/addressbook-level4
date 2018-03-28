@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 import com.calendarfx.model.Calendar;
@@ -68,6 +69,14 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
+    /** Returns a celebrity whose name matches with the name */
+    List<Celebrity> getCelebrityWithName(String name);
+
+    /** Returns the celebrity whose calendar is currently shown.
+     *  If current calendar is a combined view, {@code null} will be returned.
+     */
+    String getCurrentCelebCalendarOwner();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -79,4 +88,7 @@ public interface Model {
 
     /** Changes the currentCelebCalendarViewPage. */
     void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage);
+
+    /** Changes the currentCelebCalendarOwner. */
+    void setCelebCalendarOwner(String celerity);
 }

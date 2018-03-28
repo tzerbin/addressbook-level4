@@ -1,9 +1,16 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.calendar;
+
+import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
+import static seedu.address.model.ModelManager.MONTH_VIEW_PAGE;
+import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
+import static seedu.address.model.ModelManager.YEAR_VIEW_PAGE;
 
 import java.util.Arrays;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -13,7 +20,7 @@ public class ViewCalendarByCommand extends Command {
 
     public static final String COMMAND_WORD = "viewCalendarBy";
     public static final String COMMAND_ALIAS = "vcb";
-    public static final String[] VALID_ARGUMENT = {"day", "week", "month", "year"};
+    public static final String[] VALID_ARGUMENT = {DAY_VIEW_PAGE, WEEK_VIEW_PAGE, MONTH_VIEW_PAGE, YEAR_VIEW_PAGE};
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Switches to the calendar view specified.\n"
             + "Parameter: VIEW (must be one of "
@@ -43,7 +50,7 @@ public class ViewCalendarByCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FindCommand // instanceof handles nulls
+                || (other instanceof ViewCalendarByCommand // instanceof handles nulls
                 && this.calendarViewPage.equals(((ViewCalendarByCommand) other).calendarViewPage)); // state check
     }
 }

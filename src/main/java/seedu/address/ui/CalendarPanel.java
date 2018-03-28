@@ -1,31 +1,37 @@
 package seedu.address.ui;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDARVIEW;
+import static seedu.address.model.ModelManager.AGENDA_VIEW_PAGE;
+import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
+import static seedu.address.model.ModelManager.MONTH_VIEW_PAGE;
+import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
+import static seedu.address.model.ModelManager.YEAR_VIEW_PAGE;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.logging.Logger;
 
+import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
-import com.calendarfx.view.AgendaView;
 import com.calendarfx.view.CalendarView;
 
 import com.calendarfx.view.page.DayPage;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.collections.ObservableMap;
 import javafx.event.Event;
-import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
-import javafx.scene.web.WebView;
-import seedu.address.MainApp;
+
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
-import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+
+import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
+import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Person;
+import seedu.address.model.calendar.CelebCalendar;
+import seedu.address.model.person.Celebrity;
 
 /**
  * The panel for the Calendar. Constructs a calendar view and attaches to it a CalendarSource.
@@ -33,10 +39,6 @@ import seedu.address.model.person.Person;
  * calendarPlaceholder.
  */
 public class CalendarPanel extends UiPart<Region> {
-
-    public static final String DEFAULT_PAGE = "";
-    public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -46,9 +48,6 @@ public class CalendarPanel extends UiPart<Region> {
 
     private final CalendarSource celebCalendarSource;
     private final CalendarSource storageCalendarSource;
-
-    @FXML
-    private WebView browser;
 
     public CalendarPanel(CalendarSource celebCalendarSource, CalendarSource storageCalendarSource) {
         super(FXML);
@@ -62,6 +61,10 @@ public class CalendarPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
 
         // To set up the calendar view.
+        setUpCelebCalendarView();
+    }
+
+    private void setUpCelebCalendarView() {
         celebCalendarView.getCalendarSources().clear(); // there is an existing default source when creating the view
         celebCalendarView.getCalendarSources().add(celebCalendarSource);
         celebCalendarView.setRequestedTime(LocalTime.now());
@@ -87,79 +90,104 @@ public class CalendarPanel extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
+
+        hideButtons();
+    }
+
+    /** Hide all buttons in the calendar */
+    private void hideButtons() {
+        celebCalendarView.setShowSearchField(false);
+        celebCalendarView.setShowSourceTrayButton(false);
+        celebCalendarView.setShowAddCalendarButton(false);
+        celebCalendarView.setShowPrintButton(false);
+        celebCalendarView.setShowPageToolBarControls(false);
+        celebCalendarView.setShowPageSwitcher(false);
+        celebCalendarView.setShowToolBar(false);
     }
 
     public CalendarView getCalendarView() {
         return celebCalendarView;
     }
 
-    @Subscribe
-    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
-        String calendarViewPage = event.calendarViewPage;
+    /**
+     * Method to handle the event for changing calendar view. Changes to either day,
+     * week, month or year view.
+     * @param calendarViewPage
+     */
+    public void handleChangeCalendarViewPageRequestEvent(String calendarViewPage) {
+        //celebCalendarView.showDate(LocalDate.now());
+        celebCalendarView.getCalendarSources().clear();
+        celebCalendarView.getCalendarSources().add(celebCalendarSource);
+        switch (calendarViewPage) {
 
+        case DAY_VIEW_PAGE:
+            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
+            celebCalendarView.showDayPage();
+            break;
+        case WEEK_VIEW_PAGE:
+            celebCalendarView.showWeekPage();
+            break;
+        case MONTH_VIEW_PAGE:
+            celebCalendarView.showMonthPage();
+            break;
+        case YEAR_VIEW_PAGE:
+            celebCalendarView.showYearPage();
+            break;
+        case AGENDA_VIEW_PAGE:
+            break;
+
+        default:
+            try {
+                throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /** Shows the calendar of the specified {@code celebrity} */
+    private void showCalendarOf(Celebrity celebrity) {
+        CelebCalendar celebCalendarToShow = celebrity.getCelebCalendar();
+        ObservableMap<Calendar, BooleanProperty> calendars =
+                celebCalendarView.getSourceView().getCalendarVisibilityMap();
         Platform.runLater(() -> {
-            celebCalendarView.showDate(LocalDate.now());
-            celebCalendarView.getCalendarSources().clear();
-            celebCalendarView.getCalendarSources().add(celebCalendarSource);
-            switch (calendarViewPage) {
-
-            case "day":
-                celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
-                celebCalendarView.showDayPage();
-                break;
-            case "week":
-                celebCalendarView.showWeekPage();
-                break;
-            case "month":
-                celebCalendarView.showMonthPage();
-                break;
-            case "year":
-                celebCalendarView.showYearPage();
-                break;
-
-            default:
-                try {
-                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+            for (Calendar calendar: calendars.keySet()) {
+                if (!calendar.equals(celebCalendarToShow)) {
+                    celebCalendarView.getSourceView().setCalendarVisibility(calendar, false);
+                } else {
+                    celebCalendarView.getSourceView().setCalendarVisibility(calendar, true);
                 }
             }
         });
     }
 
+    //keep this method to load calendar if the selected person is a celeb
     @Subscribe
-    private void handleAgendaViewPageRequestEvent(AgendaViewPageRequestEvent event) {
-        Platform.runLater(() -> {
-            celebCalendarView.getCalendarSources().clear();
-            celebCalendarView.getCalendarSources().add(storageCalendarSource);
+    private void handlePersonPanelSelectionChangedToCelebrityEvent(PersonPanelSelectionChangedToCelebrityEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showCalendarOf((Celebrity) event.getNewSelection().person);
+    }
 
-            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.AGENDA_ONLY);
-            AgendaView agendaView = celebCalendarView.getDayPage().getAgendaView();
-            agendaView.setLookAheadPeriodInDays(event.getStartEndDateDifference());
-            celebCalendarView.showDate(event.getStartDate());
+    @Subscribe
+    private void handleCalendarChangeRequestEvent(ChangeCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showCalendarOf(event.celebrity);
+    }
+
+    /** Shows a combined calendar that contains {@code appointment}s for all {@code celebrity}s */
+    private void showAllCalendars() {
+        ObservableMap<Calendar, BooleanProperty> calendars =
+                celebCalendarView.getSourceView().getCalendarVisibilityMap();
+        Platform.runLater(() -> {
+            for (Calendar calendar: calendars.keySet()) {
+                celebCalendarView.getSourceView().setCalendarVisibility(calendar, true);
+            }
         });
     }
 
-    //methods from BrowserPanel
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
-    }
-
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleShowCombinedCalendarViewRequestEvent(ShowCombinedCalendarViewRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        showAllCalendars();
     }
 }

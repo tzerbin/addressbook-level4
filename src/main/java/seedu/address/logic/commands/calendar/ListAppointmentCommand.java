@@ -1,11 +1,12 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.ModelManager.AGENDA_VIEW_PAGE;
 
 import java.time.LocalDate;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.AgendaViewPageRequestEvent;
+import seedu.address.commons.events.ui.ShowAppointmentListEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -22,6 +23,8 @@ public class ListAppointmentCommand extends Command {
             + ": Lists all appointments in a celebrity calendar within a certain date range. ";
 
     public static final String MESSAGE_SUCCESS = "Listed appointments successfully.";
+
+    public static final String MESSAGE_NO_APPTS_ERROR = "No appointments to list!";
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -40,11 +43,15 @@ public class ListAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        if (!model.getStorageCalendar().hasAtLeastOneAppointment()) {
+            throw new CommandException(MESSAGE_NO_APPTS_ERROR);
+        }
         startDate = model.getStorageCalendar().getEarliestDate();
         endDate = model.getStorageCalendar().getLatestDate();
 
-        model.setCelebCalendarViewPage("agenda");
-        EventsCenter.getInstance().post(new AgendaViewPageRequestEvent(startDate, endDate));
+        model.setCelebCalendarViewPage(AGENDA_VIEW_PAGE);
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(model.getStorageCalendar()
+                .getAppointmentsWithinDate(startDate, endDate)));
 
         return new CommandResult(MESSAGE_SUCCESS);
     }

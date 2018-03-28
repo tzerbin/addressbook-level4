@@ -3,7 +3,10 @@ package seedu.address.testutil;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.map.MapAddress;
 
 /**
  * A utility class to help with building Appointment objects.
@@ -11,14 +14,14 @@ import seedu.address.model.appointment.Appointment;
 public class AppointmentBuilder {
 
     public static final String DEFAULT_NAME = "Oscars 2018";
-    public static final String DEFAULT_LOCATION = null;
+    public static final MapAddress DEFAULT_LOCATION = null;
     public static final LocalTime DEFAULT_START_TIME = LocalTime.now();
     public static final LocalDate DEFAULT_START_DATE = LocalDate.now();
     public static final LocalTime DEFAULT_END_TIME = LocalTime.now();
     public static final LocalDate DEFAULT_END_DATE = LocalDate.now();
 
     private String name;
-    private String location;
+    private MapAddress location;
     private LocalTime startTime;
     private LocalDate startDate;
     private LocalTime endTime;
@@ -38,7 +41,7 @@ public class AppointmentBuilder {
      */
     public AppointmentBuilder(Appointment apptToCopy) {
         name = apptToCopy.getTitle();
-        location = apptToCopy.getLocation();
+        location = apptToCopy.getMapAddress();
         startTime = apptToCopy.getStartTime();
         startDate = apptToCopy.getStartDate();
         endTime = apptToCopy.getEndTime();
@@ -56,8 +59,8 @@ public class AppointmentBuilder {
     /**
      * Sets the {@code location} of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withLocation(String location) {
-        this.location = location;
+    public AppointmentBuilder withLocation(String location) throws IllegalValueException {
+        this.location = ParserUtil.parseMapAddress(location);
         return this;
     }
 

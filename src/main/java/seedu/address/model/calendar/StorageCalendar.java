@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -23,6 +25,10 @@ public class StorageCalendar extends Calendar {
         super(title);
     }
 
+    public boolean hasAtLeastOneAppointment() {
+        return this.getEarliestTimeUsed() != null;
+    }
+
     public LocalDate getEarliestDate() {
         return LocalDateTime.ofInstant(this.getEarliestTimeUsed(), ZoneId.systemDefault()).toLocalDate();
     }
@@ -38,17 +44,23 @@ public class StorageCalendar extends Calendar {
     }
 
     public List<Appointment> getAppointmentsWithinDate(LocalDate startDate, LocalDate endDate) {
-        List<Appointment> appointments = new ArrayList<>();
+        List<Appointment> appointmentsWithinDate = new ArrayList<>();
         Map<LocalDate, List<Entry<?>>> dateListMap = this.findEntries(startDate, endDate, ZoneId.systemDefault());
         SortedSet<LocalDate> sortedKeySet = new TreeSet<>(dateListMap.keySet());
 
+        Set<Appointment> storedAppointments = new HashSet<>();
         for (LocalDate date : sortedKeySet) {
             for (Entry e : dateListMap.get(date)) {
-                appointments.add((Appointment) e);
+                Appointment currentAppt = (Appointment) e;
+                // because same entry might show up on different dates
+                if (!storedAppointments.contains(currentAppt)) {
+                    appointmentsWithinDate.add(currentAppt);
+                    storedAppointments.add(currentAppt);
+                }
             }
         }
 
-        return appointments;
+        return appointmentsWithinDate;
 
     }
 
