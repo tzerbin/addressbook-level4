@@ -116,7 +116,7 @@ public class CalendarPanel extends UiPart<Region> {
      * @param calendarViewPage
      */
     public void handleChangeCalendarViewPageRequestEvent(String calendarViewPage) {
-        celebCalendarView.showDate(LocalDate.now());
+        //celebCalendarView.showDate(LocalDate.now());
         celebCalendarView.getCalendarSources().clear();
         celebCalendarView.getCalendarSources().add(celebCalendarSource);
         switch (calendarViewPage) {
