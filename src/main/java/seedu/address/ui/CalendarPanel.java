@@ -127,6 +127,8 @@ public class CalendarPanel extends UiPart<Region> {
         case "year":
             celebCalendarView.showYearPage();
             break;
+        case "agenda":
+            break;
 
         default:
             try {
