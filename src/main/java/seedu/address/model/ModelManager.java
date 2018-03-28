@@ -147,11 +147,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public String getCurrentCelebCalendarOwner() {
-        return currentCelebCalendarOwner;
-    }
-
-    @Override
     public void setCelebCalendarOwner(String celerity) {
         this.currentCelebCalendarOwner = celerity;
     }
@@ -181,6 +176,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String getCurrentCelebCalendarViewPage() {
         return currentCelebCalendarViewPage;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarOwner() {
+        return currentCelebCalendarOwner;
     }
 
     //=========== Filtered Person List Accessors =============================================================
