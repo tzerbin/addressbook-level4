@@ -34,6 +34,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
     private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
+    public static final String DAY_VIEW_PAGE = "day";
+    public static final String WEEK_VIEW_PAGE = "week";
+    public static final String MONTH_VIEW_PAGE = "month";
+    public static final String YEAR_VIEW_PAGE = "year";
+    public static final String AGENDA_VIEW_PAGE = "agenda";
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
@@ -147,11 +152,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public String getCurrentCelebCalendarOwner() {
-        return currentCelebCalendarOwner;
-    }
-
-    @Override
     public void setCelebCalendarOwner(String celerity) {
         this.currentCelebCalendarOwner = celerity;
     }
@@ -181,6 +181,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String getCurrentCelebCalendarViewPage() {
         return currentCelebCalendarViewPage;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarOwner() {
+        return currentCelebCalendarOwner;
     }
 
     //=========== Filtered Person List Accessors =============================================================
