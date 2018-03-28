@@ -34,8 +34,10 @@ import java.util.Set;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.map.MapAddress;
 import seedu.address.testutil.AppointmentBuilder;
 
 public class AddAppointmentCommandParserTest {
@@ -43,7 +45,7 @@ public class AddAppointmentCommandParserTest {
     private Set<Index> emptyIndexSet = new HashSet<>();
 
     @Test
-    public void parse_allFieldsPresent_success() {
+    public void parse_allFieldsPresent_success() throws IllegalValueException {
         Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
                 .withLocation(VALID_APPOINTMENT_LOCATION_OSCAR).withStartTime(VALID_START_TIME_OSCAR)
                 .withStartDate(VALID_START_DATE_OSCAR).withEndTime(VALID_END_TIME_OSCAR)
@@ -180,7 +182,7 @@ public class AddAppointmentCommandParserTest {
 
         // invalid location
         assertParseFailure(parser, APPT_NAME_DESC_OSCAR + INVALID_APPT_LOCATION_DESC
-                + APPT_START_DATE_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR, Appointment.MESSAGE_NAME_CONSTRAINTS);
+                + APPT_START_DATE_DESC_OSCAR + APPT_START_DATE_DESC_OSCAR, MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
 
 
         // invalid start time

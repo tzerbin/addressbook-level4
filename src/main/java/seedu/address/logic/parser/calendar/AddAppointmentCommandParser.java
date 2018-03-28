@@ -24,6 +24,7 @@ import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.map.MapAddress;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object
@@ -52,10 +53,10 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             Optional<LocalDate> startDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_START_DATE));
             Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
             Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
-            Optional<String> locationInput = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_LOCATION));
+            Optional<MapAddress> locationInput = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_LOCATION));
             Set<Index> celebrityIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_CELEBRITY));
 
-            String location = null;
+            MapAddress location = null;
             LocalTime startTime = LocalTime.now();
             LocalDate startDate = LocalDate.now();
             LocalTime endTime = LocalTime.now();

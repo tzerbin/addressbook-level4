@@ -20,6 +20,7 @@ import javafx.event.Event;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
 import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
