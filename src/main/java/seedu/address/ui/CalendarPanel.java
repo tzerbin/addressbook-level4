@@ -1,6 +1,11 @@
 package seedu.address.ui;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDARVIEW;
+import static seedu.address.model.ModelManager.AGENDA_VIEW_PAGE;
+import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
+import static seedu.address.model.ModelManager.MONTH_VIEW_PAGE;
+import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
+import static seedu.address.model.ModelManager.YEAR_VIEW_PAGE;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -36,12 +41,6 @@ import seedu.address.model.person.Celebrity;
 public class CalendarPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
-
-    public static final String DAY_VIEW_PAGE = "day";
-    public static final String WEEK_VIEW_PAGE = "week";
-    public static final String MONTH_VIEW_PAGE = "month";
-    public static final String YEAR_VIEW_PAGE = "year";
-    public static final String AGENDA_VIEW_PAGE = "agenda";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 

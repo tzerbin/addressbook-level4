@@ -1,7 +1,7 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.ui.CalendarPanel.AGENDA_VIEW_PAGE;
+import static seedu.address.model.ModelManager.AGENDA_VIEW_PAGE;
 
 import java.time.LocalDate;
 
