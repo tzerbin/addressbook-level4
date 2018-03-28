@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.appointment.AppointmentList;
 import seedu.address.model.appointment.ReadOnlyAppointmentList;
+import seedu.address.model.calendar.StorageCalendar;
 
 /**
  * An Immutable AppointmentList that is serializable to XML format
@@ -33,17 +33,17 @@ public class XmlSerializableAppointmentList {
     }
 
     /**
-     * Converts appointmentlist into the model's {@code AppointmentList} object.
+     * Converts appointments into the model's {@code StorageCalendar} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedAppointments}.
      */
-    public AppointmentList toModelType() throws IllegalValueException {
-        AppointmentList appointmentList = new AppointmentList();
-        // for (XmlAdaptedAppointment a : appointments) {
-        // appointmentList.addAppointment(a.toModelType());
-        // }
-        return appointmentList;
+    public StorageCalendar toModelType() throws IllegalValueException {
+        StorageCalendar calendar = new StorageCalendar("Stored Calendar");
+        for (XmlAdaptedAppointment a : appointments) {
+            calendar.addEntry(a.toModelType());
+        }
+        return calendar;
     }
 
     @Override
