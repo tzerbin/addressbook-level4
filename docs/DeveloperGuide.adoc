@@ -643,12 +643,17 @@ public class Appointment extends Entry {
 }
 ----
 
-The figure below shows the state of the application before input of the `AddAppointmentCommand`:
+The following sequence diagram (Figure 19) gives an overview of how the command works and interacts with the other components:
+
+.Sequence diagram of addAppointment command
+image::AddAppointmentSequenceDiagram.png[width=""]
+
+The figure below (Figure 20) shows the state of the application before input of the `AddAppointmentCommand`:
 
 .State of application without any appointments
 image::BeforeAddAppointment.png[width="800"]
 
-After input of the command, we will have:
+After input of the command, we will have as shown below (Figure 21):
 
 .State of application with newly added appointment
 image::AfterAddAppointment.png[width="800"]
