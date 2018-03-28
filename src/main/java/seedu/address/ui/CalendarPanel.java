@@ -36,6 +36,12 @@ public class CalendarPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
 
+    public static final String DAY_VIEW_PAGE = "day";
+    public static final String WEEK_VIEW_PAGE = "week";
+    public static final String MONTH_VIEW_PAGE = "month";
+    public static final String YEAR_VIEW_PAGE = "year";
+    public static final String AGENDA_VIEW_PAGE = "agenda";
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private CalendarView celebCalendarView;
@@ -114,20 +120,20 @@ public class CalendarPanel extends UiPart<Region> {
         celebCalendarView.getCalendarSources().add(celebCalendarSource);
         switch (calendarViewPage) {
 
-        case "day":
+        case DAY_VIEW_PAGE:
             celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
             celebCalendarView.showDayPage();
             break;
-        case "week":
+        case WEEK_VIEW_PAGE:
             celebCalendarView.showWeekPage();
             break;
-        case "month":
+        case MONTH_VIEW_PAGE:
             celebCalendarView.showMonthPage();
             break;
-        case "year":
+        case YEAR_VIEW_PAGE:
             celebCalendarView.showYearPage();
             break;
-        case "agenda":
+        case AGENDA_VIEW_PAGE:
             break;
 
         default:

@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +77,8 @@ public class AddAppointmentCommand extends Command {
         appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
 
         // reset calendar view to dayview
-        model.setCelebCalendarViewPage("day");
-        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent("day"));
+        model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
+        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
