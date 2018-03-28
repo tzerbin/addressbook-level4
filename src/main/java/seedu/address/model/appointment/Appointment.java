@@ -104,6 +104,10 @@ public class Appointment extends Entry {
         }
     }
 
+    public List<Entry> getChildEntryList() {
+        return childEntryList;
+    }
+
     /**
      * Removes all child entries and then removes the appointment itself from
      * the StorageCalendar.
