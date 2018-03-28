@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -29,6 +30,12 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
+    public static final String DAY_VIEW_PAGE = "day";
+    public static final String WEEK_VIEW_PAGE = "week";
+    public static final String MONTH_VIEW_PAGE = "month";
+    public static final String YEAR_VIEW_PAGE = "year";
+    public static final String AGENDA_VIEW_PAGE = "agenda";
+
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
@@ -40,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final CalendarSource storageCalendarSource;
 
     private String currentCelebCalendarViewPage;
+    private String currentCelebCalendarOwner;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -61,8 +69,7 @@ public class ModelManager extends ComponentManager implements Model {
 
 
         currentCelebCalendarViewPage = "day";
-
-
+        currentCelebCalendarOwner = "";
     }
 
     public ModelManager() {
@@ -134,6 +141,22 @@ public class ModelManager extends ComponentManager implements Model {
         currentCelebCalendarViewPage = newCurrentCelebCalendarViewPage;
     }
 
+    @Override
+    public List<Celebrity> getCelebrityWithName(String name) {
+        List<Celebrity> matchedCelebrities = new ArrayList<>();
+        for (Celebrity celebrity: getCelebrities()) {
+            if (celebrity.getName().toString().contains(name)) {
+                matchedCelebrities.add(celebrity);
+            }
+        }
+        return matchedCelebrities;
+    }
+
+    @Override
+    public void setCelebCalendarOwner(String celerity) {
+        this.currentCelebCalendarOwner = celerity;
+    }
+
     //=========== Celeb Calendar Accessors ===================================================================
 
     @Override
@@ -159,6 +182,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String getCurrentCelebCalendarViewPage() {
         return currentCelebCalendarViewPage;
+    }
+
+    @Override
+    public String getCurrentCelebCalendarOwner() {
+        return currentCelebCalendarOwner;
     }
 
     //=========== Filtered Person List Accessors =============================================================

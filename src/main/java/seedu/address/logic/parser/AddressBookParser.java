@@ -20,14 +20,24 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.ViewCalendarByCommand;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.logic.commands.calendar.ListAppointmentCommand;
+<<<<<<< HEAD
 import seedu.address.logic.commands.calendar.ViewAppointmentCommand;
 import seedu.address.logic.commands.map.EstimateRouteCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.calendar.AddAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.ViewAppointmentCommandParser;
+=======
+import seedu.address.logic.commands.calendar.ViewCalendarByCommand;
+import seedu.address.logic.commands.calendar.ViewCalendarCommand;
+import seedu.address.logic.commands.calendar.ViewCombinedCalendarCommand;
+import seedu.address.logic.commands.map.EstimateRouteCommand;
+import seedu.address.logic.commands.map.ShowLocationCommand;
+import seedu.address.logic.parser.calendar.AddAppointmentCommandParser;
+import seedu.address.logic.parser.calendar.ViewCalendarByCommandParser;
+import seedu.address.logic.parser.calendar.ViewCalendarCommandParser;
+>>>>>>> e0b7380b4fe99a75b5e9a54dd6faac11dff0f32a
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.map.EstimateRouteCommandParser;
 import seedu.address.logic.parser.map.ShowLocationCommandParser;
@@ -117,6 +127,14 @@ public class AddressBookParser {
         case ViewCalendarByCommand.COMMAND_WORD:
         case ViewCalendarByCommand.COMMAND_ALIAS:
             return new ViewCalendarByCommandParser().parse(arguments);
+
+        case ViewCalendarCommand.COMMAND_WORD:
+        case ViewCalendarCommand.COMMAND_ALIAS:
+            return new ViewCalendarCommandParser().parse(arguments);
+
+        case ViewCombinedCalendarCommand.COMMAND_WORD:
+        case ViewCombinedCalendarCommand.COMMAND_ALIAS:
+            return new ViewCombinedCalendarCommand();
 
         case ShowLocationCommand.COMMAND_WORD:
         case ShowLocationCommand.COMMAND_ALIAS:
