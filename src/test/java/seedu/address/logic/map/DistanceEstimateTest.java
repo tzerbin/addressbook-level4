@@ -3,18 +3,18 @@ package seedu.address.logic.map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import org.junit.Test;
+
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
-
-import org.junit.Test;
 
 import seedu.address.testutil.Assert;
 
 public class DistanceEstimateTest {
 
-    DistanceEstimate test;
-    LatLng start;
-    LatLng end;
+    private DistanceEstimate test;
+    private LatLng start;
+    private LatLng end;
 
     @Test
     public void isValidStartAndEndAddress() {
@@ -25,7 +25,8 @@ public class DistanceEstimateTest {
         convertToLatLng.initialiseLatLngFromAddress("NUS");
         end = convertToLatLng.getLatLng();
         // null start, end addresses and mode of travel
-        Assert.assertThrows(NullPointerException.class, () -> test.calculateDistanceMatrix(null, null, null));
+        Assert.assertThrows(NullPointerException.class, () -> test.calculateDistanceMatrix
+                (null, null, null));
 
         // Start and End cannot be reached by driving
         test.calculateDistanceMatrix(start, end, TravelMode.DRIVING);

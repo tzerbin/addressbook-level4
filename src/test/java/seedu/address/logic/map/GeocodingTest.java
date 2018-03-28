@@ -9,7 +9,7 @@ import seedu.address.testutil.Assert;
 
 public class GeocodingTest {
 
-    Geocoding test;
+    private Geocoding test;
 
     @Test
     public void isValidGeocode() {

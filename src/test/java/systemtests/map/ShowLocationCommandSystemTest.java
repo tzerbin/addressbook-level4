@@ -39,7 +39,7 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
         newAddress = new MapAddress("National University of Singapore");
         assertCommandSuccess(newAddress);
 
-        /* ----------------------------------- Perform invalid showLocation operations --------------------------------- */
+        /* ------------------------------- Perform invalid showLocation operations --------------------------------- */
 
         /* Case: missing MapAddress and prefix-> rejected */
         String command = ShowLocationCommand.COMMAND_WORD + "";
