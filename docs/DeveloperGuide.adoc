@@ -1152,8 +1152,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |zoom in and out of the map of a location in a map |view the location in different levels of details
 
-|`* * *` |user |see the best route of travel by driving between two locations in a map |plan for the fastest travel
-
 |`* * *` |celebrity manager who chauffeurs celebrities |see the best route of travel by driving between two locations in a map |plan for the shortest travel
 
 |`* * *` |celebrity manager who chauffeurs celebrities |know if two locations can be reached by driving |foresee any problems and plan ahead
