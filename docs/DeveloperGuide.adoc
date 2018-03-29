@@ -1433,6 +1433,116 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
+=== Use case: Show location in map
+
+*MSS*
+
+1.  User inputs location name or address.
+2.  CelebManager converts information into LatLong form.
+3.  Celeb Manager uses the LatLong info to update create a new location marker.
+4.  CelebManager updates the map with the location marker and re-centre its panel view.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User provides invalid input.
++
+[none]
+** 1a1. CelebManager requests User to provide valid input.
++
+[none]
+** 1a2. User enters new input.
++
+Steps 1a1-1a2 are repeated until input is valid.
++
+Use case resumes from step 2.
+
+[none]
+* 4a. When there is an existing marker in the map.
++
+[none]
+** 4a1. CelebManager removes it.
++
+Use case ends.
+
+=== Use case: Show estimated route by driving in map
+
+*MSS*
+
+1.  User inputs start and end location name or address.
+2.  CelebManager converts information into LatLong form.
+3.  Celeb Manager uses the LatLong info to generate the route.
+4.  CelebManager updates the map with the route.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User provides invalid input.
++
+[none]
+** 1a1. CelebManager requests User to provide valid input.
++
+[none]
+** 1a2. User enters new input.
++
+Steps 1a1-1a2 are repeated until input is valid.
++
+Use case resumes from step 2.
+
+[none]
+* 3a. When both location cannot be reached by driving
++
+[none]
+** 3a1. CelebManager shows error message.
++
+Use case ends.
+
+[none]
+* 4a. When there is an existing route in the map
++
+[none]
+** 4a1. CelebManager removes it.
++
+Use case ends.
+
+=== Use case: Show estimated distance and time of travel by driving
+
+*MSS*
+
+1.  User inputs start and end location name or address.
+2.  CelebManager converts information into LatLong form.
+3.  Celeb Manager uses the LatLong info to generate the distance and time required to travel.
+4.  CelebManager shows the information.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User provides invalid input.
++
+[none]
+** 1a1. CelebManager requests User to provide valid input.
++
+[none]
+** 1a2. User enters new input.
++
+Steps 1a1-1a2 are repeated until input is valid.
++
+Use case resumes from step 2.
+
+[none]
+* 3a. When both location cannot be reached by driving
++
+[none]
+** 3a1. CelebManager shows error message.
+
 [appendix]
 == Non Functional Requirements
 
