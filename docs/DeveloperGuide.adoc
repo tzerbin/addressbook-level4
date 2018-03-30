@@ -820,10 +820,10 @@ checks for *blank space and the validity of location in google server*. Thus, ma
 
 This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
-* The `GMAPSFX API` is used to create the `MapPanel` class which allows the
+* `GMAPSFX API` is used to create the `MapPanel` class which allows the
 command to re-center and mark the new location which is then shown to the user.
 
-* The `Google Maps Web Services API` is used to create the
+* `Google Maps Web Services API` is used to create the
 `Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
 is then used by the command to find the exact location in the `MapPanel`.
 
@@ -891,13 +891,14 @@ An example would be the details of unit number (e.g #11-111) which will not be v
 
 This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
-* The `GMAPSFX` is used to create the `MapPanel` which allows the
+* `GMAPSFX` is used to create the `MapPanel` which allows the
 command to re-center the map view, create the route, mark the start and end location which is then shown to the user.
 
-* The `Google Maps Web Services API` is used to create the
+* `Google Maps Web Services API` is used to create the
 `Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
 is then used by the command to find the exact location in the `MapPanel`.
-* The `Google Maps Web Services API` is also used to create the `DistanceEstimate` class, which allows
+
+* `Google Maps Web Services API` is also used to create the `DistanceEstimate` class, which allows
 the calculation of estimated time and distance of travel between two location by driving. `DistanceEstimate` class is also used to check if two locations
 can be reached by driving.
 
