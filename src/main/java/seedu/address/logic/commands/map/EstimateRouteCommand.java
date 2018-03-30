@@ -3,12 +3,9 @@ package seedu.address.logic.commands.map;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_MAP_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_MAP_ADDRESS;
-import static seedu.address.ui.MapPanel.getMap;
 
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.service.directions.DirectionStatus;
 import com.lynden.gmapsfx.service.directions.DirectionsRequest;
 import com.lynden.gmapsfx.service.directions.DirectionsResult;
@@ -20,8 +17,8 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.map.DistanceEstimate;
 import seedu.address.logic.map.Geocoding;
+import seedu.address.model.map.Map;
 import seedu.address.model.map.MapAddress;
-import seedu.address.ui.MapPanel;
 
 /**
  * Estimates the distance and travel time required between two location
@@ -54,7 +51,6 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     private static String timeOfTravel;
     private final LatLng endLatLng;
     private final LatLng startLatLng;
-    private final GoogleMap map;
     private DirectionsService directionService;
 
     /**
@@ -69,9 +65,9 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
         this.endLocation = end;
         this.startLatLng = getLatLong(startLocation);
         this.endLatLng = getLatLong(endLocation);
-        map = getMap();
-        removeExistingMarker();
-        directionService = MapPanel.getDirectionService();
+        Map.removeExistingMarker();
+        Map.clearRoute();
+        directionService = Map.getDirectionService();
     }
 
     @Override
@@ -107,26 +103,15 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     }
 
     /**
-     * Remove any existing marker {@code location} in Map
-     */
-    private void removeExistingMarker() {
-        Marker location = ShowLocationCommand.getCurrentMarker();
-        if (location != null) {
-            map.removeMarker(location);
-        }
-    }
-
-    /**
      * Update {@code MapPanel} to show new route
      */
     private void addRouteToMap() {
-        MapPanel.clearRoute();
-        directionRequest = MapPanel.getDirectionRequest();
+        directionRequest = Map.getDirectionRequest();
         directionRequest = new DirectionsRequest(
                 startLatLng.toString(),
                 endLatLng.toString(),
                 TravelModes.DRIVING);
-        directionService.getRoute(directionRequest, this, MapPanel.getDirectionRenderer());
+        directionService.getRoute(directionRequest, this, Map.getDirectionRenderer());
     }
 
     /**
