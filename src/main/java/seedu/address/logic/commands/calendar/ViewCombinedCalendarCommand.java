@@ -25,11 +25,11 @@ public class ViewCombinedCalendarCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (model.getCurrentCelebCalendarOwner().contentEquals("")) {
+        if (model.getCurrentCelebCalendarOwner() == null) {
             throw new CommandException(MESSAGE_ALREADY_IN_COMBINED_VIEW);
         }
 
-        model.setCelebCalendarOwner("");
+        model.setCelebCalendarOwner(null);
         EventsCenter.getInstance().post(new ShowCombinedCalendarViewRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
