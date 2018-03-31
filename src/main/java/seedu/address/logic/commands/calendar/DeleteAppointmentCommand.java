@@ -88,6 +88,10 @@ public class DeleteAppointmentCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle().toString()));
     }
 
+    /**
+     * @returns the appointment at the given index in the currently displayed appointment list
+     * @throws CommandException
+     */
     private void findApptToDelete() throws CommandException {
         List<Appointment> lastShownList = model.getAppointmentList();
         if (targetIndex.getZeroBased() >= lastShownList.size()) {

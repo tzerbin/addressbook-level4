@@ -123,26 +123,26 @@ public class CalendarPanel extends UiPart<Region> {
         Platform.runLater(() -> {
             switch (calendarViewPage) {
 
-                case DAY_VIEW_PAGE:
-                    celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
-                    celebCalendarView.showDayPage();
-                    break;
-                case WEEK_VIEW_PAGE:
-                    celebCalendarView.showWeekPage();
-                    break;
-                case MONTH_VIEW_PAGE:
-                    celebCalendarView.showMonthPage();
-                    break;
-                case YEAR_VIEW_PAGE:
-                    celebCalendarView.showYearPage();
-                    break;
+            case DAY_VIEW_PAGE:
+                celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
+                celebCalendarView.showDayPage();
+                break;
+            case WEEK_VIEW_PAGE:
+                celebCalendarView.showWeekPage();
+                break;
+            case MONTH_VIEW_PAGE:
+                celebCalendarView.showMonthPage();
+                break;
+            case YEAR_VIEW_PAGE:
+                celebCalendarView.showYearPage();
+                break;
 
-                default:
-                    try {
-                        throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+            default:
+                try {
+                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
