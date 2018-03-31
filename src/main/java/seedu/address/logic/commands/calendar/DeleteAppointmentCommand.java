@@ -1,7 +1,6 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.ModelManager.AGENDA_VIEW_PAGE;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.util.List;
@@ -11,6 +10,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowAppointmentListEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -49,7 +49,7 @@ public class DeleteAppointmentCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         // throw exception if the user is not currently viewing an appointment list
-        if (!model.getCurrentCelebCalendarViewPage().contentEquals(AGENDA_VIEW_PAGE)) {
+        if (!model.getIsListingAppointments()) {
             throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
         findApptToDelete();
@@ -62,10 +62,12 @@ public class DeleteAppointmentCommand extends Command {
         List<Appointment> newAppointmentList = model.getAppointmentList();
         newAppointmentList.remove(apptToDelete);
         model.setAppointmentList(newAppointmentList);
-        // if the list becomes empty, switch back to calendar day view
+        // if the list becomes empty, switch back to combined calendar day view
         if (model.getAppointmentList().size() < 1) {
+            model.setIsListingAppointments(false);
             model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
             EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
 
             Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
             if (currentCalendarOwner == null) {

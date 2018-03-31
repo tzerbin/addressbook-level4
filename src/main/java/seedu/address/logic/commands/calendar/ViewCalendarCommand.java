@@ -8,6 +8,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -53,13 +54,22 @@ public class ViewCalendarCommand extends Command {
         }
 
         Celebrity celebrityToShowCalendar = (Celebrity) personToShowCalendar;
-        if (celebrityToShowCalendar.equals(model.getCurrentCelebCalendarOwner())) {
+
+        // not in appointment list view and same celebrity
+        if (celebrityToShowCalendar.equals(model.getCurrentCelebCalendarOwner())
+                && !model.getIsListingAppointments()) {
             throw new CommandException((String.format(MESSAGE_NO_CHANGE_IN_CALENDAR,
                     celebrityToShowCalendar.getName().toString())));
         }
 
         model.setCelebCalendarOwner(celebrityToShowCalendar);
         EventsCenter.getInstance().post(new ChangeCalendarRequestEvent(celebrityToShowCalendar));
+
+        // if it's switching from appointment list view to calendar
+        if (model.getIsListingAppointments()) {
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+            model.setIsListingAppointments(false);
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, celebrityToShowCalendar.getName().toString()));
     }
 

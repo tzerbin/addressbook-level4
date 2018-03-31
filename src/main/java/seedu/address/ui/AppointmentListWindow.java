@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import seedu.address.model.appointment.Appointment;
 
 /**
- * Our window to display our list of appointments using appointment cards
+ * Window to display the list of appointments using appointment cards
  */
 public class AppointmentListWindow extends UiPart<Region> {
 

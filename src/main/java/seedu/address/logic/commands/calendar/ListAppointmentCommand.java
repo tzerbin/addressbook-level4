@@ -1,7 +1,6 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.ModelManager.AGENDA_VIEW_PAGE;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -51,8 +50,7 @@ public class ListAppointmentCommand extends Command {
         startDate = model.getStorageCalendar().getEarliestDate();
         endDate = model.getStorageCalendar().getLatestDate();
 
-        model.setCelebCalendarOwner(null);
-        model.setCelebCalendarViewPage(AGENDA_VIEW_PAGE);
+        model.setIsListingAppointments(true);
         List<Appointment> newAppointmentList =
                 model.getStorageCalendar().getAppointmentsWithinDate(startDate, endDate);
         model.setAppointmentList(newAppointmentList);

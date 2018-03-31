@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.calendar;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -25,12 +26,20 @@ public class ViewCombinedCalendarCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (model.getCurrentCelebCalendarOwner() == null) {
+        // view combined calendar when it's already in combined calendar
+        if (model.getCurrentCelebCalendarOwner() == null
+                && !model.getIsListingAppointments()) {
             throw new CommandException(MESSAGE_ALREADY_IN_COMBINED_VIEW);
         }
 
         model.setCelebCalendarOwner(null);
         EventsCenter.getInstance().post(new ShowCombinedCalendarViewRequestEvent());
+
+        // if it's switching from appointment list view to calendar
+        if (model.getIsListingAppointments()) {
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+            model.setIsListingAppointments(false);
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
