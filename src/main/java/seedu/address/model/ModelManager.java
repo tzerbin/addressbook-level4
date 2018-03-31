@@ -17,6 +17,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
@@ -34,12 +35,15 @@ public class ModelManager extends ComponentManager implements Model {
     public static final String WEEK_VIEW_PAGE = "week";
     public static final String MONTH_VIEW_PAGE = "month";
     public static final String YEAR_VIEW_PAGE = "year";
-    public static final String AGENDA_VIEW_PAGE = "agenda";
+
+    public static final Tag CELEBRITY_TAG = new Tag("celebrity");
 
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
     private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
+
+    private static boolean isListingAppointments = false;
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
@@ -47,7 +51,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final CalendarSource storageCalendarSource;
 
     private String currentCelebCalendarViewPage;
-    private String currentCelebCalendarOwner;
+    private Celebrity currentCelebCalendarOwner;
+    private List<Appointment> appointments;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -67,9 +72,10 @@ public class ModelManager extends ComponentManager implements Model {
         storageCalendarSource = new CalendarSource(STORAGE_CALENDAR_SOURCE_NAME);
         initializeStorageCalendarSource(storageCalendarSource);
 
+        appointments = new ArrayList<>();
 
-        currentCelebCalendarViewPage = "day";
-        currentCelebCalendarOwner = "";
+        currentCelebCalendarViewPage = DAY_VIEW_PAGE;
+        currentCelebCalendarOwner = null;
     }
 
     public ModelManager() {
@@ -142,19 +148,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public List<Celebrity> getCelebrityWithName(String name) {
-        List<Celebrity> matchedCelebrities = new ArrayList<>();
-        for (Celebrity celebrity: getCelebrities()) {
-            if (celebrity.getName().toString().contains(name)) {
-                matchedCelebrities.add(celebrity);
-            }
-        }
-        return matchedCelebrities;
+    public void setCelebCalendarOwner(Celebrity celerity) {
+        this.currentCelebCalendarOwner = celerity;
     }
 
     @Override
-    public void setCelebCalendarOwner(String celerity) {
-        this.currentCelebCalendarOwner = celerity;
+    public boolean getIsListingAppointments() {
+        return this.isListingAppointments;
+    }
+
+    @Override
+    public void setIsListingAppointments(boolean isListingAppointments) {
+        this.isListingAppointments = isListingAppointments;
     }
 
     //=========== Celeb Calendar Accessors ===================================================================
@@ -185,8 +190,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public String getCurrentCelebCalendarOwner() {
+    public Celebrity getCurrentCelebCalendarOwner() {
         return currentCelebCalendarOwner;
+    }
+
+    public List<Appointment> getAppointmentList() {
+        return this.appointments;
+    }
+
+    @Override
+    public void setAppointmentList(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
     //=========== Filtered Person List Accessors =============================================================

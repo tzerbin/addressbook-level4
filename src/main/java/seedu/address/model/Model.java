@@ -8,6 +8,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
@@ -69,13 +70,16 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
-    /** Returns a celebrity whose name matches with the name */
-    List<Celebrity> getCelebrityWithName(String name);
-
     /** Returns the celebrity whose calendar is currently shown.
      *  If current calendar is a combined view, {@code null} will be returned.
      */
-    String getCurrentCelebCalendarOwner();
+    Celebrity getCurrentCelebCalendarOwner();
+
+    /** Returns the last displayed appointment list */
+    List<Appointment> getAppointmentList();
+
+    /** Sets the appointment list to be the last displayed appointment list */
+    void setAppointmentList(List<Appointment> appointments);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -90,5 +94,11 @@ public interface Model {
     void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage);
 
     /** Changes the currentCelebCalendarOwner. */
-    void setCelebCalendarOwner(String celerity);
+    void setCelebCalendarOwner(Celebrity celerity);
+
+    /** Returns true if calendarPanel is currently displaying appointment list. */
+    boolean getIsListingAppointments();
+
+    /** Changes isListAppointments value accordingly. */
+    void setIsListingAppointments(boolean isListingAppointments);
 }
