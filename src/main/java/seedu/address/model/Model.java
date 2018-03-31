@@ -95,4 +95,10 @@ public interface Model {
 
     /** Changes the currentCelebCalendarOwner. */
     void setCelebCalendarOwner(Celebrity celerity);
+
+    /** Returns true if calendarPanel is currently displaying appointment list. */
+    boolean getIsListingAppointments();
+
+    /** Changes isListAppointments value accordingly. */
+    void setIsListingAppointments(boolean isListingAppointments);
 }

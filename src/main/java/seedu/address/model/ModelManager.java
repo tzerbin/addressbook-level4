@@ -35,7 +35,6 @@ public class ModelManager extends ComponentManager implements Model {
     public static final String WEEK_VIEW_PAGE = "week";
     public static final String MONTH_VIEW_PAGE = "month";
     public static final String YEAR_VIEW_PAGE = "year";
-    public static final String AGENDA_VIEW_PAGE = "agenda";
 
     public static final Tag CELEBRITY_TAG = new Tag("celebrity");
 
@@ -43,6 +42,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
     private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
+
+    private static boolean isListingAppointments = false;
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
@@ -73,7 +74,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         appointments = new ArrayList<>();
 
-        currentCelebCalendarViewPage = "day";
+        currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;
     }
 
@@ -149,6 +150,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setCelebCalendarOwner(Celebrity celerity) {
         this.currentCelebCalendarOwner = celerity;
+    }
+
+    @Override
+    public boolean getIsListingAppointments() {
+        return this.isListingAppointments;
+    }
+
+    @Override
+    public void setIsListingAppointments(boolean isListingAppointments) {
+        this.isListingAppointments = isListingAppointments;
     }
 
     //=========== Celeb Calendar Accessors ===================================================================
