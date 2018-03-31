@@ -39,7 +39,7 @@ public class AppointmentListWindow extends UiPart<Region> {
                 appointmentList, (appointment) -> new AppointmentCard(appointment,
                         appointmentList.indexOf(appointment) + 1));
         appointmentListView.setItems(mappedList);
-        appointmentListView.setCellFactory(listview -> new AppointmentListViewCell());
+        appointmentListView.setCellFactory(listView -> new AppointmentListViewCell());
     }
 
     /**
