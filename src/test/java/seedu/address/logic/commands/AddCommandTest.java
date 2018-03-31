@@ -25,6 +25,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
@@ -142,6 +143,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public List<Appointment> getAppointmentList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public ObservableList<Calendar> getCelebCalendars() {
             fail("This method should not be called.");
             return null;
@@ -172,15 +179,15 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCurrentCelebCalendarOwner() {
+        public Celebrity getCurrentCelebCalendarOwner() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public List<Celebrity> getCelebrityWithName(String name) {
+        public boolean getIsListingAppointments() {
             fail("This method should not be called.");
-            return null;
+            return false;
         }
 
         @Override
@@ -201,12 +208,22 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setAppointmentList(List<Appointment> appointments) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
             fail("This method should not be called.");
         }
 
         @Override
-        public void setCelebCalendarOwner(String newCurrentCelebCalendarOwner) {
+        public void setCelebCalendarOwner(Celebrity newCurrentCelebCalendarOwner) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void setIsListingAppointments(boolean isListingAppointments) {
             fail("This method should not be called");
         }
     }

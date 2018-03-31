@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDARVIEW;
-import static seedu.address.model.ModelManager.AGENDA_VIEW_PAGE;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 import static seedu.address.model.ModelManager.MONTH_VIEW_PAGE;
 import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
@@ -27,6 +26,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
+import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
 import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -112,37 +112,39 @@ public class CalendarPanel extends UiPart<Region> {
     /**
      * Method to handle the event for changing calendar view. Changes to either day,
      * week, month or year view.
-     * @param calendarViewPage
+     * @param event
      */
-    public void handleChangeCalendarViewPageRequestEvent(String calendarViewPage) {
-        //celebCalendarView.showDate(LocalDate.now());
+    @Subscribe
+    private void handleChangeCalendarViewPageRequestEvent(ChangeCalendarViewPageRequestEvent event) {
         celebCalendarView.getCalendarSources().clear();
         celebCalendarView.getCalendarSources().add(celebCalendarSource);
-        switch (calendarViewPage) {
+        String calendarViewPage = event.calendarViewPage;
 
-        case DAY_VIEW_PAGE:
-            celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
-            celebCalendarView.showDayPage();
-            break;
-        case WEEK_VIEW_PAGE:
-            celebCalendarView.showWeekPage();
-            break;
-        case MONTH_VIEW_PAGE:
-            celebCalendarView.showMonthPage();
-            break;
-        case YEAR_VIEW_PAGE:
-            celebCalendarView.showYearPage();
-            break;
-        case AGENDA_VIEW_PAGE:
-            break;
+        Platform.runLater(() -> {
+            switch (calendarViewPage) {
 
-        default:
-            try {
-                throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            case DAY_VIEW_PAGE:
+                celebCalendarView.getDayPage().setDayPageLayout(DayPage.DayPageLayout.DAY_ONLY);
+                celebCalendarView.showDayPage();
+                break;
+            case WEEK_VIEW_PAGE:
+                celebCalendarView.showWeekPage();
+                break;
+            case MONTH_VIEW_PAGE:
+                celebCalendarView.showMonthPage();
+                break;
+            case YEAR_VIEW_PAGE:
+                celebCalendarView.showYearPage();
+                break;
+
+            default:
+                try {
+                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
     }
 
     /** Shows the calendar of the specified {@code celebrity} */
