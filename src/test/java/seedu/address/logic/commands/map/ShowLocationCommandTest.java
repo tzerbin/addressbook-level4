@@ -34,7 +34,7 @@ public class ShowLocationCommandTest {
         // same object -> returns true
         assertTrue(showLocationFirstCommand.equals(showLocationFirstCommand));
 
-        // same tag -> returns true
+        // same map address -> returns true
         ShowLocationCommand showLocationFirstCommandCopy = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB));
         assertTrue(showLocationFirstCommand.equals(showLocationFirstCommandCopy));
 
@@ -44,7 +44,7 @@ public class ShowLocationCommandTest {
         // null -> returns false
         assertFalse(showLocationFirstCommand.equals(null));
 
-        // different tags -> returns false
+        // different map address -> returns false
         assertFalse(showLocationFirstCommand.equals(showLocationSecondCommand));
     }
 

@@ -88,7 +88,7 @@ public class EstimateRouteCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(Tag)}. Executes {@code command}
+     * Performs the same verification as {@code assertCommandSuccess(MapAddress, MapAddress)}. Executes {@code command}
      * instead.
      * @see EstimateRouteCommandSystemTest#assertCommandSuccess(MapAddress, MapAddress)
      */
@@ -100,7 +100,7 @@ public class EstimateRouteCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Tag)} except asserts that
+     * Performs the same verification as {@code assertCommandSuccess(String)} except asserts that
      * the,<br>
      * 1. Result display box displays {@code expectedResultMessage}.<br>
      * 2. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
