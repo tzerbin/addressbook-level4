@@ -96,6 +96,9 @@ public class Appointment extends Entry {
         return Objects.equals(otherAppt.getId(), this.getId());
     }
 
+    /**
+     * Checks if the parameters (date, time, title and location of two appointments are equal.
+     */
     public boolean equalsValue (Object other) {
         Appointment otherAppt = (Appointment) other;
         return Objects.equals(otherAppt.getTitle(), this.getTitle())
