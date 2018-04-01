@@ -2,10 +2,8 @@ package seedu.address.logic.commands.map;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAP_ADDRESS;
-import static seedu.address.ui.MapPanel.getMap;
 
 import com.lynden.gmapsfx.javascript.object.Animation;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
@@ -13,6 +11,7 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.map.Geocoding;
+import seedu.address.model.map.Map;
 import seedu.address.model.map.MapAddress;
 
 /**
@@ -35,9 +34,7 @@ public class ShowLocationCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Location is being shown in Map (identified by marker)!";
 
-    private static Marker location;
     private final MapAddress address;
-    private final GoogleMap map;
 
     /**
      * Creates an AddAppointmentCommand with the following parameters
@@ -46,7 +43,8 @@ public class ShowLocationCommand extends Command {
     public ShowLocationCommand (MapAddress address) {
         requireNonNull(address);
         this.address = address;
-        map = getMap();
+        Map.removeExistingMarker();
+        Map.clearRoute();
     }
 
     @Override
@@ -67,25 +65,11 @@ public class ShowLocationCommand extends Command {
      */
     public void addNewMarkerToMap() {
 
-        removeExistingMarker();
-
         LatLong center = getLatLong();
 
-        location = getMarkerOptions(center);
+        Map.setLocation(getMarkerOptions(center));
 
-        setMarkerOnMap(center, location);
-    }
-
-    private void removeExistingMarker() {
-        if (location != null) {
-            map.removeMarker(location);
-        }
-    }
-
-    private void setMarkerOnMap(LatLong center, Marker location) {
-        map.addMarker(location);
-        map.setCenter(center);
-        map.setZoom(15);
+        Map.setMarkerOnMap(center);
     }
 
     private Marker getMarkerOptions(LatLong center) {
@@ -100,13 +84,5 @@ public class ShowLocationCommand extends Command {
         Geocoding convertToLatLng = new Geocoding();
         convertToLatLng.initialiseLatLngFromAddress(address.toString());
         return new LatLong(convertToLatLng.getLat(), convertToLatLng.getLong());
-    }
-
-    public static Marker getCurrentMarker() {
-        if (location != null) {
-            return location;
-        } else {
-            return null;
-        }
     }
 }

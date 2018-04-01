@@ -21,6 +21,7 @@ public class MapAddressTest {
 
     @Test
     public void isValidAddress() {
+
         // null address
         Assert.assertThrows(NullPointerException.class, () -> MapAddress.isValidAddress(null));
 

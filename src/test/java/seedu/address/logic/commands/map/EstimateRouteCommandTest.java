@@ -30,13 +30,13 @@ public class EstimateRouteCommandTest {
 
         EstimateRouteCommand estimateRouteFirstCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB),
                 new MapAddress(VALID_ADDRESS_MAP_AMY));
-        EstimateRouteCommand estimateRouteSecondCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_AMY),
-                new MapAddress(VALID_ADDRESS_MAP_BOB));
+        EstimateRouteCommand estimateRouteSecondCommand = prepareCommand(new MapAddress("Bedok"),
+                new MapAddress("NUS"));
 
         // same object -> returns true
         assertTrue(estimateRouteFirstCommand.equals(estimateRouteFirstCommand));
 
-        // same tag -> returns true
+        // same start and end address -> returns true
         EstimateRouteCommand estimateRouteFirstCommandCopy = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB),
                 new MapAddress(VALID_ADDRESS_MAP_AMY));
         assertTrue(estimateRouteFirstCommand.equals(estimateRouteFirstCommandCopy));
@@ -47,7 +47,7 @@ public class EstimateRouteCommandTest {
         // null -> returns false
         assertFalse(estimateRouteFirstCommand.equals(null));
 
-        // different tags -> returns false
+        // different start and end address -> returns false
         assertFalse(estimateRouteFirstCommand.equals(estimateRouteSecondCommand));
     }
 

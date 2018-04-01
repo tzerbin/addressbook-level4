@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -39,11 +40,19 @@ public class ViewCalendarByCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (calendarViewPage.contentEquals(model.getCurrentCelebCalendarViewPage())) {
+        if (calendarViewPage.contentEquals(model.getCurrentCelebCalendarViewPage())
+                && !model.getIsListingAppointments()) {
             throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_CALENDARVIEW, calendarViewPage));
         }
+
         model.setCelebCalendarViewPage(calendarViewPage);
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(calendarViewPage));
+
+        // if it's switching from appointment list view to calendar
+        if (model.getIsListingAppointments()) {
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+            model.setIsListingAppointments(false);
+        }
         return new CommandResult(String.format(MESSAGE_SUCCESS, calendarViewPage));
     }
 

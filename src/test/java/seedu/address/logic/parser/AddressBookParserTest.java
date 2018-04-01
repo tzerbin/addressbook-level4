@@ -6,7 +6,10 @@ import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_BOB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_MAP_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MAP_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_MAP_ADDRESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 
@@ -32,6 +35,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.map.EstimateRouteCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.map.MapAddress;
@@ -207,6 +211,26 @@ public class AddressBookParserTest {
         ShowLocationCommand command = (ShowLocationCommand) parser.parseCommand(
                 ShowLocationCommand.COMMAND_ALIAS + " " + PREFIX_MAP_ADDRESS + address.toString());
         assertEquals(new ShowLocationCommand(address), command);
+    }
+
+    @Test
+    public void parseCommand_estimateRoute() throws Exception {
+        MapAddress startAddress = new MapAddress(VALID_ADDRESS_MAP_AMY);
+        MapAddress endAddress = new MapAddress(VALID_ADDRESS_MAP_BOB);
+        EstimateRouteCommand command = (EstimateRouteCommand) parser.parseCommand(
+                EstimateRouteCommand.COMMAND_WORD + " " + PREFIX_START_MAP_ADDRESS + startAddress.toString()
+                        + " " + PREFIX_END_MAP_ADDRESS + endAddress.toString());
+        assertEquals(new EstimateRouteCommand(startAddress, endAddress), command);
+    }
+
+    @Test
+    public void parseCommand_estimateRouteAlias() throws Exception {
+        MapAddress startAddress = new MapAddress(VALID_ADDRESS_MAP_AMY);
+        MapAddress endAddress = new MapAddress(VALID_ADDRESS_MAP_BOB);
+        EstimateRouteCommand command = (EstimateRouteCommand) parser.parseCommand(
+                EstimateRouteCommand.COMMAND_ALIAS + " " + PREFIX_START_MAP_ADDRESS + startAddress.toString()
+                        + " " + PREFIX_END_MAP_ADDRESS + endAddress.toString());
+        assertEquals(new EstimateRouteCommand(startAddress, endAddress), command);
     }
 
     @Test

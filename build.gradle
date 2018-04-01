@@ -110,7 +110,6 @@ allTests.dependsOn nonGuiTests
 
 test {
     systemProperty 'testfx.setup.timeout', '60000'
-    
     minHeapSize = "512m"
     maxHeapSize = "1024m"
     jvmArgs '-Xmx1024m'
