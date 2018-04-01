@@ -15,12 +15,9 @@ import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
 
 import com.calendarfx.view.page.DayPage;
-import com.calendarfx.view.page.PageBase;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.collections.ObservableMap;
 import javafx.event.Event;
 import javafx.scene.layout.Region;
 
