@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import java.time.LocalDate;
 import java.util.List;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -52,7 +51,7 @@ public class ViewAppointmentCommand extends Command {
     public CommandResult execute() throws CommandException {
         StorageCalendar storageCalendar = model.getStorageCalendar();
         listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate, endDate);
-        if(chosenIndex<0 || chosenIndex >= listOfAppointment.size()) {
+        if (chosenIndex < 0 || chosenIndex >= listOfAppointment.size()) {
             return new CommandResult(MESSAGE_FAILURE);
         }
         selectedAppointment = listOfAppointment.get(chosenIndex);
