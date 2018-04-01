@@ -21,6 +21,7 @@ import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
+import seedu.address.logic.commands.calendar.DeleteAppointmentCommand;
 import seedu.address.logic.commands.calendar.ListAppointmentCommand;
 import seedu.address.logic.commands.calendar.ViewAppointmentCommand;
 import seedu.address.logic.commands.calendar.ViewCalendarByCommand;
@@ -29,6 +30,7 @@ import seedu.address.logic.commands.calendar.ViewCombinedCalendarCommand;
 import seedu.address.logic.commands.map.EstimateRouteCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.calendar.AddAppointmentCommandParser;
+import seedu.address.logic.parser.calendar.DeleteAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.ViewAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.ViewCalendarByCommandParser;
 import seedu.address.logic.parser.calendar.ViewCalendarCommandParser;
@@ -113,6 +115,10 @@ public class AddressBookParser {
         case AddAppointmentCommand.COMMAND_WORD:
         case AddAppointmentCommand.COMMAND_ALIAS:
             return new AddAppointmentCommandParser().parse(arguments);
+
+        case DeleteAppointmentCommand.COMMAND_WORD:
+        case DeleteAppointmentCommand.COMMAND_ALIAS:
+            return new DeleteAppointmentCommandParser().parse(arguments);
 
         case RemoveTagCommand.COMMAND_WORD:
         case RemoveTagCommand.COMMAND_ALIAS:
