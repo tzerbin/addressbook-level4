@@ -373,7 +373,7 @@ Changes the calendar view to weekly view.
 
 === Map Features
 
-Figure 2 is a snippet of the `MapPanel` which show the results of all map related features.
+Figure 2 is a snippet of the `MapPanel` which shows the results of all map related features.
 
 .Default State of `MapPanel`
 image::BeforeInputMap.png[width="400"]
@@ -383,7 +383,9 @@ Do not click on the `Google` logo or `Terms of Use` button.
 
 ==== Estimate route on map : `estimateRoute` [Since v1.3]
 
-Shows the estimated route in the map interface and displays the estimated distance and time of travel in result display. +
+Shows the estimated route in the map interface and displays the estimated distance and time of travel in result display.
+ Any existing location marker or route will be removed. +
+
 Alias: `er` +
 Format: `estimateRoute sma/MapAddress ema/MapAddress`
 
@@ -404,7 +406,9 @@ image::AfterEstimateRouteInput.png[width="400"]
 
 ==== Show location on map : `showLocation` [Since v1.2]
 
-Shows the specific location in the map interface, by marking the latitude and longitude with a location marker. +
+Shows the specific location in the map interface, by marking the latitude and longitude with a location marker.
+Any existing location marker or route will be removed. +
+
 Alias: `sl` +
 Format: `showLocation ma/MapAddress`
 
