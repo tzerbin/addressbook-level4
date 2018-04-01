@@ -100,7 +100,7 @@ public class AddAppointmentCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof AddAppointmentCommand
-                && appt.equals(((AddAppointmentCommand) other).appt));
+                && appt.equalsValue(((AddAppointmentCommand) other).appt));
     }
 
     private static List<Celebrity> getCelebrities(Set<Index> indices, List<Person> personList) throws CommandException {
