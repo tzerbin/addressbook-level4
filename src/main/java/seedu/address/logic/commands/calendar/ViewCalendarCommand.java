@@ -56,7 +56,7 @@ public class ViewCalendarCommand extends Command {
         Celebrity celebrityToShowCalendar = (Celebrity) personToShowCalendar;
 
         // not in appointment list view and same celebrity
-        if (celebrityToShowCalendar.equals(model.getCurrentCelebCalendarOwner())
+        if (celebrityToShowCalendar == model.getCurrentCelebCalendarOwner()
                 && !model.getIsListingAppointments()) {
             throw new CommandException((String.format(MESSAGE_NO_CHANGE_IN_CALENDAR,
                     celebrityToShowCalendar.getName().toString())));

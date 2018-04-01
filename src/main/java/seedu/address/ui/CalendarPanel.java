@@ -154,7 +154,7 @@ public class CalendarPanel extends UiPart<Region> {
                 celebCalendarView.getSourceView().getCalendarVisibilityMap();
         Platform.runLater(() -> {
             for (Calendar calendar: calendars.keySet()) {
-                if (!calendar.equals(celebCalendarToShow)) {
+                if (calendar != celebCalendarToShow) {
                     celebCalendarView.getSourceView().setCalendarVisibility(calendar, false);
                 } else {
                     celebCalendarView.getSourceView().setCalendarVisibility(calendar, true);
