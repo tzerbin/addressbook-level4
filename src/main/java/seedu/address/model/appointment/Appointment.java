@@ -93,10 +93,8 @@ public class Appointment extends Entry {
         }
 
         Appointment otherAppt = (Appointment) other;
-        return Objects.equals(otherAppt.getTitle(), this.getTitle())
-                && Objects.equals(otherAppt.getMapAddress(), this.getMapAddress())
-                && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
-                && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute());
+        return Objects.equals(otherAppt.getId(), this.getId());
+
     }
 
     /**
