@@ -29,7 +29,7 @@ public class ViewAppointmentCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_INDEX + "1";
 
-    public static final String MESSAGE_FAILURE = "Index may be out of bounds:\n";
+    public static final String MESSAGE_FAILURE = "Index selected is more than the number of appointments.\n";
     public static final String MESSAGE_SUCCESS = "Selected appointment details (location shown in map):\n";
 
     private Appointment selectedAppointment;
