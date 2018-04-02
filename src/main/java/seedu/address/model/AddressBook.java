@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -53,7 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
-        resetData(toBeCopied);
+        savePreviousAddressBookData(toBeCopied);
     }
 
     //// list overwrite operations
@@ -63,6 +64,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setCelebrities(List<Celebrity> celebrities) throws DuplicatePersonException {
+        this.celebrities.clear();
         this.celebrities.addAll(celebrities);
     }
 
@@ -72,7 +74,29 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Saves the newData of {@code AddressBook} in an empty {@code AddressBook}.
+     */
+    public void savePreviousAddressBookData(ReadOnlyAddressBook newData) {
+        requireNonNull(newData);
+        setTags(new HashSet<>(newData.getTagList()));
+        List<Person> syncedPersonList = newData.getPersonList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+        List<Celebrity> filteredCelebrityList = filterCelebrities(syncedPersonList);
+        // make celebrity's celeb calendar point to the copy of original ones
+        List<Celebrity> syncedCelebrityList = syncCelebCalendar(filteredCelebrityList, newData.getCelebritiesList());
+
+        try {
+            setPersons(syncedPersonList);
+            setCelebrities(syncedCelebrityList);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("AddressBooks should not have duplicate persons");
+        }
+    }
+
+    /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Used when user undo/redo
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
@@ -80,7 +104,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-        List<Celebrity> syncedCelebrityList = filterCelebrities(syncedPersonList);
+        List<Celebrity> filteredCelebrityList = filterCelebrities(syncedPersonList);
+        // make celebrity's celeb calendar point to the copy of original ones
+        List<Celebrity> syncedCelebrityList = syncCelebCalendar(filteredCelebrityList, newData.getCelebritiesList());
+
+        if (isUndoingRemovalOfCelebrity(getCelebritiesList(), syncedCelebrityList)) {
+            Celebrity copiedCelebrityForRemovedCelebrity =
+                    findCelebrityRemoved(getCelebritiesList(), syncedCelebrityList);
+            copiedCelebrityForRemovedCelebrity
+                    .setCelebCalendar(new CelebCalendar(copiedCelebrityForRemovedCelebrity.getName().fullName));
+        }
 
         try {
             setPersons(syncedPersonList);
@@ -282,11 +315,32 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Change pointers to celebCalendar of copied celebrity to the original celebCalendar
+     * @param celebrities
+     * @param previousCelebrities
+     * @return modified celebrities
+     */
+    private List<Celebrity> syncCelebCalendar(List<Celebrity> celebrities, List<Celebrity> previousCelebrities) {
+        for (Celebrity celebrity: celebrities) {
+            for (Celebrity previousCelebrity: previousCelebrities) {
+                if (celebrity.isCopyOf(previousCelebrity)) {
+                    celebrity.setCelebCalendar(previousCelebrity.getCelebCalendar());
+                }
+            }
+        }
+        return celebrities;
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(Person key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            if (key.isCelebrity()) {
+                Celebrity keyCelebrity = (Celebrity) key;
+                celebrities.remove(keyCelebrity);
+            }
             removeUnusedTags();
             return true;
         } else {

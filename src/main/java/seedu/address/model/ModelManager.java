@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
@@ -85,6 +87,24 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+
+        // reset calendars in celebCalendarSource to the restored calendars
+        List<Celebrity> celebrities = addressBook.getCelebritiesList();
+        List<Calendar> calendars = new ArrayList<>();
+
+        for (Celebrity celebrity: celebrities) {
+            calendars.add(celebrity.getCelebCalendar());
+        }
+
+        ArrayList<Calendar> calendarsToRemove = new ArrayList<>();
+        for (Calendar calendarToRemove: celebCalendarSource.getCalendars()) {
+            calendarsToRemove.add(calendarToRemove);
+        }
+        for (Calendar calendar: calendarsToRemove) {
+            celebCalendarSource.getCalendars().removeAll(calendar);
+        }
+        celebCalendarSource.getCalendars().addAll(calendars);
+
         indicateAddressBookChanged();
     }
 
