@@ -24,7 +24,7 @@ public class ViewAppointmentCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + "1";
 
-    public static final String MESSAGE_SUCCESS = "Selected appointment details (location shown in map):\n";
+    public static final String MESSAGE_SUCCESS = "Selected appointment details:\n";
 
     private Appointment selectedAppointment;
     private int chosenIndex;
@@ -39,10 +39,14 @@ public class ViewAppointmentCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         selectedAppointment = model.getChosenAppointment(chosenIndex);
-        ShowLocationCommand showLocation = new ShowLocationCommand(
-                new MapAddress(selectedAppointment.getLocation()));
-        showLocation.execute();
-        return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        try {
+            ShowLocationCommand showLocation = new ShowLocationCommand(
+                    new MapAddress(selectedAppointment.getLocation()));
+            showLocation.execute();
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        } catch (NullPointerException npe) {
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        }
     }
 
     private String getAppointmentDetailsResult () {
