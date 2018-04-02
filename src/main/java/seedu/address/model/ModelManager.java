@@ -1,8 +1,11 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.INVALID_INDEX_CHOSEN;
+import static seedu.address.commons.core.Messages.MESSAGE_NOT_LISTING_APPOINTMENTS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -18,6 +21,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.calendar.ListAppointmentCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.calendar.StorageCalendar;
@@ -83,6 +88,8 @@ public class ModelManager extends ComponentManager implements Model {
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
     }
+
+
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -293,6 +300,26 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setAppointmentList(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    @Override
+    public Appointment getChosenAppointment(int chosenIndex) throws CommandException {
+        if (!isListingAppointments) {
+            throw new CommandException(MESSAGE_NOT_LISTING_APPOINTMENTS);
+        }
+        LocalDate startDate = ListAppointmentCommand.getStartDate();
+        LocalDate endDate = ListAppointmentCommand.getEndDate();
+        StorageCalendar storageCalendar = getStorageCalendar();
+        List<Appointment> listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate, endDate);
+        if (chosenIndex < 0 || chosenIndex >= listOfAppointment.size()) {
+            throw new CommandException(INVALID_INDEX_CHOSEN);
+        }
+        return listOfAppointment.get(chosenIndex);
+    }
+
+    @Override
+    public void addAppointmentToStorageCalendar(Appointment appt) {
+        getStorageCalendar().addEntry(appt);
     }
 
     //=========== Filtered Person List Accessors =============================================================

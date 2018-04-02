@@ -8,6 +8,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
@@ -80,6 +81,16 @@ public interface Model {
 
     /** Sets the appointment list to be the last displayed appointment list */
     void setAppointmentList(List<Appointment> appointments);
+
+    /**
+     * Returns the chosen appointment from the displayed appointment list
+     * based on zeroBasedIndex
+     * @throws CommandException if appointments not listed or invalid index
+     */
+    Appointment getChosenAppointment(int chosenIndex) throws CommandException;
+
+    /** Adds the given appointment to the internal StorageCalendar */
+    void addAppointmentToStorageCalendar(Appointment appt);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
