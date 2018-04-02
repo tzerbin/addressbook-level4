@@ -87,6 +87,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /** Counts the number of {@code persons} with the given {@code tage}. */
+    int countPersonsWithTag(Tag tag);
+
     /** Removes the given {@code tag} from all {@code person}s. */
     int removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;
 

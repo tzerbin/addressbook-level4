@@ -227,6 +227,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public int countPersonsWithTag(Tag tag) {
+        return addressBook.countPersonsWithTag(tag);
+    }
+
+    @Override
     public int removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
         int numPersonsAffected = addressBook.removeTag(tag);
         indicateAddressBookChanged();
