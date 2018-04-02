@@ -51,7 +51,7 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_END_TIME + "20:00 "
             + PREFIX_END_DATE + "23-04-2018 "
             + PREFIX_CELEBRITY + "1 "
-            + PREFIX_CELEBRITY + "3";
+            + PREFIX_CELEBRITY + "2";
 
     public static final String MESSAGE_SUCCESS = "Added appointment successfully";
 
