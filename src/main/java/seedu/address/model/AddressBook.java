@@ -90,6 +90,40 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Returns true if the user is undoing removal of a celebrity
+     * @param currentCelebrities
+     * @param previousCelebrities
+     * @return true or false
+     */
+    private boolean isUndoingRemovalOfCelebrity(
+            List<Celebrity> currentCelebrities, List<Celebrity> previousCelebrities) {
+        return currentCelebrities.size() < previousCelebrities.size();
+    }
+
+    /**
+     * Returns the copiedCelebrity of {@code Celebrity} removed in previous command
+     * @param currentCelebrities
+     * @param previousCelebrities
+     * @return copiedCelebrity
+     */
+    private Celebrity findCelebrityRemoved(
+            List<Celebrity> currentCelebrities, List<Celebrity> previousCelebrities) {
+        for (Celebrity copiedCelebrity: previousCelebrities) {
+            boolean inCurrentCelebrities = false;
+            for (Celebrity celebrity: currentCelebrities) {
+                if (copiedCelebrity.isCopyOf(celebrity)) {
+                    inCurrentCelebrities = true;
+                }
+            }
+            // this is the celebrity removed, set its celeb calendar to be new empty
+            if (!inCurrentCelebrities) {
+                return copiedCelebrity;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Removes {@code tag} from all persons in this {@code AddressBook}.
