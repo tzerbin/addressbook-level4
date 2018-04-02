@@ -22,8 +22,7 @@ public class DistanceEstimate {
     /**
      * API Key required for requesting service from google server
      */
-    public static final String API_KEY = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
-
+    public static final String API_KEY = "AIzaSyD__AeJPs2lM6ktAoRrrYMfFfP-_mZckQI";
     private GeoApiContext context;
     private String distOriginDest;
     private String travelTime;
