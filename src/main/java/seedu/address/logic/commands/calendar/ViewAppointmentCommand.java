@@ -36,7 +36,10 @@ public class ViewAppointmentCommand extends Command {
         chosenIndex = index;
     }
 
-    owLocationCommand(
+    @Override
+    public CommandResult execute() throws CommandException {
+        selectedAppointment = model.getChosenAppointment(chosenIndex);
+        ShowLocationCommand showLocation = new ShowLocationCommand(
                 new MapAddress(selectedAppointment.getLocation()));
         showLocation.execute();
         return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
