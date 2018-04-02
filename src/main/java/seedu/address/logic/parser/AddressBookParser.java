@@ -23,6 +23,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.logic.commands.calendar.DeleteAppointmentCommand;
 import seedu.address.logic.commands.calendar.ListAppointmentCommand;
+import seedu.address.logic.commands.calendar.ViewAppointmentCommand;
 import seedu.address.logic.commands.calendar.ViewCalendarByCommand;
 import seedu.address.logic.commands.calendar.ViewCalendarCommand;
 import seedu.address.logic.commands.calendar.ViewCombinedCalendarCommand;
@@ -30,6 +31,7 @@ import seedu.address.logic.commands.map.EstimateRouteCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.calendar.AddAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.DeleteAppointmentCommandParser;
+import seedu.address.logic.parser.calendar.ViewAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.ViewCalendarByCommandParser;
 import seedu.address.logic.parser.calendar.ViewCalendarCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -145,6 +147,10 @@ public class AddressBookParser {
         case ListAppointmentCommand.COMMAND_WORD:
         case ListAppointmentCommand.COMMAND_ALIAS:
             return new ListAppointmentCommand();
+
+        case ViewAppointmentCommand.COMMAND_WORD:
+        case ViewAppointmentCommand.COMMAND_ALIAS:
+            return new ViewAppointmentCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
