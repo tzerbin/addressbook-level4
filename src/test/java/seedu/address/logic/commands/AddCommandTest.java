@@ -202,6 +202,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public int countPersonsWithTag(Tag tag) {
+            fail("This method should not be called.");
+            return -1;
+        }
+
+        @Override
         public int removeTag(Tag tag) {
             fail("This method should not be called.");
             return -1;
