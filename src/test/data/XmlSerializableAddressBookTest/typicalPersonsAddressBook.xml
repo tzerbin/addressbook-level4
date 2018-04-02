@@ -47,6 +47,32 @@
         <email>anna@example.com</email>
         <address>4th street</address>
     </persons>
+    <persons>
+        <name>Jay Chou</name>
+        <phone>134520789201</phone>
+        <email>jay@gmail.com</email>
+        <address>145, Taiwan</address>
+        <tagged>friends</tagged>
+        <tagged>celebrity</tagged>
+    </persons>
+    <persons>
+        <name>Sakura Ayane</name>
+        <phone>5201314</phone>
+        <email>ayane@gmail.com</email>
+        <address>Tokyo, Japan</address>
+        <tagged>celebrity</tagged>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Robert Downey</name>
+        <phone>19650404</phone>
+        <email>ironman@firefox.com</email>
+        <address>USA</address>
+        <tagged>celebrity</tagged>
+        <tagged>owesMoney</tagged>
+    </persons>
+    <tags>celebrity</tags>
+    <tags>colleagues</tags>
     <tags>friends</tags>
     <tags>owesMoney</tags>
 </addressbook>
