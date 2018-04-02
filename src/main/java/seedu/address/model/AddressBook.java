@@ -157,6 +157,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         return null;
     }
 
+    /**
+     * Counts the number of {@code person}s with a given {@code tag}
+     */
+    public int countPersonsWithTag(Tag tag) {
+        int count = 0;
+        for (Person person: persons) {
+            if (person.hasTag(tag)) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     /**
      * Removes {@code tag} from all persons in this {@code AddressBook}.
@@ -382,8 +394,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
-                && this.celebrities.equals(((AddressBook) other).celebrities);
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.celebrities.equals(((AddressBook) other).celebrities));
     }
 
     @Override

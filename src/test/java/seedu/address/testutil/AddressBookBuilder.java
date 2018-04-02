@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -31,6 +32,18 @@ public class AddressBookBuilder {
             addressBook.addPerson(person);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Adds a new {@code Celebrity} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withCelebrity(Celebrity celebrity) {
+        try {
+            addressBook.addCelebrity(celebrity);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("celebrity is expected to be unique.");
         }
         return this;
     }

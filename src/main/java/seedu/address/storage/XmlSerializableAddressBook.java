@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static seedu.address.model.ModelManager.CELEBRITY_TAG;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Celebrity;
+import seedu.address.model.person.Person;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -52,7 +56,13 @@ public class XmlSerializableAddressBook {
             addressBook.addTag(t.toModelType());
         }
         for (XmlAdaptedPerson p : persons) {
-            addressBook.addPerson(p.toModelType());
+            Person person = p.toModelType();
+            if (person.hasTag(CELEBRITY_TAG)) {
+                Celebrity celebrity = new Celebrity(person);
+                addressBook.addCelebrity(celebrity);
+            } else {
+                addressBook.addPerson(p.toModelType());
+            }
         }
         return addressBook;
     }
