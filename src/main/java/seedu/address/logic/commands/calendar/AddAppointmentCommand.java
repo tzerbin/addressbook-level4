@@ -23,7 +23,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 
@@ -82,8 +81,7 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
-        StorageCalendar cal = model.getStorageCalendar();
-        cal.addEntry(appt);
+        model.addAppointmentToStorageCalendar(appt);
         appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
 
         // reset calendar view to day view

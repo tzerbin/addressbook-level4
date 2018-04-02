@@ -225,6 +225,11 @@ public class ModelManager extends ComponentManager implements Model {
         return listOfAppointment.get(chosenIndex);
     }
 
+    @Override
+    public void addAppointmentToStorageCalendar(Appointment appt) {
+        getStorageCalendar().addEntry(appt);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

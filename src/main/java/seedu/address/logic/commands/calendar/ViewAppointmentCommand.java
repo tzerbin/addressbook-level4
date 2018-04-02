@@ -1,17 +1,12 @@
 package seedu.address.logic.commands.calendar;
 
-import static seedu.address.commons.core.Messages.MESSAGE_NOT_LISTING_APPOINTMENTS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-
-import java.time.LocalDate;
-import java.util.List;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.map.MapAddress;
 
 /**
@@ -41,10 +36,7 @@ public class ViewAppointmentCommand extends Command {
         chosenIndex = index;
     }
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        selectedAppointment = model.getChosenAppointment(chosenIndex);
-        ShowLocationCommand showLocation = new ShowLocationCommand(
+    owLocationCommand(
                 new MapAddress(selectedAppointment.getLocation()));
         showLocation.execute();
         return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());

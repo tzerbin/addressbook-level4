@@ -1,7 +1,6 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_NOT_LISTING_APPOINTMENTS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -9,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,8 +17,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -71,11 +74,43 @@ public class EditAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-//        Appointment selectedA
+        Appointment appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
+        Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+        appointmentToEdit.removeAppointment();
+        model.addAppointmentToStorageCalendar(editedAppointment);
 
-        return null;
+
+        // reset calendar view to day view
+        model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
+        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+        if (model.getIsListingAppointments()) {
+            model.setIsListingAppointments(false);
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+        }
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
 
+    /**
+     * Creates and returns a {@code Appointment} with the details of {@code apptToEdit}
+     * edited with {@code ead}.
+     */
+    public static Appointment createEditedAppointment(Appointment apptToEdit, EditAppointmentDescriptor ead) {
+        assert apptToEdit != null;
+
+        String apptName = ead.getAppointmentName().orElse(apptToEdit.getTitle());
+        LocalTime startTime = ead.getStartTime().orElse(apptToEdit.getStartTime());
+        LocalTime endTime = ead.getEndTime().orElse(apptToEdit.getEndTime());
+        LocalDate startDate = ead.getStartDate().orElse(apptToEdit.getStartDate());
+        LocalDate endDate = ead.getEndDate().orElse(apptToEdit.getEndDate());
+        MapAddress location = ead.getAddress().orElse(apptToEdit.getMapAddress());
+
+        return new Appointment(apptName, startTime, startDate, location, endTime, endDate);
+    }
+
+    /**
+     * Stores the details to edit an appointment with. Each non-empty field value will replace
+     * the corresponding field value of the person.
+     */
     public static class EditAppointmentDescriptor {
         private String appointmentName;
         private LocalTime startTime;

@@ -219,6 +219,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addAppointmentToStorageCalendar(Appointment appt) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
             fail("This method should not be called.");
         }
