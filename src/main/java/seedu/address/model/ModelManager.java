@@ -101,7 +101,79 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        if (target.isCelebrity()) {
+            Celebrity targetCelebrity = (Celebrity) target;
+            deleteCelebrity(targetCelebrity);
+        }
+        //removePersonFromAppointments(target);
+
         indicateAddressBookChanged();
+    }
+
+    /**
+     * Removes the person from appointments
+     * @param person
+     */
+    private void removePersonFromAppointments(Person person) {
+        List<Appointment> allAppointments = getStorageCalendar().getAllAppointments();
+        // to be implemented after knowing how normal person is added to an appointment
+    }
+
+    /**
+     * Removes celebrity from appointments and celebrity's celeb calendar
+     * @param targetCelebrity
+     */
+    private synchronized void deleteCelebrity(Celebrity targetCelebrity) {
+        CelebCalendar targetCelebCalendar = targetCelebrity.getCelebCalendar();
+        StorageCalendar storageCalendar = this.getStorageCalendar();
+        List<Appointment> allAppointments = storageCalendar.getAllAppointments();
+
+        // find appointment that has entry(s) belonging to target's celeb calendar
+        // remove these entry(s) from the appointment's childEntryList
+        List<Appointment> appointmentsToRemove =
+                removeEntriesOfTargetCelebCalendarFrom(targetCelebCalendar, allAppointments);
+
+        // remove appointment that only involves the deleted celebrity
+        // from appointment list in storageCalendar and in storageCalendar itself
+        allAppointments.removeAll(appointmentsToRemove);
+        for (Appointment appointment: appointmentsToRemove) {
+            storageCalendar.removeEntry(appointment);
+        }
+
+        // remove the celebrity's calendar
+        celebCalendarSource.getCalendars().removeAll(targetCelebCalendar);
+    }
+
+    /**
+     * Removes child entries that belong to target celeb calendar from all appointments
+     * Finds appointments that only have child entries belonging to target celeb calendar
+     * @param targetCelebCalendar
+     * @param allAppointments
+     * @return a list of appointments that only has child entry pointing to the target celeb calendar
+     */
+    private List<Appointment> removeEntriesOfTargetCelebCalendarFrom(
+            CelebCalendar targetCelebCalendar, List<Appointment> allAppointments) {
+
+        List<Appointment> appointmentsOnlyInvolveTargetCelebCalendar = new ArrayList<>();
+
+        for (Appointment appointment: allAppointments) {
+            List<Entry> oldChildEntries = appointment.getChildEntryList();
+            List<Entry> newChildEntries = new ArrayList<>();
+            for (Entry childEntry: oldChildEntries) {
+                if (childEntry.getCalendar() == targetCelebCalendar) {
+                    continue;
+                }
+                newChildEntries.add(childEntry);
+            }
+            // appointment only involves the target celeb calendar, add to to the list
+            if (newChildEntries.size() < 1) {
+                appointmentsOnlyInvolveTargetCelebCalendar.add(appointment);
+            } else {
+                appointment.setChildEntries(newChildEntries);
+            }
+        }
+
+        return appointmentsOnlyInvolveTargetCelebCalendar;
     }
 
     @Override
