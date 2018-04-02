@@ -43,16 +43,16 @@ public class ModelManager extends ComponentManager implements Model {
     private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
     private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
 
-    private static boolean isListingAppointments = false;
-
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
     private final CalendarSource storageCalendarSource;
 
+    // attributes related to calendarPanel status
     private String currentCelebCalendarViewPage;
     private Celebrity currentCelebCalendarOwner;
     private List<Appointment> appointments;
+    private boolean isListingAppointments = false;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
