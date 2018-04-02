@@ -24,9 +24,9 @@ public class ViewAppointmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Show the appointment details based on index "
             + "Parameters: "
-            + PREFIX_INDEX + "Index (Based on most recent appointment list generated). \n"
+            + "Index (Based on most recent appointment list generated). \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_INDEX + "1";
+            + "1";
 
     public static final String MESSAGE_FAILURE = "Index selected is more than the number of appointments.\n";
     public static final String MESSAGE_SUCCESS = "Selected appointment details (location shown in map):\n";

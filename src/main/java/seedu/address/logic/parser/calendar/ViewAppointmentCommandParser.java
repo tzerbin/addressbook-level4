@@ -26,20 +26,10 @@ public class ViewAppointmentCommandParser implements Parser<ViewAppointmentComma
      */
     @Override
     public ViewAppointmentCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultiMap =
-                ArgumentTokenizer.tokenize(args, PREFIX_INDEX);
-        if (!arePrefixesPresent(argMultiMap, PREFIX_INDEX)
-                || !argMultiMap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ViewAppointmentCommand.MESSAGE_USAGE));
-        }
+
         try {
-            Optional<Index> index = ParserUtil.parseIndex(argMultiMap.getValue(PREFIX_INDEX));
-            Index chosenIndex = null;
-            if (index.isPresent()) {
-                chosenIndex = index.get();
-            }
-            return new ViewAppointmentCommand(chosenIndex.getZeroBased());
+            Index index = ParserUtil.parseIndex(args);
+            return new ViewAppointmentCommand(index.getZeroBased());
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
