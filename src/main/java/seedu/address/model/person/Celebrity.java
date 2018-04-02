@@ -20,4 +20,20 @@ public class Celebrity extends Person {
     public CelebCalendar getCelebCalendar() {
         return celebCalendar;
     }
+
+    /**
+     * Sets the celebCalendar to another one.
+     * @param newCelebCalendar
+     */
+    public void setCelebCalendar(CelebCalendar newCelebCalendar) {
+        this.celebCalendar = newCelebCalendar;
+    }
+
+    /**
+     * @param celeb
+     * @return true if input celeb is a copy of this celebrity
+     */
+    public boolean isCopyOf(Celebrity celeb) {
+        return super.equals(celeb);
+    }
 }
