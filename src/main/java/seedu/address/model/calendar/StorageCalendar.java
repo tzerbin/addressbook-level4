@@ -63,5 +63,4 @@ public class StorageCalendar extends Calendar {
         return appointmentsWithinDate;
 
     }
-
 }

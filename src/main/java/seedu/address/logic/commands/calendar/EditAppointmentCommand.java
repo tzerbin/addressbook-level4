@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_NOT_LISTING_APPOINTMENTS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -22,6 +23,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
@@ -55,7 +57,6 @@ public class EditAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Edited appointment successfully";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
-    public static final String MESSAGE_NOT_LISTING_APPOINTMENTS = "Need to be in the appointment list page";
 
     private final Index appointmentIndex;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
@@ -70,9 +71,7 @@ public class EditAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (!model.getIsListingAppointments()) {
-            throw new CommandException(MESSAGE_NOT_LISTING_APPOINTMENTS);
-        }
+//        Appointment selectedA
 
         return null;
     }

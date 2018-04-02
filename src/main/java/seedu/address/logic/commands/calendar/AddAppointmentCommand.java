@@ -18,6 +18,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -53,6 +54,9 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_CELEBRITY + "1 "
             + PREFIX_CELEBRITY + "2";
 
+    public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only add appointment when "
+            + "viewing combined calendar\n"
+            + "currently viewing %1$s's calendar";
     public static final String MESSAGE_SUCCESS = "Added appointment successfully";
 
     private final Appointment appt;
@@ -72,13 +76,23 @@ public class AddAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        if (model.getCurrentCelebCalendarOwner() != null) {
+            throw new CommandException(
+                    String.format(MESSAGE_NOT_IN_COMBINED_CALENDAR,
+                            model.getCurrentCelebCalendarOwner().getName().toString()));
+        }
+
         StorageCalendar cal = model.getStorageCalendar();
         cal.addEntry(appt);
         appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
 
-        // reset calendar view to dayview
+        // reset calendar view to day view
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+        if (model.getIsListingAppointments()) {
+            model.setIsListingAppointments(false);
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

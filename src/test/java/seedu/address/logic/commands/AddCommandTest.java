@@ -213,6 +213,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public Appointment getChosenAppointment(int chosenIndex) throws CommandException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void setCelebCalendarViewPage(String newCurrentCelebCalendarViewPage) {
             fail("This method should not be called.");
         }

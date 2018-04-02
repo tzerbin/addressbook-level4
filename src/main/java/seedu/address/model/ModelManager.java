@@ -1,8 +1,11 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.INVALID_INDEX_CHOSEN;
+import static seedu.address.commons.core.Messages.MESSAGE_NOT_LISTING_APPOINTMENTS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,6 +20,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.calendar.ListAppointmentCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
@@ -43,16 +48,16 @@ public class ModelManager extends ComponentManager implements Model {
     private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
     private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
 
-    private static boolean isListingAppointments = false;
-
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
     private final CalendarSource storageCalendarSource;
 
+    // attributes related to calendarPanel status
     private String currentCelebCalendarViewPage;
     private Celebrity currentCelebCalendarOwner;
     private List<Appointment> appointments;
+    private boolean isListingAppointments = false;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -203,6 +208,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setAppointmentList(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    @Override
+    public Appointment getChosenAppointment(int chosenIndex) throws CommandException {
+        if (!isListingAppointments) {
+            throw new CommandException(MESSAGE_NOT_LISTING_APPOINTMENTS);
+        }
+        LocalDate startDate = ListAppointmentCommand.getStartDate();
+        LocalDate endDate = ListAppointmentCommand.getEndDate();
+        StorageCalendar storageCalendar = getStorageCalendar();
+        List<Appointment> listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate, endDate);
+        if (chosenIndex < 0 || chosenIndex >= listOfAppointment.size()) {
+            throw new CommandException(INVALID_INDEX_CHOSEN);
+        }
+        return listOfAppointment.get(chosenIndex);
     }
 
     //=========== Filtered Person List Accessors =============================================================
