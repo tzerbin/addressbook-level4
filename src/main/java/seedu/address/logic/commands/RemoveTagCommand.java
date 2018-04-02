@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
+import static seedu.address.model.ModelManager.CELEBRITY_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -24,6 +25,7 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Parameters: TAG (must be a non-empty string)\n"
             + "Example: " + COMMAND_WORD + " friends";
 
+    public static final String MESSAGE_CANNOT_REMOVE_CELEBRITY_TAG = "Cannot remove celebrity tag.";
     public static final String MESSAGE_TAG_NOT_FOUND = "The tag %1$s does not exist and thus cannot be removed.";
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Removed tag %1$s and %2$s person(s) affected.";
 
@@ -38,6 +40,10 @@ public class RemoveTagCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(tagToRemove);
+
+        if (tagToRemove.equals(CELEBRITY_TAG)) {
+            throw new CommandException(MESSAGE_CANNOT_REMOVE_CELEBRITY_TAG);
+        }
 
         int numberOfAffectedPersons = 0;
         try {

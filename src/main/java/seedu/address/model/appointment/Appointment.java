@@ -125,6 +125,14 @@ public class Appointment extends Entry {
         }
     }
 
+    /**
+     * Sets old child entries to the new entries.
+     * @param newChildEntryList
+     */
+    public void setChildEntries(List<Entry> newChildEntryList) {
+        childEntryList = newChildEntryList;
+    }
+
     public List<Entry> getChildEntryList() {
         return childEntryList;
     }

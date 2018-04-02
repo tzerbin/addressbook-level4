@@ -23,7 +23,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 
@@ -52,7 +51,7 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_END_TIME + "20:00 "
             + PREFIX_END_DATE + "23-04-2018 "
             + PREFIX_CELEBRITY + "1 "
-            + PREFIX_CELEBRITY + "3";
+            + PREFIX_CELEBRITY + "2";
 
     public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only add appointment when "
             + "viewing combined calendar\n"
@@ -82,8 +81,7 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
-        StorageCalendar cal = model.getStorageCalendar();
-        cal.addEntry(appt);
+        model.addAppointmentToStorageCalendar(appt);
         appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
 
         // reset calendar view to day view

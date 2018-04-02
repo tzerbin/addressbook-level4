@@ -22,6 +22,9 @@ public class Tag {
     public Tag(String tagName) {
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_TAG_CONSTRAINTS);
+        if ("celebrity".contentEquals(tagName.toLowerCase())) {
+            tagName = tagName.toLowerCase();
+        }
         this.tagName = tagName;
     }
 
