@@ -36,7 +36,6 @@ public class ModelManager extends ComponentManager implements Model {
     public static final String DAY_VIEW_PAGE = "day";
     public static final String WEEK_VIEW_PAGE = "week";
     public static final String MONTH_VIEW_PAGE = "month";
-    public static final String YEAR_VIEW_PAGE = "year";
 
     public static final Tag CELEBRITY_TAG = new Tag("celebrity");
 
