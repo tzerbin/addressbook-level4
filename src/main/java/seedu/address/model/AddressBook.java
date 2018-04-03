@@ -123,6 +123,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author WJY-norainu
     /**
      * Returns true if the user is undoing removal of a celebrity
      * @param currentCelebrities
@@ -215,6 +216,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// person-level operations
 
+    //@@author
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
@@ -299,7 +301,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         return usedTags;
     }
 
-
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
@@ -326,6 +327,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return updatedPerson;
     }
 
+    //@@author WJY-norainu
     /**
      * Change pointers to celebCalendar of copied celebrity to the original celebCalendar
      * @param celebrities
@@ -343,6 +345,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return celebrities;
     }
 
+    //@@author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.

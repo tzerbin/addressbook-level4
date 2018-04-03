@@ -7,6 +7,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author WJY-norainu
 /**
  * Display the calendar of the celebrity specified by the user.
  */

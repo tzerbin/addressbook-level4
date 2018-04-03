@@ -91,6 +91,7 @@ public class CalendarPanel extends UiPart<Region> {
         hideButtons();
     }
 
+    //@@author WJY-norainu
     /** Hide all buttons in the calendar */
     private void hideButtons() {
         celebCalendarView.setShowSearchField(false);
