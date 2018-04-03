@@ -387,7 +387,7 @@ Changes to view the calendar of the 1st person in the list of contacts, if the 1
 
 ==== Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]
 
-Changes to view the combined calendar that shows all `celebrity` 's appointments in one calendar.
+Changes to view the combined calendar that shows all `celebrity` 's appointments in one calendar. +
 Alias: `vcc` +
 Format: `viewCombinedCalendar`
 
