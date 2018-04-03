@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- StorageCalendar save file which contains the same Appointment values as in
+{@code TypicalAppointmentss#getTypicalAppointments()}-->
+<storagecalendar>
+    <appointments>
+        <title>Concert</title>
+        <location>Singapore Indoors Stadium</location>
+        <startDate>20a8-08-24</startDate>
+        <startTime>@9:0-</startTime>
+        <endDate>818-13-00</endDate>
+        <endTime>26:68</endTime>
+    </appointments>
+</storagecalendar>
