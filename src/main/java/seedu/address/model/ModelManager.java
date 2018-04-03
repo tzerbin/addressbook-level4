@@ -37,6 +37,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
+//@@author muruges95
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
@@ -211,7 +212,7 @@ public class ModelManager extends ComponentManager implements Model {
         return appointmentsOnlyInvolveTargetCelebCalendar;
     }
 
-    //@@author
+    //@@author muruges95
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         if (person.isCelebrity()) {
@@ -278,7 +279,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Celeb Calendar Accessors ===================================================================
 
-    //@@author
+    //@@author muruges95
     @Override
     public ObservableList<Calendar> getCelebCalendars() {
         return celebCalendarSource.getCalendars();

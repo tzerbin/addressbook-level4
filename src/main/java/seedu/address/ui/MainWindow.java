@@ -189,6 +189,8 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author muruges95
+
     /**
      * Creates appointmentListWindow and replaces calendarPanel with it
      */

@@ -200,7 +200,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API*: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarPanel` etc.
 All these classes inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework.

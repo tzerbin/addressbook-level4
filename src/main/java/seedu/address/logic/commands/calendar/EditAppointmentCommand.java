@@ -30,6 +30,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
 
+//@@author muruges95
 /**
  * Edits an appointment in a calendar.
  */

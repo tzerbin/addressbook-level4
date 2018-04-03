@@ -30,6 +30,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Celebrity;
 
+//@@author muruges95
 /**
  * The panel for the Calendar. Constructs a calendar view and attaches to it a CalendarSource.
  * The view is then returned by calling getCalendarView in MainWindow to attach it to the
