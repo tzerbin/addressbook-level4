@@ -69,12 +69,14 @@ can be used as `add n/John Doe`.
 acceptable.
 ====
 
-[IMPORTANT]
 ====
-Commands that modify the people and appointments stored in CelebManager (`add`, `delete`, `edit`, `undo`, `redo`,
+*Precaution*
+
+* You should not click inside the calendar at all times, except for scrolling up and down using the scroll bar.
+* Commands that modify the people and appointments stored in CelebManager (`add`, `delete`, `edit`, `undo`, `redo`,
 `addAppointment`) must be performed in combined calendar view unless specified otherwise. +
 Information about combined calendar view can be found in +
-<<Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]>>
+<<Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]>>.
 ====
 
 The following are all the commands available to you:
@@ -354,13 +356,17 @@ positive number greater than 0 and not greater than the total number of appointm
  3.3.1 for more details.
 ****
 
-====  Deleting an appointment `[Since in v1.4]`
+====  Deleting an appointment `deleteAppointment` [Since v1.4]
 
 Deletes the specified appointment from CelebManager. +
 Alias: `da` +
 Format: `deleteAppointment INDEX`
 
-[IMPORTANT] You can only delete an appointment when you are in appointment list view.
+[IMPORTANT]
+====
+You can only delete an appointment when you are in appointment list view. Refer to
+<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
+====
 
 ****
 * Deletes the appointment at the specified `INDEX`.
