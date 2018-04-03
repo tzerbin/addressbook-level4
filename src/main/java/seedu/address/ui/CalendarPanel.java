@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDARVIEW;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 import static seedu.address.model.ModelManager.MONTH_VIEW_PAGE;
 import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
-import static seedu.address.model.ModelManager.YEAR_VIEW_PAGE;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -130,9 +129,6 @@ public class CalendarPanel extends UiPart<Region> {
                 break;
             case MONTH_VIEW_PAGE:
                 celebCalendarView.showMonthPage();
-                break;
-            case YEAR_VIEW_PAGE:
-                celebCalendarView.showYearPage();
                 break;
 
             default:

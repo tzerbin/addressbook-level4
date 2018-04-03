@@ -9,6 +9,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -56,7 +59,8 @@ public class EditAppointmentCommandParser implements Parser<EditAppointmentComma
             ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE)).ifPresent(editApptDescriptor::setEndDate);
             ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_LOCATION))
                     .ifPresent(editApptDescriptor::setLocation);
-            Set<Index> celebrityIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_CELEBRITY));
+            parseCelebrityIndicesForEditAppointment(argMultiMap.getAllValues(PREFIX_CELEBRITY))
+                    .ifPresent(editApptDescriptor::setCelebrityIndices);
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -67,5 +71,22 @@ public class EditAppointmentCommandParser implements Parser<EditAppointmentComma
         }
 
         return new EditAppointmentCommand(appointmentIndex, editApptDescriptor);
+    }
+
+    /**
+     * Parses {@code Collection<String> celebrityIndices} into a {@code Set<Index>}
+     * if {@code celebrityIndices} is non-empty. If {@code celebrityIndices} contain only one element
+     * which is an empty string, it will be parsed into a {@code Set<Celebrity>} containing zero celebrities.
+     */
+    private Optional<Set<Index>> parseCelebrityIndicesForEditAppointment(Collection<String> celebrityIndices)
+        throws IllegalValueException {
+        assert celebrityIndices != null;
+
+        if (celebrityIndices.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> celebrityIndexSet = (celebrityIndices.size() == 1 && celebrityIndices.contains(""))
+                ? Collections.emptySet() : celebrityIndices;
+        return Optional.of(ParserUtil.parseIndices(celebrityIndexSet));
     }
 }

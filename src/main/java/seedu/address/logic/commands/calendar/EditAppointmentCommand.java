@@ -12,13 +12,13 @@ import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
@@ -29,7 +29,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
-import seedu.address.model.person.Person;
 
 /**
  * Edits an appointment in a calendar.
@@ -69,15 +68,22 @@ public class EditAppointmentCommand extends Command {
         requireNonNull(editAppointmentDescriptor);
 
         this.appointmentIndex = appointmentIndex;
-        this.editAppointmentDescriptor = editAppointmentDescriptor;
+        this.editAppointmentDescriptor = new EditAppointmentDescriptor(editAppointmentDescriptor);
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         Appointment appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
         Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+
+        // either use existing celebrity list or get new one
+        List<Celebrity> celebrityList = (editAppointmentDescriptor.getCelebrityIndices().isPresent())
+                ? model.getCelebritiesChosen(editAppointmentDescriptor.getCelebrityIndices().get())
+                : appointmentToEdit.getCelebrities();
+
         appointmentToEdit.removeAppointment();
         model.addAppointmentToStorageCalendar(editedAppointment);
+        editedAppointment.updateEntries(celebrityList);
 
 
         // reset calendar view to day view
@@ -102,7 +108,7 @@ public class EditAppointmentCommand extends Command {
         LocalTime endTime = ead.getEndTime().orElse(apptToEdit.getEndTime());
         LocalDate startDate = ead.getStartDate().orElse(apptToEdit.getStartDate());
         LocalDate endDate = ead.getEndDate().orElse(apptToEdit.getEndDate());
-        MapAddress location = ead.getAddress().orElse(apptToEdit.getMapAddress());
+        MapAddress location = ead.getLocation().orElse(apptToEdit.getMapAddress());
 
         return new Appointment(apptName, startTime, startDate, location, endTime, endDate);
     }
@@ -118,16 +124,27 @@ public class EditAppointmentCommand extends Command {
         private LocalDate startDate;
         private LocalDate endDate;
         private MapAddress location;
+        private Set<Index> celebrityIndices;
 
         public EditAppointmentDescriptor() {}
 
+        /**
+         * Copy constructor.
+         * A defensive copy of {@code celebrityIndices} is used internally.
+         */
         public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
-
+            setAppointmentName(toCopy.appointmentName);
+            setLocation(toCopy.location);
+            setStartTime(toCopy.startTime);
+            setStartDate(toCopy.startDate);
+            setEndTime(toCopy.endTime);
+            setEndDate(toCopy.endDate);
+            setCelebrityIndices(toCopy.celebrityIndices);
         }
 
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.appointmentName, this.startTime, this.startDate,
-                    this.endTime, this.endDate, this.location);
+                    this.endTime, this.endDate, this.location, this.celebrityIndices);
         }
 
         public void setAppointmentName(String appointmentName) {
@@ -174,28 +191,26 @@ public class EditAppointmentCommand extends Command {
             this.location = location;
         }
 
-        public Optional<MapAddress> getAddress() {
+        public Optional<MapAddress> getLocation() {
             return Optional.ofNullable(location);
         }
 
-    }
-
-    private static List<Celebrity> getCelebrities(Set<Index> indices, List<Person> personList) throws CommandException {
-        List<Celebrity> celebrities = new ArrayList<>();
-        for (Index index : indices) {
-            celebrities.add(getCelebrity(index, personList));
+        /**
+         * Sets {@code celebrityIndices} to this object's {@code celebrityIndices}.
+         * A defensive copy of {@code celebrityIndices} is used internally.
+         */
+        public void setCelebrityIndices(Set<Index> celebrityIndices) {
+            this.celebrityIndices = (celebrityIndices != null) ? new HashSet<>(celebrityIndices) : null;
         }
-        return celebrities;
-    }
 
-    private static Celebrity getCelebrity(Index index, List<Person> personList) throws CommandException {
-        int zeroBasedIndex = index.getZeroBased();
-        if (zeroBasedIndex >= personList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } else if (!personList.get(zeroBasedIndex).isCelebrity()) {
-            throw new CommandException(Messages.MESSAGE_NOT_CELEBRITY_INDEX);
-        } else {
-            return (Celebrity) personList.get(zeroBasedIndex);
+        /**
+         * Returns an unmodifiable celebrities set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code celebrityIndices} is null.
+         */
+        public Optional<Set<Index>> getCelebrityIndices() {
+            return (celebrityIndices != null) ? Optional.of(Collections.unmodifiableSet(celebrityIndices))
+                                              : Optional.empty();
         }
     }
 

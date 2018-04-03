@@ -7,6 +7,8 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
+import static seedu.address.testutil.TypicalTags.HUSBAND_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +45,16 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+    }
+
+    @Test
+    public void countPersonsWithTag_countsFriendsTag_returnNumberOfPersonsWithFriendsTag() {
+        assertEquals(addressBookWithAlice.countPersonsWithTag(FRIENDS_TAG), 1);
+    }
+
+    @Test
+    public void countPersonsWithTag_countsHusbandTag_returnNumberOfPersonsWithHusbandTag() {
+        assertEquals(addressBookWithAlice.countPersonsWithTag(HUSBAND_TAG), 0);
     }
 
     @Test

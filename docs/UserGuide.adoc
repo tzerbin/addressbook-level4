@@ -296,24 +296,47 @@ Does not modify CelebManager and outputs an error message.
 
 Adds an appointment to CelebManager. +
 Alias: `aa` +
-Format: `addAppointment n/APPOINTMENT_NAME l/LOCATION sd/START_DATE st/START_TIME ed/END_DATE et/END_TIME`
+Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]...`
 
 Examples:
 
-* `addAppointment n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
-* `addAppointment n/Dentist Appointment l/Dental Clinic st/15:45`
+* `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00`
+* `addAppointment n/Dentist Appointment l/Dental Clinic st/15:45 c/1 c/3`
 
 ****
 * Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
 it must be prefixed with a 0, e.g. `03/07/2017`.
 * Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
 or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
-* You can omit one or more of the time, date and location fields when using this command.
+* Celebrity index refers to the person's index on the person list displayed inside of our app. This person must be a celebrity,
+failing which you will receive an error message stating so.
+* Similar to our other commands, the celebrity index must be a positive number greater than 0 and at most the number of person being shown.
+* You can choose multiple celebrities to whom you want to add the appointment as shown in our example.
+* All the fields with brackets as shown in the format are optional and can be omitted.
 ****
 
-====  Editing an appointment `[coming in v1.3]`
+====  Editing an appointment `editAppointment` [Since v1.4]
 
-====  Deleting an appointment `[coming in v1.3]`
+Edits an appointment currently stored in CelebManager. +
+Alias: `ea` +
+Format: `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]...`
+
+Examples:
+
+* `editAppointment 2 n/Dentist Appointment l/Orchard Road
+* `editAppointment 1 st/16:00 et/20:00 sd/23-03-2018 c/1 c/2`
+
+****
+* To use this command you need to be in the appointment list page which you can go to using the `listAppointment` command.
+* The appointment index needs to be a valid index corresponding to an appointment in the list of appointments. The index must be a
+positive number greater than 0 and not greater than the total number of appointments being displayed.
+* Compared to `addAppointment`, here it is optional to specify a new appointment name.
+* Other than that, the constraints on the other fields are exactly the same as our `addAppointment`. Do look under section
+ 3.3.1 for more details.
+
+****
+
+====  Deleting an appointment `deleteAppointment` [Since v1.4]
 
 ==== Listing appointments: `listAppointment` [Since v1.3]
 
@@ -407,13 +430,16 @@ within a pair of `[]`. A field that can be repeatedly entered with different inp
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
-[et/END_TIME]` +
-e.g. `add n/Oscars 2018 l/Hollywood sd/23/03/2018 st/14:00 ed/23/03/2018 et/20:00`
+[et/END_TIME] [c/CELEBRITY_INDEX]...` +
+e.g. `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00 c/1 c/2`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit Appointment* : `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
+[et/END_TIME] [c/CELEBRITY_INDEX]...` +
+e.g. `editAppointment n/Dentist Appointment l/Clementi Road st/15:00 et/16:00 c/3`
 * *Estimate Route* : `estimateRoute sma/LOCATION ema/LOCATION`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`

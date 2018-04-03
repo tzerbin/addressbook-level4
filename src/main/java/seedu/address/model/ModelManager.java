@@ -8,6 +8,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -20,6 +21,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.logic.commands.calendar.ListAppointmentCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -41,7 +44,6 @@ public class ModelManager extends ComponentManager implements Model {
     public static final String DAY_VIEW_PAGE = "day";
     public static final String WEEK_VIEW_PAGE = "week";
     public static final String MONTH_VIEW_PAGE = "month";
-    public static final String YEAR_VIEW_PAGE = "year";
 
     public static final Tag CELEBRITY_TAG = new Tag("celebrity");
 
@@ -235,6 +237,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public int countPersonsWithTag(Tag tag) {
+        return addressBook.countPersonsWithTag(tag);
+    }
+
+    @Override
     public int removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
         int numPersonsAffected = addressBook.removeTag(tag);
         indicateAddressBookChanged();
@@ -337,6 +344,27 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    public List<Celebrity> getCelebritiesChosen(Set<Index> indices) throws CommandException {
+        List<Celebrity> celebrities = new ArrayList<>();
+        for (Index index : indices) {
+            celebrities.add(getCelebrityChosen(index));
+        }
+        return celebrities;
+    }
+
+    @Override
+    public Celebrity getCelebrityChosen(Index index) throws CommandException {
+        int zeroBasedIndex = index.getZeroBased();
+        List<Person> personList = getFilteredPersonList();
+        if (zeroBasedIndex >= personList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (!personList.get(zeroBasedIndex).isCelebrity()) {
+            throw new CommandException(Messages.MESSAGE_NOT_CELEBRITY_INDEX);
+        } else {
+            return (Celebrity) personList.get(zeroBasedIndex);
+        }
     }
 
     @Override

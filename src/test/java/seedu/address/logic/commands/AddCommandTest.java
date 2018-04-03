@@ -9,6 +9,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -19,6 +20,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -199,6 +201,24 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public List<Celebrity> getCelebritiesChosen(Set<Index> indices) throws CommandException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Celebrity getCelebrityChosen(Index index) throws CommandException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public int countPersonsWithTag(Tag tag) {
+            fail("This method should not be called.");
+            return -1;
         }
 
         @Override
