@@ -465,8 +465,8 @@ Examples:
 * `viewCalendarBy day` +
 Changes the calendar view to day view that looks similar to the calendar in red rectangle in the figure below.
 
-.View Calendar By Day
-image::ViewCalendarByDay.jpg[width="400"]
+.State of application after `viewCalendarBy day` input
+image::ViewCalendarByDay.jpg[width=""]
 
 [NOTE]
 ====
@@ -478,14 +478,14 @@ calendar view before using `viewCalendarBy day`.
 * `viewCalendarBy week` +
 Changes the calendar view to week view that looks similar to the calendar in red rectangle in the figure below.
 
-.View Calendar By Week
-image::ViewCalendarByWeek.jpg[width="400"]
+.State of application after `viewCalendarBy week` input
+image::ViewCalendarByWeek.jpg[width=""]
 
 * `viewCalendarBy month` +
 Changes the calendar view to month view that looks similar to the calendar in red rectangle in the figure below.
 
-.View Calendar By Month
-image::ViewCalendarByMonth.jpg[width="400"]
+.State of application after `viewCalendarBy month` input
+image::ViewCalendarByMonth.jpg[width=""]
 
 {sp} +
 
