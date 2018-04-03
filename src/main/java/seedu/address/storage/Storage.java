@@ -38,13 +38,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, StorageCa
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
 
-    /**
-     * Saves the current version of the StorageCalendar to the hard disk.
-     * Creates the data file if it is missing.
-     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
-     */
-    void handleStorageCalendarChangedEvent(StorageCalendarChangedEvent alce);
-
+    //@@author tzerbin
     @Override
     String getStorageCalendarFilePath();
 
@@ -53,4 +47,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, StorageCa
 
     @Override
     void saveStorageCalendar(StorageCalendar storageCalendar) throws IOException;
+
+    /**
+     * Saves the current version of the StorageCalendar to the hard disk.
+     * Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleStorageCalendarChangedEvent(StorageCalendarChangedEvent alce);
 }
