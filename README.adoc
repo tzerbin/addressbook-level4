@@ -28,6 +28,6 @@ endif::[]
 * Some parts of this application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 * This project is based off of the AddressBook-Level4 project created by the SE-EDU initiative at https://github.com/se-edu/addressbook-level4
-* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4], https://github.com/dlemmermann/CalendarFX[CalendarFX]
+* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4], https://github.com/dlemmermann/CalendarFX[CalendarFX], https://github.com/rterp/GMapsFX[GMapsFX], https://github.com/googlemaps/google-maps-services-java[GoogleMapsServices]
 
 == Licence : link:LICENSE[MIT]
