@@ -450,13 +450,36 @@ Format: `viewCalendarBy VIEW`
 ****
 * Changes the calendar view to the specified `VIEW`.
 * `VIEW` *must be* `day`, `week`, or `month`.
-* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to weekly calendar view.
+* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to view calendar by week.
+* CelebManger only supports showing calendar for *current* `day`, `week` or `month`.
 ****
 
 Examples:
 
+* `viewCalendarBy day` +
+Changes the calendar view to day view that looks similar to the calendar in red rectangle in the figure below.
+
+.View Calendar By Day
+image::ViewCalendarByDay.jpg[width="400"]
+
+[NOTE]
+====
+CelebManger by default shows calendar in day view whenever it gets launched. Hence you need to first change to other
+calendar view before using `viewCalendarBy day`.
+====
+
+
 * `viewCalendarBy week` +
-Changes the calendar view to weekly view.
+Changes the calendar view to week view that looks similar to the calendar in red rectangle in the figure below.
+
+.View Calendar By Week
+image::ViewCalendarByWeek.jpg[width="400"]
+
+* `viewCalendarBy month` +
+Changes the calendar view to month view that looks similar to the calendar in red rectangle in the figure below.
+
+.View Calendar By Month
+image::ViewCalendarByMonth.jpg[width="400"]
 
 {sp} +
 
