@@ -758,15 +758,15 @@ The following diagram shows the inheritance diagram for `ShowLocationCommand`:
 image::ShowLocationLogicCommandClassDiagram.png[width=""]
 
 As you can see from the diagram, `ShowLocationCommand` inherits from the Command class and is not part of the Undoable Command.
-Similar to the other commands like `FindCommand` it will not be identified by the undo/redo feature.
+Similar to the other commands like `FindCommand` *it will not be identified by the undo/redo feature*.
 
 This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
  the difference in address specification details as the `Address` model is too specific for the command to work.
 An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
 
-The main difference between both model is shown below in the two diagrams.
+The main difference between both model is shown below in the two code snippets.
 
-The snippet code below shows the diagram of `Address` model:
+The snippet code below shows the `Address` model:
 
 [source,java]
 ----
@@ -788,7 +788,7 @@ public class Address {
 }
 ----
 
-The snippet code below shows the diagram of `MapAddress` model:
+The snippet code below shows the `MapAddress` model:
 
 [source,java]
 ----
@@ -816,7 +816,7 @@ public class MapAddress {
 ----
 The difference to note is the `isValidAddress` method, where `Address` only checks for *blank space* whereas `MapAddress`
 checks for *blank space and the validity of location in google server*. Thus, making the command more restrictive to location,
- road, block name and postal code. Any details more than that would result in a higher possibility of it being invalid.
+ road, block name and postal code. Any details more than that would result in a higher possibility of it being invalid or inaccurate.
 
 This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
@@ -827,7 +827,7 @@ command to re-center and mark the new location which is then shown to the user.
 `Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
 is then used by the command to find the exact location in the `MapPanel`.
 
-Every new input of this command will remove the previous location marker and add the new marker into the map.
+Every new input of this command will remove the previous route or location marker and add the new marker into the map.
 
 The snippet below shows the state of `MapPanel` before input of `ShowLocation` command:
 
@@ -839,7 +839,7 @@ After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to t
 .State of `MapPanel` after `CommandInput`
 image::AfterShowLocationInput.png[width="400"]
 
-Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker
+Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
 
 The following sequence diagram shows how the command works:
 
@@ -859,17 +859,17 @@ image::ShowLocationSequenceDiagram.png[width=""]
 ===== Aspect: Use of address model
 * **Alternative 1 (current choice):** Use `MapAddress`
 ** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion
-** Cons: Both model are very similar
+** Cons: Confusing as both `MapAddress` and `Address` model are quite similar.
 * **Alternative 2:** Use `Address`
 ** Pros: Reduces the amount of code/class in the project
-** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
+** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
 
 // tag::estimateRoute[]
 === EstimateRoute Feature
 ==== Current Implementation
 
 The EstimateRoute mechanism is facilitated by the `EstimateRouteCommand`, which resides inside `Logic`. It supports the viewing of estimated route
-in the `MapPanel` UI by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the new route. This command inherits from `Command` so it *does not support the undo/redo feature*.
+in the `MapPanel` UI by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the new route.
 
 
 
@@ -882,7 +882,7 @@ image::Start_Location_Marker.png[width="100"]
 image::End_Location_Marker.png[width="100"]
 
 `EstimateRouteCommand` inherits from the Command class and is not part of the Undoable Command.
-Similar to the other commands like `FindCommand` it will not be identified by the undo/redo feature.
+Similar to the other commands like `FindCommand` *it will not be identified by the undo/redo feature*.
 
 This command is similar to the `ShowLocation` feature which does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to the difference in address specification details as the `Address` model is too specific for the command to work.
 Even if it works the results may not be accurate.
@@ -931,10 +931,10 @@ image::EstimateRouteSequenceDiagram.png[width=""]
 ===== Aspect: Use of address model
 * **Alternative 1 (current choice):** Use `MapAddress`
 ** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion.
-** Cons: Both model are very similar.
+** Cons: Confusing as the two models are similar.
 * **Alternative 2:** Use `Address`
 ** Pros: Reduces the amount of code/class in the project.
-** Cons: Will be confusing as different requirements for a single model. Lacks proper organisation.
+** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
 
 ===== Aspect: Input using appointment index
 * **Alternative 1 (current choice):** Use Location name
@@ -959,7 +959,7 @@ As this command relies on the list generated by `ListAppointmentCommand`, the co
 from `ListAppointmentCommand`, which is used to generate the appointment list internally from the `StorageCalendar` in `Model`.
 This is done by `getChosenAppointment()` method.
 
-The snippet code below shows the code that generates the list of appointments.
+The snippet code below shows the code that retrieves the selected appointment.
 [source,java]
 ----
     public CommandResult execute() throws CommandException {
