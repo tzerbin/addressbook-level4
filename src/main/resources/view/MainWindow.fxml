@@ -45,7 +45,7 @@
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>
         </StackPane>
-
+        <!-- @@author Damienskt -->
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
           <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
@@ -63,7 +63,7 @@
               </padding>
             </StackPane>
           </VBox>
-
+          <!-- @@author -->
           <StackPane fx:id="calendarPlaceholder" prefWidth="340" >
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />

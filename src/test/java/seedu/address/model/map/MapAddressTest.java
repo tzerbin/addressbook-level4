@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
-
+//@@author Damienskt
 public class MapAddressTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
