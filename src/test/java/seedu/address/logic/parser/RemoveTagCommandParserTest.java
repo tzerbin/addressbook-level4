@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 import org.junit.Test;
 
 import seedu.address.logic.commands.RemoveTagCommand;
+import seedu.address.model.tag.Tag;
 
 public class RemoveTagCommandParserTest {
 
@@ -20,8 +21,16 @@ public class RemoveTagCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "",
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+    public void parse_emptyArgs_throwsParseException() {
+        assertParseFailure(parser,
+                "",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgsContainingSpecialCharacters_throwsParseException() {
+        assertParseFailure(parser,
+                "%#friends",
+                Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 }

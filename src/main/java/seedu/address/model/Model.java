@@ -2,12 +2,15 @@ package seedu.address.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
@@ -82,10 +85,35 @@ public interface Model {
     void setAppointmentList(List<Appointment> appointments);
 
     /**
+     * Returns the chosen appointment from the displayed appointment list
+     * based on zeroBasedIndex
+     * @throws CommandException if appointments not listed or invalid index
+     */
+    Appointment getChosenAppointment(int chosenIndex) throws CommandException;
+
+    /** Adds the given appointment to the internal StorageCalendar */
+    void addAppointmentToStorageCalendar(Appointment appt);
+
+    /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Returns the list of celebrities chosen based on their index
+     * @throws CommandException if any of the indices given is invalid or the person is not a celebrity
+     */
+    List<Celebrity> getCelebritiesChosen(Set<Index> indices) throws CommandException;
+
+    /**
+     * Returns the Celebrity at a particular index given the current personList
+     * @throws CommandException if the given index is invalid or the person is not a celebrity.
+     */
+    Celebrity getCelebrityChosen(Index index) throws CommandException;
+
+    /** Counts the number of {@code persons} with the given {@code tage}. */
+    int countPersonsWithTag(Tag tag);
 
     /** Removes the given {@code tag} from all {@code person}s. */
     int removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException;

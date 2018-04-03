@@ -38,8 +38,15 @@ public class StorageCalendar extends Calendar {
     }
 
     public List<Appointment> getAllAppointments() {
-        LocalDate startDate = getEarliestDate();
-        LocalDate endDate = getLatestDate();
+        LocalDate startDate;
+        LocalDate endDate;
+        // handle the case when no entries in calendar
+        try {
+            startDate = getEarliestDate();
+            endDate = getLatestDate();
+        } catch (NullPointerException e) {
+            return new ArrayList<>();
+        }
         return getAppointmentsWithinDate(startDate, endDate);
     }
 
@@ -63,5 +70,4 @@ public class StorageCalendar extends Calendar {
         return appointmentsWithinDate;
 
     }
-
 }

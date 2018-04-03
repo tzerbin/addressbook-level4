@@ -53,6 +53,7 @@ public class Appointment extends Entry {
     private static final Duration minDuration = Duration.ofMinutes(1);
 
     private List<Entry> childEntryList;
+    private List<Celebrity> celebrityList;
     private MapAddress mapAddress;
 
     public Appointment(String title, LocalTime startTime, LocalDate startDate,
@@ -76,6 +77,7 @@ public class Appointment extends Entry {
             this.setLocation(mapAddress.toString());
         }
         this.childEntryList = new ArrayList<>();
+        this.celebrityList = new ArrayList<>();
     }
 
     public static boolean isValidName(String test) {
@@ -118,11 +120,28 @@ public class Appointment extends Entry {
      */
     public void updateEntries(List<Celebrity> celebrities) {
         clearChildEntries();
+        celebrityList.clear();
         childEntryList.clear();
 
         for (Celebrity celebrity : celebrities) {
             childEntryList.add(createChildEntry(celebrity));
         }
+        celebrityList = new ArrayList<>(celebrities);
+    }
+
+    /**
+     * Returns the current list of Celebrities attending this appointment
+     */
+    public List<Celebrity> getCelebrities() {
+        return celebrityList;
+    }
+
+    /**
+     * Sets old child entries to the new entries.
+     * @param newChildEntryList
+     */
+    public void setChildEntries(List<Entry> newChildEntryList) {
+        childEntryList = newChildEntryList;
     }
 
     public List<Entry> getChildEntryList() {

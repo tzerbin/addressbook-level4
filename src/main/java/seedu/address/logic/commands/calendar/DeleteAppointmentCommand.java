@@ -15,7 +15,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 
 /**
@@ -54,13 +53,11 @@ public class DeleteAppointmentCommand extends Command {
         }
         findApptToDelete();
         requireNonNull(apptToDelete);
-        StorageCalendar cal = model.getStorageCalendar();
-        cal.removeEntry(apptToDelete);
         apptToDelete.removeAppointment();
 
         // remove the appt from last displayed appointment list
         List<Appointment> newAppointmentList = model.getAppointmentList();
-        newAppointmentList.remove(apptToDelete);
+        newAppointmentList.remove(targetIndex.getZeroBased());
         model.setAppointmentList(newAppointmentList);
         // if the list becomes empty, switch back to combined calendar day view
         if (model.getAppointmentList().size() < 1) {

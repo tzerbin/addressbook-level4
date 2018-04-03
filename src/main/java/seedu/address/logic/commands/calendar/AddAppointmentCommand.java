@@ -10,21 +10,16 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.calendar.StorageCalendar;
-import seedu.address.model.person.Celebrity;
-import seedu.address.model.person.Person;
 
 /**
  * Adds an appointment to a calendar.
@@ -51,8 +46,11 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_END_TIME + "20:00 "
             + PREFIX_END_DATE + "23-04-2018 "
             + PREFIX_CELEBRITY + "1 "
-            + PREFIX_CELEBRITY + "3";
+            + PREFIX_CELEBRITY + "2";
 
+    public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only add appointment when "
+            + "viewing combined calendar\n"
+            + "currently viewing %1$s's calendar";
     public static final String MESSAGE_SUCCESS = "Added appointment successfully";
 
     private final Appointment appt;
@@ -72,13 +70,22 @@ public class AddAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        StorageCalendar cal = model.getStorageCalendar();
-        cal.addEntry(appt);
-        appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
+        if (model.getCurrentCelebCalendarOwner() != null) {
+            throw new CommandException(
+                    String.format(MESSAGE_NOT_IN_COMBINED_CALENDAR,
+                            model.getCurrentCelebCalendarOwner().getName().toString()));
+        }
 
-        // reset calendar view to dayview
+        model.addAppointmentToStorageCalendar(appt);
+        appt.updateEntries(model.getCelebritiesChosen(celebrityIndices));
+
+        // reset calendar view to day view
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+        if (model.getIsListingAppointments()) {
+            model.setIsListingAppointments(false);
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -89,22 +96,5 @@ public class AddAppointmentCommand extends Command {
                 && appt.equalsValue(((AddAppointmentCommand) other).appt));
     }
 
-    private static List<Celebrity> getCelebrities(Set<Index> indices, List<Person> personList) throws CommandException {
-        List<Celebrity> celebrities = new ArrayList<>();
-        for (Index index : indices) {
-            celebrities.add(getCelebrity(index, personList));
-        }
-        return celebrities;
-    }
 
-    private static Celebrity getCelebrity(Index index, List<Person> personList) throws CommandException {
-        int zeroBasedIndex = index.getZeroBased();
-        if (zeroBasedIndex >= personList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } else if (!personList.get(zeroBasedIndex).isCelebrity()) {
-            throw new CommandException(Messages.MESSAGE_NOT_CELEBRITY_INDEX);
-        } else {
-            return (Celebrity) personList.get(zeroBasedIndex);
-        }
-    }
 }
