@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook and appointment list data in an XML file
+ * Stores addressbook and Storage Calendar data in an XML file
  */
 public class XmlFileStorage {
     /**
@@ -27,8 +27,8 @@ public class XmlFileStorage {
     /**
      * Returns address book in the file or an empty address book
      */
-    public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
-                                                                            FileNotFoundException {
+    public static XmlSerializableAddressBook loadDataFromSaveFile(File file)
+            throws DataConversionException, FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
         } catch (JAXBException e) {
@@ -37,24 +37,24 @@ public class XmlFileStorage {
     }
 
     /**
-     * Saves the given appointment list data to the specified file.
+     * Saves the given storage calendar data to the specified file.
      */
-    public static void saveAppointmentListToFile(File file, XmlSerializableAppointmentList appointmentList)
+    public static void saveStorageCalendarToFile(File file, XmlSerializableStorageCalendar storageCalendar)
             throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, appointmentList);
+            XmlUtil.saveDataToFile(file, storageCalendar);
         } catch (JAXBException e) {
             throw new AssertionError("Unexpected exception " + e.getMessage());
         }
     }
 
     /**
-     * Returns appointment list in the file or an empty appointment list
+     * Returns storage calendar stored in the file with all its appointments
      */
-    public static XmlSerializableAppointmentList loadAppointmentListFromSaveFile(File file)
+    public static XmlSerializableStorageCalendar loadStorageCalendarFromSaveFile(File file)
             throws DataConversionException, FileNotFoundException {
         try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableAppointmentList.class);
+            return XmlUtil.getDataFromFile(file, XmlSerializableStorageCalendar.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

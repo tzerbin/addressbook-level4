@@ -1,5 +1,7 @@
 package seedu.address;
 
+import static seedu.address.testutil.TypicalAppointments.EMPTY_CALENDAR;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Supplier;
@@ -94,7 +96,8 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getAddressBook()), EMPTY_CALENDAR,
+                new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }

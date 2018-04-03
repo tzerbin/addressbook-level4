@@ -9,6 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_CANNOT_REMOVE_CELEBRITY_TAG;
 import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_TAG_NOT_FOUND;
 import static seedu.address.model.ModelManager.CELEBRITY_TAG;
+import static seedu.address.testutil.TypicalAppointments.EMPTY_CALENDAR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 import static seedu.address.testutil.TypicalTags.HUSBAND_TAG;
@@ -34,7 +35,7 @@ public class RemoveTagCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
     private Tag nonExistingTag = new Tag("thisTagNameIsSuperLongAndThereShouldntBeAnyoneWithSuchATag");
 
     @Test
@@ -66,7 +67,7 @@ public class RemoveTagCommandTest {
                 FRIENDS_TAG.toString(),
                 count);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         expectedModel.removeTag(FRIENDS_TAG);
 
         assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
@@ -74,7 +75,7 @@ public class RemoveTagCommandTest {
 
     @Test
     public void executeUndoRedo_friendsTagWhichThreePersonsHave_success() throws Exception {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
 
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);

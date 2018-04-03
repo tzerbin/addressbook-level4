@@ -683,7 +683,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 === Appointment Storage Feature
 ==== Current Implementation
-The storing of appointment is facilitated by the `XmlAppointmentListStorage` class, which resides in the `Storage` component.
+The storing of appointment is facilitated by the `XmlStorageCalendarStorage` class, which resides in the `Storage` component.
 It supports the retrieval and storage for appointments made by the user.
 
 During start-up of application, the storage component will be initialized by the `MainApp`, which retrieves information from the specified file path in `UserPrefs`.
@@ -697,24 +697,24 @@ public void init() throws Exception {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        AppointmentListStorage appointmentListStorage =
-                new XmlAppointmentListStorage(userPrefs.getAppointmentListFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage, appointmentListStorage);
+        StorageCalendarStorage storageCalendarStorage =
+                new XmlStorageCalendarStorage(userPrefs.getStorageCalendarFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, storageCalendarStorage);
 
         // initializes other component in the application.
     }
 ----
 
-In the `XmlAppointmentListStorage` class, it allows developers to use methods:
+In the `XmlStorageCalendarStorage` class, it allows developers to use methods:
 
-* `readAppointmentList`, to retrieve a `ReadOnlyAppointmentList`
-** This is done by checking if the file exist, and load the list from `XmlSerializableAppointmentList`.
-* `saveAppointmentList`, to write information into `filePath` specified in `userPrefs`
-** This is done by creating a new file and rewriting to the list in `XmlSerializableAppointmentList`.
+* `readStorageCalendar`, to retrieve a `StorageCalendar`
+** This is done by checking if the file exist, and load the list from `XmlSerializableStorageCalendar`.
+* `saveStorageCalendar`, to write information into `filePath` specified in `userPrefs`
+** This is done by creating a new file and rewriting to the list in `XmlSerializableStorageCalendar`.
 
-While the `XmlAppointmentListStorage` class allows access to data stored on the hard disk, the `XmlSerializableAppointmentList` class represents the data of the appointment list for the calendar.
-In `XmlSerializableAppointmentList`, it contains a `List` of XML formats of appointments `XmlAdaptedAppointment`.
-`XmlAdaptedAppointment` will then contain essential information of different `Appointment` in `AppointmentList` in the `Model` component, which includes:
+While the `XmlStorageCalendarStorage` class allows access to data stored on the hard disk, the `XmlSerializableStorageCalendar` class represents the data of the appointment list for the calendar.
+In `XmlSerializableStorageCalendar`, it contains a `List` of XML formats of appointments `XmlAdaptedAppointment`.
+`XmlAdaptedAppointment` will then contain essential information of different `Appointment` in `StorageCalendar` of the `Model` component, which includes:
 
 * `title` of appointment
 * `interval` of appointment indicating its starting and ending time
@@ -723,11 +723,11 @@ In `XmlSerializableAppointmentList`, it contains a `List` of XML formats of appo
 * `location` of appointment that is going to happen
 
 ==== Design Considerations
-===== Aspect: Implementing of `AppointmentListStorage`
+===== Aspect: Implementing of `StorageCalendarStorage`
 * **Alternative 1 (current choice):** Adapting existing `AddressBookStorage`
 ** Pros: Allows similar structure that can be maintained easily in `Storage` component
 ** Cons: Prevents major overhaul in future if necessary
-* **Alternative 2:** Redefining `AppointmentListStorage`
+* **Alternative 2:** Redefining `StorageCalendarStorage`
 ** Pros: Allows flexibility in implementation
 ** Cons: Confuses developer with different requirements for a single component
 
