@@ -14,6 +14,7 @@ public class TypicalStorageCalendar {
 
     public static final StorageCalendar EMPTY_CALENDAR = new StorageCalendar("Storage Calendar");
 
+    //@@author tzerbin
     public static final Appointment CONCERT = new Appointment(
             new AppointmentBuilder().withName("Concert")
                     .withStartTime("19:00")

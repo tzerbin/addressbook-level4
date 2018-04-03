@@ -1,4 +1,4 @@
-//@@author: tzerbin
+//@@author tzerbin
 package seedu.address.storage;
 
 import java.io.File;
