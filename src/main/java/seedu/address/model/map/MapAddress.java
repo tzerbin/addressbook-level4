@@ -8,7 +8,7 @@ import com.google.maps.model.TravelMode;
 
 import seedu.address.logic.map.DistanceEstimate;
 import seedu.address.logic.map.Geocoding;
-
+//@@author Damienskt
 /**
  * Represents a map address in the CelebManager.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}

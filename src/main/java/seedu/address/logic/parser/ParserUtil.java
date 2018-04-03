@@ -51,16 +51,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> oneBasedIndex} into an {@code Optional<Index>}
-     * if {@code oneBasedIndex} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Index> parseIndex(Optional<String> oneBasedIndex) throws IllegalValueException {
-        requireNonNull(oneBasedIndex);
-        return oneBasedIndex.isPresent() ? Optional.of(parseIndex(oneBasedIndex.get())) : Optional.empty();
-    }
-
-    /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -131,7 +121,7 @@ public class ParserUtil {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
-
+    //@@author Damienskt
     /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
@@ -154,7 +144,7 @@ public class ParserUtil {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseMapAddress(address.get())) : Optional.empty();
     }
-
+    //@@author
     /**
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.

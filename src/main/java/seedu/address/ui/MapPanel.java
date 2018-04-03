@@ -14,7 +14,7 @@ import com.lynden.gmapsfx.service.directions.DirectionsService;
 import javafx.application.Platform;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebEvent;
-
+//@@author Damienskt
 /**
  * The panel for google maps. Construct the maps view which is return by calling
  * getMapView() to MainWindow which attaches it to mapPanelPlaceHolder. After which it initialises the Map contents

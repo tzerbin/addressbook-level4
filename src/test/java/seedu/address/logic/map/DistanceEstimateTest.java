@@ -9,7 +9,7 @@ import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
 import seedu.address.testutil.Assert;
-
+//@@author Damienskt
 public class DistanceEstimateTest {
 
     private DistanceEstimate test;

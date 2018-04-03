@@ -13,7 +13,7 @@ import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.Duration;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
-
+//@@author Damienskt
 /**
  * Calculates distance and travel duration between two location.
  */

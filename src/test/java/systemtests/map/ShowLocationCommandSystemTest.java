@@ -13,7 +13,7 @@ import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.Model;
 import seedu.address.model.map.MapAddress;
 import systemtests.AddressBookSystemTest;
-
+//@@author Damienskt
 public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
 
     @Test

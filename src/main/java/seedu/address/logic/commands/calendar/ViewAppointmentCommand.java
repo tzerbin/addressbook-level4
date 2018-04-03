@@ -7,7 +7,7 @@ import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 
-//@@author WJY-norainu
+//@@author Damienskt
 /**
  * Display the appointment details in the display panel
  * based on the index given

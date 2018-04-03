@@ -8,7 +8,7 @@ import com.lynden.gmapsfx.service.directions.DirectionsRequest;
 import com.lynden.gmapsfx.service.directions.DirectionsService;
 
 import seedu.address.ui.MapPanel;
-
+//@@author Damienskt
 /**
  * Map model which allows updating of map state
  */

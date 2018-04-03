@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.map.MapAddress;
-
+//@@author Damienskt
 /**
  * Contains integration tests and unit tests for
  * {@code ShowLocationCommand}.

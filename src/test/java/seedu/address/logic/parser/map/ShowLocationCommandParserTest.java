@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.map.MapAddress;
-
+//@@author Damienskt
 public class ShowLocationCommandParserTest {
 
     private ShowLocationCommandParser parser = new ShowLocationCommandParser();

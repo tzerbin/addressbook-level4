@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.address.testutil.Assert;
-
+//@@author Damienskt
 public class GeocodingTest {
 
     private Geocoding test;

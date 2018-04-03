@@ -19,7 +19,7 @@ import seedu.address.logic.map.DistanceEstimate;
 import seedu.address.logic.map.Geocoding;
 import seedu.address.model.map.Map;
 import seedu.address.model.map.MapAddress;
-
+//@@author Damienskt
 /**
  * Estimates the distance and travel time required between two location
  */
