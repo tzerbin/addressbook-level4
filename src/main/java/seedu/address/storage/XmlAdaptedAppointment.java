@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -75,37 +76,56 @@ public class XmlAdaptedAppointment {
      */
     public Appointment toModelType() throws IllegalValueException {
 
+        LocalDate startDateCreated;
+        LocalTime startTimeCreated;
+        LocalDate endDateCreated;
+        LocalTime endTimeCreated;
+
+        if (startTime == null) {
+            throw new IllegalValueException(Appointment.MESSAGE_TIME_CONSTRAINTS);
+        }
+        try {
+            startTimeCreated = LocalTime.parse(startTime);
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_TIME_CONSTRAINTS);
+        }
+
+        if (startDate == null) {
+            throw new IllegalValueException(Appointment.MESSAGE_DATE_CONSTRAINTS);
+        }
+        try {
+            startDateCreated = LocalDate.parse(startDate);
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_DATE_CONSTRAINTS);
+        }
+
+        if (endTime == null) {
+            throw new IllegalValueException(String.format(Appointment.MESSAGE_TIME_CONSTRAINTS,
+                    LocalTime.class.getSimpleName()));
+        }
+        try {
+            endTimeCreated = LocalTime.parse(endTime);
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_TIME_CONSTRAINTS);
+        }
+
+        if (endDate == null) {
+            throw new IllegalValueException(String.format(Appointment.MESSAGE_DATE_CONSTRAINTS,
+                    LocalTime.class.getSimpleName()));
+        }
+        try {
+            endDateCreated = LocalDate.parse(endDate);
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_DATE_CONSTRAINTS);
+        }
+
         if (title == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, String.class.getSimpleName()));
+            throw new IllegalValueException(Appointment.MESSAGE_NAME_CONSTRAINTS);
         }
         if (!Appointment.isValidName(title)) {
             throw new IllegalValueException(Appointment.MESSAGE_NAME_CONSTRAINTS);
         }
         final String appointmentName = title;
-
-        if (startTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    LocalTime.class.getSimpleName()));
-        }
-        final LocalTime startTimeCreated = LocalTime.parse(startTime);
-
-        if (startDate == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    LocalTime.class.getSimpleName()));
-        }
-        final LocalDate startDateCreated = LocalDate.parse(startDate);
-
-        if (endTime == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    LocalTime.class.getSimpleName()));
-        }
-        final LocalTime endTimeCreated = LocalTime.parse(endTime);
-
-        if (endDate == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    LocalTime.class.getSimpleName()));
-        }
-        final LocalDate endDateCreated = LocalDate.parse(endDate);
 
         MapAddress mapAddressCreated = null;
         if (location != null) {
