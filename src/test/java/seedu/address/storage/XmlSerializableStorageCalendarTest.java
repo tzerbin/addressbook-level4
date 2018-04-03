@@ -2,12 +2,12 @@
 package seedu.address.storage;
 
 import java.io.File;
-import java.time.format.DateTimeParseException;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 
@@ -39,7 +39,7 @@ public class XmlSerializableStorageCalendarTest {
     public void toModelType_invalidAppointmentFile_throwsDateTimeParseException() throws Exception {
         XmlSerializableStorageCalendar dataFromFile =
                 XmlUtil.getDataFromFile(INVALID_APPOINTMENTS_FILE, XmlSerializableStorageCalendar.class);
-        thrown.expect(DateTimeParseException.class);
+        thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }
 
