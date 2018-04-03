@@ -10,6 +10,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
+//@@author WJY-norainu
 /**
  * Removes a tag from every person who has it in the address book
  * and shows the number of people affected by the operation.

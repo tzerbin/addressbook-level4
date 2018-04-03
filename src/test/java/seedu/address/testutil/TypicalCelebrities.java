@@ -6,6 +6,7 @@ import java.util.List;
 
 import seedu.address.model.person.Celebrity;
 
+//@@author WJY-norainu
 /**
  * A utility class containing a list of {@code Celebrity} objects to be used in tests.
  */

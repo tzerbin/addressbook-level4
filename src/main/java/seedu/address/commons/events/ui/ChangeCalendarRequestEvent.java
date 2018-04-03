@@ -3,6 +3,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.calendar.CelebCalendar;
 
+//@@author WJY-norainu
 /**
  * Indicates a request to show another celebrity's calendar
  */

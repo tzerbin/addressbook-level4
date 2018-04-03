@@ -90,7 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-
+    //@@author WJY-norainu
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
@@ -115,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
@@ -142,6 +143,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author WJY-norainu
     /**
      * Removes the person from appointments
      * @param person
@@ -151,6 +153,7 @@ public class ModelManager extends ComponentManager implements Model {
         // to be implemented after knowing how normal person is added to an appointment
     }
 
+    //@@author WJY-norainu
     /**
      * Removes celebrity from appointments and celebrity's celeb calendar
      * @param targetCelebrity
@@ -208,6 +211,7 @@ public class ModelManager extends ComponentManager implements Model {
         return appointmentsOnlyInvolveTargetCelebCalendar;
     }
 
+    //@@author
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
         if (person.isCelebrity()) {
@@ -239,6 +243,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author WJY-norainu
     @Override
     public int countPersonsWithTag(Tag tag) {
         return addressBook.countPersonsWithTag(tag);
@@ -273,6 +278,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Celeb Calendar Accessors ===================================================================
 
+    //@@author
     @Override
     public ObservableList<Calendar> getCelebCalendars() {
         return celebCalendarSource.getCalendars();

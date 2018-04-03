@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Celebrity;
 
+//@@author WJY-norainu
 /**
  * Deletes an appointment identified using its last displayed index from the calendar.
  */

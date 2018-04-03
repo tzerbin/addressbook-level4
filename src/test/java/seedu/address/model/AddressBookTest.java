@@ -47,6 +47,7 @@ public class AddressBookTest {
         assertEquals(Collections.emptyList(), addressBook.getTagList());
     }
 
+    //@@author WJY-norainu
     @Test
     public void countPersonsWithTag_countsFriendsTag_returnNumberOfPersonsWithFriendsTag() {
         assertEquals(addressBookWithAlice.countPersonsWithTag(FRIENDS_TAG), 1);
@@ -69,6 +70,7 @@ public class AddressBookTest {
         assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
     }
 
+    //@@author
     @Test
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -93,6 +95,7 @@ public class AddressBookTest {
         addressBook.resetData(newData);
     }
 
+    //@@author WJY-norainu
     @Test
     public void removePerson_theOnlyPersonWithHusbandTagRemoved_tagListUpdated() throws Exception {
         addressBookWithBobAndAlice.removePerson(BOB);
@@ -110,6 +113,7 @@ public class AddressBookTest {
         assertEquals(expectedAddressBook, addressBookWithAlice);
     }
 
+    //@@author
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
