@@ -1,7 +1,5 @@
 package seedu.address.logic.commands.calendar;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
