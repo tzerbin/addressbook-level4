@@ -33,7 +33,6 @@ public class XmlSerializableStorageCalendarTest {
         List typicalAppointmentList = TypicalStorageCalendar.getTypicalAppointmentList();
         assertEquals(storageCalendarFromFile, typicalAppointmentList);
     }
-    */
 
     @Test
     public void toModelType_invalidAppointmentFile_throwsDateTimeParseException() throws Exception {
@@ -42,5 +41,5 @@ public class XmlSerializableStorageCalendarTest {
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }
-
+    */
 }
