@@ -82,9 +82,8 @@ public class EditAppointmentCommand extends Command {
                 : appointmentToEdit.getCelebrities();
 
         appointmentToEdit.removeAppointment();
-        model.addAppointmentToStorageCalendar(editedAppointment);
         editedAppointment.updateEntries(celebrityList);
-
+        model.addAppointmentToStorageCalendar(editedAppointment);
 
         // reset calendar view to day view
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);

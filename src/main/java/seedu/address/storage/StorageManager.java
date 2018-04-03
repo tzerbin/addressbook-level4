@@ -9,11 +9,12 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.StorageCalendarChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.appointment.ReadOnlyAppointmentList;
+import seedu.address.model.calendar.StorageCalendar;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -23,16 +24,16 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
-    private AppointmentListStorage appointmentListStorage;
+    private StorageCalendarStorage storageCalendarStorage;
 
 
     public StorageManager(AddressBookStorage addressBookStorage,
                           UserPrefsStorage userPrefsStorage,
-                          AppointmentListStorage appointmentListStorage) {
+                          StorageCalendarStorage storageCalendarStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
-        this.appointmentListStorage = appointmentListStorage;
+        this.storageCalendarStorage = storageCalendarStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -98,33 +99,44 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
-    // ================ AppointmentList methods ==============================
+    // ================ StorageCalendar methods ==============================
 
     @Override
-    public String getAppointmentListFilePath() {
-        return appointmentListStorage.getAppointmentListFilePath();
+    public String getStorageCalendarFilePath() {
+        return storageCalendarStorage.getStorageCalendarFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyAppointmentList> readAppointmentList() throws DataConversionException, IOException {
-        return readAppointmentList(appointmentListStorage.getAppointmentListFilePath());
+    public Optional<StorageCalendar> readStorageCalendar() throws DataConversionException, IOException {
+        return readStorageCalendar(storageCalendarStorage.getStorageCalendarFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyAppointmentList> readAppointmentList(String filePath) throws DataConversionException,
-                                                                                         IOException {
+    public Optional<StorageCalendar> readStorageCalendar(String filePath)
+            throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return appointmentListStorage.readAppointmentList(filePath);
+        return storageCalendarStorage.readStorageCalendar(filePath);
     }
 
     @Override
-    public void saveAppointmentList(ReadOnlyAppointmentList appointmentList) throws IOException {
-        saveAppointmentList(appointmentList, appointmentListStorage.getAppointmentListFilePath());
+    public void saveStorageCalendar(StorageCalendar storageCalendar) throws IOException {
+        saveStorageCalendar(storageCalendar, storageCalendarStorage.getStorageCalendarFilePath());
     }
 
     @Override
-    public void saveAppointmentList(ReadOnlyAppointmentList appointmentList, String filePath) throws IOException {
+    public void saveStorageCalendar(StorageCalendar storageCalendar, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        appointmentListStorage.saveAppointmentList(appointmentList, filePath);
+        storageCalendarStorage.saveStorageCalendar(storageCalendar, filePath);
+    }
+
+    @Override
+    @Subscribe
+    public void handleStorageCalendarChangedEvent(StorageCalendarChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveStorageCalendar(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
     }
 }

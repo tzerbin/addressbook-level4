@@ -64,9 +64,6 @@ public interface Model {
     /** Fetches the StorageCalendar used to store Appointments */
     StorageCalendar getStorageCalendar();
 
-    /** Fetches CalendarSource containing the StorageCalendar */
-    CalendarSource getStorageCalendarSource();
-
     /** Returns a String that represents the current calendar view page. */
     String getCurrentCelebCalendarViewPage();
 
@@ -93,6 +90,12 @@ public interface Model {
 
     /** Adds the given appointment to the internal StorageCalendar */
     void addAppointmentToStorageCalendar(Appointment appt);
+
+    /** Removes appointment from internal StorageCalendar based on zero-based index */
+    void deleteAppointmentFromStorageCalendar(int index) throws CommandException;
+
+    /** Makes changes to model's internal appointment list */
+    Appointment removeAppointmentFromInternalList(int index);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

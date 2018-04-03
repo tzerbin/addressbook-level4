@@ -81,7 +81,7 @@ public class XmlAdaptedAppointment {
         if (!Appointment.isValidName(title)) {
             throw new IllegalValueException(Appointment.MESSAGE_NAME_CONSTRAINTS);
         }
-        final String appointmentName = new String(title);
+        final String appointmentName = title;
 
         if (startTime == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,

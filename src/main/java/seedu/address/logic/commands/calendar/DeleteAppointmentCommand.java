@@ -1,12 +1,10 @@
 package seedu.address.logic.commands.calendar;
 
-import static java.util.Objects.requireNonNull;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowAppointmentListEvent;
@@ -33,8 +31,8 @@ public class DeleteAppointmentCommand extends Command {
             + "before deleting an appointment";
     public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
     public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
-            + "switch back to calendar view by day\n"
-            + "currently showing %1$s calendar";
+            + "Switching back to calendar view by day\n"
+            + "Currently showing %1$s calendar";
 
     private final Index targetIndex;
 
@@ -51,14 +49,11 @@ public class DeleteAppointmentCommand extends Command {
         if (!model.getIsListingAppointments()) {
             throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
-        findApptToDelete();
-        requireNonNull(apptToDelete);
-        apptToDelete.removeAppointment();
+        model.deleteAppointmentFromStorageCalendar(targetIndex.getZeroBased());
+        apptToDelete = model.removeAppointmentFromInternalList(targetIndex.getZeroBased());
 
         // remove the appt from last displayed appointment list
         List<Appointment> newAppointmentList = model.getAppointmentList();
-        newAppointmentList.remove(targetIndex.getZeroBased());
-        model.setAppointmentList(newAppointmentList);
         // if the list becomes empty, switch back to combined calendar day view
         if (model.getAppointmentList().size() < 1) {
             model.setIsListingAppointments(false);
@@ -69,12 +64,12 @@ public class DeleteAppointmentCommand extends Command {
             Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
             if (currentCalendarOwner == null) {
                 return new CommandResult(
-                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle().toString())
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
                                 + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
                                 "combined"));
             } else {
                 return new CommandResult(
-                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle().toString())
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
                                 + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
                                 currentCalendarOwner.getName().toString() + "'s"));
             }
@@ -82,20 +77,7 @@ public class DeleteAppointmentCommand extends Command {
         // if the list is not empty yet, update appointment list view
         EventsCenter.getInstance().post(new ShowAppointmentListEvent(newAppointmentList));
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle().toString()));
-    }
-
-    /**
-     * @returns the appointment at the given index in the currently displayed appointment list
-     * @throws CommandException
-     */
-    private void findApptToDelete() throws CommandException {
-        List<Appointment> lastShownList = model.getAppointmentList();
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
-        }
-
-        apptToDelete = lastShownList.get(targetIndex.getZeroBased());
+        return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
     }
 
     @Override

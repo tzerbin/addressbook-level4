@@ -24,6 +24,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.StorageCalendarChangedEvent;
 import seedu.address.logic.commands.calendar.ListAppointmentCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
@@ -50,12 +51,11 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private static final String CELEB_CALENDAR_SOURCE_NAME  = "Celeb Calendar Source";
-    private static final String STORAGE_CALENDAR_SOURCE_NAME = "Storage Calendar Source";
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
-    private final CalendarSource storageCalendarSource;
+    private final StorageCalendar storageCalendar;
 
     // attributes related to calendarPanel status
     private String currentCelebCalendarViewPage;
@@ -66,7 +66,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, StorageCalendar storageCalendar, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -78,17 +78,15 @@ public class ModelManager extends ComponentManager implements Model {
         celebCalendarSource = new CalendarSource(CELEB_CALENDAR_SOURCE_NAME);
         initializeCelebCalendarSource(celebCalendarSource);
 
-        storageCalendarSource = new CalendarSource(STORAGE_CALENDAR_SOURCE_NAME);
-        initializeStorageCalendarSource(storageCalendarSource);
-
-        appointments = new ArrayList<>();
+        this.storageCalendar = storageCalendar;
+        appointments = storageCalendar.getAllAppointments();
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new StorageCalendar("Storage Calendar"), new UserPrefs());
     }
 
 
@@ -122,9 +120,14 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /** Raises an event to indicate the addressbook has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
+    }
+
+    /** Raises an event to indicate the appointment list has changed */
+    private void indicateAppointmentListChanged() {
+        raise(new StorageCalendarChangedEvent(getStorageCalendar()));
     }
 
     @Override
@@ -282,12 +285,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public StorageCalendar getStorageCalendar() {
-        return (StorageCalendar) storageCalendarSource.getCalendars().get(0);
-    }
-
-    @Override
-    public CalendarSource getStorageCalendarSource() {
-        return storageCalendarSource;
+        return storageCalendar;
     }
 
     @Override
@@ -327,7 +325,23 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addAppointmentToStorageCalendar(Appointment appt) {
         getStorageCalendar().addEntry(appt);
+        indicateAppointmentListChanged();
     }
+
+    @Override
+    public void deleteAppointmentFromStorageCalendar(int index) throws CommandException {
+        Appointment apptToDelete = getChosenAppointment(index);
+        apptToDelete.removeAppointment();
+        indicateAppointmentListChanged();
+    }
+
+    @Override
+    public Appointment removeAppointmentFromInternalList(int index) {
+        return getAppointmentList().remove(index);
+
+    }
+
+
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -394,13 +408,6 @@ public class ModelManager extends ComponentManager implements Model {
         for (Celebrity celebrity : celebrities) {
             calSource.getCalendars().add(celebrity.getCelebCalendar());
         }
-    }
-
-    /**
-     * Initialize StorageCalendar CalendarSource
-     */
-    private void initializeStorageCalendarSource(CalendarSource calSource) {
-        calSource.getCalendars().add(new StorageCalendar("Storage Calendar"));
     }
 
 }

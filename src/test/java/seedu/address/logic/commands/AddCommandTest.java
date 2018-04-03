@@ -169,12 +169,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public CalendarSource getStorageCalendarSource() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
         public String getCurrentCelebCalendarViewPage() {
             fail("This  method should not be called.");
             return null;
@@ -241,6 +235,17 @@ public class AddCommandTest {
         @Override
         public void addAppointmentToStorageCalendar(Appointment appt) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteAppointmentFromStorageCalendar(int index) throws CommandException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public Appointment removeAppointmentFromInternalList(int index) {
+            fail("This method should not be called");
+            return null;
         }
 
         @Override
