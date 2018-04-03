@@ -10,12 +10,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
@@ -23,8 +20,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.person.Celebrity;
-import seedu.address.model.person.Person;
 
 /**
  * Adds an appointment to a calendar.
@@ -82,7 +77,7 @@ public class AddAppointmentCommand extends Command {
         }
 
         model.addAppointmentToStorageCalendar(appt);
-        appt.updateEntries(getCelebrities(celebrityIndices, model.getFilteredPersonList()));
+        appt.updateEntries(model.getCelebritiesChosen(celebrityIndices));
 
         // reset calendar view to day view
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
@@ -101,22 +96,5 @@ public class AddAppointmentCommand extends Command {
                 && appt.equalsValue(((AddAppointmentCommand) other).appt));
     }
 
-    private static List<Celebrity> getCelebrities(Set<Index> indices, List<Person> personList) throws CommandException {
-        List<Celebrity> celebrities = new ArrayList<>();
-        for (Index index : indices) {
-            celebrities.add(getCelebrity(index, personList));
-        }
-        return celebrities;
-    }
 
-    private static Celebrity getCelebrity(Index index, List<Person> personList) throws CommandException {
-        int zeroBasedIndex = index.getZeroBased();
-        if (zeroBasedIndex >= personList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } else if (!personList.get(zeroBasedIndex).isCelebrity()) {
-            throw new CommandException(Messages.MESSAGE_NOT_CELEBRITY_INDEX);
-        } else {
-            return (Celebrity) personList.get(zeroBasedIndex);
-        }
-    }
 }
