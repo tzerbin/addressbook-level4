@@ -37,6 +37,7 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, Appointme
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
 
+    //@@author tzerbin
     @Override
     String getAppointmentListFilePath();
 

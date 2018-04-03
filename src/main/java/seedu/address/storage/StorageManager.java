@@ -98,6 +98,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author tzerbin
     // ================ AppointmentList methods ==============================
 
     @Override
