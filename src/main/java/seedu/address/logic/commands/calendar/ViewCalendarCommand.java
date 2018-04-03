@@ -15,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 
+//@@author WJY-norainu
 /**
  * Display the calendar of the celebrity specified by the user.
  */
