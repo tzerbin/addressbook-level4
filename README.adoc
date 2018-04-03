@@ -6,7 +6,7 @@ https://ci.appveyor.com/project/muruges95/main/branch/master[image:https://ci.ap
 https://coveralls.io/github/CS2103JAN2018-W14-B4/main?branch=master[image:https://coveralls.io/repos/github/CS2103JAN2018-W14-B4/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/UI.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
