@@ -69,12 +69,14 @@ can be used as `add n/John Doe`.
 acceptable.
 ====
 
-[IMPORTANT]
 ====
-Commands that modify the people and appointments stored in CelebManager (`add`, `delete`, `edit`, `undo`, `redo`,
+*Precaution*
+
+* You should not click inside the calendar at all times, except for scrolling up and down using the scroll bar.
+* Commands that modify the people and appointments stored in CelebManager (`add`, `delete`, `edit`, `undo`, `redo`,
 `addAppointment`) must be performed in combined calendar view unless specified otherwise. +
 Information about combined calendar view can be found in +
-<<Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]>>
+<<Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]>>.
 ====
 
 The following are all the commands available to you:
@@ -345,22 +347,32 @@ Examples:
 * `editAppointment 2 n/Dentist Appointment l/Orchard Road
 * `editAppointment 1 st/16:00 et/20:00 sd/23-03-2018 c/1 c/2`
 
+[IMPORTANT]
+====
+You can only edit an appointment when you are in appointment list view. Refer to
+<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
+====
+
 ****
-* To use this command you need to be in the appointment list page which you can go to using the `listAppointment` command.
-* The appointment index needs to be a valid index corresponding to an appointment in the list of appointments. The index must be a
-positive number greater than 0 and not greater than the total number of appointments being displayed.
-* Compared to `addAppointment`, here it is optional to specify a new appointment name.
-* Other than that, the constraints on the other fields are exactly the same as our `addAppointment`. Do look under section
- 3.3.1 for more details.
+* Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the current
+appointment listing. The index *must be a positive integer* `1`, `2`, `3`, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* For more information on constraints of the different fields,
+refer to <<Adding an appointment: `addAppointment` [Since v1.2]>>.
 ****
 
-====  Deleting an appointment `[Since in v1.4]`
+====  Deleting an appointment `deleteAppointment` [Since v1.4]
 
 Deletes the specified appointment from CelebManager. +
 Alias: `da` +
 Format: `deleteAppointment INDEX`
 
-[IMPORTANT] You can only delete an appointment when you are in appointment list view.
+[IMPORTANT]
+====
+You can only delete an appointment when you are in appointment list view. Refer to
+<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
+====
 
 ****
 * Deletes the appointment at the specified `INDEX`.
@@ -450,13 +462,36 @@ Format: `viewCalendarBy VIEW`
 ****
 * Changes the calendar view to the specified `VIEW`.
 * `VIEW` *must be* `day`, `week`, or `month`.
-* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to weekly calendar view.
+* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to view calendar by week.
+* CelebManger only supports showing calendar for *current* `day`, `week` or `month`.
 ****
 
 Examples:
 
+* `viewCalendarBy day` +
+Changes the calendar view to day view that looks similar to the calendar in red rectangle in the figure below.
+
+.State of application after `viewCalendarBy day` input
+image::ViewCalendarByDay.jpg[width=""]
+
+[NOTE]
+====
+CelebManger by default shows calendar in day view whenever it gets launched. Hence you need to first change to other
+calendar view before using `viewCalendarBy day`.
+====
+
+
 * `viewCalendarBy week` +
-Changes the calendar view to weekly view.
+Changes the calendar view to week view that looks similar to the calendar in red rectangle in the figure below.
+
+.State of application after `viewCalendarBy week` input
+image::ViewCalendarByWeek.jpg[width=""]
+
+* `viewCalendarBy month` +
+Changes the calendar view to month view that looks similar to the calendar in red rectangle in the figure below.
+
+.State of application after `viewCalendarBy month` input
+image::ViewCalendarByMonth.jpg[width=""]
 
 {sp} +
 
