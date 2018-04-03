@@ -16,7 +16,7 @@ public class Geocoding {
     /**
      * API Key required for requesting service from google server
      */
-    public static final String API_KEY = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
+    public static final String API_KEY = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
 
     private static LatLng location;
     private GeoApiContext context;
