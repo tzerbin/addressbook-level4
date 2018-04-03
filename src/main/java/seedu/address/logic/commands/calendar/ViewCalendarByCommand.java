@@ -13,6 +13,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+//@@author WJY-norainu
 /**
  * Switches the calendar view to another view specified by the user.
  */

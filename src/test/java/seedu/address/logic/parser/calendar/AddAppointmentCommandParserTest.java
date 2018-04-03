@@ -39,7 +39,7 @@ import seedu.address.logic.commands.calendar.AddAppointmentCommand;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.testutil.AppointmentBuilder;
-
+// @@author muruges95
 public class AddAppointmentCommandParserTest {
     private AddAppointmentCommandParser parser = new AddAppointmentCommandParser();
     private Set<Index> emptyIndexSet = new HashSet<>();

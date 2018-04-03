@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import seedu.address.model.calendar.CelebCalendar;
 
+//@@author muruges95
 /**
  *  Child class of Person for those who are tagged celebrities
  */

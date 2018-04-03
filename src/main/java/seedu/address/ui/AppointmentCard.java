@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.appointment.Appointment;
 
+//@@author muruges95
 /**
  * Individual card for each appointment in our list view
  */

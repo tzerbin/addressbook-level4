@@ -13,6 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import seedu.address.model.appointment.Appointment;
 
+//@@author muruges95
 /**
  * Window to display the list of appointments using appointment cards
  */

@@ -26,6 +26,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 
+//@@author muruges95
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object
  */

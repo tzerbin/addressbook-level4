@@ -2,6 +2,7 @@ package seedu.address.model.calendar;
 
 import com.calendarfx.model.Calendar;
 
+//@@author muruges95
 /**
  * Stores the entries for a single celebrity
  */

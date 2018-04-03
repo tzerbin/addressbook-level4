@@ -16,6 +16,7 @@ import com.calendarfx.model.Entry;
 
 import seedu.address.model.appointment.Appointment;
 
+//@@author muruges95
 /**
  * Stores the list of all the celebrity appointments
  */

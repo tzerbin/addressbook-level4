@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author WJY-norainu
 /**
  * Indicates a request to change to another calendar view page
  */

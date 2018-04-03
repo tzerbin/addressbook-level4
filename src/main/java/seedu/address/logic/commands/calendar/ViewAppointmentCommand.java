@@ -6,6 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
+
 //@@author Damienskt
 /**
  * Display the appointment details in the display panel

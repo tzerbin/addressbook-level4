@@ -21,6 +21,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 
+//@@author muruges95
 /**
  * Adds an appointment to a calendar.
  */
@@ -76,8 +77,8 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
-        model.addAppointmentToStorageCalendar(appt);
         appt.updateEntries(model.getCelebritiesChosen(celebrityIndices));
+        model.addAppointmentToStorageCalendar(appt);
 
         // reset calendar view to day view
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);

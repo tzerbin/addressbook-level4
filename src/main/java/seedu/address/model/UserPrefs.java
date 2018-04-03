@@ -12,8 +12,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private String appointmentListFilePath = "data/appointmentlist.xml";
-    private String appointmentListName = "MyCalendar";
+    private String storageCalendarFilePath = "data/storagecalendar.xml";
+    private String storageCalendarName = "MyCalendar";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -47,20 +47,20 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public String getAppointmentListFilePath() {
-        return appointmentListFilePath;
+    public String getStorageCalendarFilePath() {
+        return storageCalendarFilePath;
     }
 
-    public void setAppointmentListFilePath(String appointmentListFilePath) {
-        this.appointmentListFilePath = appointmentListFilePath;
+    public void setStorageCalendarFilePath(String storageCalendarFilePath) {
+        this.storageCalendarFilePath = storageCalendarFilePath;
     }
 
-    public String getAppointmentListName() {
-        return appointmentListName;
+    public String getStorageCalendarName() {
+        return storageCalendarName;
     }
 
-    public void setAppointmentListName(String appointmentListName) {
-        this.appointmentListName = appointmentListName;
+    public void setStorageCalendarName(String storageCalendarName) {
+        this.storageCalendarName = storageCalendarName;
     }
 
     @Override
@@ -77,14 +77,14 @@ public class UserPrefs {
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
                 && Objects.equals(addressBookName, o.addressBookName)
-                && Objects.equals(appointmentListFilePath, o.appointmentListFilePath)
-                && Objects.equals(appointmentListName, o.appointmentListName);
+                && Objects.equals(storageCalendarFilePath, o.storageCalendarFilePath)
+                && Objects.equals(storageCalendarName, o.storageCalendarName);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(guiSettings, addressBookFilePath, addressBookName,
-                appointmentListFilePath, appointmentListName);
+                storageCalendarFilePath, storageCalendarName);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal contacts data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
-        sb.append("\nLocal calendar data file location : " + appointmentListFilePath);
-        sb.append("\nCalendar name : " + appointmentListName);
+        sb.append("\nLocal calendar data file location : " + storageCalendarFilePath);
+        sb.append("\nCalendar name : " + storageCalendarName);
         return sb.toString();
     }
 

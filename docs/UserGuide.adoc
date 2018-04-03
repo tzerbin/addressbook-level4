@@ -69,6 +69,16 @@ can be used as `add n/John Doe`.
 acceptable.
 ====
 
+====
+*Precaution*
+
+* You should not click inside the calendar at all times, except for scrolling up and down using the scroll bar.
+* Commands that modify the people and appointments stored in CelebManager (`add`, `delete`, `edit`, `undo`, `redo`,
+`addAppointment`) must be performed in combined calendar view unless specified otherwise. +
+Information about combined calendar view can be found in +
+<<Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]>>.
+====
+
 The following are all the commands available to you:
 
 === General Features
@@ -114,11 +124,22 @@ Format: `undo`
 Undoable commands: those commands that modify CelebManager's content (`add`, `delete`, `edit`, `clear`, etc).
 ====
 
+[IMPORTANT]
+====
+Undoing deletion of a `celebrity` or removal of `celebrity` tag through `edit` will not undo changes made to the
+`celebrity` 's calendar. A new calendar will be created for the restored `celebrity` instead.
+====
+
 Examples:
 
 * `delete 1` +
 `list` +
 `undo` (reverses the `delete 1` command) +
+
+[NOTE]
+====
+If a `celebrity` is at index `1`, the `celebrity` 's calendar will be re-created and become empty after `undo`.
+====
 
 * `select 1` +
 `list` +
@@ -127,7 +148,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
+`undo` (reverses the `clear` command and creates new calendars for all `celebrity` s restored by `undo`) +
 `undo` (reverses the `delete 1` command) +
 
 ==== Redoing the previously undone command : `redo` [Since v1.0]
@@ -285,8 +306,8 @@ Examples:
 
 * `removeTag friends` +
 Removes the tag, `friends` from every person with it in CelebManager and shows the number of person(s) affected.
-* `removeTag celebrity` +
-Does not modify CelebManager and outputs an error message.
+* `removeTag colleagues` +
+Removes the tag, `colleagues` from every person with it in CelebManager and shows the number of person(s) affected.
 
 {sp} +
 
@@ -326,17 +347,49 @@ Examples:
 * `editAppointment 2 n/Dentist Appointment l/Orchard Road
 * `editAppointment 1 st/16:00 et/20:00 sd/23-03-2018 c/1 c/2`
 
-****
-* To use this command you need to be in the appointment list page which you can go to using the `listAppointment` command.
-* The appointment index needs to be a valid index corresponding to an appointment in the list of appointments. The index must be a
-positive number greater than 0 and not greater than the total number of appointments being displayed.
-* Compared to `addAppointment`, here it is optional to specify a new appointment name.
-* Other than that, the constraints on the other fields are exactly the same as our `addAppointment`. Do look under section
- 3.3.1 for more details.
+[IMPORTANT]
+====
+You can only edit an appointment when you are in appointment list view. Refer to
+<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
+====
 
+****
+* Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the current
+appointment listing. The index *must be a positive integer* `1`, `2`, `3`, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* For more information on constraints of the different fields,
+refer to <<Adding an appointment: `addAppointment` [Since v1.2]>>.
 ****
 
 ====  Deleting an appointment `deleteAppointment` [Since v1.4]
+
+Deletes the specified appointment from CelebManager. +
+Alias: `da` +
+Format: `deleteAppointment INDEX`
+
+[IMPORTANT]
+====
+You can only delete an appointment when you are in appointment list view. Refer to
+<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
+====
+
+****
+* Deletes the appointment at the specified `INDEX`.
+* The index refers to the index number shown in the current listing of appointments.
+* The index *must be a positive integer* `1`, `2`, `3`, ...
+* If there is no more appointment in the list, CelebManager will switch back from appointment list view to
+calendar view
+****
+
+Examples:
+
+* `listAppointment` +
+`deleteAppointment 2` +
+Deletes the 2nd appointment in the appointment list from CelebManager.
+* `listAppointment` +
+`deleteAppointment 1` +
+Deletes the 1st appointment in the appointment list from CelebManager.
 
 ==== Listing appointments: `listAppointment` [Since v1.3]
 
@@ -376,6 +429,30 @@ image::viewAppointmentInput.png[width=""]
 
 === Calendar Features
 
+==== Changing the calendar: `viewCalendar` [Since v1.3]
+
+Changes to view the calendar of the specified `celebrity`. +
+Alias: `vc` +
+Format: `viewCalendar INDEX`
+
+****
+* Changes to view the calendar of the `celebrity` at the specified `INDEX`.
+* The index refers to the index number shown in the last shown list of contacts.
+* The index *must be a positive integer* `1`, `2`, `3`, ...
+* The person at the specified index *must be* a `celebrity`.
+****
+
+Examples:
+
+* `viewCalendar 1` +
+Changes to view the calendar of the 1st person in the list of contacts, if the 1st person is a `celebrity`.
+
+==== Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]
+
+Changes to view the combined calendar that shows all `celebrity` 's appointments in one calendar. +
+Alias: `vcc` +
+Format: `viewCombinedCalendar`
+
 ==== Changing the calendar view: `viewCalendarBy` [Since v1.3]
 
 Changes the calendar view to a different one specified by the user. +
@@ -384,14 +461,37 @@ Format: `viewCalendarBy VIEW`
 
 ****
 * Changes the calendar view to the specified `VIEW`.
-* `VIEW` *must be* `day`, `week`, `month` or `year`.
-* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to weekly calendar view.
+* `VIEW` *must be* `day`, `week`, or `month`.
+* `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to view calendar by week.
+* CelebManger only supports showing calendar for *current* `day`, `week` or `month`.
 ****
 
 Examples:
 
+* `viewCalendarBy day` +
+Changes the calendar view to day view that looks similar to the calendar in red rectangle in the figure below.
+
+.State of application after `viewCalendarBy day` input
+image::ViewCalendarByDay.jpg[width=""]
+
+[NOTE]
+====
+CelebManger by default shows calendar in day view whenever it gets launched. Hence you need to first change to other
+calendar view before using `viewCalendarBy day`.
+====
+
+
 * `viewCalendarBy week` +
-Changes the calendar view to weekly view.
+Changes the calendar view to week view that looks similar to the calendar in red rectangle in the figure below.
+
+.State of application after `viewCalendarBy week` input
+image::ViewCalendarByWeek.jpg[width=""]
+
+* `viewCalendarBy month` +
+Changes the calendar view to month view that looks similar to the calendar in red rectangle in the figure below.
+
+.State of application after `viewCalendarBy month` input
+image::ViewCalendarByMonth.jpg[width=""]
 
 {sp} +
 
@@ -493,5 +593,8 @@ e.g.`showLocation ma/Punggol`
 * *Undo* : `undo`
 * *View Appointment By* : `viewAppointment i/INDEX` +
 e.g.`viewAppointment i/1`
+* *View Calendar* : `viewCalendar INDEX` +
+e.g.`viewCalendar 1`
 * *View Calendar By* : `viewCalendarBy VIEW` +
 e.g.`viewCalendarBy week`
+* *View Combined Calendar* : `viewCombinedCalendar`

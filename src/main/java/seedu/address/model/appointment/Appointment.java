@@ -16,6 +16,7 @@ import com.calendarfx.model.Entry;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
 
+//@@author muruges95
 /**
  * Wraps all data required for an appointment, inheriting from a class of our calendar library
  * Each appointment also creates child entries for every celebrity associated with the appointment

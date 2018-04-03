@@ -30,6 +30,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.person.Celebrity;
 
+//@@author muruges95
 /**
  * The panel for the Calendar. Constructs a calendar view and attaches to it a CalendarSource.
  * The view is then returned by calling getCalendarView in MainWindow to attach it to the
@@ -44,13 +45,11 @@ public class CalendarPanel extends UiPart<Region> {
     private CalendarView celebCalendarView;
 
     private final CalendarSource celebCalendarSource;
-    private final CalendarSource storageCalendarSource;
 
-    public CalendarPanel(CalendarSource celebCalendarSource, CalendarSource storageCalendarSource) {
+    public CalendarPanel(CalendarSource celebCalendarSource) {
         super(FXML);
         this.celebCalendarView = new CalendarView();
         this.celebCalendarSource = celebCalendarSource;
-        this.storageCalendarSource = storageCalendarSource;
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
@@ -91,6 +90,7 @@ public class CalendarPanel extends UiPart<Region> {
         hideButtons();
     }
 
+    //@@author WJY-norainu
     /** Hide all buttons in the calendar */
     private void hideButtons() {
         celebCalendarView.setShowSearchField(false);

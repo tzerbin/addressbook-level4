@@ -7,39 +7,42 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.appointment.ReadOnlyAppointmentList;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 
 /**
- * An Immutable AppointmentList that is serializable to XML format
+ * An Immutable StorageCalendar that is serializable to XML format
  */
-@XmlRootElement(name = "appointmentlist")
-public class XmlSerializableAppointmentList {
+@XmlRootElement(name = "storagecalendar")
+public class XmlSerializableStorageCalendar {
 
     @XmlElement
     private List<XmlAdaptedAppointment> appointments;
 
     /**
-     * Creates an empty XmlSerializableAddressBook.
+     * Creates an empty XMLSerializableStorageCalendar.
      * This empty constructor is required for marshalling.
      */
-    public XmlSerializableAppointmentList() {
+    public XmlSerializableStorageCalendar() {
         appointments = new ArrayList<>();
     }
 
-    public XmlSerializableAppointmentList(ReadOnlyAppointmentList src) {
+    public XmlSerializableStorageCalendar(StorageCalendar storageCalendar) {
         this();
-        //TODO: Provide the list of appointments
+        List<Appointment> appointmentList = storageCalendar.getAllAppointments();
+        for (Appointment appt : appointmentList) {
+            appointments.add(new XmlAdaptedAppointment(appt));
+        }
     }
 
     /**
-     * Converts appointments into the model's {@code StorageCalendar} object.
+     * Converts XMLAdapterAppointments into a {@code StorageCalendar} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
      * {@code XmlAdaptedAppointments}.
      */
     public StorageCalendar toModelType() throws IllegalValueException {
-        StorageCalendar calendar = new StorageCalendar("Stored Calendar");
+        StorageCalendar calendar = new StorageCalendar("Storage Calendar");
         for (XmlAdaptedAppointment a : appointments) {
             calendar.addEntry(a.toModelType());
         }
@@ -52,11 +55,11 @@ public class XmlSerializableAppointmentList {
             return true;
         }
 
-        if (!(other instanceof XmlSerializableAppointmentList)) {
+        if (!(other instanceof XmlSerializableStorageCalendar)) {
             return false;
         }
 
-        XmlSerializableAppointmentList otherAl = (XmlSerializableAppointmentList) other;
+        XmlSerializableStorageCalendar otherAl = (XmlSerializableStorageCalendar) other;
         return appointments.equals(otherAl.appointments);
     }
 }

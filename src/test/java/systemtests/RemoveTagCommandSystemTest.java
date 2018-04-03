@@ -14,6 +14,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 
+//@@author WJY-norainu
 public class RemoveTagCommandSystemTest extends AddressBookSystemTest {
 
     @Test

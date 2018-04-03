@@ -47,7 +47,6 @@ public class MainWindow extends UiPart<Stage> {
 
     // Source of calendars for calendar UI container
     private CalendarSource celebCalendarSource;
-    private CalendarSource storageCalendarSource;
 
     @FXML
     private StackPane calendarPlaceholder;
@@ -79,7 +78,6 @@ public class MainWindow extends UiPart<Stage> {
         this.config = config;
         this.prefs = prefs;
         this.celebCalendarSource = logic.getCelebCalendarSource();
-        this.storageCalendarSource = logic.getStorageCalendarSource();
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -133,7 +131,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
 
-        calendarPanel = new CalendarPanel(celebCalendarSource, storageCalendarSource);
+        calendarPanel = new CalendarPanel(celebCalendarSource);
 
         calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
 
@@ -190,6 +188,8 @@ public class MainWindow extends UiPart<Stage> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
+    //@@author muruges95
 
     /**
      * Creates appointmentListWindow and replaces calendarPanel with it

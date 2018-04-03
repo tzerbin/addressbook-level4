@@ -30,6 +30,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
 
+//@@author muruges95
 /**
  * Edits an appointment in a calendar.
  */
@@ -82,9 +83,8 @@ public class EditAppointmentCommand extends Command {
                 : appointmentToEdit.getCelebrities();
 
         appointmentToEdit.removeAppointment();
-        model.addAppointmentToStorageCalendar(editedAppointment);
         editedAppointment.updateEntries(celebrityList);
-
+        model.addAppointmentToStorageCalendar(editedAppointment);
 
         // reset calendar view to day view
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);

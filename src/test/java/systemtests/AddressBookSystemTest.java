@@ -190,8 +190,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected person.
+     * Asserts that the previously selected card is now deselected.
      * @see CalendarPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
@@ -209,7 +208,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
+     * Asserts that the selected card in the person list panel remain unchanged.
      * @see CalendarPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
