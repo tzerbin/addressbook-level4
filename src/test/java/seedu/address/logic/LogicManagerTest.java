@@ -3,7 +3,7 @@ package seedu.address.logic;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalAppointments.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
 
 import org.junit.Rule;
 import org.junit.Test;
