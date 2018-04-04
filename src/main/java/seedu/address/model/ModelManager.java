@@ -62,7 +62,8 @@ public class ModelManager extends ComponentManager implements Model {
     private String currentCelebCalendarViewPage;
     private Celebrity currentCelebCalendarOwner;
     private List<Appointment> appointments;
-    private boolean isListingAppointments = false;
+    private boolean isListingAppointments;
+    private LocalDate baseDate;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -84,6 +85,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;
+        isListingAppointments = false;
+        baseDate = LocalDate.now();
     }
 
     public ModelManager() {
@@ -305,6 +308,7 @@ public class ModelManager extends ComponentManager implements Model {
         return currentCelebCalendarOwner;
     }
 
+    @Override
     public List<Appointment> getAppointmentList() {
         return this.appointments;
     }
@@ -312,6 +316,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setAppointmentList(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    @Override
+    public LocalDate getBaseDate() {
+        return this.baseDate;
+    }
+
+    @Override
+    public  void setBaseDate(LocalDate date) {
+        this.baseDate = date;
     }
 
     @Override

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -178,6 +179,17 @@ public class AddCommandTest {
         public Celebrity getCurrentCelebCalendarOwner() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public LocalDate getBaseDate() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setBaseDate(LocalDate date) {
+            fail("This method should not be called.");
         }
 
         @Override
