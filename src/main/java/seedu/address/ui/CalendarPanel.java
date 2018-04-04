@@ -13,6 +13,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
 
+import com.calendarfx.view.DateControl;
 import com.calendarfx.view.page.DayPage;
 import com.google.common.eventbus.Subscribe;
 
@@ -99,7 +100,7 @@ public class CalendarPanel extends UiPart<Region> {
         celebCalendarView.setShowPrintButton(false);
         celebCalendarView.setShowPageToolBarControls(false);
         celebCalendarView.setShowPageSwitcher(false);
-        celebCalendarView.setShowToolBar(false);
+        celebCalendarView.setLayout(DateControl.Layout.SWIMLANE);
     }
 
     public CalendarView getCalendarView() {

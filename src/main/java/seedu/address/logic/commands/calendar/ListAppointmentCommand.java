@@ -11,6 +11,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.Person;
 
 //@@author muruges95
 /**
@@ -35,12 +36,12 @@ public class ListAppointmentCommand extends Command {
 
     }
 
-    public ListAppointmentCommand(LocalDate startDate, LocalDate endDate) {
-        requireNonNull(startDate);
-        requireNonNull(endDate);
+    public ListAppointmentCommand(LocalDate startDateInput, LocalDate endDateInput) {
+        requireNonNull(startDateInput);
+        requireNonNull(endDateInput);
 
-        this.startDate = startDate;
-        this.endDate = endDate;
+        startDate = startDateInput;
+        endDate = endDateInput;
     }
 
     @Override
@@ -50,6 +51,8 @@ public class ListAppointmentCommand extends Command {
         }
         startDate = model.getStorageCalendar().getEarliestDate();
         endDate = model.getStorageCalendar().getLatestDate();
+
+        List<Person> personList = model.getFilteredPersonList();
 
         model.setIsListingAppointments(true);
         List<Appointment> newAppointmentList =

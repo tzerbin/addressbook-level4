@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -28,6 +29,8 @@ public class XmlAdaptedAppointment {
     private String endDate;
     @XmlElement(required = true)
     private String endTime;
+    @XmlElement(required = true)
+    private List<Long> celebrityIds;
 
     /**
      * Constructs an XmlAdaptedAppointment.
@@ -66,6 +69,7 @@ public class XmlAdaptedAppointment {
         if (source.getMapAddress() != null) {
             location = source.getMapAddress().toString();
         }
+        this.celebrityIds = source.getCelebIds();
     }
 
     /**
@@ -115,13 +119,15 @@ public class XmlAdaptedAppointment {
 
             mapAddressCreated = new MapAddress(location);
         }
+        if (celebrityIds == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Celebrity Ids"));
+        }
+        final List<Long> celebIds = celebrityIds;
 
-        return new Appointment(appointmentName,
-                               startTimeCreated,
-                               startDateCreated,
-                               mapAddressCreated,
-                               endTimeCreated,
-                               endDateCreated);
+        Appointment appt =  new Appointment(appointmentName, startTimeCreated, startDateCreated,
+                               mapAddressCreated, endTimeCreated, endDateCreated);
+        appt.setCelebIds(celebIds);
+        return appt;
     }
 
     @Override
@@ -140,6 +146,7 @@ public class XmlAdaptedAppointment {
                 && Objects.equals(startTime, otherAppointment.startTime)
                 && Objects.equals(endDate, otherAppointment.endDate)
                 && Objects.equals(endTime, otherAppointment.endTime)
-                && Objects.equals(location, otherAppointment.location);
+                && Objects.equals(location, otherAppointment.location)
+                && Objects.equals(celebrityIds, otherAppointment.celebrityIds);
     }
 }

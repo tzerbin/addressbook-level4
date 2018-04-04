@@ -81,6 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.storageCalendar = storageCalendar;
         appointments = storageCalendar.getAllAppointments();
+        associateAppointmentsWithCelebrities();
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;
@@ -405,7 +406,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
+    //=========== Private inner methods =============================================================
     /**
      * Populates our CelebCalendar CalendarSource by creating a calendar for every celebrity in our addressbook
      */
@@ -415,6 +416,33 @@ public class ModelManager extends ComponentManager implements Model {
         for (Celebrity celebrity : celebrities) {
             calSource.getCalendars().add(celebrity.getCelebCalendar());
         }
+    }
+
+    /**
+     * Associates each appointment with the relevant celebrities based on the ids they contain
+     */
+    private void associateAppointmentsWithCelebrities() {
+        List<Celebrity> celebrityList;
+        for (Appointment a : appointments) {
+            celebrityList = getCelebritiesFromId(a.getCelebIds());
+            a.updateEntries(celebrityList);
+        }
+    }
+
+    /**
+     * Gets the celebrities based on their ids from our person list
+     */
+    private List<Celebrity> getCelebritiesFromId(List<Long> celebrityIds) {
+        List<Celebrity> celebrities = new ArrayList<>();
+        for (long celebId : celebrityIds) {
+            for (Person p : filteredPersons) {
+                if (p.isCelebrity() && (p.getId() == celebId)) {
+                    celebrities.add((Celebrity) p);
+                    break;
+                }
+            }
+        }
+        return celebrities;
     }
 
 }

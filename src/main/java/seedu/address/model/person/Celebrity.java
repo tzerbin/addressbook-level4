@@ -14,7 +14,7 @@ public class Celebrity extends Person {
      * Every field must be present and not null.
      */
     public Celebrity(Person celeb) {
-        super(celeb.getName(), celeb.getPhone(), celeb.getEmail(), celeb.getAddress(), celeb.getTags());
+        super(celeb.getName(), celeb.getPhone(), celeb.getEmail(), celeb.getAddress(), celeb.getTags(), celeb.getId());
         this.celebCalendar = new CelebCalendar(this.getName().fullName);
     }
 
