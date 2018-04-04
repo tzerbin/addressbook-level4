@@ -11,8 +11,10 @@ public class Messages {
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
     public static final String MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX = "The appointment index provided is"
             + " invalid";
-    public static final String MESSAGE_NOT_CELEBRITY_INDEX = "At least one of the indices provided does not correspond "
-            + "to a celebrity";
+    public static final String MESSAGE_NOT_CELEBRITY_INDEX = "At least one of the celebrity indices provided does not "
+            + "correspond to a celebrity.";
+    public static final String MESSAGE_NOT_POINT_OF_CONTACT_INDEX = "At least one of the point of contact indices "
+            + "provided corresponds to a celebrity.";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_NOT_LISTING_APPOINTMENTS = "Need to be in the appointment list page";
     public static final String INVALID_INDEX_CHOSEN = "Invalid index chosen";

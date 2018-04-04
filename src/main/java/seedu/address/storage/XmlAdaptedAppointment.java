@@ -3,7 +3,10 @@ package seedu.address.storage;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -30,6 +33,10 @@ public class XmlAdaptedAppointment {
     private String endDate;
     @XmlElement(required = true)
     private String endTime;
+    @XmlElement(required = true)
+    private List<Long> celebrityIds;
+    @XmlElement(required = true)
+    private List<Long> pointOfContactIds;
 
     /**
      * Constructs an XmlAdaptedAppointment.
@@ -51,6 +58,8 @@ public class XmlAdaptedAppointment {
         if (mapAddress != null) {
             location = mapAddress.toString();
         }
+        this.celebrityIds = new ArrayList<>();
+        this.pointOfContactIds = new ArrayList<>();
     }
 
     /**
@@ -68,6 +77,8 @@ public class XmlAdaptedAppointment {
         if (source.getMapAddress() != null) {
             location = source.getMapAddress().toString();
         }
+        this.celebrityIds = source.getCelebIds();
+        this.pointOfContactIds = source.getPointOfContactIds();
     }
 
     /**
@@ -136,13 +147,19 @@ public class XmlAdaptedAppointment {
 
             mapAddressCreated = new MapAddress(location);
         }
+        if (celebrityIds == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Celebrity Ids"));
+        }
 
-        return new Appointment(appointmentName,
-                               startTimeCreated,
-                               startDateCreated,
-                               mapAddressCreated,
-                               endTimeCreated,
-                               endDateCreated);
+        if (pointOfContactIds == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Point of Contact Ids"));
+        }
+
+        Appointment appt =  new Appointment(appointmentName, startTimeCreated, startDateCreated,
+                               mapAddressCreated, endTimeCreated, endDateCreated);
+        appt.setCelebIds(celebrityIds);
+        appt.setPointOfContactIds(pointOfContactIds);
+        return appt;
     }
 
     @Override
@@ -161,6 +178,7 @@ public class XmlAdaptedAppointment {
                 && Objects.equals(startTime, otherAppointment.startTime)
                 && Objects.equals(endDate, otherAppointment.endDate)
                 && Objects.equals(endTime, otherAppointment.endTime)
-                && Objects.equals(location, otherAppointment.location);
+                && Objects.equals(location, otherAppointment.location)
+                && Objects.equals(celebrityIds, otherAppointment.celebrityIds);
     }
 }

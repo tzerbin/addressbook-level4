@@ -222,6 +222,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public List<Person> getPointsOfContactChosen(Set<Index> indices) throws CommandException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Person getPointOfContactChosen(Index index) throws CommandException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public int countPersonsWithTag(Tag tag) {
             fail("This method should not be called.");
             return -1;
@@ -267,6 +279,11 @@ public class AddCommandTest {
 
         @Override
         public void setIsListingAppointments(boolean isListingAppointments) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
             fail("This method should not be called");
         }
     }

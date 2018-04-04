@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.Person;
 
 //@@author muruges95
 /**
@@ -44,6 +45,9 @@ public class AppointmentCard extends UiPart<Region> {
     private Label celebrities;
 
     @FXML
+    private Label pointsOfContact;
+
+    @FXML
     private Label id;
 
     public AppointmentCard(Appointment appt, int displayedIndex) {
@@ -57,6 +61,7 @@ public class AppointmentCard extends UiPart<Region> {
         endDate.setText("End date: " + appt.getEndDate().format(Appointment.DATE_FORMAT));
         appointmentLocation.setText(getLocation(appt));
         celebrities.setText(getCelebrities(appt));
+        pointsOfContact.setText(getPointsOfContact(appt));
     }
 
     private static String getLocation(Appointment appt) {
@@ -80,6 +85,20 @@ public class AppointmentCard extends UiPart<Region> {
             return sb.substring(0, sb.length() - 2);
         }
 
+    }
+
+    private static String getPointsOfContact(Appointment appt) {
+        List<Person> pointsOfContact = appt.getPointOfContactList();
+        if (pointsOfContact.size() == 0) {
+            return "No points of contact for this appointment.";
+        } else {
+            StringBuilder sb = new StringBuilder("Points of contact: ");
+            for (Person p :pointsOfContact) {
+                sb.append(p.getName().fullName);
+                sb.append(", ");
+            }
+            return sb.substring(0, sb.length() - 2);
+        }
     }
 
     @Override

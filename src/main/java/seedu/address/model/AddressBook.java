@@ -126,8 +126,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author WJY-norainu
     /**
      * Returns true if the user is undoing removal of a celebrity
-     * @param currentCelebrities
-     * @param previousCelebrities
      * @return true or false
      */
     private boolean isUndoingRemovalOfCelebrity(
@@ -137,8 +135,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Returns the copiedCelebrity of {@code Celebrity} removed in previous command
-     * @param currentCelebrities
-     * @param previousCelebrities
      * @return copiedCelebrity
      */
     private Celebrity findCelebrityRemoved(
@@ -173,7 +169,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code tag} from all persons in this {@code AddressBook}.
-     * @returns the number of {@code person}s with this {@code tag} removed.
+     * @return the number of {@code person}s with this {@code tag} removed.
      */
     public int removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
         boolean tagExists = false;
@@ -319,7 +315,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         Person updatedPerson = new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(),
+                person.getAddress(), correctTagReferences, person.getId());
 
         if (updatedPerson.isCelebrity()) {
             updatedPerson = new Celebrity(updatedPerson);
@@ -330,8 +327,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author WJY-norainu
     /**
      * Change pointers to celebCalendar of copied celebrity to the original celebCalendar
-     * @param celebrities
-     * @param previousCelebrities
      * @return modified celebrities
      */
     private List<Celebrity> syncCelebCalendar(List<Celebrity> celebrities, List<Celebrity> previousCelebrities) {
