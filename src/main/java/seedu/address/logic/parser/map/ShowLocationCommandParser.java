@@ -11,6 +11,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.map.Map;
 import seedu.address.model.map.MapAddress;
 //@@author Damienskt
 /**
@@ -29,6 +30,8 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_MAP_ADDRESS);
         if (!arePrefixesPresent(argMultiMap, PREFIX_MAP_ADDRESS)
                 || !argMultiMap.getPreamble().isEmpty()) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ShowLocationCommand.MESSAGE_USAGE));
         }
@@ -37,6 +40,8 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
             MapAddress address = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_MAP_ADDRESS)).get();
             return new ShowLocationCommand(address);
         } catch (IllegalValueException ive) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
         }
     }

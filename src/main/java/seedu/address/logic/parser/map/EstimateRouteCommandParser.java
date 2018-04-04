@@ -14,6 +14,7 @@ import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.map.Map;
 import seedu.address.model.map.MapAddress;
 //@@author Damienskt
 /**
@@ -32,6 +33,8 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
                 ArgumentTokenizer.tokenize(args, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS);
         if (!arePrefixesPresent(argMultiMap, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS)
                 || !argMultiMap.getPreamble().isEmpty()) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         EstimateRouteCommand.MESSAGE_USAGE));
         }
@@ -40,12 +43,18 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
             MapAddress start = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_START_MAP_ADDRESS)).get();
             MapAddress end = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_END_MAP_ADDRESS)).get();
             if (!MapAddress.isValidAddressForEstimatingRoute(start.toString(), end.toString())) {
+                Map.removeExistingMarker();
+                Map.clearRoute();
                 throw new InvalidAddress("");
             }
             return new EstimateRouteCommand(start, end);
         } catch (IllegalValueException ive) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
         } catch (InvalidAddress ia) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS_ROUTE_ESTIMATION);
         }
     }
