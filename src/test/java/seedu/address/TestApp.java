@@ -1,6 +1,6 @@
 package seedu.address;
 
-import static seedu.address.testutil.TypicalAppointments.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
 
 import java.io.File;
 import java.io.IOException;

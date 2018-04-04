@@ -81,6 +81,18 @@ public class Appointment extends Entry {
         this.celebrityList = new ArrayList<>();
     }
 
+    public Appointment(Appointment appointment) {
+        this.setTitle(appointment.getTitle());
+        this.changeStartDate(appointment.getStartDate());
+        this.changeStartTime(appointment.getStartTime());
+        this.changeEndDate(appointment.getEndDate());
+        this.changeEndTime(appointment.getEndTime());
+        this.mapAddress = appointment.getMapAddress();
+
+        this.childEntryList = appointment.getChildEntryList();
+        this.celebrityList = appointment.getCelebrities();
+    }
+
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
