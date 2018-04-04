@@ -606,6 +606,8 @@ e.g. `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Appointment* : `deleteAppointment INDEX` +
+e.g. `deleteAppointment 1`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Appointment* : `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
