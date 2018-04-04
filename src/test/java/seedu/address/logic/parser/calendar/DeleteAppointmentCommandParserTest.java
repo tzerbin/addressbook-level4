@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.calendar.DeleteAppointmentCommand;
 
 //@@author WJY-norainu

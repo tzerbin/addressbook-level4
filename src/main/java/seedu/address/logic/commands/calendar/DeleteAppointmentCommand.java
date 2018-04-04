@@ -2,7 +2,7 @@ package seedu.address.logic.commands.calendar;
 
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
-import java.util.List;
+import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -50,15 +50,10 @@ public class DeleteAppointmentCommand extends Command {
         if (!model.getIsListingAppointments()) {
             throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
-        model.deleteAppointmentFromStorageCalendar(targetIndex.getZeroBased());
-        apptToDelete = model.removeAppointmentFromInternalList(targetIndex.getZeroBased());
+        apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
 
-        // remove the appt from last displayed appointment list
-        List<Appointment> newAppointmentList = model.getAppointmentList();
         // if the list becomes empty, switch back to combined calendar day view
         if (model.getAppointmentList().size() < 1) {
-            model.setIsListingAppointments(false);
-            model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
             EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
             EventsCenter.getInstance().post(new ShowCalendarEvent());
 
@@ -75,8 +70,9 @@ public class DeleteAppointmentCommand extends Command {
                                 currentCalendarOwner.getName().toString() + "'s"));
             }
         }
+
         // if the list is not empty yet, update appointment list view
-        EventsCenter.getInstance().post(new ShowAppointmentListEvent(newAppointmentList));
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(model.getAppointmentList()));
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
     }
@@ -85,6 +81,6 @@ public class DeleteAppointmentCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteAppointmentCommand
-                && apptToDelete.equals(((DeleteAppointmentCommand) other).apptToDelete));
+                && Objects.equals(this.apptToDelete, ((DeleteAppointmentCommand) other).apptToDelete));
     }
 }
