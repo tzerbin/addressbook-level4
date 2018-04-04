@@ -350,18 +350,25 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteAppointmentFromStorageCalendar(int index) throws CommandException {
+    public Appointment deleteAppointment(int index) throws CommandException {
         Appointment apptToDelete = getChosenAppointment(index);
         apptToDelete.removeAppointment();
         indicateAppointmentListChanged();
+
+        apptToDelete = removeAppointmentFromInternalList(index);
+
+        if (getAppointmentList().size() < 1) {
+            setIsListingAppointments(false);
+            setCelebCalendarViewPage(DAY_VIEW_PAGE);
+        }
+        return apptToDelete;
     }
 
-    @Override
-    public Appointment removeAppointmentFromInternalList(int index) {
+    /** Makes changes to model's internal appointment list */
+    private Appointment removeAppointmentFromInternalList(int index) {
         return getAppointmentList().remove(index);
 
     }
-
 
 
     //=========== Filtered Person List Accessors =============================================================

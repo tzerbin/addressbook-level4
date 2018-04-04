@@ -250,12 +250,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteAppointmentFromStorageCalendar(int index) throws CommandException {
-            fail("This method should not be called");
-        }
-
-        @Override
-        public Appointment removeAppointmentFromInternalList(int index) {
+        public Appointment deleteAppointment(int index) throws CommandException {
             fail("This method should not be called");
             return null;
         }
