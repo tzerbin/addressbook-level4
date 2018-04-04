@@ -460,10 +460,8 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
-    /**
-     * Associates each appointment with the relevant celebrities based on the ids they contain
-     */
-    private void associateAppointmentsWithCelebritiesAndPointsOfContact() {
+    @Override
+    public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
         List<Celebrity> celebrityList;
         List<Person> pointOfContactList;
         for (Appointment a : appointments) {

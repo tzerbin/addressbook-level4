@@ -281,6 +281,11 @@ public class AddCommandTest {
         public void setIsListingAppointments(boolean isListingAppointments) {
             fail("This method should not be called");
         }
+
+        @Override
+        public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
+            fail("This method should not be called");
+        }
     }
 
     /**

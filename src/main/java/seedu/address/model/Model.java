@@ -150,4 +150,9 @@ public interface Model {
 
     /** Changes isListAppointments value accordingly. */
     void setIsListingAppointments(boolean isListingAppointments);
+
+    /**
+     * Associates each appointment with the relevant celebrities based on the ids they contain
+     */
+    void associateAppointmentsWithCelebritiesAndPointsOfContact();
 }
