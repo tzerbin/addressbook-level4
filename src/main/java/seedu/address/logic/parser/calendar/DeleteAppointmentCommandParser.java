@@ -29,5 +29,4 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAppointmentCommand.MESSAGE_USAGE));
         }
     }
-
 }
