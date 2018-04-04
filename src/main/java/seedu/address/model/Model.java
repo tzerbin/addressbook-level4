@@ -122,6 +122,18 @@ public interface Model {
      */
     Celebrity getCelebrityChosen(Index index) throws CommandException;
 
+    /**
+     * Returns the pointsOfContact list chosen based on their index
+     * @throws CommandException if any of the indices given is invalid or the person is a celebrity
+     */
+    List<Person> getPointsOfContactChosen(Set<Index> indices) throws CommandException;
+
+    /**
+     * Returns the Person at a particular index given the current personList
+     * @throws CommandException if the given index is invalid or the person is a celebrity.
+     */
+    Person getPointOfContactChosen(Index index) throws CommandException;
+
     /** Counts the number of {@code persons} with the given {@code tage}. */
     int countPersonsWithTag(Tag tag);
 

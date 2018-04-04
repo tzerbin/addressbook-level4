@@ -15,6 +15,7 @@ import com.calendarfx.model.Entry;
 
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
+import seedu.address.model.person.Person;
 
 //@@author muruges95
 /**
@@ -56,6 +57,8 @@ public class Appointment extends Entry {
     private final List<Entry> childEntryList;
     private final List<Celebrity> celebrityList;
     private final List<Long> celebrityIds;
+    private final List<Person> pointOfContactList;
+    private final List<Long> pointOfContactIds;
     private MapAddress mapAddress;
 
     public Appointment(String title, LocalTime startTime, LocalDate startDate,
@@ -81,6 +84,8 @@ public class Appointment extends Entry {
         this.childEntryList = new ArrayList<>();
         this.celebrityList = new ArrayList<>();
         this.celebrityIds = new ArrayList<>();
+        this.pointOfContactList = new ArrayList<>();
+        this.pointOfContactIds = new ArrayList<>();
     }
 
     public Appointment(Appointment appointment) {
@@ -94,6 +99,8 @@ public class Appointment extends Entry {
         this.childEntryList = appointment.getChildEntryList();
         this.celebrityList = appointment.getCelebrities();
         this.celebrityIds = appointment.getCelebIds();
+        this.pointOfContactList = appointment.getPointOfContactList();
+        this.pointOfContactIds = appointment.getPointOfContactIds();
     }
 
     public static boolean isValidName(String test) {
@@ -107,6 +114,19 @@ public class Appointment extends Entry {
 
     public List<Long> getCelebIds() {
         return celebrityIds;
+    }
+
+    public List<Person> getPointOfContactList() {
+        return pointOfContactList;
+    }
+
+    public List<Long> getPointOfContactIds() {
+        return pointOfContactIds;
+    }
+
+    public void setPointOfContactIds(List<Long> ids) {
+        pointOfContactIds.clear();
+        pointOfContactIds.addAll(ids);
     }
 
     @Override
@@ -140,10 +160,21 @@ public class Appointment extends Entry {
     }
 
     /**
-     * Removes old child entries and creates a new child entry for every celebrity
-     * and then stores it in childEntryList.
+     * Resets the stores celebrities and points of contacts, along with their associated
+     * information stored in the Appointment object
      */
-    public void updateEntries(List<Celebrity> celebrities) {
+    public void updateEntries(List<Celebrity> celebrities, List<Person> pointsOfContact) {
+
+        updateCelebEntries(celebrities);
+        updatePointsOfContacts(pointsOfContact);
+    }
+
+    /**
+     * Removes old child entries and creates a new child entry for every celebrity
+     * and then stores it in childEntryList. Also stores the id of each celeb and the
+     * celebrities themselves
+     */
+    private void updateCelebEntries(List<Celebrity> celebrities) {
         clearChildEntries();
         celebrityList.clear();
         childEntryList.clear();
@@ -153,6 +184,18 @@ public class Appointment extends Entry {
             celebrityIds.add(celebrity.getId());
         }
         celebrityList.addAll(celebrities);
+    }
+
+    /**
+     * Update points of contact list stored and their ids.
+     */
+    private void updatePointsOfContacts(List<Person> pointsOfContact) {
+        pointOfContactList.clear();
+        pointOfContactIds.clear();
+        for (Person p : pointsOfContact) {
+            pointOfContactIds.add(p.getId());
+        }
+        pointOfContactList.addAll(pointsOfContact);
     }
 
     /**

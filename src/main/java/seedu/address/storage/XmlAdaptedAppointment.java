@@ -35,6 +35,8 @@ public class XmlAdaptedAppointment {
     private String endTime;
     @XmlElement(required = true)
     private List<Long> celebrityIds;
+    @XmlElement(required = true)
+    private List<Long> pointOfContactIds;
 
     /**
      * Constructs an XmlAdaptedAppointment.
@@ -57,6 +59,7 @@ public class XmlAdaptedAppointment {
             location = mapAddress.toString();
         }
         this.celebrityIds = new ArrayList<>();
+        this.pointOfContactIds = new ArrayList<>();
     }
 
     /**
@@ -75,6 +78,7 @@ public class XmlAdaptedAppointment {
             location = source.getMapAddress().toString();
         }
         this.celebrityIds = source.getCelebIds();
+        this.pointOfContactIds = source.getPointOfContactIds();
     }
 
     /**
@@ -146,11 +150,15 @@ public class XmlAdaptedAppointment {
         if (celebrityIds == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Celebrity Ids"));
         }
-        final List<Long> celebIds = celebrityIds;
+
+        if (pointOfContactIds == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Point of Contact Ids"));
+        }
 
         Appointment appt =  new Appointment(appointmentName, startTimeCreated, startDateCreated,
                                mapAddressCreated, endTimeCreated, endDateCreated);
-        appt.setCelebIds(celebIds);
+        appt.setCelebIds(celebrityIds);
+        appt.setPointOfContactIds(pointOfContactIds);
         return appt;
     }
 

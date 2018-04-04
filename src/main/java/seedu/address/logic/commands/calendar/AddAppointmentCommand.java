@@ -56,16 +56,18 @@ public class AddAppointmentCommand extends Command {
 
     private final Appointment appt;
     private final Set<Index> celebrityIndices;
+    private final Set<Index> pointOfContactIndices;
 
     /**
      * Creates an AddAppointmentCommand with the following parameter
      * @param appt The created appointment
      * @param celebrityIndices The indices of the celebrities who are part of this appointment
      */
-    public AddAppointmentCommand(Appointment appt, Set<Index> celebrityIndices) {
+    public AddAppointmentCommand(Appointment appt, Set<Index> celebrityIndices, Set<Index> pointOfContactIndices) {
         requireNonNull(appt);
         this.appt = appt;
         this.celebrityIndices = celebrityIndices;
+        this.pointOfContactIndices = pointOfContactIndices;
     }
 
 
@@ -77,7 +79,9 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
-        appt.updateEntries(model.getCelebritiesChosen(celebrityIndices));
+        appt.updateEntries(
+                model.getCelebritiesChosen(celebrityIndices),
+                model.getPointsOfContactChosen(pointOfContactIndices));
         model.addAppointmentToStorageCalendar(appt);
 
         // reset calendar view to day view

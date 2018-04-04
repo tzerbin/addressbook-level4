@@ -29,6 +29,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
+import seedu.address.model.person.Person;
 
 //@@author muruges95
 /**
@@ -82,8 +83,12 @@ public class EditAppointmentCommand extends Command {
                 ? model.getCelebritiesChosen(editAppointmentDescriptor.getCelebrityIndices().get())
                 : appointmentToEdit.getCelebrities();
 
+        List<Person> pointOfContactList = (editAppointmentDescriptor.getPointOfContactIndices().isPresent())
+                ? model.getPointsOfContactChosen(editAppointmentDescriptor.getPointOfContactIndices().get())
+                : appointmentToEdit.getPointOfContactList();
+
         appointmentToEdit.removeAppointment();
-        editedAppointment.updateEntries(celebrityList);
+        editedAppointment.updateEntries(celebrityList, pointOfContactList);
         model.addAppointmentToStorageCalendar(editedAppointment);
 
         // reset calendar view to day view
@@ -125,6 +130,7 @@ public class EditAppointmentCommand extends Command {
         private LocalDate endDate;
         private MapAddress location;
         private Set<Index> celebrityIndices;
+        private Set<Index> pointOfContactIndices;
 
         public EditAppointmentDescriptor() {}
 
@@ -140,11 +146,12 @@ public class EditAppointmentCommand extends Command {
             setEndTime(toCopy.endTime);
             setEndDate(toCopy.endDate);
             setCelebrityIndices(toCopy.celebrityIndices);
+            setPointOfContactIndices(toCopy.pointOfContactIndices);
         }
 
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.appointmentName, this.startTime, this.startDate,
-                    this.endTime, this.endDate, this.location, this.celebrityIndices);
+                    this.endTime, this.endDate, this.location, this.celebrityIndices, this.pointOfContactIndices);
         }
 
         public void setAppointmentName(String appointmentName) {
@@ -211,6 +218,24 @@ public class EditAppointmentCommand extends Command {
         public Optional<Set<Index>> getCelebrityIndices() {
             return (celebrityIndices != null) ? Optional.of(Collections.unmodifiableSet(celebrityIndices))
                                               : Optional.empty();
+        }
+
+        /**
+         * Sets {@code pointOfContactIndices} to this object's {@code pointOfContactIndices}.
+         * A defensive copy of {@code pointOfContactIndices} is used internally.
+         */
+        public void setPointOfContactIndices(Set<Index> pointOfContactIndices) {
+            this.pointOfContactIndices = (pointOfContactIndices != null) ? new HashSet<>(pointOfContactIndices) : null;
+        }
+
+        /**
+         * Returns an unmodifiable points of contact set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code pointOfContactIndices} is null.
+         */
+        public Optional<Set<Index>> getPointOfContactIndices() {
+            return (pointOfContactIndices != null) ? Optional.of(Collections.unmodifiableSet(pointOfContactIndices))
+                    : Optional.empty();
         }
     }
 
