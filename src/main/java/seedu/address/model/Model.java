@@ -98,11 +98,10 @@ public interface Model {
     /** Adds the given appointment to the internal StorageCalendar */
     void addAppointmentToStorageCalendar(Appointment appt);
 
-    /** Removes appointment from internal StorageCalendar based on zero-based index */
-    void deleteAppointmentFromStorageCalendar(int index) throws CommandException;
-
-    /** Makes changes to model's internal appointment list */
-    Appointment removeAppointmentFromInternalList(int index);
+    /** Removes appointment from internal StorageCalendar based on zero-based index
+     *  Returns the removed appointment
+     */
+    Appointment deleteAppointment(int index) throws CommandException;
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
