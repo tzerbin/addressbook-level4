@@ -59,8 +59,12 @@ public class AppointmentBuilder {
     /**
      * Sets the {@code location} of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withLocation(String location) throws IllegalValueException {
-        this.location = ParserUtil.parseMapAddress(location);
+    public AppointmentBuilder withLocation(String location) {
+        try {
+            this.location = ParserUtil.parseMapAddress(location);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException("map address not valid.");
+        }
         return this;
     }
 
