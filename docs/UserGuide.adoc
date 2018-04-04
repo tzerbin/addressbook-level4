@@ -493,7 +493,7 @@ Changes the calendar view to month view that looks similar to the calendar in re
 .State of application after `viewCalendarBy month` input
 image::ViewCalendarByMonth.jpg[width=""]
 
-==== Changing the base date of calendar: `viewDate` [Since v1.4]
+==== Changing the base date of calendar: `viewDate` [Since v1.5]
 
 Changes the base date of calendar and displays the calendar by day for the specified `date`. +
 Alias: `vd` +
