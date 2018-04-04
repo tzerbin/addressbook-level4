@@ -99,6 +99,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    //@@author tzerbin
     // ================ StorageCalendar methods ==============================
 
     @Override

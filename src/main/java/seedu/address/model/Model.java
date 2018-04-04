@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -74,6 +75,12 @@ public interface Model {
      *  If current calendar is a combined view, {@code null} will be returned.
      */
     Celebrity getCurrentCelebCalendarOwner();
+
+    /** Returns the current base date of the calendar. */
+    LocalDate getBaseDate();
+
+    /** Sets the current base date of the calendar to the specified date. */
+    void setBaseDate(LocalDate date);
 
     /** Returns the last displayed appointment list */
     List<Appointment> getAppointmentList();

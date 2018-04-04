@@ -493,6 +493,42 @@ Changes the calendar view to month view that looks similar to the calendar in re
 .State of application after `viewCalendarBy month` input
 image::ViewCalendarByMonth.jpg[width=""]
 
+==== Changing the base date of calendar: `viewDate` [Since v1.5]
+
+Changes the base date of calendar and displays the calendar by day for the specified `date`. +
+Alias: `vd` +
+Format: `viewDate [DATE]`
+
+****
+* Changes base date to the specified `date`.
+* When no date is given, it takes on the value of current date.
+* The date *must be in the format of* `YYYY-MM-DD`.
+* The date *must be* a valid date, eg, `2018-13-01` and `2018-02-30` are not valid dates.
+****
+
+Examples:
+
+* `viewDate` +
+Changes the base date of calendar to current date and displays the calendar by day for current date. +
+
+[NOTE]
+====
+Whenever CelebManager gets launched, its base date is reset to the current date by default. Hence `viewDate` can only
+be performed after performing `viewDate [SOME OTHER DATE]`.
+====
+
+
+* `viewDate 2018-05-03` +
+Changes the base date of calendar to `2018-05-03` and displays the calendar by day for `2018-05-03`.
+
+[TIP]
+====
+Change in base date allows you to view calendar for different weeks and months.
+For example, after `viewDate 2018-05-03`, you can type `viewCalendarBy week` - which will show you the
+calendar for the first week of May of 2018, or `viewCalendarBy month` - which will show you the calendar
+for May of 2018.
+====
+
 {sp} +
 
 === Map Features
@@ -570,6 +606,8 @@ e.g. `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Appointment* : `deleteAppointment INDEX` +
+e.g. `deleteAppointment 1`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Appointment* : `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
@@ -598,3 +636,5 @@ e.g.`viewCalendar 1`
 * *View Calendar By* : `viewCalendarBy VIEW` +
 e.g.`viewCalendarBy week`
 * *View Combined Calendar* : `viewCombinedCalendar`
+* *View Date* : `viewDate [DATE]` +
+e.g.`viewDate 2018-05-03`

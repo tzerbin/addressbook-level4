@@ -26,6 +26,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
+import seedu.address.commons.events.ui.ShowCalendarBasedOnDateEvent;
 import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.CelebCalendar;
@@ -87,7 +88,7 @@ public class CalendarPanel extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
-
+        celebCalendarView.setLayout(DateControl.Layout.SWIMLANE);
         hideButtons();
     }
 
@@ -181,5 +182,18 @@ public class CalendarPanel extends UiPart<Region> {
     private void handleShowCombinedCalendarViewRequestEvent(ShowCombinedCalendarViewRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showAllCalendars();
+    }
+
+    private void showDate(LocalDate date) {
+        Platform.runLater(() -> {
+            celebCalendarView.setDate(date);
+        });
+    }
+
+    /** Shows calendar with the specified date as its base */
+    @Subscribe
+    private void handleShowCalendarBasedOnDateEvent(ShowCalendarBasedOnDateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showDate(event.getDate());
     }
 }

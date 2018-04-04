@@ -9,8 +9,8 @@ import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_CANNOT_REMOVE_CELEBRITY_TAG;
 import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_TAG_NOT_FOUND;
 import static seedu.address.model.ModelManager.CELEBRITY_TAG;
-import static seedu.address.testutil.TypicalAppointments.EMPTY_CALENDAR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
 import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 import static seedu.address.testutil.TypicalTags.HUSBAND_TAG;
 
