@@ -48,7 +48,7 @@ public class EditAppointmentCommand extends Command {
             + "[" + PREFIX_START_DATE + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_END_TIME + "END TIME] "
-            + "[" + PREFIX_END_DATE + "END DATE]"
+            + "[" + PREFIX_END_DATE + "END DATE] "
             + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]... "
             + "[" + PREFIX_POINT_OF_CONTACT + "POINT_OF_CONTACT_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
