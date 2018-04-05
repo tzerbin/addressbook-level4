@@ -277,9 +277,9 @@ public class Appointment extends Entry {
     }
 
     /**
-     * Returns list of point of contacts for the appointment in string format.
+     * Returns list of points of contact for the appointment in string format.
      */
-    public String getPointOfContacts () {
+    public String getPointsOfContact () {
         if (pointOfContactList.size() == 0) {
             return "No point of contact";
         }
