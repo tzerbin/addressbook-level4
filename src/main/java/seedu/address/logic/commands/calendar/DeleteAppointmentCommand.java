@@ -2,6 +2,7 @@ package seedu.address.logic.commands.calendar;
 
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
+import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
@@ -51,9 +52,10 @@ public class DeleteAppointmentCommand extends Command {
             throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
         apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
+        List<Appointment> currentAppointmentList = model.getAppointmentList();
 
         // if the list becomes empty, switch back to combined calendar day view
-        if (model.getAppointmentList().size() < 1) {
+        if (currentAppointmentList.size() < 1) {
             EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
             EventsCenter.getInstance().post(new ShowCalendarEvent());
 
@@ -72,7 +74,7 @@ public class DeleteAppointmentCommand extends Command {
         }
 
         // if the list is not empty yet, update appointment list view
-        EventsCenter.getInstance().post(new ShowAppointmentListEvent(model.getAppointmentList()));
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(currentAppointmentList));
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
     }

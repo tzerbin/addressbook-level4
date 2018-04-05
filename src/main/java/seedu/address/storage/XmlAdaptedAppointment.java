@@ -147,18 +147,16 @@ public class XmlAdaptedAppointment {
 
             mapAddressCreated = new MapAddress(location);
         }
-        if (celebrityIds == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Celebrity Ids"));
-        }
-
-        if (pointOfContactIds == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Point of Contact Ids"));
-        }
 
         Appointment appt =  new Appointment(appointmentName, startTimeCreated, startDateCreated,
-                               mapAddressCreated, endTimeCreated, endDateCreated);
-        appt.setCelebIds(celebrityIds);
-        appt.setPointOfContactIds(pointOfContactIds);
+                mapAddressCreated, endTimeCreated, endDateCreated);
+        if (celebrityIds != null) {
+            appt.setCelebIds(celebrityIds);
+        }
+
+        if (pointOfContactIds != null) {
+            appt.setPointOfContactIds(pointOfContactIds);
+        }
         return appt;
     }
 
