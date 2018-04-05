@@ -317,11 +317,11 @@ Removes the tag, `colleagues` from every person with it in CelebManager and show
 
 Adds an appointment to CelebManager. +
 Alias: `aa` +
-Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]...`
+Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_CONTACT_INDEX]...`
 
 Examples:
 
-* `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00`
+* `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00 p/1 p/5`
 * `addAppointment n/Dentist Appointment l/Dental Clinic st/15:45 c/1 c/3`
 
 ****
@@ -329,10 +329,11 @@ Examples:
 it must be prefixed with a 0, e.g. `03/07/2017`.
 * Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
 or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
-* Celebrity index refers to the person's index on the person list displayed inside of our app. This person must be a celebrity,
+* The celebrity index refers to the person's index on the person list displayed inside of our app. This person *must* be a celebrity,
 failing which you will receive an error message stating so.
-* Similar to our other commands, the celebrity index must be a positive number greater than 0 and at most the number of person being shown.
-* You can choose multiple celebrities to whom you want to add the appointment as shown in our example.
+* The point of contact index refers to an ordinary person associated with the appointment. This person *must not* be a Celebrity.
+* Similar to our other commands, the celebrity and point of contact indices must be positive numbers greater than 0 and at most the number of person being shown.
+* You can choose multiple celebrities or points of contact whom you want to add the appointment as shown in our example.
 * All the fields with brackets as shown in the format are optional and can be omitted.
 ****
 
@@ -340,11 +341,11 @@ failing which you will receive an error message stating so.
 
 Edits an appointment currently stored in CelebManager. +
 Alias: `ea` +
-Format: `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]...`
+Format: `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_CONTACT_INDEX]...`
 
 Examples:
 
-* `editAppointment 2 n/Dentist Appointment l/Orchard Road
+* `editAppointment 2 n/Dentist Appointment l/Orchard Road p/3`
 * `editAppointment 1 st/16:00 et/20:00 sd/23-03-2018 c/1 c/2`
 
 [IMPORTANT]
@@ -601,8 +602,8 @@ within a pair of `[]`. A field that can be repeatedly entered with different inp
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Add Appointment* : `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
-[et/END_TIME] [c/CELEBRITY_INDEX]...` +
-e.g. `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00 c/1 c/2`
+[et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_CONTACT_INDEX]...` +
+e.g. `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00 c/1 c/2 p/3 p/4`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -611,7 +612,7 @@ e.g. `deleteAppointment 1`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Appointment* : `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE]
-[et/END_TIME] [c/CELEBRITY_INDEX]...` +
+[et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_CONTACT_INDEX]...` +
 e.g. `editAppointment n/Dentist Appointment l/Clementi Road st/15:00 et/16:00 c/3`
 * *Estimate Route* : `estimateRoute sma/LOCATION ema/LOCATION` +
 e.g.`estimateRoute sma/Punggol ema/NUS`
