@@ -32,6 +32,7 @@
             <Label fx:id="endDate" styleClass="cell_small_label" text="\$endDate" />
             <Label fx:id="appointmentLocation" styleClass="cell_small_label" text="\$location" />
             <Label fx:id="celebrities" styleClass="cell_small_label" text="\$celebrities" />
+            <Label fx:id="pointsOfContact" styleClass="cell_small_label" text="\$pointsOfContact" />
         </VBox>
     </GridPane>
 </HBox>

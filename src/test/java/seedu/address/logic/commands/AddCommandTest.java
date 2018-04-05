@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -181,6 +182,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public LocalDate getBaseDate() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setBaseDate(LocalDate date) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public boolean getIsListingAppointments() {
             fail("This method should not be called.");
             return false;
@@ -205,6 +217,18 @@ public class AddCommandTest {
 
         @Override
         public Celebrity getCelebrityChosen(Index index) throws CommandException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<Person> getPointsOfContactChosen(Set<Index> indices) throws CommandException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Person getPointOfContactChosen(Index index) throws CommandException {
             fail("This method should not be called.");
             return null;
         }
@@ -238,12 +262,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteAppointmentFromStorageCalendar(int index) throws CommandException {
-            fail("This method should not be called");
-        }
-
-        @Override
-        public Appointment removeAppointmentFromInternalList(int index) {
+        public Appointment deleteAppointment(int index) throws CommandException {
             fail("This method should not be called");
             return null;
         }
@@ -260,6 +279,11 @@ public class AddCommandTest {
 
         @Override
         public void setIsListingAppointments(boolean isListingAppointments) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
             fail("This method should not be called");
         }
     }

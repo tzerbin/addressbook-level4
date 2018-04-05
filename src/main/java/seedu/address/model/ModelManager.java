@@ -62,7 +62,8 @@ public class ModelManager extends ComponentManager implements Model {
     private String currentCelebCalendarViewPage;
     private Celebrity currentCelebCalendarOwner;
     private List<Appointment> appointments;
-    private boolean isListingAppointments = false;
+    private boolean isListingAppointments;
+    private LocalDate baseDate;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -81,9 +82,12 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.storageCalendar = storageCalendar;
         appointments = storageCalendar.getAllAppointments();
+        associateAppointmentsWithCelebritiesAndPointsOfContact();
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;
+        isListingAppointments = false;
+        baseDate = LocalDate.now();
     }
 
     public ModelManager() {
@@ -305,6 +309,7 @@ public class ModelManager extends ComponentManager implements Model {
         return currentCelebCalendarOwner;
     }
 
+    @Override
     public List<Appointment> getAppointmentList() {
         return this.appointments;
     }
@@ -312,6 +317,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setAppointmentList(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    @Override
+    public LocalDate getBaseDate() {
+        return this.baseDate;
+    }
+
+    @Override
+    public  void setBaseDate(LocalDate date) {
+        this.baseDate = date;
     }
 
     @Override
@@ -336,18 +351,25 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteAppointmentFromStorageCalendar(int index) throws CommandException {
+    public Appointment deleteAppointment(int index) throws CommandException {
         Appointment apptToDelete = getChosenAppointment(index);
         apptToDelete.removeAppointment();
         indicateAppointmentListChanged();
+
+        apptToDelete = removeAppointmentFromInternalList(index);
+
+        if (getAppointmentList().size() < 1) {
+            setIsListingAppointments(false);
+            setCelebCalendarViewPage(DAY_VIEW_PAGE);
+        }
+        return apptToDelete;
     }
 
-    @Override
-    public Appointment removeAppointmentFromInternalList(int index) {
+    /** Makes changes to model's internal appointment list */
+    private Appointment removeAppointmentFromInternalList(int index) {
         return getAppointmentList().remove(index);
 
     }
-
 
 
     //=========== Filtered Person List Accessors =============================================================
@@ -367,6 +389,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
     public List<Celebrity> getCelebritiesChosen(Set<Index> indices) throws CommandException {
         List<Celebrity> celebrities = new ArrayList<>();
         for (Index index : indices) {
@@ -378,13 +401,33 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Celebrity getCelebrityChosen(Index index) throws CommandException {
         int zeroBasedIndex = index.getZeroBased();
-        List<Person> personList = getFilteredPersonList();
-        if (zeroBasedIndex >= personList.size()) {
+        if (zeroBasedIndex >= filteredPersons.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } else if (!personList.get(zeroBasedIndex).isCelebrity()) {
+        } else if (!filteredPersons.get(zeroBasedIndex).isCelebrity()) {
             throw new CommandException(Messages.MESSAGE_NOT_CELEBRITY_INDEX);
         } else {
-            return (Celebrity) personList.get(zeroBasedIndex);
+            return (Celebrity) filteredPersons.get(zeroBasedIndex);
+        }
+    }
+
+    @Override
+    public List<Person> getPointsOfContactChosen(Set<Index> indices) throws CommandException {
+        List<Person> pointsOfContact = new ArrayList<>();
+        for (Index index : indices) {
+            pointsOfContact.add(getPointOfContactChosen(index));
+        }
+        return pointsOfContact;
+    }
+
+    @Override
+    public Person getPointOfContactChosen(Index index) throws CommandException {
+        int zeroBasedIndex = index.getZeroBased();
+        if (zeroBasedIndex >= filteredPersons.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } else if (filteredPersons.get(zeroBasedIndex).isCelebrity()) {
+            throw new CommandException(Messages.MESSAGE_NOT_POINT_OF_CONTACT_INDEX);
+        } else {
+            return filteredPersons.get(zeroBasedIndex);
         }
     }
 
@@ -405,7 +448,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
+    //=========== Private inner methods =============================================================
     /**
      * Populates our CelebCalendar CalendarSource by creating a calendar for every celebrity in our addressbook
      */
@@ -415,6 +458,46 @@ public class ModelManager extends ComponentManager implements Model {
         for (Celebrity celebrity : celebrities) {
             calSource.getCalendars().add(celebrity.getCelebCalendar());
         }
+    }
+
+    @Override
+    public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
+        List<Celebrity> celebrityList;
+        List<Person> pointOfContactList;
+        for (Appointment a : appointments) {
+            celebrityList = getCelebritiesFromId(a.getCelebIds());
+            pointOfContactList = getPointsOfContactFromId(a.getPointOfContactIds());
+            a.updateEntries(celebrityList, pointOfContactList);
+        }
+    }
+
+    private List<Person> getPointsOfContactFromId(List<Long> pointOfContactIds) {
+        List<Person> pointsOfContact = new ArrayList<>();
+        for (long pointOfContactId : pointOfContactIds) {
+            for (Person p : filteredPersons) {
+                if (!p.isCelebrity() && (p.getId() == pointOfContactId)) {
+                    pointsOfContact.add(p);
+                    break;
+                }
+            }
+        }
+        return pointsOfContact;
+    }
+
+    /**
+     * Gets the celebrities based on their ids from our person list
+     */
+    private List<Celebrity> getCelebritiesFromId(List<Long> celebrityIds) {
+        List<Celebrity> celebrities = new ArrayList<>();
+        for (long celebId : celebrityIds) {
+            for (Person p : filteredPersons) {
+                if (p.isCelebrity() && (p.getId() == celebId)) {
+                    celebrities.add((Celebrity) p);
+                    break;
+                }
+            }
+        }
+        return celebrities;
     }
 
 }

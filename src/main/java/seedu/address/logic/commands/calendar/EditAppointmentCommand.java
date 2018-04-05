@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POINT_OF_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
@@ -29,6 +30,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
+import seedu.address.model.person.Person;
 
 //@@author muruges95
 /**
@@ -46,8 +48,9 @@ public class EditAppointmentCommand extends Command {
             + "[" + PREFIX_START_DATE + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_END_TIME + "END TIME] "
-            + "[" + PREFIX_END_DATE + "END DATE]"
-            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]...\n"
+            + "[" + PREFIX_END_DATE + "END DATE] "
+            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]... "
+            + "[" + PREFIX_POINT_OF_CONTACT + "POINT_OF_CONTACT_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Oscars 2018 "
             + PREFIX_START_TIME + "18:00 "
@@ -56,7 +59,9 @@ public class EditAppointmentCommand extends Command {
             + PREFIX_END_TIME + "20:00 "
             + PREFIX_END_DATE + "23-04-2018 "
             + PREFIX_CELEBRITY + "1 "
-            + PREFIX_CELEBRITY + "2";
+            + PREFIX_CELEBRITY + "2 "
+            + PREFIX_POINT_OF_CONTACT + "3 "
+            + PREFIX_POINT_OF_CONTACT + "4 ";
 
     public static final String MESSAGE_SUCCESS = "Edited appointment successfully";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
@@ -82,8 +87,12 @@ public class EditAppointmentCommand extends Command {
                 ? model.getCelebritiesChosen(editAppointmentDescriptor.getCelebrityIndices().get())
                 : appointmentToEdit.getCelebrities();
 
+        List<Person> pointOfContactList = (editAppointmentDescriptor.getPointOfContactIndices().isPresent())
+                ? model.getPointsOfContactChosen(editAppointmentDescriptor.getPointOfContactIndices().get())
+                : appointmentToEdit.getPointOfContactList();
+
         appointmentToEdit.removeAppointment();
-        editedAppointment.updateEntries(celebrityList);
+        editedAppointment.updateEntries(celebrityList, pointOfContactList);
         model.addAppointmentToStorageCalendar(editedAppointment);
 
         // reset calendar view to day view
@@ -125,6 +134,7 @@ public class EditAppointmentCommand extends Command {
         private LocalDate endDate;
         private MapAddress location;
         private Set<Index> celebrityIndices;
+        private Set<Index> pointOfContactIndices;
 
         public EditAppointmentDescriptor() {}
 
@@ -140,11 +150,12 @@ public class EditAppointmentCommand extends Command {
             setEndTime(toCopy.endTime);
             setEndDate(toCopy.endDate);
             setCelebrityIndices(toCopy.celebrityIndices);
+            setPointOfContactIndices(toCopy.pointOfContactIndices);
         }
 
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.appointmentName, this.startTime, this.startDate,
-                    this.endTime, this.endDate, this.location, this.celebrityIndices);
+                    this.endTime, this.endDate, this.location, this.celebrityIndices, this.pointOfContactIndices);
         }
 
         public void setAppointmentName(String appointmentName) {
@@ -211,6 +222,24 @@ public class EditAppointmentCommand extends Command {
         public Optional<Set<Index>> getCelebrityIndices() {
             return (celebrityIndices != null) ? Optional.of(Collections.unmodifiableSet(celebrityIndices))
                                               : Optional.empty();
+        }
+
+        /**
+         * Sets {@code pointOfContactIndices} to this object's {@code pointOfContactIndices}.
+         * A defensive copy of {@code pointOfContactIndices} is used internally.
+         */
+        public void setPointOfContactIndices(Set<Index> pointOfContactIndices) {
+            this.pointOfContactIndices = (pointOfContactIndices != null) ? new HashSet<>(pointOfContactIndices) : null;
+        }
+
+        /**
+         * Returns an unmodifiable points of contact set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code pointOfContactIndices} is null.
+         */
+        public Optional<Set<Index>> getPointOfContactIndices() {
+            return (pointOfContactIndices != null) ? Optional.of(Collections.unmodifiableSet(pointOfContactIndices))
+                    : Optional.empty();
         }
     }
 

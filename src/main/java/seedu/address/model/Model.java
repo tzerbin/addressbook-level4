@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -75,6 +76,12 @@ public interface Model {
      */
     Celebrity getCurrentCelebCalendarOwner();
 
+    /** Returns the current base date of the calendar. */
+    LocalDate getBaseDate();
+
+    /** Sets the current base date of the calendar to the specified date. */
+    void setBaseDate(LocalDate date);
+
     /** Returns the last displayed appointment list */
     List<Appointment> getAppointmentList();
 
@@ -91,11 +98,10 @@ public interface Model {
     /** Adds the given appointment to the internal StorageCalendar */
     void addAppointmentToStorageCalendar(Appointment appt);
 
-    /** Removes appointment from internal StorageCalendar based on zero-based index */
-    void deleteAppointmentFromStorageCalendar(int index) throws CommandException;
-
-    /** Makes changes to model's internal appointment list */
-    Appointment removeAppointmentFromInternalList(int index);
+    /** Removes appointment from internal StorageCalendar based on zero-based index
+     *  Returns the removed appointment
+     */
+    Appointment deleteAppointment(int index) throws CommandException;
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -115,6 +121,18 @@ public interface Model {
      */
     Celebrity getCelebrityChosen(Index index) throws CommandException;
 
+    /**
+     * Returns the pointsOfContact list chosen based on their index
+     * @throws CommandException if any of the indices given is invalid or the person is a celebrity
+     */
+    List<Person> getPointsOfContactChosen(Set<Index> indices) throws CommandException;
+
+    /**
+     * Returns the Person at a particular index given the current personList
+     * @throws CommandException if the given index is invalid or the person is a celebrity.
+     */
+    Person getPointOfContactChosen(Index index) throws CommandException;
+
     /** Counts the number of {@code persons} with the given {@code tage}. */
     int countPersonsWithTag(Tag tag);
 
@@ -132,4 +150,9 @@ public interface Model {
 
     /** Changes isListAppointments value accordingly. */
     void setIsListingAppointments(boolean isListingAppointments);
+
+    /**
+     * Associates each appointment with the relevant celebrities based on the ids they contain
+     */
+    void associateAppointmentsWithCelebritiesAndPointsOfContact();
 }

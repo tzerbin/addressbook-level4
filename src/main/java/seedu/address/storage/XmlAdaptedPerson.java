@@ -31,6 +31,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private long id;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -52,6 +54,7 @@ public class XmlAdaptedPerson {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        // TODO: include id for this and change tests
     }
 
     /**
@@ -68,6 +71,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        id = source.getId();
     }
 
     /**
@@ -114,7 +118,9 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+
+        final long id = this.id;
+        return new Person(name, phone, email, address, tags, id);
     }
 
     @Override
@@ -132,6 +138,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
-                && tagged.equals(otherPerson.tagged);
+                && tagged.equals(otherPerson.tagged)
+                && (id == otherPerson.id);
     }
 }

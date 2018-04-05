@@ -35,12 +35,12 @@ public class ListAppointmentCommand extends Command {
 
     }
 
-    public ListAppointmentCommand(LocalDate startDate, LocalDate endDate) {
-        requireNonNull(startDate);
-        requireNonNull(endDate);
+    public ListAppointmentCommand(LocalDate startDateInput, LocalDate endDateInput) {
+        requireNonNull(startDateInput);
+        requireNonNull(endDateInput);
 
-        this.startDate = startDate;
-        this.endDate = endDate;
+        startDate = startDateInput;
+        endDate = endDateInput;
     }
 
     @Override

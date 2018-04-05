@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POINT_OF_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
@@ -37,8 +38,9 @@ public class AddAppointmentCommand extends Command {
             + "[" + PREFIX_START_DATE + "START DATE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_END_TIME + "END TIME] "
-            + "[" + PREFIX_END_DATE + "END DATE]"
-            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]...\n"
+            + "[" + PREFIX_END_DATE + "END DATE] "
+            + "[" + PREFIX_CELEBRITY + "CELEBRITY_INDEX]... "
+            + "[" + PREFIX_POINT_OF_CONTACT + "POINT_OF_CONTACT_INDEX]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Oscars 2018 "
             + PREFIX_START_TIME + "18:00 "
@@ -47,7 +49,9 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_END_TIME + "20:00 "
             + PREFIX_END_DATE + "23-04-2018 "
             + PREFIX_CELEBRITY + "1 "
-            + PREFIX_CELEBRITY + "2";
+            + PREFIX_CELEBRITY + "2 "
+            + PREFIX_POINT_OF_CONTACT + "3 "
+            + PREFIX_POINT_OF_CONTACT + "4 ";
 
     public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only add appointment when "
             + "viewing combined calendar\n"
@@ -56,16 +60,18 @@ public class AddAppointmentCommand extends Command {
 
     private final Appointment appt;
     private final Set<Index> celebrityIndices;
+    private final Set<Index> pointOfContactIndices;
 
     /**
      * Creates an AddAppointmentCommand with the following parameter
      * @param appt The created appointment
      * @param celebrityIndices The indices of the celebrities who are part of this appointment
      */
-    public AddAppointmentCommand(Appointment appt, Set<Index> celebrityIndices) {
+    public AddAppointmentCommand(Appointment appt, Set<Index> celebrityIndices, Set<Index> pointOfContactIndices) {
         requireNonNull(appt);
         this.appt = appt;
         this.celebrityIndices = celebrityIndices;
+        this.pointOfContactIndices = pointOfContactIndices;
     }
 
 
@@ -77,7 +83,9 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
-        appt.updateEntries(model.getCelebritiesChosen(celebrityIndices));
+        appt.updateEntries(
+                model.getCelebritiesChosen(celebrityIndices),
+                model.getPointsOfContactChosen(pointOfContactIndices));
         model.addAppointmentToStorageCalendar(appt);
 
         // reset calendar view to day view
