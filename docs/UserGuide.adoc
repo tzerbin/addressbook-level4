@@ -72,7 +72,8 @@ acceptable.
 ====
 *Precaution*
 
-* You should not click inside the calendar at all times, except for scrolling up and down using the scroll bar.
+* Refrain from clicking inside the calendar at all times, except for scrolling up and down using the scroll bar.
+This bug will be fixed in v2.0.
 * Commands that modify the people and appointments stored in CelebManager (`add`, `delete`, `edit`, `undo`, `redo`,
 `addAppointment`) must be performed in combined calendar view unless specified otherwise. +
 Information about combined calendar view can be found in +
@@ -126,8 +127,9 @@ Undoable commands: those commands that modify CelebManager's content (`add`, `de
 
 [IMPORTANT]
 ====
-Undoing deletion of a `celebrity` or removal of `celebrity` tag through `edit` will not undo changes made to the
-`celebrity` 's calendar. A new calendar will be created for the restored `celebrity` instead.
+Undoing deletion of a person will not restore this person to the appointment he/she should attend before deletion.
+If a person gets deleted, he/she will be removed from all appointments that have him/her as attendess or
+point-of-contacts. This removal is not undone by undoing the deletion.
 ====
 
 Examples:
@@ -226,7 +228,7 @@ Alias: `s` +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person at the specified `INDEX` in the last shown person list.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1`, `2`, `3`, ...
 ****
@@ -253,6 +255,8 @@ The index *must be a positive integer* `1`, `2`, `3`, ...
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* If `celebrity` tag gets removed, the person's calendar will be removed.
+* If the person now has `celebrity` tag, a calendar will be created for him/her.
 ****
 
 Examples:
@@ -511,12 +515,14 @@ Format: `viewDate [DATE]`
 * When no date is given, it takes on the value of current date.
 * The date *must be in the format of* `YYYY-MM-DD`.
 * The date *must be* a valid date, eg, `2018-13-01` and `2018-02-30` are not valid dates.
+* This command can take slightly longer to load than other view-related commands.
 ****
 
 Examples:
 
 * `viewDate` +
 Changes the base date of calendar to current date and displays the calendar by day for current date. +
+Changes the date at the top right corner of the calendar panel.
 
 [NOTE]
 ====
