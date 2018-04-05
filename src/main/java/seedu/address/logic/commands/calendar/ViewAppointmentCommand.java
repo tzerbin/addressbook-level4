@@ -1,11 +1,15 @@
 package seedu.address.logic.commands.calendar;
 
+import java.util.List;
+
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
+import seedu.address.model.person.Celebrity;
+import seedu.address.model.person.Person;
 
 //@@author Damienskt
 /**
@@ -54,6 +58,8 @@ public class ViewAppointmentCommand extends Command {
                 + "Start Time: " + selectedAppointment.getStartTime() + "\n"
                 + "End Date: " + selectedAppointment.getEndDate() + "\n"
                 + "End Time: " + selectedAppointment.getEndTime() + "\n"
-                + "Location: " + selectedAppointment.getLocation();
+                + "Location: " + selectedAppointment.getLocation() + "\n"
+                + "Celebrities attending: " + selectedAppointment.getCelebritiesAttending() + "\n"
+                + "Point of Contacts: " + selectedAppointment.getPointOfContacts();
     }
 }
