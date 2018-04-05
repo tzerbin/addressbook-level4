@@ -256,7 +256,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        if (target.isCelebrity()) {
+            celebrities.remove(target);
+        }
         persons.setPerson(target, syncedEditedPerson);
+        if (syncedEditedPerson.isCelebrity()) {
+            celebrities.add((Celebrity) syncedEditedPerson);
+        }
         removeUnusedTags();
     }
 

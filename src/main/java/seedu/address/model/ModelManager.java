@@ -78,7 +78,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
 
         celebCalendarSource = new CalendarSource(CELEB_CALENDAR_SOURCE_NAME);
-        initializeCelebCalendarSource(celebCalendarSource);
+        resetCelebCalendars();
 
         this.storageCalendar = storageCalendar;
         appointments = storageCalendar.getAllAppointments();
@@ -99,24 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
-
-        // reset calendars in celebCalendarSource to the restored calendars
-        List<Celebrity> celebrities = addressBook.getCelebritiesList();
-        List<Calendar> calendars = new ArrayList<>();
-
-        for (Celebrity celebrity: celebrities) {
-            calendars.add(celebrity.getCelebCalendar());
-        }
-
-        ArrayList<Calendar> calendarsToRemove = new ArrayList<>();
-        for (Calendar calendarToRemove: celebCalendarSource.getCalendars()) {
-            calendarsToRemove.add(calendarToRemove);
-        }
-        for (Calendar calendar: calendarsToRemove) {
-            celebCalendarSource.getCalendars().removeAll(calendar);
-        }
-        celebCalendarSource.getCalendars().addAll(calendars);
-
+        resetCelebCalendars();
         indicateAddressBookChanged();
     }
 
@@ -126,8 +109,13 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the addressbook has changed */
+    /**
+     * Raises an event to indicate the addressbook has changed
+     * and reassoicates appointments with relevant celebrities and points of contact
+     **/
     private void indicateAddressBookChanged() {
+        resetCelebCalendars();
+        associateAppointmentsWithCelebritiesAndPointsOfContact();
         raise(new AddressBookChangedEvent(addressBook));
     }
 
@@ -151,7 +139,6 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author WJY-norainu
     /**
      * Removes the person from appointments
-     * @param person
      */
     private void removePersonFromAppointments(Person person) {
         List<Appointment> allAppointments = getStorageCalendar().getAllAppointments();
@@ -161,7 +148,6 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author WJY-norainu
     /**
      * Removes celebrity from appointments and celebrity's celeb calendar
-     * @param targetCelebrity
      */
     private synchronized void deleteCelebrity(Celebrity targetCelebrity) {
         CelebCalendar targetCelebCalendar = targetCelebrity.getCelebCalendar();
@@ -187,8 +173,6 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Removes child entries that belong to target celeb calendar from all appointments
      * Finds appointments that only have child entries belonging to target celeb calendar
-     * @param targetCelebCalendar
-     * @param allAppointments
      * @return a list of appointments that only has child entry pointing to the target celeb calendar
      */
     private List<Appointment> removeEntriesOfTargetCelebCalendarFrom(
@@ -246,6 +230,17 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
+        List<Celebrity> celebrityList;
+        List<Person> pointOfContactList;
+        for (Appointment a : appointments) {
+            celebrityList = getCelebritiesFromId(a.getCelebIds());
+            pointOfContactList = getPointsOfContactFromId(a.getPointOfContactIds());
+            a.updateEntries(celebrityList, pointOfContactList);
+        }
     }
 
     //@@author WJY-norainu
@@ -449,32 +444,26 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
     //=========== Private inner methods =============================================================
+
     /**
      * Populates our CelebCalendar CalendarSource by creating a calendar for every celebrity in our addressbook
      */
-    private void initializeCelebCalendarSource(CalendarSource calSource) {
-        requireNonNull(addressBook);
-        ArrayList<Celebrity> celebrities = addressBook.getCelebritiesList();
-        for (Celebrity celebrity : celebrities) {
-            calSource.getCalendars().add(celebrity.getCelebCalendar());
-        }
-    }
+    private void resetCelebCalendars() {
+        // reset calendars in celebCalendarSource to the restored calendars
+        List<Celebrity> celebrities = addressBook.getCelebritiesList();
+        List<Calendar> calendars = new ArrayList<>();
 
-    @Override
-    public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
-        List<Celebrity> celebrityList;
-        List<Person> pointOfContactList;
-        for (Appointment a : appointments) {
-            celebrityList = getCelebritiesFromId(a.getCelebIds());
-            pointOfContactList = getPointsOfContactFromId(a.getPointOfContactIds());
-            a.updateEntries(celebrityList, pointOfContactList);
+        for (Celebrity celebrity: celebrities) {
+            calendars.add(celebrity.getCelebCalendar());
         }
+        celebCalendarSource.getCalendars().clear();
+        celebCalendarSource.getCalendars().addAll(calendars);
     }
 
     private List<Person> getPointsOfContactFromId(List<Long> pointOfContactIds) {
         List<Person> pointsOfContact = new ArrayList<>();
         for (long pointOfContactId : pointOfContactIds) {
-            for (Person p : filteredPersons) {
+            for (Person p : addressBook.getPersonList()) {
                 if (!p.isCelebrity() && (p.getId() == pointOfContactId)) {
                     pointsOfContact.add(p);
                     break;
@@ -490,7 +479,7 @@ public class ModelManager extends ComponentManager implements Model {
     private List<Celebrity> getCelebritiesFromId(List<Long> celebrityIds) {
         List<Celebrity> celebrities = new ArrayList<>();
         for (long celebId : celebrityIds) {
-            for (Person p : filteredPersons) {
+            for (Person p : addressBook.getPersonList()) {
                 if (p.isCelebrity() && (p.getId() == celebId)) {
                     celebrities.add((Celebrity) p);
                     break;
