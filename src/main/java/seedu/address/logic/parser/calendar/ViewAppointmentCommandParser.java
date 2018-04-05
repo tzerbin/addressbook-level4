@@ -6,6 +6,7 @@ import seedu.address.logic.commands.calendar.ViewAppointmentCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.map.Map;
 
 //@@author Damienskt
 /**
@@ -25,6 +26,8 @@ public class ViewAppointmentCommandParser implements Parser<ViewAppointmentComma
             Index index = ParserUtil.parseIndex(args);
             return new ViewAppointmentCommand(index.getZeroBased());
         } catch (IllegalValueException ive) {
+            Map.removeExistingMarker();
+            Map.clearRoute();
             throw new ParseException(ive.getMessage(), ive);
         }
     }

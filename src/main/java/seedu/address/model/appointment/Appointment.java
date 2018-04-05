@@ -260,4 +260,33 @@ public class Appointment extends Entry {
     public MapAddress getMapAddress() {
         return mapAddress;
     }
+
+    //@@author Damienskt
+    /**
+     * Returns list of celebrities attending the appointment in string format.
+     */
+    public String getCelebritiesAttending () {
+        if (celebrityList.size() == 0) {
+            return "No celebrities attending";
+        }
+        String celebritiesAttending = new String(celebrityList.get(0).getName().toString());
+        for (int i = 1; i < celebrityList.size(); i++) {
+            celebritiesAttending = celebritiesAttending + ", " + celebrityList.get(i).getName().toString();
+        }
+        return celebritiesAttending;
+    }
+
+    /**
+     * Returns list of points of contact for the appointment in string format.
+     */
+    public String getPointsOfContact () {
+        if (pointOfContactList.size() == 0) {
+            return "No point of contact";
+        }
+        String pointOfContacts = new String(pointOfContactList.get(0).getName().toString());
+        for (int i = 1; i < pointOfContactList.size(); i++) {
+            pointOfContacts = pointOfContacts + ", " + pointOfContactList.get(i).getName().toString();
+        }
+        return pointOfContacts;
+    }
 }
