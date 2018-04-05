@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
-import com.calendarfx.model.Entry;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +27,6 @@ import seedu.address.commons.events.model.StorageCalendarChangedEvent;
 import seedu.address.logic.commands.calendar.ListAppointmentCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.calendar.CelebCalendar;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
@@ -103,20 +101,10 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author
+    //@@author WJY-norainu
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
-    }
-
-    /**
-     * Raises an event to indicate the addressbook has changed
-     * and reassoicates appointments with relevant celebrities and points of contact
-     **/
-    private void indicateAddressBookChanged() {
-        resetCelebCalendars();
-        associateAppointmentsWithCelebritiesAndPointsOfContact();
-        raise(new AddressBookChangedEvent(addressBook));
     }
 
     /** Raises an event to indicate the appointment list has changed */
@@ -127,77 +115,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
-        if (target.isCelebrity()) {
-            Celebrity targetCelebrity = (Celebrity) target;
-            deleteCelebrity(targetCelebrity);
-        }
-        //removePersonFromAppointments(target);
 
         indicateAddressBookChanged();
-    }
-
-    //@@author WJY-norainu
-    /**
-     * Removes the person from appointments
-     */
-    private void removePersonFromAppointments(Person person) {
-        List<Appointment> allAppointments = getStorageCalendar().getAllAppointments();
-        // to be implemented after knowing how normal person is added to an appointment
-    }
-
-    //@@author WJY-norainu
-    /**
-     * Removes celebrity from appointments and celebrity's celeb calendar
-     */
-    private synchronized void deleteCelebrity(Celebrity targetCelebrity) {
-        CelebCalendar targetCelebCalendar = targetCelebrity.getCelebCalendar();
-        StorageCalendar storageCalendar = this.getStorageCalendar();
-        List<Appointment> allAppointments = storageCalendar.getAllAppointments();
-
-        // find appointment that has entry(s) belonging to target's celeb calendar
-        // remove these entry(s) from the appointment's childEntryList
-        List<Appointment> appointmentsToRemove =
-                removeEntriesOfTargetCelebCalendarFrom(targetCelebCalendar, allAppointments);
-
-        // remove appointment that only involves the deleted celebrity
-        // from appointment list in storageCalendar and in storageCalendar itself
-        allAppointments.removeAll(appointmentsToRemove);
-        for (Appointment appointment: appointmentsToRemove) {
-            storageCalendar.removeEntry(appointment);
-        }
-
-        // remove the celebrity's calendar
-        celebCalendarSource.getCalendars().removeAll(targetCelebCalendar);
-    }
-
-    /**
-     * Removes child entries that belong to target celeb calendar from all appointments
-     * Finds appointments that only have child entries belonging to target celeb calendar
-     * @return a list of appointments that only has child entry pointing to the target celeb calendar
-     */
-    private List<Appointment> removeEntriesOfTargetCelebCalendarFrom(
-            CelebCalendar targetCelebCalendar, List<Appointment> allAppointments) {
-
-        List<Appointment> appointmentsOnlyInvolveTargetCelebCalendar = new ArrayList<>();
-
-        for (Appointment appointment: allAppointments) {
-            List<Entry> oldChildEntries = appointment.getChildEntryList();
-            List<Entry> newChildEntries = new ArrayList<>();
-            for (Entry childEntry: oldChildEntries) {
-                if (childEntry.getCalendar() == targetCelebCalendar) {
-                    continue;
-                }
-                newChildEntries.add(childEntry);
-            }
-            // appointment only involves the target celeb calendar, add to to the list
-            if (newChildEntries.size() < 1) {
-                appointmentsOnlyInvolveTargetCelebCalendar.add(appointment);
-            } else {
-                appointment.setChildEntries(newChildEntries);
-            }
-        }
-
-        return appointmentsOnlyInvolveTargetCelebCalendar;
     }
 
     //@@author muruges95
@@ -236,6 +155,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
         List<Celebrity> celebrityList;
         List<Person> pointOfContactList;
+        appointments = storageCalendar.getAllAppointments();
         for (Appointment a : appointments) {
             celebrityList = getCelebritiesFromId(a.getCelebIds());
             pointOfContactList = getPointsOfContactFromId(a.getPointOfContactIds());
@@ -487,6 +407,16 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
         return celebrities;
+    }
+
+    /**
+     * Raises an event to indicate the addressbook has changed
+     * and reassoicates appointments with relevant celebrities and points of contact
+     **/
+    private void indicateAddressBookChanged() {
+        resetCelebCalendars();
+        associateAppointmentsWithCelebritiesAndPointsOfContact();
+        raise(new AddressBookChangedEvent(addressBook));
     }
 
 }
