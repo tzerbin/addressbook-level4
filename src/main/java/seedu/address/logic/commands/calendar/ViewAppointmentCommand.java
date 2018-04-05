@@ -56,6 +56,6 @@ public class ViewAppointmentCommand extends Command {
                 + "End Time: " + selectedAppointment.getEndTime() + "\n"
                 + "Location: " + selectedAppointment.getLocation() + "\n"
                 + "Celebrities attending: " + selectedAppointment.getCelebritiesAttending() + "\n"
-                + "Points of Contact: " + selectedAppointment.getPointOfContacts();
+                + "Points of Contact: " + selectedAppointment.getPointsOfContact();
     }
 }
