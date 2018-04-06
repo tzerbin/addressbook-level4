@@ -286,9 +286,8 @@ This section describes some noteworthy features that are implemented in CelebMan
 
 The tag removal mechanism is facilitated by both `RemoveTagCommand`, which resides inside `LogicManager`, and
 `removeTag`, which resides in `AddressBook`. This feature removes a specified tag from each person who has it in the
-address book, and prints out how many persons are affected by this removal.
-
-The `RemoveTagCommand` class inherits from the `UndoableCommand` class and hence supports the `undo` and `redo` features.
+address book. `RemoveTagCommand` class inherits from the `UndoableCommand`
+class and hence supports the `undo` and `redo` features.
 
 The snippet code below shows the implementation of `executeUndoableCommand` in `RemoveTagCommand`:
 
@@ -326,7 +325,7 @@ public class RemoveTagCommand extends UndoableCommand {
     ...
 }
 ----
-From the snippet above, it can be seen that `RemoveTagCommand` disallows removal of `celebrity` tag, or a non-existing
+From the snippet above, it can be seen that `RemoveTagCommand` disallows the removal of `celebrity` tag, or a non-existing
 tag. Upon successful execution, `RemoveTagCommand` will print out successful message with the number of person(s)
 affected by this removal.
 
@@ -388,7 +387,7 @@ This is because `removeTag` removes the tag from each person with it and after t
 address book should have the tag. Hence the unused tag should be removed from `tags` inside the address book.
 
 Suppose the current address book has two types of tags, `friends` and `husband`.
-The figure below shows the state of `PersonListPanel`:
+The figure below shows a possible state of `PersonListPanel`:
 
 .State of `PersonListPanel` before executing `removeTag friends`
 image::BeforeRemoveTag.png[width=""]
@@ -405,10 +404,10 @@ image::RemoveTagSequenceDiagram.png[width=""]
 
 ==== Design Considerations
 ===== Aspect: Command result for removal of `celebrity` tag
-* **Alternative 1 (current choice):** Output the `celebrity` tag cannot be removed
+* **Alternative 1 (current choice):** Output an error message saying that the `celebrity` tag cannot be removed
 ** Pros: Prevents `removeTag` from affecting the calendar as celebrities will not get affected by this operation.
 ** Cons: Results in no available method to mass remove `celebrity` tag.
-* **Alternative 2:** Removes `celebrity` tag and clears all calendars
+* **Alternative 2:** Remove `celebrity` tag and clears all calendars
 ** Pros: Provides an easy way to mass remove `celebrity` tag and clears all celebrities from the address book.
 ** Cons: Requires the creation of additional events to interact with `CalendarPanel` as calendars are under
 UI component, which logic component has no directly access to.
@@ -543,7 +542,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Execution of `undo` and `redo` commands
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Save the entire address book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -695,11 +694,11 @@ After input of the command, we will have as shown below (Figure 21):
 image::AfterAddAppointment.png[width="800"]
 
 
-== DeleteAppointment Feature
+=== DeleteAppointment Feature
 ==== Current Implementation
 
 The mechanism to delete an appointment is facilitated by the `DeleteAppointmentCommand`, which resides inside `Logic`,
-and `deleteAppointment` in `Model`. It supports the deletion of an appointment from an existing calendar.
+and `deleteAppointment` in `Model`. It supports the deletion of an appointment.
 Deletion of an appointment can only be done when the `CalendarPanel` is in appointment list view, instead of showing
 calendars. The command requires users to put in an index which represents the appointment to be deleted. This index is
 taken from the currently displayed appointment list.
@@ -811,19 +810,19 @@ image::DeleteAppointmentCommand-logic-seq-diagram.png[width=""]
 
 ==== Design Considerations
 ===== Aspect: Status of `CalendarPanel` after deletion of the only appointment
-* **Alternative 1 (current choice):** Switches back to combined calendar view
+* **Alternative 1 (current choice):** Switch back to combined calendar view
 ** Pros: Keeps consistent with `listAppointment` as CelebManager does not show an empty list when there is no
 appointment to list, but instead outputs an error message.
 ** Cons: Makes it difficult for users to see if the appointment gets deleted correctly.
-* **Alternative 2:** Stays at the appointment list view and shows an empty list
+* **Alternative 2:** Stay at the appointment list view and shows an empty list
 ** Pros: Shows the effect of deletion immediately.
 ** Cons: Becomes inconsistent with `listAppointment` command's inability to show an empty list when there is no
 appointment to list.
-* **Alternative 3:** Switches back to combined calendar view and goes to the day when the deleted appointment should
+* **Alternative 3:** Switch back to combined calendar view and goes to the day when the deleted appointment should
 happen
 ** Pros: Keeps consistent with `listAppointment` while making it easy for users to check if the appointment gets
 deleted visually on calendar.
-** Cons: Takes long to run.
+** Cons: Takes long time to run.
 
 ==== Aspect: Undoability of `deleteAppointment` command
 * **Alternative 1 (current choice):** Cannot be undone
@@ -832,7 +831,7 @@ deleted visually on calendar.
 * **Alternative 2:** Can be undone
 ** Pros: Can restore deletions made by mistake.
 ** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
-in UI component while appointments in Model component. 
+in UI component while appointments in Model component.
 
 // tag::viewAppointment[]
 === ViewAppointment Feature
