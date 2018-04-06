@@ -183,7 +183,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         int count = 0;
-        //is it possible to have two people with everything the same except for tag?
         for (Person person: persons) {
             if (person.hasTag(tag)) {
                 //get the new tag set with the specified tag removed
