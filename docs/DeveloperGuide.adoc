@@ -284,19 +284,10 @@ This section describes some noteworthy features that are implemented in CelebMan
 === RemoveTag Feature
 ==== Current Implementation
 
-The tag removal mechanism is facilitated by both `RemoveTagCommand`, which resides inside `Logic`, and `removeTag`, which resides in `AddressBook`.
-`RemoveTagCommand` removes a specified tag from each person in the address book, and prints out how many persons are affected by this removal.
-The following figure shows the inheritance diagram for `RemoveTagCommand`:
-
-.Inheritance diagram for `Command`
-image::RemoveTagCommandClassDiagram.png[width=""]
-
-The `RemoveTagCommand` class inherits from the `UndoableCommand` class.
-Similar to the other undoable commands like `DeleteCommand`, it supports the undo/redo feature.
-
-Unlike `DeleteCommand` that can raise `PersonNotFoundException` when the `index` of the `person` to be deleted does not exist,
-`RemoveTagCommand` can remove a non-existing tag from the address book, but implicitly tell the user that the tag does not exist
-by showing that, the number of persons affected by the removal is 0.
+The tag removal mechanism is facilitated by both `RemoveTagCommand`, which resides inside `LogicManager`, and
+`removeTag`, which resides in `AddressBook`. This feature removes a specified tag from each person who has it in the
+address book. `RemoveTagCommand` class inherits from the `UndoableCommand`
+class and hence supports the `undo` and `redo` features.
 
 The snippet code below shows the implementation of `executeUndoableCommand` in `RemoveTagCommand`:
 
@@ -304,19 +295,39 @@ The snippet code below shows the implementation of `executeUndoableCommand` in `
 ----
 public class RemoveTagCommand extends UndoableCommand {
     ...
-    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Removed Tag %1$s and %2$s person(s) affected.";
+    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Removed tag %1$s and %2$s person(s) affected.";
     ...
 
     @Override
-    public CommandResult executeUndoableCommand() {
-        requireNonNull(tagToRemove);
-        int numberOfAffectedPersons = model.removeTag(tagToRemove);
-        return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, tagToRemove, numberOfAffectedPersons));
-    }
+        public CommandResult executeUndoableCommand() throws CommandException {
+            requireNonNull(tagToRemove);
+
+            if (tagToRemove.equals(CELEBRITY_TAG)) {
+                throw new CommandException(MESSAGE_CANNOT_REMOVE_CELEBRITY_TAG);
+            }
+
+            int numberOfAffectedPersons = 0;
+            try {
+                numberOfAffectedPersons = model.removeTag(tagToRemove);
+            } catch (TagNotFoundException tnfe) {
+                throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagToRemove.toString()));
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            return new CommandResult(String.format(
+                    MESSAGE_DELETE_TAG_SUCCESS,
+                    tagToRemove.toString(),
+                    numberOfAffectedPersons));
+        }
 
     ...
 }
 ----
+From the snippet above, it can be seen that `RemoveTagCommand` disallows the removal of `celebrity` tag, or a non-existing
+tag. Upon successful execution, `RemoveTagCommand` will print out successful message with the number of person(s)
+affected by this removal.
 
 The snippet code below shows the implementation of `removeTag` in `AddressBook`:
 
@@ -324,18 +335,43 @@ The snippet code below shows the implementation of `removeTag` in `AddressBook`:
 ----
 public class AddressBook {
     /**
-     * Removes {@code tag} from all persons in this {@code AddressBook}.
-     * @returns the number of {@code person}s with this {@code tag} removed.
-     */
-    public int removeTag(Tag tag) {
-        int count = 0;
-        for (Person person: persons) {
-            if (person.removeTag(tag)) {
-                count++;
+    * Removes {@code tag} from all persons in this {@code AddressBook}.
+    * @return the number of {@code person}s with this {@code tag} removed.
+    */
+    public int removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
+        boolean tagExists = false;
+        for (Tag existingTag: tags) {
+            if (existingTag.equals(tag)) {
+                    tagExists = true;
             }
         }
-        if (count > 0) {
-            removeUnusedTags();
+        if (!tagExists) {
+            throw new TagNotFoundException();
+        }
+
+        int count = 0;
+        for (Person person: persons) {
+            if (person.hasTag(tag)) {
+                //get the new tag set with the specified tag removed
+                Set<Tag> oldTags = person.getTags();
+                Set<Tag> newTags = new HashSet<>();
+                for (Tag tagToKeep: oldTags) {
+                    if (tagToKeep.equals(tag)) {
+                        continue;
+                    }
+                    newTags.add(tagToKeep);
+                }
+
+                //create a new person with the specified tag removed to replace the person
+                EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+                editPersonDescriptor.setTags(newTags);
+                Person editedPerson = createEditedPerson(person, editPersonDescriptor);
+                Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+                persons.setPerson(person, syncedEditedPerson);
+                removeUnusedTags();
+
+                count++;
+            }
         }
         return count;
     }
@@ -343,12 +379,15 @@ public class AddressBook {
 }
 ----
 
-Note that `removeUnusedTags` is called inside `removeTag` when there is at least one person affected by the removal.
-This is because this operation removes the tag from each person with it, and thus after the operation, no person in the
-address book should have the tag, and hence the unused tag should be removed from `tags` inside the address book.
+Note that `removeTag` makes use of `EditPersonDescriptor` class to creates a new `person` without the tag, to replace
+the original `person` with the tag.
+
+Additionally, `removeUnusedTags` is called inside `removeTag` when there is at least one person affected by the removal.
+This is because `removeTag` removes the tag from each person with it and after the operation, no person in the
+address book should have the tag. Hence the unused tag should be removed from `tags` inside the address book.
 
 Suppose the current address book has two types of tags, `friends` and `husband`.
-The figure below shows the state of `PersonListPanel`:
+The figure below shows a possible state of `PersonListPanel`:
 
 .State of `PersonListPanel` before executing `removeTag friends`
 image::BeforeRemoveTag.png[width=""]
@@ -358,24 +397,20 @@ After the successful execution of `removeTag friends`, `PersonListPanel` will be
 .State of `PersonListPanel` after executing `removeTag friends`
 image::AfterRemoveTag.png[width=""]
 
-The following sequence diagram shows how the command works:
+The following sequence diagram shows the interaction within classes in `Logic` to process `removeTag` command:
 
 .Sequence diagram of removeTag command
 image::RemoveTagSequenceDiagram.png[width=""]
 
 ==== Design Considerations
-
-===== Aspect: Command result for removal of non-existing `tag`
-* **Alternative 1 (current choice):** Output `tag` is removed and 0 person affected
-** Pros: Easy to implement.
-** Cons: Does not make it explicit to users that the `tag` being removed does not exist in the address book.
-* **Alternative 2:** Output the `tag` cannot be removed
-** Pros: Makes it clear to users that the `tag` does not exist and thus cannot be removed.
-** Cons: Does not invalidate the removal and can thus be confusing to users whether this removal is legal.
-* **Alternative 3:** Output error and invalid command format
-** Pros: Follows the common logical convention and makes it clear to users that the removal is not legal.
-** Cons: Requires the creation of additional exception class and exception handling methods.
-
+===== Aspect: Command result for removal of `celebrity` tag
+* **Alternative 1 (current choice):** Output an error message saying that the `celebrity` tag cannot be removed
+** Pros: Prevents `removeTag` from affecting the calendar as celebrities will not get affected by this operation.
+** Cons: Results in no available method to mass remove `celebrity` tag.
+* **Alternative 2:** Remove `celebrity` tag and clears all calendars
+** Pros: Provides an easy way to mass remove `celebrity` tag and clears all celebrities from the address book.
+** Cons: Requires the creation of additional events to interact with `CalendarPanel` as calendars are under
+UI component, which logic component has no directly access to.
 
 // tag::undoredo[]
 === Undo/Redo Command Feature
@@ -507,7 +542,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Execution of `undo` and `redo` commands
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Save the entire address book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -651,13 +686,212 @@ image::AddAppointmentSequenceDiagram.png[width=""]
 The figure below (Figure 20) shows the state of the application before input of the `AddAppointmentCommand`:
 
 .State of application without any appointments
-image::BeforeAddAppointment.png[width="800"]
+image::BeforeAddAppointment.jpg[width="800"]
 
-After input of the command, we will have as shown below (Figure 21):
+After input of `addAppointment n/Oscars 2018 st/18:00 sd/06-04-2018 l/Hollywood et/20:00 ed/06-04-2018 c/1`,
+the added appointment will be reflected in the calendar as shown in the figure below (Figure 21):
 
 .State of application with newly added appointment
-image::AfterAddAppointment.png[width="800"]
+image::AfterAddAppointment.jpg[width="800"]
 
+
+=== DeleteAppointment Feature
+==== Current Implementation
+
+The mechanism to delete an appointment is facilitated by the `DeleteAppointmentCommand`, which resides inside `Logic`,
+and `deleteAppointment` in `Model`. It supports the deletion of an appointment.
+Deletion of an appointment can only be done when the `CalendarPanel` is in appointment list view, instead of showing
+calendars. The command requires users to put in an index which represents the appointment to be deleted. This index is
+taken from the currently displayed appointment list.
+
+The snippet code below shows the implementation of `execute` in `DeleteAppointmentCommand`:
+
+[source,java]
+----
+public class DeleteAppointmentCommand extends Command {
+    ...
+    public static final String MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS = "List of appointments must be shown "
+            + "before deleting an appointment";
+    public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
+    public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
+            + "Switching back to calendar view by day\n"
+            + "Currently showing %1$s calendar";
+    ...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        // throw exception if the user is not currently viewing an appointment list
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
+        apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
+        List<Appointment> currentAppointmentList = model.getAppointmentList();
+
+        // if the list becomes empty, switch back to combined calendar day view
+        if (currentAppointmentList.size() < 1) {
+            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+
+            Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
+            if (currentCalendarOwner == null) {
+                return new CommandResult(
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                                "combined"));
+            } else {
+                return new CommandResult(
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                                currentCalendarOwner.getName().toString() + "'s"));
+            }
+        }
+
+        // if the list is not empty yet, update appointment list view
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(currentAppointmentList));
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
+    }
+
+    ...
+}
+----
+From the snippet above, it can be seen that `DeleteAppointmentCommand` changes `CalendarPanel` back to combined
+calendar view if there is no more appointment in the appointment list after deletion. Otherwise, the appointment list
+with the specified appointment deleted will be shown.
+
+The snippet code below shows the implementation of `deleteAppointment` in `Model`:
+
+[source,java]
+----
+public class ModelManager extends ComponentManager implements Model {
+    ...
+    @Override
+    public Appointment deleteAppointment(int index) throws CommandException {
+        Appointment apptToDelete = getChosenAppointment(index);
+        apptToDelete.removeAppointment();
+        indicateAppointmentListChanged();
+
+        apptToDelete = removeAppointmentFromInternalList(index);
+
+        if (getAppointmentList().size() < 1) {
+            setIsListingAppointments(false);
+            setCelebCalendarViewPage(DAY_VIEW_PAGE);
+        }
+        return apptToDelete;
+    }
+
+    /** Makes changes to model's internal appointment list */
+    private Appointment removeAppointmentFromInternalList(int index) {
+        return getAppointmentList().remove(index);
+
+    }
+    ...
+}
+----
+
+Note that `getAppointmentList()` retrieves the list of appointments currently being displayed.
+The method `removeAppointment` is in `Appointment` class, and removes all child entries of an appointment. For example,
+an appointment may have two celebrities attending. Then this appointment will have two child entries, one each in each
+attending celebrity's calendar. So when this appointment gets deleted, both entries should get removed as well.
+
+Suppose the current address book has two appointments in the appointment list as shown in the figure below:
+
+.State of application before executing `deleteAppointment 2`
+image::BeforeDeleteAppointment_2.png[width=""]
+
+After the successful execution of `deleteAppointment 2`, appointment list will be updated to the diagram below:
+
+.State of `PersonListPanel` after executing `removeTag friends`
+image::AfterDeleteAppointment_2.png[width=""]
+
+The following sequence diagram shows the interaction within classes in `Logic` to process `removeTag` command:
+
+.Sequence diagram of deleteAppointment command
+image::DeleteAppointmentCommand-logic-seq-diagram.png[width=""]
+
+==== Design Considerations
+===== Aspect: Status of `CalendarPanel` after deletion of the only appointment
+* **Alternative 1 (current choice):** Switch back to combined calendar view
+** Pros: Keeps consistent with `listAppointment` as CelebManager does not show an empty list when there is no
+appointment to list, but instead outputs an error message.
+** Cons: Makes it difficult for users to see if the appointment gets deleted correctly.
+* **Alternative 2:** Stay at the appointment list view and shows an empty list
+** Pros: Shows the effect of deletion immediately.
+** Cons: Becomes inconsistent with `listAppointment` command's inability to show an empty list when there is no
+appointment to list.
+* **Alternative 3:** Switch back to combined calendar view and goes to the day when the deleted appointment should
+happen
+** Pros: Keeps consistent with `listAppointment` while making it easy for users to check if the appointment gets
+deleted visually on calendar.
+** Cons: Takes long time to run.
+
+==== Aspect: Undoability of `deleteAppointment` command
+* **Alternative 1 (current choice):** Cannot be undone
+** Pros: Needs not remember previous appointments' and calendar's status.
+** Cons: Cannot restore deletions made by mistake.
+* **Alternative 2:** Can be undone
+** Pros: Can restore deletions made by mistake.
+** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
+in UI component while appointments in Model component.
+
+// tag::viewAppointment[]
+=== ViewAppointment Feature
+==== Current Implementation
+The ViewAppointment mechanism is facilitated by the `ViewAppointmentCommand`, which resides inside `Logic`. It supports the viewing of a specific appointment
+in the `ResultDisplayPanel` UI by displaying the `Appointment` details. The specific `Appointment` is selected using an index based on the list generated by `ListAppointmentCommand`.
+ This command inherits from `Command` so it *does not support the undo/redo feature*.
+
+The input index is *one-based* which means that the smallest possible index is '1' and the largest possible index is the size of list
+generated by `ListAppointmentCommand` (total number of `Appointment`).
+
+As this command relies on the list generated by `ListAppointmentCommand`, the command retrieves the start (earliest) and end (latest) date
+from `ListAppointmentCommand`, which is used to generate the appointment list internally from the `StorageCalendar` in `Model`.
+This is done by `getChosenAppointment()` method.
+
+The snippet code below shows the code that retrieves the selected appointment.
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+        selectedAppointment = model.getChosenAppointment(chosenIndex);
+        try {
+            ShowLocationCommand showLocation = new ShowLocationCommand(
+                    new MapAddress(selectedAppointment.getLocation()));
+            showLocation.execute();
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        } catch (NullPointerException npe) {
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        }
+    }
+----
+
+To show the location in the `MapPanel`, `ShowLocationCommand` is used to update the location marker in `MapPanel` to
+point to the `Appointment` location.
+
+In the case where the `Appointment` do not have any location data, the result will still be displayed without the
+location being shown in the map.
+
+The diagram below in figure 32 shows the sequence diagram of `ViewAppointmentCommand`.
+
+.Sequence Diagram of `viewAppointment` Command
+image::ViewAppointmentSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `viewAppointment`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline.
+
+===== Aspect: Inclusion of showing location on map
+* **Alternative 1 (current choice):** Show location of appointment on map
+** Pros: Reduces the hassle of keying an extra command to show `Appointment` location on map.
+** Cons: Reduces independent usage of `ShowLocationCommand`.
+* **Alternative 2:** Does not show location on map
+** Pros: Reduces unnecessary showing of location.
+** Cons: Requires an extra command input to show location when required.
 
 ////
 === Logging
@@ -943,66 +1177,6 @@ image::EstimateRouteSequenceDiagram.png[width=""]
 * **Alternative 2:** Use `Appointment` index
 ** Pros: Reduces the amount of typing.
 ** Cons: Restricts the use of function, as without an appointment index you will not be able to use it.
-
-
-// tag::viewAppointment[]
-=== ViewAppointment Feature
-==== Current Implementation
-The ViewAppointment mechanism is facilitated by the `ViewAppointmentCommand`, which resides inside `Logic`. It supports the viewing of a specific appointment
-in the `ResultDisplayPanel` UI by displaying the `Appointment` details. The specific `Appointment` is selected using an index based on the list generated by `ListAppointmentCommand`.
- This command inherits from `Command` so it *does not support the undo/redo feature*.
-
-The input index is *one-based* which means that the smallest possible index is '1' and the largest possible index is the size of list
-generated by `ListAppointmentCommand` (total number of `Appointment`).
-
-As this command relies on the list generated by `ListAppointmentCommand`, the command retrieves the start (earliest) and end (latest) date
-from `ListAppointmentCommand`, which is used to generate the appointment list internally from the `StorageCalendar` in `Model`.
-This is done by `getChosenAppointment()` method.
-
-The snippet code below shows the code that retrieves the selected appointment.
-[source,java]
-----
-    public CommandResult execute() throws CommandException {
-        selectedAppointment = model.getChosenAppointment(chosenIndex);
-        try {
-            ShowLocationCommand showLocation = new ShowLocationCommand(
-                    new MapAddress(selectedAppointment.getLocation()));
-            showLocation.execute();
-            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
-        } catch (NullPointerException npe) {
-            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
-        }
-    }
-----
-
-To show the location in the `MapPanel`, `ShowLocationCommand` is used to update the location marker in `MapPanel` to
-point to the `Appointment` location.
-
-In the case where the `Appointment` do not have any location data, the result will still be displayed without the
-location being shown in the map.
-
-The diagram below in figure 32 shows the sequence diagram of `ViewAppointmentCommand`.
-
-.Sequence Diagram of `viewAppointment` Command
-image::ViewAppointmentSequenceDiagram.png[width=""]
-
-==== Design Considerations
-
-===== Aspect: Implementation of `viewAppointment`
-* **Alternative 1 (current choice):** Extend `Command`
-** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
-** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
-* **Alternative 2:** Extend `UndoableCommand`
-** Pros: Allows for command to have the undo/redo function.
-** Cons: Requires more work that may not fit in with our timeline.
-
-===== Aspect: Inclusion of showing location on map
-* **Alternative 1 (current choice):** Show location of appointment on map
-** Pros: Reduces the hassle of keying an extra command to show `Appointment` location on map.
-** Cons: Reduces independent usage of `ShowLocationCommand`.
-* **Alternative 2:** Does not show location on map
-** Pros: Reduces unnecessary showing of location.
-** Cons: Requires an extra command input to show location when required.
 
 
 == Documentation
