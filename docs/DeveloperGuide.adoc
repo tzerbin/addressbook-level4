@@ -806,7 +806,7 @@ image::AfterDeleteAppointment_2.png[width=""]
 
 The following sequence diagram shows the interaction within classes in `Logic` to process `removeTag` command:
 
-.Sequence diagram of removeTag command
+.Sequence diagram of deleteAppointment command
 image::DeleteAppointmentCommand-logic-seq-diagram.png[width=""]
 
 ==== Design Considerations
