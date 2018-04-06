@@ -744,7 +744,7 @@ In `XmlSerializableStorageCalendar`, it contains a `List` of XML formats of appo
 ==== Current Implementation
 
 The ShowLocation mechanism is facilitated by the `ShowLocationCommand`, which resides inside `Logic`. It supports the viewing of location
-in the `MapPanel` UI by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the latitude and longitude of the
+in the `MapPanel` by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the latitude and longitude of the
 location and identifying it with a location marker. This command inherits from `Command` so it *does not support the undo/redo feature*.
 
 The following figure shows the marker that is used to identify the location in the `MapPanel`:
@@ -762,7 +762,7 @@ Similar to the other commands like `FindCommand` *it will not be identified by t
 
 This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
  the difference in address specification details as the `Address` model is too specific for the command to work.
-An example would be the details of unit number (e.g #11-111) which will not be valid for this command.
+An example would be the details of unit number (e.g #11-111) which will result in an invalid command or inaccurate result.
 
 The main difference between both model is shown below in the two code snippets.
 
@@ -816,7 +816,7 @@ public class MapAddress {
 ----
 The difference to note is the `isValidAddress` method, where `Address` only checks for *blank space* whereas `MapAddress`
 checks for *blank space and the validity of location in google server*. Thus, making the command more restrictive to location,
- road, block name and postal code. Any details more than that would result in a higher possibility of it being invalid or inaccurate.
+ road, block name and postal code. Any details more than that, would result in a higher possibility of it being invalid or inaccurate.
 
 This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
@@ -841,6 +841,9 @@ image::AfterShowLocationInput.png[width="400"]
 
 Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
 
+[NOTE]
+Whenever an invalid `showlocation` command is done, any existing location marker or route will be removed from the map.
+
 The following sequence diagram shows how the command works:
 
 .Sequence Diagram of `showLocation` Command
@@ -850,7 +853,7 @@ image::ShowLocationSequenceDiagram.png[width=""]
 
 ===== Aspect: Implementation of `showLocationCommand`
 * **Alternative 1 (current choice):** Extend `Command`
-** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
+** Pros: Allows new developers to understand easily as the command is at the same abstraction level as other commands.
 ** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
 * **Alternative 2:** Extend `UndoableCommand`
 ** Pros: Allows for command to have the undo/redo function.
@@ -869,7 +872,7 @@ image::ShowLocationSequenceDiagram.png[width=""]
 ==== Current Implementation
 
 The EstimateRoute mechanism is facilitated by the `EstimateRouteCommand`, which resides inside `Logic`. It supports the viewing of estimated route
-in the `MapPanel` UI by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the new route.
+in the `MapPanel` by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the new route.
 
 
 
@@ -886,7 +889,7 @@ Similar to the other commands like `FindCommand` *it will not be identified by t
 
 This command is similar to the `ShowLocation` feature which does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to the difference in address specification details as the `Address` model is too specific for the command to work.
 Even if it works the results may not be accurate.
-An example would be the details of unit number (e.g #11-111) which will not be accurate for this command.
+An example would be the details of unit number (e.g #11-111) which will result in an invalid command or inaccurate results.
 
 This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
@@ -911,7 +914,10 @@ After the input of "estimateRoute sma/Punggol ema/NUS" the `MapPanel` will be up
 .State of `MapPanel` after `CommandInput`
 image::AfterEstimateRouteInput.png[width="400"]
 
-Any subsequent `estimateRoute` command will remove any existing marker or route and update the `MapPanel` with the new route.
+Any subsequent `estimateRoute` command will remove any existing marker or route before updating the `MapPanel` with the new route.
+
+[NOTE]
+Whenever an invalid `estimateRoute` command is done, any existing location marker or route will be removed from the map.
 
 The following sequence diagram shows how the command works:
 
@@ -922,7 +928,7 @@ image::EstimateRouteSequenceDiagram.png[width=""]
 
 ===== Aspect: Implementation of `estimateCommand`
 * **Alternative 1 (current choice):** Extend `Command`
-** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
+** Pros: Allows new developers to understand easily as the command is at the same abstraction level as other commands.
 ** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
 * **Alternative 2:** Extend `UndoableCommand`
 ** Pros: Allows for command to have the undo/redo function.
@@ -937,19 +943,19 @@ image::EstimateRouteSequenceDiagram.png[width=""]
 ** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
 
 ===== Aspect: Input using appointment index
-* **Alternative 1 (current choice):** Use Location name
+* **Alternative 1 (current choice):** Use `Location` name
 ** Pros: Allows the function to be used independently
 ** Cons: Requires keying in of location instead of just an index.
 * **Alternative 2:** Use `Appointment` index
 ** Pros: Reduces the amount of typing.
-** Cons: Restricts the use of function, as without an appointment index you will not be able to use it.
+** Cons: Restricts the use of function as without an appointment index you will not be able to use it.
 
 
 // tag::viewAppointment[]
 === ViewAppointment Feature
 ==== Current Implementation
 The ViewAppointment mechanism is facilitated by the `ViewAppointmentCommand`, which resides inside `Logic`. It supports the viewing of a specific appointment
-in the `ResultDisplayPanel` UI by displaying the `Appointment` details. The specific `Appointment` is selected using an index based on the list generated by `ListAppointmentCommand`.
+in the `ResultDisplayPanel`  by displaying the `Appointment` details. The specific `Appointment` is selected using an index based on the list generated by `ListAppointmentCommand`.
  This command inherits from `Command` so it *does not support the undo/redo feature*.
 
 The input index is *one-based* which means that the smallest possible index is '1' and the largest possible index is the size of list
@@ -980,6 +986,9 @@ point to the `Appointment` location.
 
 In the case where the `Appointment` do not have any location data, the result will still be displayed without the
 location being shown in the map.
+
+[NOTE]
+Whenever an `Appintment` has no location data, any existing location marker or route will be removed from the map.
 
 The diagram below in figure 32 shows the sequence diagram of `ViewAppointmentCommand`.
 
