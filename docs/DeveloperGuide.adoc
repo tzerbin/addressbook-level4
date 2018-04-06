@@ -686,12 +686,13 @@ image::AddAppointmentSequenceDiagram.png[width=""]
 The figure below (Figure 20) shows the state of the application before input of the `AddAppointmentCommand`:
 
 .State of application without any appointments
-image::BeforeAddAppointment.png[width="800"]
+image::BeforeAddAppointment.jpg[width="800"]
 
-After input of the command, we will have as shown below (Figure 21):
+After input of `addAppointment n/Oscars 2018 st/18:00 sd/06-04-2018 l/Hollywood et/20:00 ed/06-04-2018 c/1`,
+the added appointment will be reflected in the calendar as shown in the figure below (Figure 21):
 
 .State of application with newly added appointment
-image::AfterAddAppointment.png[width="800"]
+image::AfterAddAppointment.jpg[width="800"]
 
 
 === DeleteAppointment Feature
