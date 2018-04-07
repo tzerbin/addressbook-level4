@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import java.time.LocalDate;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.calendar.ListAppointmentCommand;
 
 //@@author: WJY-norainu
