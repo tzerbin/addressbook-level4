@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import java.time.LocalDate;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.calendar.ViewDateCommand;
 
 //@@author: WJY-norainu
@@ -50,6 +51,6 @@ public class ViewDateCommandParserTest {
 
     @Test
     public void parse_invalidDate_throwsParseException() {
-        assertParseFailure(parser, "31-02-2018", MESSAGE_INVALID_DATE);
+        assertParseFailure(parser, "31-02", MESSAGE_INVALID_DATE);
     }
 }
