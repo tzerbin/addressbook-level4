@@ -5,7 +5,6 @@ import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import org.joda.time.DateTime;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowCalendarBasedOnDateEvent;
