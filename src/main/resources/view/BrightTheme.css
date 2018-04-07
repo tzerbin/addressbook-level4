@@ -1,4 +1,4 @@
-<!-- @@author Damienskt -->
+<!-- @@author Damienskt reused-->
 .background {
     -fx-background-color: derive(#e8e8e8, 20%);
     background-color: #e8e8e8; /* Used in the default.html file */
@@ -85,7 +85,7 @@
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    -fx-background-color: derive(#e8e8e8, 20%);
+    -fx-background-color: linear-gradient(#e2e2e2, white);
 }
 
 .list-view {
@@ -134,11 +134,11 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#fcfcfc, 20%);
+     -fx-background-color: #fcfcfc;
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#e8e8e8, 20%);
+     -fx-background-color: derive(#e2e2e2, 20%);
      -fx-border-color: derive(black, 10%);
      -fx-border-top-width: 1px;
 }
@@ -150,7 +150,7 @@
 }
 
 .status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: white;
     -fx-text-fill: black;
 }
 
@@ -187,7 +187,7 @@
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#e8e8e8, 30%);
+    -fx-background-color: derive(white, 30%);
 }
 
 .context-menu {
@@ -199,7 +199,7 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#e8e8e8, 20%);
+    -fx-background-color: derive(#efefef, 20%);
 }
 
 .menu-bar .label {
