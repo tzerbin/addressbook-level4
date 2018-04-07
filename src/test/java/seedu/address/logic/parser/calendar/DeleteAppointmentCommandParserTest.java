@@ -14,7 +14,7 @@ public class DeleteAppointmentCommandParserTest {
     private DeleteAppointmentCommandParser parser = new DeleteAppointmentCommandParser();
 
     @Test
-    public void parse_validArgs_returnsDeleteCommand() {
+    public void parse_validArgs_returnsDeleteAppointmentCommand() {
         assertParseSuccess(parser, "1", new DeleteAppointmentCommand(INDEX_FIRST_APPOINTMENT));
     }
 

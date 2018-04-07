@@ -2,6 +2,7 @@ package seedu.address.logic.parser.calendar;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.calendar.ViewDateCommand.FORMATTER;
+import static seedu.address.logic.commands.calendar.ViewDateCommand.MESSAGE_INVALID_DATE;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -27,7 +28,9 @@ public class ViewDateCommandParser implements Parser<ViewDateCommand> {
         }
 
         String trimmedArgs = args.trim();
-        if (FORMATTER.parse(trimmedArgs) == null) {
+        try {
+            FORMATTER.parse(trimmedArgs);
+        } catch (Exception e) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDateCommand.MESSAGE_USAGE));
         }
 
@@ -42,7 +45,7 @@ public class ViewDateCommandParser implements Parser<ViewDateCommand> {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDateCommand.MESSAGE_USAGE));
             }
         } catch (Exception e) {
-            throw new ParseException(e.getMessage());
+            throw new ParseException(MESSAGE_INVALID_DATE);
         }
         return new ViewDateCommand(date);
     }

@@ -30,6 +30,7 @@ public class ViewDateCommand extends Command {
             + "When latter is entered, YYYY will take the current year.\n"
             + "Example: " + COMMAND_WORD + " 23-04";
 
+    public static final String MESSAGE_INVALID_DATE = "The date entered is invalid";
     public static final String MESSAGE_NO_CHANGE_IN_BASE_DATE = "The current calendar is already based on %1$s";
     public static final String MESSAGE_SUCCESS = "Switched to view calendar based on %1$s";
 
@@ -59,5 +60,12 @@ public class ViewDateCommand extends Command {
             model.setIsListingAppointments(false);
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, date.format(FORMATTER)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ViewDateCommand // instanceof handles nulls
+                && date.equals(((ViewDateCommand) other).date));
     }
 }
