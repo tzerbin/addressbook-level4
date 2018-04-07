@@ -17,26 +17,10 @@ import com.google.maps.model.TravelMode;
 /**
  * Calculates distance and travel duration between two location.
  */
-public class DistanceEstimate {
+public class DistanceEstimate extends GoogleWebServices {
 
-    /**
-     * API Key required for requesting service from google server
-     */
-    //public static final String API_KEY = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
-    public static final String API_KEY = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
-
-    private GeoApiContext context;
     private String distOriginDest;
     private String travelTime;
-
-    /**
-     * Initialises access to google server
-     */
-    public DistanceEstimate() {
-        context = new GeoApiContext.Builder()
-                .apiKey(API_KEY)
-                .build();
-    }
 
     /**
      * Extract time duration details from {@code matrixDetails}
@@ -74,7 +58,7 @@ public class DistanceEstimate {
      * extracted from result {@code estimate} and stored into {@code distOriginDest} and {@code travelTime}
      */
     public void calculateDistanceMatrix(LatLng startLocation, LatLng endLocation, TravelMode modeOfTravel) {
-        DistanceMatrixApiRequest request = getApprovalForRequest(context);
+        DistanceMatrixApiRequest request = getApprovalForRequest(GoogleWebServices.getGeoApiContext());
         DistanceMatrix estimate = null;
         try {
             estimate = request.origins(startLocation)

@@ -2,7 +2,6 @@ package seedu.address.logic.map;
 
 import java.io.IOException;
 
-import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
@@ -11,25 +10,9 @@ import com.google.maps.model.LatLng;
 /**
  * Converts address to LatLng form.
  */
-public class Geocoding {
-
-    /**
-     * API Key required for requesting service from google server
-     */
-    //public static final String API_KEY = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
-    public static final String API_KEY = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
+public class Geocoding extends GoogleWebServices {
 
     private static LatLng location;
-    private GeoApiContext context;
-
-    /**
-     * Initialises access to google server
-     */
-    public Geocoding() {
-        context = new GeoApiContext.Builder()
-                .apiKey(API_KEY)
-                .build();
-    }
 
     /**
      * Send request to google server to obtain {@code results}
@@ -38,7 +21,7 @@ public class Geocoding {
      */
     public void initialiseLatLngFromAddress(String address) {
         try {
-            GeocodingResult[] results = GeocodingApi.geocode(context,
+            GeocodingResult[] results = GeocodingApi.geocode(GoogleWebServices.getGeoApiContext(),
                     address).await();
             getLocation(results);
         } catch (ApiException e) {
@@ -71,14 +54,15 @@ public class Geocoding {
     }
 
     /**
-     * Checks if the {@code address} can be found in google server
+     * Checks if the {@code address} can
+     * be found in google server
      * @param address
      * @return boolean
      */
     public boolean checkIfAddressCanBeFound(String address) {
 
         try {
-            GeocodingResult[] results = GeocodingApi.geocode(context,
+            GeocodingResult[] results = GeocodingApi.geocode(GoogleWebServices.getGeoApiContext(),
                     address).await();
             getLocation(results);
         } catch (ApiException e) {
