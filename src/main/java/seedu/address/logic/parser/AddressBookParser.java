@@ -34,6 +34,7 @@ import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.calendar.AddAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.DeleteAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.EditAppointmentCommandParser;
+import seedu.address.logic.parser.calendar.ListAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.ViewAppointmentCommandParser;
 import seedu.address.logic.parser.calendar.ViewCalendarByCommandParser;
 import seedu.address.logic.parser.calendar.ViewCalendarCommandParser;
@@ -154,7 +155,7 @@ public class AddressBookParser {
 
         case ListAppointmentCommand.COMMAND_WORD:
         case ListAppointmentCommand.COMMAND_ALIAS:
-            return new ListAppointmentCommand();
+            return new ListAppointmentCommandParser().parse(arguments);
 
         case ViewAppointmentCommand.COMMAND_WORD:
         case ViewAppointmentCommand.COMMAND_ALIAS:

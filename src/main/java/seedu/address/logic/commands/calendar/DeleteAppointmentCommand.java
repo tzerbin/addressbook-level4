@@ -73,6 +73,7 @@ public class DeleteAppointmentCommand extends Command {
      * @return CommandResult with the corresponding message
      */
     private CommandResult changeToCalendarWithDayView() {
+        model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
         EventsCenter.getInstance().post(new ShowCalendarEvent());
 

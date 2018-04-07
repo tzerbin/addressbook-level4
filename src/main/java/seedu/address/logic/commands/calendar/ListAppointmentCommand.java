@@ -3,7 +3,9 @@ package seedu.address.logic.commands.calendar;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowAppointmentListEvent;
@@ -20,20 +22,25 @@ public class ListAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "listAppointment";
     public static final String COMMAND_ALIAS = "la";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM[-yyyy]");
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Lists all appointments in a celebrity calendar within a certain date range. ";
+            + ": Lists appointments of all celebrities within the specified date range."
+            + "Parameter: [START_DATE END_DATE] (includes the space in between."
+            + " lists all appointments when no range specified.)"
+            + "START_DATE and END_DATE should be in DD-MM-YYYY or DD-MM format, including the dash."
+            + "When latter is entered, YYYY will take the current year.\n"
+            + "Example: " + COMMAND_WORD + " 23-04 01-05";
 
-    public static final String MESSAGE_SUCCESS = "Listed appointments successfully.";
+    public static final String MESSAGE_INVALID_DATE_RANGE = "Start date cannot be after end date";
+    public static final String MESSAGE_SUCCESS = "Listed appointments from $1%s to $2%s successfully.";
 
-    public static final String MESSAGE_NO_APPTS_ERROR = "No appointments to list!";
+    public static final String MESSAGE_NO_APPTS_ERROR = "No appointments to list";
 
-    private static LocalDate startDate;
-    private static LocalDate endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public ListAppointmentCommand() {
-
-    }
+    public ListAppointmentCommand() {}
 
     public ListAppointmentCommand(LocalDate startDateInput, LocalDate endDateInput) {
         requireNonNull(startDateInput);
@@ -48,23 +55,27 @@ public class ListAppointmentCommand extends Command {
         if (!model.getStorageCalendar().hasAtLeastOneAppointment()) {
             throw new CommandException(MESSAGE_NO_APPTS_ERROR);
         }
-        startDate = model.getStorageCalendar().getEarliestDate();
-        endDate = model.getStorageCalendar().getLatestDate();
+
+        if (startDate == null && endDate == null) {
+            startDate = model.getStorageCalendar().getEarliestDate();
+            endDate = model.getStorageCalendar().getLatestDate();
+        }
 
         model.setIsListingAppointments(true);
         List<Appointment> newAppointmentList =
                 model.getStorageCalendar().getAppointmentsWithinDate(startDate, endDate);
-        model.setAppointmentList(newAppointmentList);
+        model.setCurrentlyDisplayedAppointments(newAppointmentList);
         EventsCenter.getInstance().post(new ShowAppointmentListEvent(newAppointmentList));
 
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(
+                String.format(MESSAGE_SUCCESS, startDate.format(FORMATTER), endDate.format(FORMATTER)));
     }
 
-    public static LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public static LocalDate getStartDate () {
-        return startDate;
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ListAppointmentCommand // instanceof handles nulls
+                && Objects.equals(startDate, ((ListAppointmentCommand) other).startDate)
+                && Objects.equals(endDate, ((ListAppointmentCommand) other).endDate));
     }
 }

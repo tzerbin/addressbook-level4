@@ -152,6 +152,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public List<Appointment> getCurrentlyDisplayedAppointments() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setCurrentlyDisplayedAppointments(List<Appointment> appointments) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Calendar> getCelebCalendars() {
             fail("This method should not be called.");
             return null;
@@ -243,11 +254,6 @@ public class AddCommandTest {
         public int removeTag(Tag tag) {
             fail("This method should not be called.");
             return -1;
-        }
-
-        @Override
-        public void setAppointmentList(List<Appointment> appointments) {
-            fail("This method should not be called.");
         }
 
         @Override
