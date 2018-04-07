@@ -22,7 +22,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.StorageCalendarChangedEvent;
-import seedu.address.logic.commands.calendar.ListAppointmentCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
@@ -53,11 +52,12 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private final CalendarSource celebCalendarSource;
     private final StorageCalendar storageCalendar;
+    private List<Appointment> appointments;
 
     // attributes related to calendarPanel status
     private String currentCelebCalendarViewPage;
     private Celebrity currentCelebCalendarOwner;
-    private List<Appointment> appointments;
+    private List<Appointment> currentlyDisplayedAppointments;
     private boolean isListingAppointments;
     private LocalDate baseDate;
 
@@ -228,7 +228,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setAppointmentList(List<Appointment> appointments) {
+    public List<Appointment> getCurrentlyDisplayedAppointments() {
+        return this.currentlyDisplayedAppointments;
+    }
+
+    @Override
+    public void setCurrentlyDisplayedAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
     }
 
@@ -244,14 +249,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public Appointment getChosenAppointment(int chosenIndex) throws IndexOutOfBoundsException {
-        LocalDate startDate = ListAppointmentCommand.getStartDate();
-        LocalDate endDate = ListAppointmentCommand.getEndDate();
-        StorageCalendar storageCalendar = getStorageCalendar();
-        List<Appointment> listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate, endDate);
-        if (chosenIndex < 0 || chosenIndex >= listOfAppointment.size()) {
+        if (chosenIndex < 0 || chosenIndex >= currentlyDisplayedAppointments.size()) {
             throw new IndexOutOfBoundsException();
         }
-        return listOfAppointment.get(chosenIndex);
+        return currentlyDisplayedAppointments.get(chosenIndex);
     }
 
     @Override
@@ -265,6 +266,7 @@ public class ModelManager extends ComponentManager implements Model {
         Appointment apptToDelete = getChosenAppointment(index);
         apptToDelete.removeAppointment();
         removeAppointmentFromInternalList(index);
+        currentlyDisplayedAppointments.remove(apptToDelete);
         indicateAppointmentListChanged();
         return apptToDelete;
     }

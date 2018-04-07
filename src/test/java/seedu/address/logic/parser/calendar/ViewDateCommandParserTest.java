@@ -14,7 +14,8 @@ import seedu.address.logic.commands.calendar.ViewDateCommand;
 //@@author: WJY-norainu
 public class ViewDateCommandParserTest {
     private ViewDateCommandParser parser = new ViewDateCommandParser();
-    private LocalDate date = LocalDate.of(2018, 5, 1);
+    private LocalDate mayFirstCurrentYear = LocalDate.of(LocalDate.now().getYear(), 5, 1);
+    private LocalDate mayFirst2018 = LocalDate.of(2018, 5, 1);
 
     @Test
     public void parse_noInput_returnsViewDateCommand() {
@@ -23,12 +24,12 @@ public class ViewDateCommandParserTest {
 
     @Test
     public void parse_dateMonthInCorrectFormat_returnsViewDateCommand() {
-        assertParseSuccess(parser, "01-05", new ViewDateCommand(date));
+        assertParseSuccess(parser, "01-05", new ViewDateCommand(mayFirstCurrentYear));
     }
 
     @Test
     public void parse_dateMonthYearInCorrectFormat_returnsViewDateCommand() {
-        assertParseSuccess(parser, "01-05-2018", new ViewDateCommand(date));
+        assertParseSuccess(parser, "01-05-2018", new ViewDateCommand(mayFirst2018));
     }
 
     @Test

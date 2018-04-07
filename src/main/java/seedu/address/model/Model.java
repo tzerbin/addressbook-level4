@@ -82,11 +82,14 @@ public interface Model {
     /** Sets the current base date of the calendar to the specified date. */
     void setBaseDate(LocalDate date);
 
-    /** Returns the last displayed appointment list */
+    /** Returns the full appointment list that contains all appointments */
     List<Appointment> getAppointmentList();
 
-    /** Sets the appointment list to be the last displayed appointment list */
-    void setAppointmentList(List<Appointment> appointments);
+    /** Returns the currently displayed appointment list */
+    List<Appointment> getCurrentlyDisplayedAppointments();
+
+    /** Sets the currently displayed appointment list to be specified list */
+    void setCurrentlyDisplayedAppointments(List<Appointment> appointments);
 
     /**
      * Returns the chosen appointment from the displayed appointment list

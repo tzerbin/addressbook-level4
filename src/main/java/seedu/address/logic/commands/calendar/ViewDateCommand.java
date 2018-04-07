@@ -4,6 +4,7 @@ import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
@@ -66,6 +67,6 @@ public class ViewDateCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ViewDateCommand // instanceof handles nulls
-                && date.equals(((ViewDateCommand) other).date));
+                && Objects.equals(date, ((ViewDateCommand) other).date));
     }
 }
