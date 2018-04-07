@@ -5,10 +5,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_MAP_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_MAP_ADDRESS;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
+import com.google.maps.errors.ApiException;
+import com.google.maps.errors.InvalidRequestException;
+
 import org.omg.CosNaming.NamingContextExtPackage.InvalidAddress;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.map.EstimateRouteCommand;
+import seedu.address.logic.map.GoogleWebServices;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;
@@ -21,6 +25,8 @@ import seedu.address.model.map.MapAddress;
  * Reads {@code args} and checks if the input has all the necessary values
  */
 public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> {
+
+    private GoogleWebServices initialiseConnection;
     /**
      * Parses the given {@code String} of arguments in the context of the EstimateRouteCommand
      * and returns an EstimateRouteCommand object for execution
@@ -28,7 +34,10 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
      */
     @Override
     public EstimateRouteCommand parse(String args) throws ParseException {
-
+        initialiseConnection = new GoogleWebServices();
+        if(!initialiseConnection.checkInitialisedConnection()) {
+            throw new ParseException(GoogleWebServices.MESSAGE_FAIL_CONNECTION);
+        }
         ArgumentMultimap argMultiMap =
                 ArgumentTokenizer.tokenize(args, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS);
         if (!arePrefixesPresent(argMultiMap, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS)

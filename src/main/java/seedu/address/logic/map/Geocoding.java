@@ -11,25 +11,9 @@ import com.google.maps.model.LatLng;
 /**
  * Converts address to LatLng form.
  */
-public class Geocoding {
-
-    /**
-     * API Key required for requesting service from google server
-     */
-    //public static final String API_KEY = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
-    public static final String API_KEY = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
+public class Geocoding extends GoogleWebServices{
 
     private static LatLng location;
-    private GeoApiContext context;
-
-    /**
-     * Initialises access to google server
-     */
-    public Geocoding() {
-        context = new GeoApiContext.Builder()
-                .apiKey(API_KEY)
-                .build();
-    }
 
     /**
      * Send request to google server to obtain {@code results}
