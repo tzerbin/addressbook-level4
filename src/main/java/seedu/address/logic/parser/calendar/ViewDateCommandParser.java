@@ -1,6 +1,11 @@
 package seedu.address.logic.parser.calendar;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.calendar.ViewDateCommand.FORMATTER;
+import static seedu.address.logic.commands.calendar.ViewDateCommand.MESSAGE_INVALID_DATE;
+
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import seedu.address.logic.commands.calendar.ViewDateCommand;
 import seedu.address.logic.parser.Parser;
@@ -23,12 +28,24 @@ public class ViewDateCommandParser implements Parser<ViewDateCommand> {
         }
 
         String trimmedArgs = args.trim();
-        String[] arguments = trimmedArgs.split("\\s+");
+        try {
+            FORMATTER.parse(trimmedArgs);
+        } catch (Exception e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDateCommand.MESSAGE_USAGE));
+        }
+
+        int[] time = Arrays.stream(args.trim().split("-")).mapToInt(Integer::parseInt).toArray();
         LocalDate date;
         try {
-            date = LocalDate.parse(arguments[0]);
+            if (time.length == 2) {
+                date = LocalDate.of(LocalDate.now().getYear(), time[1], time[0]);
+            } else if (time.length == 3) {
+                date = LocalDate.of(time[2], time[1], time[0]);
+            } else {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewDateCommand.MESSAGE_USAGE));
+            }
         } catch (Exception e) {
-            throw new ParseException(e.getMessage());
+            throw new ParseException(MESSAGE_INVALID_DATE);
         }
         return new ViewDateCommand(date);
     }

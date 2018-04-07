@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.calendar;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.util.List;
@@ -47,42 +48,53 @@ public class DeleteAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        // throw exception if the user is not currently viewing an appointment list
         if (!model.getIsListingAppointments()) {
             throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
-        apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
-        List<Appointment> currentAppointmentList = model.getAppointmentList();
 
-        // if the list becomes empty, switch back to combined calendar day view
-        if (currentAppointmentList.size() < 1) {
-            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
-            EventsCenter.getInstance().post(new ShowCalendarEvent());
-
-            Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
-            if (currentCalendarOwner == null) {
-                return new CommandResult(
-                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
-                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
-                                "combined"));
-            } else {
-                return new CommandResult(
-                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
-                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
-                                currentCalendarOwner.getName().toString() + "'s"));
-            }
+        try {
+            apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
         }
 
-        // if the list is not empty yet, update appointment list view
-        EventsCenter.getInstance().post(new ShowAppointmentListEvent(currentAppointmentList));
+        List<Appointment> currentAppointmentList = model.getAppointmentList();
+        // if the list becomes empty, switch back to combined calendar day view
+        if (currentAppointmentList.isEmpty()) {
+            return changeToCalendarWithDayView();
+        }
 
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(currentAppointmentList));
         return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
+    }
+
+    /**
+     * sets the calendar panel to calendar
+     * @return CommandResult with the corresponding message
+     */
+    private CommandResult changeToCalendarWithDayView() {
+        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+        EventsCenter.getInstance().post(new ShowCalendarEvent());
+
+        Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
+        if (currentCalendarOwner == null) {
+            return new CommandResult(
+                    String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                            + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                            "combined"));
+        } else {
+            return new CommandResult(
+                    String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                            + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                            currentCalendarOwner.getName().toString() + "'s"));
+        }
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteAppointmentCommand
-                && Objects.equals(this.apptToDelete, ((DeleteAppointmentCommand) other).apptToDelete));
+                && Objects.equals(this.apptToDelete, ((DeleteAppointmentCommand) other).apptToDelete)
+                && this.targetIndex.equals(((DeleteAppointmentCommand) other).targetIndex));
     }
 }

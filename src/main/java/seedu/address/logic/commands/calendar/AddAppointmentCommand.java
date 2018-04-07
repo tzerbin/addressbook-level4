@@ -16,6 +16,7 @@ import java.util.Set;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarBasedOnDateEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -31,7 +32,7 @@ public class AddAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "addAppointment";
     public static final String COMMAND_ALIAS = "aa";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment.\n"
             + "Parameters: "
             + PREFIX_NAME + "APPOINTMENT NAME "
             + "[" + PREFIX_START_TIME + "START TIME] "
@@ -88,7 +89,9 @@ public class AddAppointmentCommand extends Command {
                 model.getPointsOfContactChosen(pointOfContactIndices));
         model.addAppointmentToStorageCalendar(appt);
 
-        // reset calendar view to day view
+        // reset calendar view to day view and set base date to the day when appointment starts
+        model.setBaseDate(appt.getStartDate());
+        EventsCenter.getInstance().post(new ShowCalendarBasedOnDateEvent(appt.getStartDate()));
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
         EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
         if (model.getIsListingAppointments()) {
