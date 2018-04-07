@@ -82,6 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;
+        currentlyDisplayedAppointments = new ArrayList<>();
         isListingAppointments = false;
         baseDate = LocalDate.now();
     }
@@ -234,7 +235,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void setCurrentlyDisplayedAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
+        this.currentlyDisplayedAppointments = appointments;
     }
 
     @Override
@@ -257,7 +258,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void addAppointmentToStorageCalendar(Appointment appt) {
-        getStorageCalendar().addEntry(appt);
+        storageCalendar.addEntry(appt);
+        appointments.add(appt);
         indicateAppointmentListChanged();
     }
 

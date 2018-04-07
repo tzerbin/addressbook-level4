@@ -58,7 +58,7 @@ public class DeleteAppointmentCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
         }
 
-        List<Appointment> currentAppointmentList = model.getAppointmentList();
+        List<Appointment> currentAppointmentList = model.getCurrentlyDisplayedAppointments();
         // if the list becomes empty, switch back to combined calendar day view
         if (currentAppointmentList.isEmpty()) {
             return changeToCalendarWithDayView();
