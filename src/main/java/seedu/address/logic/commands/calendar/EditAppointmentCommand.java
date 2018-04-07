@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -41,7 +42,7 @@ public class EditAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "editap";
     public static final String COMMAND_ALIAS = "ea";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an appointment. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an appointment.\n"
             + "Parameters: APPOINTMENT_INDEX (must be a positive integer)"
             + "[" + PREFIX_NAME + "APPOINTMENT NAME] "
             + "[" + PREFIX_START_TIME + "START TIME] "
@@ -79,7 +80,12 @@ public class EditAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Appointment appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
+        Appointment appointmentToEdit;
+        try {
+            appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        }
         Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
 
         // either use existing celebrity list or get new one

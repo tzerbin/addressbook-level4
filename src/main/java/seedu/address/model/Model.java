@@ -101,7 +101,7 @@ public interface Model {
     /** Removes appointment from internal StorageCalendar based on zero-based index
      *  Returns the removed appointment
      */
-    Appointment deleteAppointment(int index) throws CommandException;
+    Appointment deleteAppointment(int index) throws IndexOutOfBoundsException;
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.calendar;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX;
+
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -37,7 +39,12 @@ public class ViewAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        selectedAppointment = model.getChosenAppointment(chosenIndex);
+        try {
+            selectedAppointment = model.getChosenAppointment(chosenIndex);
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        }
+
         try {
             ShowLocationCommand showLocation = new ShowLocationCommand(
                     new MapAddress(selectedAppointment.getLocation()));
