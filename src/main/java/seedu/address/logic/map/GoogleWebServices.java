@@ -17,10 +17,11 @@ public class GoogleWebServices {
     public static final String API_KEY_2 = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
     public static final String API_KEY_3 = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
     public static final String API_KEY_4 = "AIzaSyA-gBgtvaQU4NMEmO37UJEyx5YHnuFU30E";
-    public static final String API_KEY_5 = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
-    public static final String MESSAGE_FAIL_CONNECTION = "Api key reached max daily usage, please wait till 3pm SGT for it to be reset";
+    public static final String API_KEY_5 = "AIzaSyD__AeJPs2lM6ktAoRrrYMfFfP-_mZckQI";
+    public static final String MESSAGE_FAIL_CONNECTION = "Api key reached max daily usage, "
+            + "please wait till 3pm SGT for it to be reset";
 
-    public GeoApiContext context;
+    private static GeoApiContext context;
     private String [] apiKeys;
     private boolean initialised;
 
@@ -38,8 +39,11 @@ public class GoogleWebServices {
         initialiseConnection();
     }
 
+    /**
+     * Initialise and test connection to google server
+     */
     private void initialiseConnection() {
-        for ( int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             initialised = true;
             context = new GeoApiContext.Builder()
                     .apiKey(apiKeys[i])
@@ -59,5 +63,9 @@ public class GoogleWebServices {
 
     public boolean checkInitialisedConnection() {
         return initialised;
+    }
+
+    public static GeoApiContext getGeoApiContext() {
+        return context;
     }
 }

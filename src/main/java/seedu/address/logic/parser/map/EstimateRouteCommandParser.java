@@ -5,9 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END_MAP_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_MAP_ADDRESS;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
-import com.google.maps.errors.ApiException;
-import com.google.maps.errors.InvalidRequestException;
-
 import org.omg.CosNaming.NamingContextExtPackage.InvalidAddress;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -35,7 +32,7 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
     @Override
     public EstimateRouteCommand parse(String args) throws ParseException {
         initialiseConnection = new GoogleWebServices();
-        if(!initialiseConnection.checkInitialisedConnection()) {
+        if (!initialiseConnection.checkInitialisedConnection()) {
             throw new ParseException(GoogleWebServices.MESSAGE_FAIL_CONNECTION);
         }
         ArgumentMultimap argMultiMap =

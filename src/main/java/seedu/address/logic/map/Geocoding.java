@@ -2,7 +2,6 @@ package seedu.address.logic.map;
 
 import java.io.IOException;
 
-import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
@@ -11,7 +10,7 @@ import com.google.maps.model.LatLng;
 /**
  * Converts address to LatLng form.
  */
-public class Geocoding extends GoogleWebServices{
+public class Geocoding extends GoogleWebServices {
 
     private static LatLng location;
 
@@ -22,7 +21,7 @@ public class Geocoding extends GoogleWebServices{
      */
     public void initialiseLatLngFromAddress(String address) {
         try {
-            GeocodingResult[] results = GeocodingApi.geocode(context,
+            GeocodingResult[] results = GeocodingApi.geocode(GoogleWebServices.getGeoApiContext(),
                     address).await();
             getLocation(results);
         } catch (ApiException e) {
@@ -55,14 +54,15 @@ public class Geocoding extends GoogleWebServices{
     }
 
     /**
-     * Checks if the {@code address} can be found in google server
+     * Checks if the {@code address} can
+     * be found in google server
      * @param address
      * @return boolean
      */
     public boolean checkIfAddressCanBeFound(String address) {
 
         try {
-            GeocodingResult[] results = GeocodingApi.geocode(context,
+            GeocodingResult[] results = GeocodingApi.geocode(GoogleWebServices.getGeoApiContext(),
                     address).await();
             getLocation(results);
         } catch (ApiException e) {

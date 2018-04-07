@@ -17,7 +17,7 @@ import com.google.maps.model.TravelMode;
 /**
  * Calculates distance and travel duration between two location.
  */
-public class DistanceEstimate extends GoogleWebServices{
+public class DistanceEstimate extends GoogleWebServices {
 
     private String distOriginDest;
     private String travelTime;
@@ -58,7 +58,7 @@ public class DistanceEstimate extends GoogleWebServices{
      * extracted from result {@code estimate} and stored into {@code distOriginDest} and {@code travelTime}
      */
     public void calculateDistanceMatrix(LatLng startLocation, LatLng endLocation, TravelMode modeOfTravel) {
-        DistanceMatrixApiRequest request = getApprovalForRequest(context);
+        DistanceMatrixApiRequest request = getApprovalForRequest(GoogleWebServices.getGeoApiContext());
         DistanceMatrix estimate = null;
         try {
             estimate = request.origins(startLocation)

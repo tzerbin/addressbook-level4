@@ -28,7 +28,7 @@ public class ShowLocationCommandParser implements Parser<ShowLocationCommand> {
     @Override
     public ShowLocationCommand parse(String args) throws ParseException {
         initialiseConnection = new GoogleWebServices();
-        if(!initialiseConnection.checkInitialisedConnection()) {
+        if (!initialiseConnection.checkInitialisedConnection()) {
             throw new ParseException(GoogleWebServices.MESSAGE_FAIL_CONNECTION);
         }
         ArgumentMultimap argMultiMap =
