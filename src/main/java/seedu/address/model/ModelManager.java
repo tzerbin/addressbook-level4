@@ -1,8 +1,6 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.INVALID_INDEX_CHOSEN;
-import static seedu.address.commons.core.Messages.MESSAGE_NOT_LISTING_APPOINTMENTS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
@@ -245,16 +243,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Appointment getChosenAppointment(int chosenIndex) throws CommandException {
-        if (!isListingAppointments) {
-            throw new CommandException(MESSAGE_NOT_LISTING_APPOINTMENTS);
-        }
+    public Appointment getChosenAppointment(int chosenIndex) throws IndexOutOfBoundsException {
         LocalDate startDate = ListAppointmentCommand.getStartDate();
         LocalDate endDate = ListAppointmentCommand.getEndDate();
         StorageCalendar storageCalendar = getStorageCalendar();
         List<Appointment> listOfAppointment = storageCalendar.getAppointmentsWithinDate(startDate, endDate);
         if (chosenIndex < 0 || chosenIndex >= listOfAppointment.size()) {
-            throw new CommandException(INVALID_INDEX_CHOSEN);
+            throw new IndexOutOfBoundsException();
         }
         return listOfAppointment.get(chosenIndex);
     }
@@ -266,24 +261,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public Appointment deleteAppointment(int index) throws CommandException {
+    public Appointment deleteAppointment(int index) throws IndexOutOfBoundsException {
         Appointment apptToDelete = getChosenAppointment(index);
         apptToDelete.removeAppointment();
+        removeAppointmentFromInternalList(index);
         indicateAppointmentListChanged();
-
-        apptToDelete = removeAppointmentFromInternalList(index);
-
-        if (getAppointmentList().size() < 1) {
-            setIsListingAppointments(false);
-            setCelebCalendarViewPage(DAY_VIEW_PAGE);
-        }
         return apptToDelete;
     }
 
     /** Makes changes to model's internal appointment list */
-    private Appointment removeAppointmentFromInternalList(int index) {
-        return getAppointmentList().remove(index);
-
+    private void removeAppointmentFromInternalList(int index) {
+        getAppointmentList().remove(index);
     }
 
 

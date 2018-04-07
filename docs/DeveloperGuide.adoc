@@ -34,7 +34,7 @@ This section will discuss the setting up of project for development.
 
 === Prerequisites
 
-There are two prerequisites before you can work on this software.
+There are two prerequisites before you can work on this software. They are (in the order you should obtain them):
 
 . *Java Development Kit* (JDK) +
 The Java programming language is used in this project. To be able to work with this project, you will need to have JDK version `1.8.0_60` installed.
@@ -591,7 +591,7 @@ To be able to create appointments, add them to calendars and view the calendar w
 [NOTE]
 Inheritance from the base classes of the external package is done so that we can add in additional methods as necessary.
 
-Right now, the addAppointment command takes in up to 6 parameters. They are:
+Right now, the addAppointment command takes in up to 8 parameters. They are:
 
 * Appointment name [Compulsory field]
 * Location
@@ -599,52 +599,57 @@ Right now, the addAppointment command takes in up to 6 parameters. They are:
 * Start Time
 * End Date
 * End Time
+* Celebrity indices
+* Point of Contact Indices
 
 The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:
 
 [source,java]
 ----
 public AddAppointmentCommand parse(String args) throws ParseException {
-    ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
-            PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE);
+        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
+                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY,
+                PREFIX_POINT_OF_CONTACT);
 
-    if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
-            || !argMultiMap.getPreamble().isEmpty()) {
-        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                AddAppointmentCommand.MESSAGE_USAGE));
-    }
+        if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
+                || !argMultiMap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
+        }
 
-    try {
-        String appointmentName = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_NAME)).get();
-        Optional<LocalTime> startTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_START_TIME));
-        Optional<LocalDate> startDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_START_DATE));
-        Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
-        Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
-        Optional<String> locationInput = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_LOCATION));
+        try {
+            String appointmentName = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_NAME)).get();
+            Optional<LocalTime> startTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_START_TIME));
+            Optional<LocalDate> startDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_START_DATE));
+            Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
+            Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
+            Optional<MapAddress> locationInput = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_LOCATION));
+            Set<Index> celebrityIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_CELEBRITY));
+            Set<Index> pointOfContactIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_POINT_OF_CONTACT));
 
-        String location = null;
-        LocalTime startTime = LocalTime.now();
-        LocalDate startDate = LocalDate.now();
-        LocalTime endTime = LocalTime.now();
-        LocalDate endDate = LocalDate.now();
+            MapAddress location = null;
+            LocalTime startTime = LocalTime.now();
+            LocalDate startDate = LocalDate.now();
+            LocalTime endTime = LocalTime.now();
+            LocalDate endDate = LocalDate.now();
 
-        if (startTimeInput.isPresent()) {
-            startTime = startTimeInput.get();
-            endTime = startTimeInput.get();
-        }
-        if (endTimeInput.isPresent()) {
-            endTime = endTimeInput.get();
-        }
-        if (startDateInput.isPresent()) {
-            startDate = startDateInput.get();
-            endDate = startDateInput.get();
-        }
-        if (endDateInput.isPresent()) {
-            endDate = endDateInput.get();
-        }
-        if (locationInput.isPresent()) {
-            location = locationInput.get();
-        }
+            if (startTimeInput.isPresent()) {
+                startTime = startTimeInput.get();
+                endTime = startTimeInput.get();
+            }
+            if (endTimeInput.isPresent()) {
+                endTime = endTimeInput.get();
+            }
+            if (startDateInput.isPresent()) {
+                startDate = startDateInput.get();
+                endDate = startDateInput.get();
+            }
+            if (endDateInput.isPresent()) {
+                endDate = endDateInput.get();
+            }
+            if (locationInput.isPresent()) {
+                location = locationInput.get();
+            }
         ...
     }
     ...
@@ -694,6 +699,18 @@ the added appointment will be reflected in the calendar as shown in the figure b
 .State of application with newly added appointment
 image::AfterAddAppointment.jpg[width="800"]
 
+==== Design Considerations
+===== Aspect: Ability to undo `addAppointment` command
+* **Alternative 1 (current choice):** Cannot be undone
+** Pros: Needs not remember previous state of the storage calendar.
+** Pros: If user made small mistake in one or more of the fields, can use `editAppointment` command instead of undo and re-add
+the new appointment with the correct fields.
+** If user instead just want to cancel the appointment, can use `deleteAppointment` command
+** Cons: Cannot remove or edit additions made by mistake without looking at the list of appointments.
+* **Alternative 2:** Can be undone
+** Pros: Can remove additions made by mistake.
+** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
+in UI component while appointments in Model component.
 
 === DeleteAppointment Feature
 ==== Current Implementation
@@ -825,7 +842,7 @@ happen
 deleted visually on calendar.
 ** Cons: Takes long time to run.
 
-==== Aspect: Undoability of `deleteAppointment` command
+===== Aspect: Ability to undo `deleteAppointment` command
 * **Alternative 1 (current choice):** Cannot be undone
 ** Pros: Needs not remember previous appointments' and calendar's status.
 ** Cons: Cannot restore deletions made by mistake.

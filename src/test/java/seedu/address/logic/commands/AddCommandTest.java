@@ -262,7 +262,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public Appointment deleteAppointment(int index) throws CommandException {
+        public Appointment deleteAppointment(int index) throws IndexOutOfBoundsException {
             fail("This method should not be called");
             return null;
         }

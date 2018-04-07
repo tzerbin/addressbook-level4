@@ -546,8 +546,8 @@ Format: `viewDate [DATE]`
 ****
 * Changes base date to the specified `date`.
 * When no date is given, it takes on the value of current date.
-* The date *must be in the format of* `YYYY-MM-DD`.
-* The date *must be* a valid date, eg, `2018-13-01` and `2018-02-30` are not valid dates.
+* The date *must be in the format of* `DD-MM-YYYY` or `DD-MM`. For the latter, year will be set to current year.
+* The date *must be* a valid date, eg, `01-13-2018` and `30-02` are not valid dates.
 * This command can take slightly longer to load than other view-related commands.
 ****
 
@@ -564,13 +564,13 @@ be performed after performing `viewDate [SOME OTHER DATE]`.
 ====
 
 
-* `viewDate 2018-05-03` +
-Changes the base date of calendar to `2018-05-03` and displays the calendar by day for `2018-05-03`.
+* `viewDate 03-05-2018` +
+Changes the base date of calendar to `03-05-2018` and displays the calendar by day for `03-05-2018`.
 
 [TIP]
 ====
 Change in base date allows you to view calendar for different weeks and months.
-For example, after `viewDate 2018-05-03`, you can type `viewCalendarBy week` - which will show you the
+For example, after `viewDate 03-05-2018`, you can type `viewCalendarBy week` - which will show you the
 calendar for the first week of May of 2018, or `viewCalendarBy month` - which will show you the calendar
 for May of 2018.
 ====
@@ -699,4 +699,4 @@ e.g.`viewCalendar 1`
 e.g.`viewCalendarBy week`
 * *View Combined Calendar* : `viewCombinedCalendar`
 * *View Date* : `viewDate [DATE]` +
-e.g.`viewDate 2018-05-03`
+e.g.`viewDate 03-05-2018`
