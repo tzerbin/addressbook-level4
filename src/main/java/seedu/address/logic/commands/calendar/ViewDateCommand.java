@@ -3,7 +3,9 @@ package seedu.address.logic.commands.calendar;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+import org.joda.time.DateTime;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowCalendarBasedOnDateEvent;
@@ -20,12 +22,14 @@ public class ViewDateCommand extends Command {
 
     public static final String COMMAND_WORD = "viewDate";
     public static final String COMMAND_ALIAS = "vd";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM[-yyyy]");
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Displays the calendar which bases on the specified "
             + "date.\n"
             + "Parameter: [DATE] (goes back to current date when no parameter is given.)"
-            + "DATE should be in YYYY-MM-DD format\n"
-            + "Example: " + COMMAND_WORD + " 2018-04-23";
+            + "DATE should be in DD-MM-YYYY or DD-MM format, including the dash."
+            + "When latter is entered, YYYY will take the current year.\n"
+            + "Example: " + COMMAND_WORD + " 23-04";
 
     public static final String MESSAGE_NO_CHANGE_IN_BASE_DATE = "The current calendar is already based on %1$s";
     public static final String MESSAGE_SUCCESS = "Switched to view calendar based on %1$s";
@@ -38,10 +42,11 @@ public class ViewDateCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        // view a date that is already the base
+        // view a date that is already the base date
         if (model.getBaseDate().equals(date)
                 && !model.getIsListingAppointments()) {
-            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_BASE_DATE, date.toString()));
+            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_BASE_DATE,
+                    date.format(FORMATTER)));
         }
 
         model.setBaseDate(date);
@@ -54,6 +59,6 @@ public class ViewDateCommand extends Command {
             EventsCenter.getInstance().post(new ShowCalendarEvent());
             model.setIsListingAppointments(false);
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, date.toString()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, date.format(FORMATTER)));
     }
 }

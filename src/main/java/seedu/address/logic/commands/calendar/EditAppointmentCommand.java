@@ -41,7 +41,7 @@ public class EditAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "editap";
     public static final String COMMAND_ALIAS = "ea";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an appointment. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an appointment.\n"
             + "Parameters: APPOINTMENT_INDEX (must be a positive integer)"
             + "[" + PREFIX_NAME + "APPOINTMENT NAME] "
             + "[" + PREFIX_START_TIME + "START TIME] "
