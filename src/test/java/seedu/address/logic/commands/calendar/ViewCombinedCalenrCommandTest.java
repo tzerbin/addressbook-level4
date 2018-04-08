@@ -1,7 +1,5 @@
 package seedu.address.logic.commands.calendar;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.calendar.ViewCombinedCalendarCommand.MESSAGE_ALREADY_IN_COMBINED_VIEW;
@@ -50,24 +48,6 @@ public class ViewCombinedCalenrCommandTest {
         ViewCombinedCalendarCommand viewCombinedCalendarCommand = prepareCommand();
 
         assertCommandFailure(viewCombinedCalendarCommand, model, MESSAGE_ALREADY_IN_COMBINED_VIEW);
-    }
-
-    @Test
-    public void equals() {
-        ViewCombinedCalendarCommand viewCombinedCalendarCommand = prepareCommand();
-
-        // same object -> returns true
-        assertTrue(viewCombinedCalendarCommand.equals(viewCombinedCalendarCommand));
-
-        // same values -> returns true
-        ViewCombinedCalendarCommand viewCombinedCalendarCommandCopy = prepareCommand();
-        assertTrue(viewCombinedCalendarCommand.equals(viewCombinedCalendarCommandCopy));
-
-        // different types -> returns false
-        assertFalse(viewCombinedCalendarCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(viewCombinedCalendarCommand.equals(null));
     }
 
     /**
