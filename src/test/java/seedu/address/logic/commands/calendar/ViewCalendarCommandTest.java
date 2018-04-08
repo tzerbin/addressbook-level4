@@ -16,8 +16,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_ROBERT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
 
-import javax.swing.text.View;
-
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
