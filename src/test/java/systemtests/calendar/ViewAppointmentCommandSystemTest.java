@@ -17,10 +17,8 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void viewAppointment() {
 
-        /* ---------------------------- Perform invalid viewAppointment operations --------------------------------- */
-        assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " "
-                + 2 , ViewAppointmentCommand.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         executeCommand("la");
+        /* ---------------------------- Perform invalid viewAppointment operations --------------------------------- */
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " " + 0, ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " ads" , ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " "
