@@ -52,6 +52,7 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void execute_deletesTheOnlyAppointmentWithCombinedCalendar_successAndChangeToCombinedCalendar() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setIsListingAppointments(true);
         model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
