@@ -77,7 +77,6 @@ public class EstimateRouteCommandSystemTest extends AddressBookSystemTest {
      * 3. Result display box displays the success message of executing {@code EstimateRouteCommand}.<br>
      * 4. Shows the distance and time of travel in result display.<br>
      * 5. Calendar panel and selected card remain unchanged.<br>
-     * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)

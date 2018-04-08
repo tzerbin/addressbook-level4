@@ -69,7 +69,6 @@ public class ShowLocationCommandSystemTest extends AddressBookSystemTest {
      * 3. Result display box displays the success message of executing {@code ShowLocationCommand}.<br>
      * 4. Shows the location marker of {@code address} in Maps GUI.<br>
      * 5. Calendar panel and selected card remain unchanged.<br>
-     * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
