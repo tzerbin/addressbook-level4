@@ -134,7 +134,7 @@ public class DeleteAppointmentCommandTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     * Returns a {@code DeleteAppointmentCommand} with the parameter {@code index}.
      */
     private DeleteAppointmentCommand prepareCommand(Index index) {
         DeleteAppointmentCommand deleteAppointmentCommand = new DeleteAppointmentCommand(index);

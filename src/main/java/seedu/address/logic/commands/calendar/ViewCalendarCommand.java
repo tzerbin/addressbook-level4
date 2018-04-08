@@ -55,10 +55,10 @@ public class ViewCalendarCommand extends Command {
 
         Celebrity celebrityToShowCalendar = (Celebrity) personToShowCalendar;
         // the celebrity's calendar is currently being shown
-        if (celebrityToShowCalendar == model.getCurrentCelebCalendarOwner()
+        if (celebrityToShowCalendar.equals(model.getCurrentCelebCalendarOwner())
                 && !model.getIsListingAppointments()) {
-            throw new CommandException((String.format(MESSAGE_NO_CHANGE_IN_CALENDAR,
-                    celebrityToShowCalendar.getName().toString())));
+            throw new CommandException(String.format(MESSAGE_NO_CHANGE_IN_CALENDAR,
+                    celebrityToShowCalendar.getName().toString()));
         }
 
         model.setCelebCalendarOwner(celebrityToShowCalendar);
