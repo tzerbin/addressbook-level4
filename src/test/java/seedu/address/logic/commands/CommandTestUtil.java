@@ -101,6 +101,8 @@ public class CommandTestUtil {
     public static final String INVALID_APPT_LOCATION_DESC = " " + PREFIX_LOCATION + " "; // cant be just empty space
     public static final String INVALID_START_TIME = " " + PREFIX_START_TIME + "23:61"; // Minute cannot be more than 60
     public static final String INVALID_START_DATE = " " + PREFIX_START_DATE + "31-02-2018"; // There is no Feb 31st
+    public static final String INVALID_END_TIME = " " + PREFIX_END_TIME + "23:61"; // Minute cannot be more than 60
+    public static final String INVALID_END_DATE = " " + PREFIX_END_DATE + "31-02-2018"; // There is no Feb 31st
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
