@@ -25,9 +25,11 @@ public class ViewAppointmentCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + "1";
 
+    public static final String MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS = "List of appointments must be shown "
+            + "before viewing an appointment";
     public static final String MESSAGE_SUCCESS = "Selected appointment details:\n";
 
-    private Appointment selectedAppointment;
+    private static Appointment selectedAppointment;
     private int chosenIndex;
 
     /**
@@ -39,6 +41,9 @@ public class ViewAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
         try {
             selectedAppointment = model.getChosenAppointment(chosenIndex);
         } catch (IndexOutOfBoundsException iobe) {
@@ -55,7 +60,7 @@ public class ViewAppointmentCommand extends Command {
         }
     }
 
-    private String getAppointmentDetailsResult () {
+    public static String getAppointmentDetailsResult () {
         return "Appointment Name: " + selectedAppointment.getTitle() + "\n"
                 + "Start Date: " + selectedAppointment.getStartDate() + "\n"
                 + "Start Time: " + selectedAppointment.getStartTime() + "\n"
@@ -64,5 +69,12 @@ public class ViewAppointmentCommand extends Command {
                 + "Location: " + selectedAppointment.getLocation() + "\n"
                 + "Celebrities attending: " + selectedAppointment.getCelebritiesAttending() + "\n"
                 + "Points of Contact: " + selectedAppointment.getPointsOfContact();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ViewAppointmentCommand
+                && this.chosenIndex == (((ViewAppointmentCommand) other).chosenIndex));
     }
 }

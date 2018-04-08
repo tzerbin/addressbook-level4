@@ -18,12 +18,19 @@ public class DistanceEstimateTest {
 
     @Test
     public void isValidStartAndEndAddress() {
+
         test = new DistanceEstimate();
+
         Geocoding convertToLatLng = new Geocoding();
+
+        //Initialise start location
         convertToLatLng.initialiseLatLngFromAddress("Hollywood");
         start = convertToLatLng.getLatLng();
+
+        //Initialise end location
         convertToLatLng.initialiseLatLngFromAddress("NUS");
         end = convertToLatLng.getLatLng();
+
         // null start, end addresses and mode of travel
         Assert.assertThrows(NullPointerException.class, () -> test.calculateDistanceMatrix
                 (null, null, null));
@@ -37,5 +44,21 @@ public class DistanceEstimateTest {
         start = convertToLatLng.getLatLng();
         test.calculateDistanceMatrix(start, end, TravelMode.DRIVING);
         assertNotEquals(test.getTravelTime(), "null"); // long address
+
+        // Invalid start LatLng and valid end LatLng
+        start = new LatLng(-1, -1);
+        test.calculateDistanceMatrix(start, end, TravelMode.DRIVING);
+        assertEquals(test.getTravelTime(), "null"); // long address
+
+        // Valid start LatLng and Invalid end LatLng
+        end = new LatLng(-1, -1);
+        test.calculateDistanceMatrix(start, end, TravelMode.DRIVING);
+        assertEquals(test.getTravelTime(), "null"); // long address
+
+        // Invalid start LatLng and invalid end LatLng
+        start = new LatLng(-10, -10);
+        end = new LatLng(-1, -1);
+        test.calculateDistanceMatrix(start, end, TravelMode.DRIVING);
+        assertEquals(test.getTravelTime(), "null"); // long address
     }
 }

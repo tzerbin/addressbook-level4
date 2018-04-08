@@ -35,6 +35,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.calendar.ViewAppointmentCommand;
 import seedu.address.logic.commands.map.EstimateRouteCommand;
 import seedu.address.logic.commands.map.ShowLocationCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -221,6 +222,20 @@ public class AddressBookParserTest {
                 EstimateRouteCommand.COMMAND_WORD + " " + PREFIX_START_MAP_ADDRESS + startAddress.toString()
                         + " " + PREFIX_END_MAP_ADDRESS + endAddress.toString());
         assertEquals(new EstimateRouteCommand(startAddress, endAddress), command);
+    }
+
+    @Test
+    public void parseCommand_viewAppointment() throws Exception {
+        ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
+                ViewAppointmentCommand.COMMAND_WORD + " " + 1);
+        assertEquals(new ViewAppointmentCommand(1), command);
+    }
+
+    @Test
+    public void parseCommand_viewAppointmentAlias() throws Exception {
+        ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
+                ViewAppointmentCommand.COMMAND_ALIAS + " " + 1);
+        assertEquals(new ViewAppointmentCommand(1), command);
     }
 
     @Test
