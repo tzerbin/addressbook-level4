@@ -61,6 +61,10 @@ public class ModelManager extends ComponentManager implements Model {
     private boolean isListingAppointments;
     private LocalDate baseDate;
 
+    public ModelManager() {
+        this(new AddressBook(), new StorageCalendar("Storage Calendar"), new UserPrefs());
+    }
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -96,11 +100,6 @@ public class ModelManager extends ComponentManager implements Model {
             celebCalendarSource.getCalendars().add(celebrity.getCelebCalendar());
         }
     }
-
-    public ModelManager() {
-        this(new AddressBook(), new StorageCalendar("Storage Calendar"), new UserPrefs());
-    }
-
 
     //@@author WJY-norainu
     @Override

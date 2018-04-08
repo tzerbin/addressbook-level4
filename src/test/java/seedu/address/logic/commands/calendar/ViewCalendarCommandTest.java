@@ -49,7 +49,7 @@ public class ViewCalendarCommandTest {
 
     @Test
     public void execute_invalidIndex_throwsCommandException() {
-        Index invalidIndex = Index.fromOneBased(model.getAddressBook().getPersonList().size()+1);
+        Index invalidIndex = Index.fromOneBased(model.getAddressBook().getPersonList().size() + 1);
         ViewCalendarCommand viewCalendarCommand = prepareCommand(invalidIndex);
         assertCommandFailure(viewCalendarCommand, model, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
