@@ -125,15 +125,6 @@ public class AddAppointmentCommandParserTest {
     }
 
     @Test
-    public void parseStartTimeAndStartDateFieldMissing_success() {
-        Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
-                .withEndTime(VALID_END_TIME_OSCAR).withEndDate(VALID_END_DATE_OSCAR).build();
-        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_END_TIME_DESC_OSCAR
-                + APPT_END_DATE_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, emptyIndexSet,
-                emptyIndexSet));
-    }
-
-    @Test
     public void parse_endTimeFieldMissing_success() {
         Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
                 .withStartDate(VALID_START_DATE_OSCAR).withStartTime(VALID_START_TIME_OSCAR)
@@ -159,13 +150,6 @@ public class AddAppointmentCommandParserTest {
                 .withStartTime(VALID_START_TIME_OSCAR).withStartDate(VALID_START_DATE_OSCAR).build();
         assertParseSuccess(parser, APPT_NAME_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
                 + APPT_START_DATE_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, emptyIndexSet,
-                emptyIndexSet));
-    }
-
-    @Test
-    public void parseAllTimeAndDateFieldsMissing_success() {
-        Appointment expectedAppointment = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR).build();
-        assertParseSuccess(parser, APPT_NAME_DESC_OSCAR, new AddAppointmentCommand(expectedAppointment, emptyIndexSet,
                 emptyIndexSet));
     }
 

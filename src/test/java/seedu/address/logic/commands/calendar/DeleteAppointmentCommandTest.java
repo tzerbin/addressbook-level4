@@ -32,6 +32,7 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void execute_validIndexListingAppointmentsWithRemainingAppointments_success() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setIsListingAppointments(true);
@@ -71,6 +72,7 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void execute_deleteTheOnlyAppointmentWithCelebCalendar_successAndShowCelebCalendar() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setCelebCalendarOwner(JAY);
         model.setIsListingAppointments(true);
@@ -90,6 +92,7 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void execute_validIndexNotListingAppointments_throwsCommandException() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
@@ -102,6 +105,7 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void execute_invalidIndexListingAppointments_throwsCommandException() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.setIsListingAppointments(true);
         model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
         Index outOfBoundIndex = Index.fromOneBased(model.getAppointmentList().size() + 1);
@@ -112,6 +116,7 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void equals() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         DeleteAppointmentCommand deleteFirstAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
         DeleteAppointmentCommand deleteSecondAppointmentCommand = prepareCommand(INDEX_SECOND_APPOINTMENT);
 
