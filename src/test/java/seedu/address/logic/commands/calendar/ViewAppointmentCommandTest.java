@@ -55,6 +55,7 @@ public class ViewAppointmentCommandTest {
 
     @Test
     public void execute_validIndexNotListingAppointments_throwsCommandException() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
@@ -68,6 +69,7 @@ public class ViewAppointmentCommandTest {
 
     @Test
     public void execute_invalidOutOfBoundsIndexListingAppointments_throwsCommandException() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.setIsListingAppointments(true);
         model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
         Index outOfBoundIndex = Index.fromOneBased(model.getAppointmentList().size() + 1);
@@ -78,6 +80,7 @@ public class ViewAppointmentCommandTest {
 
     @Test
     public void equals() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         ViewAppointmentCommand viewFirstAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
         ViewAppointmentCommand viewSecondAppointmentCommand = prepareCommand(INDEX_SECOND_APPOINTMENT);
 
