@@ -17,7 +17,6 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void viewAppointment() {
 
-        executeCommand("la");
         /* ---------------------------- Perform invalid viewAppointment operations --------------------------------- */
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " " + 0, ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " ads" , ParserUtil.MESSAGE_INVALID_INDEX);
@@ -79,6 +78,7 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
      * @see ViewAppointmentCommandSystemTest#assertCommandSuccess(String,int)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
+        executeCommand("la");
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
@@ -98,6 +98,7 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
+        executeCommand("la");
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
