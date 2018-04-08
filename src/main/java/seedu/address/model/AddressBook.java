@@ -73,6 +73,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author WJY-norainu
     /**
      * Saves the newData of {@code AddressBook} in an empty {@code AddressBook}.
      */
@@ -123,7 +124,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //@@author WJY-norainu
     /**
      * Returns true if the user is undoing removal of a celebrity
      * @return true or false
