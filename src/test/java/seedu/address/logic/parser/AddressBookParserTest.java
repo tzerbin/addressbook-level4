@@ -228,14 +228,14 @@ public class AddressBookParserTest {
     public void parseCommand_viewAppointment() throws Exception {
         ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
                 ViewAppointmentCommand.COMMAND_WORD + " " + 1);
-        assertEquals(new ViewAppointmentCommand(1), command);
+        assertEquals(new ViewAppointmentCommand(0), command);
     }
 
     @Test
     public void parseCommand_viewAppointmentAlias() throws Exception {
         ViewAppointmentCommand command = (ViewAppointmentCommand) parser.parseCommand(
                 ViewAppointmentCommand.COMMAND_ALIAS + " " + 1);
-        assertEquals(new ViewAppointmentCommand(1), command);
+        assertEquals(new ViewAppointmentCommand(0), command);
     }
 
     @Test
