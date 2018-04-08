@@ -61,6 +61,10 @@ public class ModelManager extends ComponentManager implements Model {
     private boolean isListingAppointments;
     private LocalDate baseDate;
 
+    public ModelManager() {
+        this(new AddressBook(), new StorageCalendar("Storage Calendar"), new UserPrefs());
+    }
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -75,6 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         celebCalendarSource = new CalendarSource(CELEB_CALENDAR_SOURCE_NAME);
         resetCelebCalendars();
+        addCalendarsToCelebCalendarSource(this.getCelebrities(), this.getCelebCalendarSource());
 
         this.storageCalendar = storageCalendar;
         appointments = getStoredAppointmentList();
@@ -87,10 +92,14 @@ public class ModelManager extends ComponentManager implements Model {
         baseDate = LocalDate.now();
     }
 
-    public ModelManager() {
-        this(new AddressBook(), new StorageCalendar("Storage Calendar"), new UserPrefs());
-    }
+    /** Adds celebrities' calendars to model's celebCalenderSource*/
+    private void addCalendarsToCelebCalendarSource(
+            ArrayList<Celebrity> celebrities, CalendarSource celebCalendarSource) {
 
+        for (Celebrity celebrity: celebrities) {
+            celebCalendarSource.getCalendars().add(celebrity.getCelebCalendar());
+        }
+    }
 
     //@@author WJY-norainu
     @Override
@@ -100,7 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author WJY-norainu
+    //@@author
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
@@ -214,6 +223,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public List<Appointment> getAppointmentList() {
+        return this.appointments;
+    }
+
+    //@@author WJY-norainu
+    @Override
     public String getCurrentCelebCalendarViewPage() {
         return currentCelebCalendarViewPage;
     }
@@ -221,11 +236,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public Celebrity getCurrentCelebCalendarOwner() {
         return currentCelebCalendarOwner;
-    }
-
-    @Override
-    public List<Appointment> getAppointmentList() {
-        return this.appointments;
     }
 
     @Override
@@ -253,6 +263,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.baseDate = date;
     }
 
+    //@@author muruges95
     @Override
     public Appointment getChosenAppointment(int chosenIndex) throws IndexOutOfBoundsException {
         if (chosenIndex < 0 || chosenIndex >= currentlyDisplayedAppointments.size()) {
