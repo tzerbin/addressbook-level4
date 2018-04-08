@@ -27,5 +27,6 @@ public class GeocodingTest {
         assertTrue(test.checkIfAddressCanBeFound("Kent ridge road"));
         assertTrue(test.checkIfAddressCanBeFound("820297")); // postal code
         assertTrue(test.checkIfAddressCanBeFound("National University Of Singapore")); // long address
+        assertTrue(test.checkIfAddressCanBeFound("NUS")); // alias of location
     }
 }
