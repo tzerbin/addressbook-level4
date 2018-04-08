@@ -73,6 +73,12 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public List<Appointment> getStoredAppointmentList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
     public List<Appointment> getCurrentlyDisplayedAppointments() {
         fail("This method should not be called.");
         return null;

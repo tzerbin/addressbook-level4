@@ -35,14 +35,14 @@ public class DeleteAppointmentCommandTest {
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setIsListingAppointments(true);
-        model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
+        model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
         DeleteAppointmentCommand deleteAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
 
         String expectedMessage = String.format(
                 MESSAGE_SUCCESS,
                 CONCERT.getTitle());
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         expectedModel.addAppointmentToStorageCalendar(DENTAL);
         //still have appointments in the list after deletion, should show appointment list
         expectedModel.setIsListingAppointments(true);
@@ -54,14 +54,13 @@ public class DeleteAppointmentCommandTest {
     public void execute_deletesTheOnlyAppointmentWithCombinedCalendar_successAndChangeToCombinedCalendar() {
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setIsListingAppointments(true);
-        model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
-        model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
+        model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
         DeleteAppointmentCommand deleteAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
 
         String expectedMessage = String.format(MESSAGE_SUCCESS, DENTAL.getTitle())
                 + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY, "combined");
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         //have no appointments in the list after deletion, should show calendar
         expectedModel.setIsListingAppointments(false);
         expectedModel.setCelebCalendarViewPage(ModelManager.DAY_VIEW_PAGE);
@@ -74,13 +73,13 @@ public class DeleteAppointmentCommandTest {
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setCelebCalendarOwner(JAY);
         model.setIsListingAppointments(true);
-        model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
+        model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
         DeleteAppointmentCommand deleteAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
 
         String expectedMessage = String.format(MESSAGE_SUCCESS, DENTAL.getTitle())
                 + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY, JAY.getName().toString() + "'s");
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         //have no appointments in the list after deletion, should show calendar
         expectedModel.setIsListingAppointments(false);
         expectedModel.setCelebCalendarViewPage(ModelManager.DAY_VIEW_PAGE);
@@ -92,19 +91,18 @@ public class DeleteAppointmentCommandTest {
     public void execute_validIndexNotListingAppointments_throwsCommandException() {
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
-        model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
+        model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
         model.setIsListingAppointments(false);
         DeleteAppointmentCommand deleteAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
 
         assertCommandFailure(deleteAppointmentCommand,
-                model,
-                DeleteAppointmentCommand.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+                model, Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
     }
 
     @Test
     public void execute_invalidIndexListingAppointments_throwsCommandException() {
         model.setIsListingAppointments(true);
-        model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
+        model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());
         Index outOfBoundIndex = Index.fromOneBased(model.getAppointmentList().size() + 1);
         DeleteAppointmentCommand deleteAppointmentCommand = prepareCommand(outOfBoundIndex);
 

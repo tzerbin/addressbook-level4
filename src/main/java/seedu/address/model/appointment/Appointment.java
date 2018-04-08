@@ -70,10 +70,11 @@ public class Appointment extends Entry {
         requireNonNull(endDate);
 
         this.setMinimumDuration(minDuration);
-        this.changeStartTime(startTime);
         this.changeStartDate(startDate);
-        this.changeEndTime(endTime);
         this.changeEndDate(endDate);
+        this.changeStartTime(startTime);
+        this.changeEndTime(endTime);
+
 
         this.mapAddress = mapAddress;
         if (mapAddress == null) {
@@ -91,8 +92,8 @@ public class Appointment extends Entry {
     public Appointment(Appointment appointment) {
         this.setTitle(appointment.getTitle());
         this.changeStartDate(appointment.getStartDate());
-        this.changeStartTime(appointment.getStartTime());
         this.changeEndDate(appointment.getEndDate());
+        this.changeStartTime(appointment.getStartTime());
         this.changeEndTime(appointment.getEndTime());
         this.mapAddress = appointment.getMapAddress();
 

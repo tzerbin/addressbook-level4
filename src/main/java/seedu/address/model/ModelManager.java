@@ -77,7 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
         resetCelebCalendars();
 
         this.storageCalendar = storageCalendar;
-        appointments = storageCalendar.getAllAppointments();
+        appointments = getStoredAppointmentList();
         associateAppointmentsWithCelebritiesAndPointsOfContact();
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
@@ -154,7 +154,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void associateAppointmentsWithCelebritiesAndPointsOfContact() {
         List<Celebrity> celebrityList;
         List<Person> pointOfContactList;
-        appointments = storageCalendar.getAllAppointments();
+        appointments = getStoredAppointmentList();
         for (Appointment a : appointments) {
             celebrityList = getCelebritiesFromId(a.getCelebIds());
             pointOfContactList = getPointsOfContactFromId(a.getPointOfContactIds());
@@ -231,6 +231,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public List<Appointment> getCurrentlyDisplayedAppointments() {
         return this.currentlyDisplayedAppointments;
+    }
+
+    @Override
+    public List<Appointment> getStoredAppointmentList() {
+        return storageCalendar.getAllAppointments();
     }
 
     @Override
