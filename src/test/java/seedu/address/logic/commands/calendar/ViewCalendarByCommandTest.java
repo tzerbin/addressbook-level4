@@ -111,7 +111,7 @@ public class ViewCalendarByCommandTest {
         // null -> returns false
         assertFalse(viewCalendarByDayCommand.equals(null));
 
-        // different appointment -> returns false
+        // different view page -> returns false
         assertFalse(viewCalendarByDayCommand.equals(viewCalendarByWeekCommand));
     }
 

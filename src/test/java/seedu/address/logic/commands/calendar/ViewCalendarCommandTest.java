@@ -95,7 +95,7 @@ public class ViewCalendarCommandTest {
         // null -> returns false
         assertFalse(viewJayCalendarCommand.equals(null));
 
-        // different appointment -> returns false
+        // different calendar -> returns false
         assertFalse(viewJayCalendarCommand.equals(viewAyaneCalendarCommand));
     }
 
