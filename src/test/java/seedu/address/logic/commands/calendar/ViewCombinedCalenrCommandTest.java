@@ -61,7 +61,7 @@ public class ViewCombinedCalenrCommandTest {
 
         // same values -> returns true
         ViewCombinedCalendarCommand viewCombinedCalendarCommandCopy = prepareCommand();
-        assertTrue(viewCombinedCalendarCommand.equals(viewCombinedCalendarCommand));
+        assertTrue(viewCombinedCalendarCommand.equals(viewCombinedCalendarCommandCopy));
 
         // different types -> returns false
         assertFalse(viewCombinedCalendarCommand.equals(1));
@@ -71,7 +71,7 @@ public class ViewCombinedCalenrCommandTest {
     }
 
     /**
-     * Returns a {@code ViewCalendarCommand} with the parameter {@code index}.
+     * Returns a {@code ViewCombinedCalendarCommand}.
      */
     private ViewCombinedCalendarCommand prepareCommand() {
         ViewCombinedCalendarCommand viewCombinedCalendarCommand = new ViewCombinedCalendarCommand();

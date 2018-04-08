@@ -116,7 +116,7 @@ public class ViewCalendarByCommandTest {
     }
 
     /**
-     * Returns a {@code ViewCalendarCommand} with the parameter {@code index}.
+     * Returns a {@code ViewCalendarByCommand} with the parameter {@code calendarViewPage}.
      */
     private ViewCalendarByCommand prepareCommand(String calendarViewPage) {
         ViewCalendarByCommand viewCalendarByCommand = new ViewCalendarByCommand(calendarViewPage);
