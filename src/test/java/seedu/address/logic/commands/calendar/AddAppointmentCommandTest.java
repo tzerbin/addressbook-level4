@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,8 +22,6 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
@@ -34,12 +30,12 @@ import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.TypicalCelebrities;
 
 public class AddAppointmentCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Set<Index> emptyCelebrityIndices = new HashSet<>();
     private Set<Index> emptyPointOfContactIndices = new HashSet<>();
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void constructor_nullAppointment_throwsNullPointerException() {

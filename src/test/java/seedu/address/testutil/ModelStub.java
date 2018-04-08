@@ -27,7 +27,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Generates a new AddCommand with the details of the given person.
  */
-public class ModelStub implements Model{
+public class ModelStub implements Model {
     @Override
     public void addPerson(Person person) throws DuplicatePersonException {
         fail("This method should not be called.");
