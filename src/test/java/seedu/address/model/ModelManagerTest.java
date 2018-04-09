@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import java.util.Arrays;
 
@@ -34,8 +34,8 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        ModelManager modelManager = new ModelManager(addressBook, EMPTY_CALENDAR, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, EMPTY_CALENDAR, userPrefs);
+        ModelManager modelManager = new ModelManager(addressBook, generateEmptyStorageCalendar(), userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(addressBook, generateEmptyStorageCalendar(), userPrefs);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -48,12 +48,13 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, EMPTY_CALENDAR, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, generateEmptyStorageCalendar(),
+                userPrefs)));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, EMPTY_CALENDAR, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, generateEmptyStorageCalendar(), userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -61,6 +62,7 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(addressBook, EMPTY_CALENDAR, differentUserPrefs)));
+        assertTrue(modelManager.equals(new ModelManager(addressBook, generateEmptyStorageCalendar(),
+                differentUserPrefs)));
     }
 }

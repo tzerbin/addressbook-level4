@@ -10,7 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_APPOINTMENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalStorageCalendar.CONCERT;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import org.junit.Test;
 
@@ -39,11 +39,11 @@ public class EditAppointmentCommandTest {
     public void execute_allFieldsSpecifiedListingAppointments_success() {
         prepareModel(CONCERT);
 
-        Appointment editedAppointment = new AppointmentBuilder().build();
+        Appointment editedAppointment = new AppointmentBuilder().withLocation("Clementi Road").build();
         EditAppointmentDescriptor descriptor = new EditAppointmentDescriptorBuilder(editedAppointment).build();
         EditAppointmentCommand editAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT, descriptor);
         String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, editedAppointment.getTitle());
-        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         expectedModel.addAppointmentToStorageCalendar(editedAppointment);
         expectedModel.setIsListingAppointments(false);
 
@@ -61,7 +61,7 @@ public class EditAppointmentCommandTest {
                 .withName("New Concert").withStartTime("15:00").withEndTime("16:00").build();
         EditAppointmentCommand editAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT, descriptor);
         String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, editedAppointment.getTitle());
-        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         expectedModel.addAppointmentToStorageCalendar(editedAppointment);
         expectedModel.setIsListingAppointments(false);
 
@@ -74,9 +74,9 @@ public class EditAppointmentCommandTest {
 
         EditAppointmentCommand editAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT,
                 new EditAppointmentDescriptor());
-        Appointment editedAppointment = model.getChosenAppointment(INDEX_FIRST_APPOINTMENT.getZeroBased());
+        Appointment editedAppointment = new AppointmentBuilder(CONCERT).build();
         String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, editedAppointment.getTitle());
-        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         expectedModel.addAppointmentToStorageCalendar(editedAppointment);
         expectedModel.setIsListingAppointments(false);
 
@@ -146,7 +146,7 @@ public class EditAppointmentCommandTest {
      * Add appointment to storageCalendar Model and change isListingAppointment attribute of model
      */
     private void prepareModel(Appointment appt) {
-        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(appt);
         model.setIsListingAppointments(true);
         model.setCurrentlyDisplayedAppointments(model.getStoredAppointmentList());

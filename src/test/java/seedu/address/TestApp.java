@@ -1,6 +1,6 @@
 package seedu.address;
 
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,7 +96,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), EMPTY_CALENDAR,
+        Model copy = new ModelManager((model.getAddressBook()), generateEmptyStorageCalendar(),
                 new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;

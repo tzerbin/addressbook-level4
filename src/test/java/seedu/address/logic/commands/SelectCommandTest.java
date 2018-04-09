@@ -9,7 +9,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,7 +37,7 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
     }
 
     @Test

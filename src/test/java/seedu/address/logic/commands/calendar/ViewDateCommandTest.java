@@ -7,7 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.calendar.ViewDateCommand.MESSAGE_NO_CHANGE_IN_BASE_DATE;
 import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import java.time.LocalDate;
 
@@ -20,7 +20,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 public class ViewDateCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
     private LocalDate mayFirst2018 = LocalDate.of(2018, 5, 1);
     private LocalDate maySecond2018 = LocalDate.of(2018, 5, 2);
 
@@ -32,7 +32,8 @@ public class ViewDateCommandTest {
         String expectedMessage = String.format(ViewDateCommand.MESSAGE_SUCCESS,
                 maySecond2018.format(ViewDateCommand.FORMATTER));
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setBaseDate(maySecond2018);
 
         assertCommandSuccess(viewDateCommand, model, expectedMessage, expectedModel);
@@ -47,7 +48,8 @@ public class ViewDateCommandTest {
         String expectedMessage = String.format(ViewDateCommand.MESSAGE_SUCCESS,
                 mayFirst2018.format(ViewDateCommand.FORMATTER));
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setBaseDate(mayFirst2018);
 
         assertCommandSuccess(viewDateCommand, model, expectedMessage, expectedModel);
@@ -62,7 +64,8 @@ public class ViewDateCommandTest {
         String expectedMessage = String.format(ViewDateCommand.MESSAGE_SUCCESS,
                 maySecond2018.format(ViewDateCommand.FORMATTER));
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setBaseDate(maySecond2018);
 
         assertCommandSuccess(viewDateCommand, model, expectedMessage, expectedModel);

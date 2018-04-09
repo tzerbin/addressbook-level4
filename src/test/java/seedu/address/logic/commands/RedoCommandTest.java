@@ -7,7 +7,7 @@ import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,7 +25,8 @@ public class RedoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
-    private final Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    private final Model model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(),
+            new UserPrefs());
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_SECOND_PERSON);
 
@@ -43,7 +44,8 @@ public class RedoCommandTest {
                 Collections.emptyList(), Arrays.asList(deleteCommandTwo, deleteCommandOne));
         RedoCommand redoCommand = new RedoCommand();
         redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
 
         // multiple commands in redoStack
         deleteFirstPerson(expectedModel);
