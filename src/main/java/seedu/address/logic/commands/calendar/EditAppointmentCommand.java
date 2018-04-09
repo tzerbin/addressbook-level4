@@ -14,13 +14,16 @@ import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
@@ -39,7 +42,7 @@ import seedu.address.model.person.Person;
  */
 public class EditAppointmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "editap";
+    public static final String COMMAND_WORD = "editAppointment";
     public static final String COMMAND_ALIAS = "ea";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits an appointment.\n"
@@ -64,11 +67,13 @@ public class EditAppointmentCommand extends Command {
             + PREFIX_POINT_OF_CONTACT + "3 "
             + PREFIX_POINT_OF_CONTACT + "4 ";
 
-    public static final String MESSAGE_SUCCESS = "Edited appointment successfully";
+    public static final String MESSAGE_SUCCESS = "Edited appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
 
     private final Index appointmentIndex;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
+
+    private Appointment appointmentToEdit;
 
     public EditAppointmentCommand(Index appointmentIndex, EditAppointmentDescriptor editAppointmentDescriptor) {
         requireNonNull(appointmentIndex);
@@ -80,7 +85,9 @@ public class EditAppointmentCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Appointment appointmentToEdit;
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
         try {
             appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
         } catch (IndexOutOfBoundsException iobe) {
@@ -108,7 +115,7 @@ public class EditAppointmentCommand extends Command {
             model.setIsListingAppointments(false);
             EventsCenter.getInstance().post(new ShowCalendarEvent());
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedAppointment.getTitle()));
     }
 
     /**
@@ -142,6 +149,10 @@ public class EditAppointmentCommand extends Command {
         private Set<Index> celebrityIndices;
         private Set<Index> pointOfContactIndices;
 
+        // for JUnit Tests
+        private List<Long> celebIds;
+        private List<Long> pointOfContactIds;
+
         public EditAppointmentDescriptor() {}
 
         /**
@@ -157,6 +168,8 @@ public class EditAppointmentCommand extends Command {
             setEndDate(toCopy.endDate);
             setCelebrityIndices(toCopy.celebrityIndices);
             setPointOfContactIndices(toCopy.pointOfContactIndices);
+            setCelebIds(toCopy.celebIds);
+            setPointOfContactIds(toCopy.pointOfContactIds);
         }
 
         public boolean isAnyFieldEdited() {
@@ -246,6 +259,81 @@ public class EditAppointmentCommand extends Command {
         public Optional<Set<Index>> getPointOfContactIndices() {
             return (pointOfContactIndices != null) ? Optional.of(Collections.unmodifiableSet(pointOfContactIndices))
                     : Optional.empty();
+        }
+
+        /**
+         * Sets {@code celebIds} to this object's {@code celebIds}.
+         * A defensive copy of {@code celebIds} is used internally.
+         */
+        public void setCelebIds(List<Long> celebIds) {
+            this.celebIds = (celebIds != null) ? new ArrayList<>(celebIds) : null;
+        }
+
+        /**
+         * Returns an unmodifiable celebrities id list, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code celebIds} is null.
+         */
+        public Optional<List<Long>> getCelebIds() {
+            return (this.celebIds != null)
+                    ? Optional.of(Collections.unmodifiableList(celebIds))
+                    : Optional.empty();
+        }
+
+        /**
+         * Sets {@code pointOfContactIds} to this object's {@code pointOfContactIds}.
+         * A defensive copy of {@code pointOfContactIds} is used internally.
+         */
+        public void setPointOfContactIds(List<Long> pointOfContactIds) {
+            this.pointOfContactIds = (pointOfContactIds != null) ? new ArrayList<>(pointOfContactIds) : null;
+        }
+
+        /**
+         * Returns an unmodifiable points of contact id list, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code pointOfContactIds} is null.
+         */
+        public Optional<List<Long>> getPointOfContactIds() {
+            return (this.pointOfContactIds != null)
+                    ? Optional.of(Collections.unmodifiableList(pointOfContactIds))
+                    : Optional.empty();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (other == this) {
+                return true;
+            } else if (!(other instanceof EditAppointmentDescriptor)) {
+                return false;
+            } else {
+
+                EditAppointmentDescriptor e = (EditAppointmentDescriptor) other;
+
+                return getAppointmentName().equals(e.getAppointmentName())
+                        && getStartDate().equals(e.getStartDate())
+                        && getEndDate().equals(e.getEndDate())
+                        && getStartTime().equals(e.getStartTime())
+                        && getEndTime().equals(e.getEndTime())
+                        && getLocation().equals(e.getLocation())
+                        && getCelebrityIndices().equals(e.getCelebrityIndices())
+                        && getPointOfContactIndices().equals(e.getPointOfContactIndices())
+                        && getCelebIds().equals(e.getCelebIds())
+                        && getPointOfContactIndices().equals(e.getPointOfContactIndices());
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        } else if (!(other instanceof EditAppointmentCommand)) {
+            return false;
+        } else {
+            EditAppointmentCommand e = (EditAppointmentCommand) other;
+            return appointmentIndex.equals(e.appointmentIndex)
+                    && editAppointmentDescriptor.equals(e.editAppointmentDescriptor)
+                    && Objects.equals(appointmentToEdit, e.appointmentToEdit);
         }
     }
 

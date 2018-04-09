@@ -9,7 +9,7 @@ import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 import static seedu.address.model.ModelManager.MONTH_VIEW_PAGE;
 import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ import seedu.address.model.UserPrefs;
 
 //@@author WJY-norainu
 public class ViewCalendarByCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
 
     @Test
     public void execute_calendarViewByDay_success() {
@@ -29,7 +29,8 @@ public class ViewCalendarByCommandTest {
 
         String expectedMessage = String.format(ViewCalendarByCommand.MESSAGE_SUCCESS, DAY_VIEW_PAGE);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setCelebCalendarViewPage(DAY_VIEW_PAGE);
 
         model.setCelebCalendarViewPage(WEEK_VIEW_PAGE);
@@ -42,7 +43,8 @@ public class ViewCalendarByCommandTest {
 
         String expectedMessage = String.format(ViewCalendarByCommand.MESSAGE_SUCCESS, WEEK_VIEW_PAGE);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setCelebCalendarViewPage(WEEK_VIEW_PAGE);
 
         assertCommandSuccess(viewCalendarByCommand, model, expectedMessage, expectedModel);
@@ -54,7 +56,8 @@ public class ViewCalendarByCommandTest {
 
         String expectedMessage = String.format(ViewCalendarByCommand.MESSAGE_SUCCESS, MONTH_VIEW_PAGE);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setCelebCalendarViewPage(MONTH_VIEW_PAGE);
 
         assertCommandSuccess(viewCalendarByCommand, model, expectedMessage, expectedModel);
@@ -67,7 +70,8 @@ public class ViewCalendarByCommandTest {
 
         String expectedMessage = String.format(ViewCalendarByCommand.MESSAGE_SUCCESS, DAY_VIEW_PAGE);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setCelebCalendarViewPage(DAY_VIEW_PAGE);
 
         assertCommandSuccess(viewCalendarByCommand, model, expectedMessage, expectedModel);
@@ -80,7 +84,8 @@ public class ViewCalendarByCommandTest {
 
         String expectedMessage = String.format(ViewCalendarByCommand.MESSAGE_SUCCESS, WEEK_VIEW_PAGE);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setCelebCalendarViewPage(WEEK_VIEW_PAGE);
 
         assertCommandSuccess(viewCalendarByCommand, model, expectedMessage, expectedModel);

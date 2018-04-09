@@ -5,7 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.calendar.ViewCombinedCalendarCommand.MESSAGE_ALREADY_IN_COMBINED_VIEW;
 import static seedu.address.testutil.TypicalCelebrities.JAY;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import org.junit.Test;
 
@@ -17,14 +17,15 @@ import seedu.address.model.UserPrefs;
 
 //@@author WJY-norainu
 public class ViewCombinedCalenrCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
 
     @Test
     public void execute_notAlreadyInCombinedCalendar_success() {
         model.setCelebCalendarOwner(JAY);
         ViewCombinedCalendarCommand viewCombinedCalendarCommand = prepareCommand();
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
 
         assertCommandSuccess(viewCombinedCalendarCommand, model,
                 ViewCombinedCalendarCommand.MESSAGE_SUCCESS, expectedModel);
@@ -36,7 +37,8 @@ public class ViewCombinedCalenrCommandTest {
         model.setIsListingAppointments(true);
         ViewCombinedCalendarCommand viewCombinedCalendarCommand = prepareCommand();
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
 
         assertCommandSuccess(viewCombinedCalendarCommand, model,
                 ViewCombinedCalendarCommand.MESSAGE_SUCCESS, expectedModel);

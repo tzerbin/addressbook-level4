@@ -727,8 +727,6 @@ The snippet code below shows the implementation of `execute` in `DeleteAppointme
 ----
 public class DeleteAppointmentCommand extends Command {
     ...
-    public static final String MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS = "List of appointments must be shown "
-            + "before deleting an appointment";
     public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
     public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
             + "Switching back to calendar view by day\n"
@@ -739,7 +737,7 @@ public class DeleteAppointmentCommand extends Command {
     public CommandResult execute() throws CommandException {
         // throw exception if the user is not currently viewing an appointment list
         if (!model.getIsListingAppointments()) {
-            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+            throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
         apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
         List<Appointment> currentAppointmentList = model.getAppointmentList();

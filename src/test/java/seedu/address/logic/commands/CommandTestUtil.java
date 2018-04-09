@@ -22,12 +22,14 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.calendar.EditAppointmentCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.EditAppointmentDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -99,12 +101,17 @@ public class CommandTestUtil {
     public static final String INVALID_APPT_LOCATION_DESC = " " + PREFIX_LOCATION + " "; // cant be just empty space
     public static final String INVALID_START_TIME = " " + PREFIX_START_TIME + "23:61"; // Minute cannot be more than 60
     public static final String INVALID_START_DATE = " " + PREFIX_START_DATE + "31-02-2018"; // There is no Feb 31st
+    public static final String INVALID_END_TIME = " " + PREFIX_END_TIME + "23:61"; // Minute cannot be more than 60
+    public static final String INVALID_END_DATE = " " + PREFIX_END_DATE + "31-02-2018"; // There is no Feb 31st
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final EditAppointmentCommand.EditAppointmentDescriptor DESC_OSCAR;
+    public static final EditAppointmentCommand.EditAppointmentDescriptor DESC_GRAMMY;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -113,6 +120,15 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        DESC_OSCAR = new EditAppointmentDescriptorBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
+                .withStartTime(VALID_START_TIME_OSCAR).withEndTime(VALID_END_TIME_OSCAR)
+                .withLocation(VALID_APPOINTMENT_LOCATION_OSCAR).withEndDate(VALID_END_DATE_OSCAR)
+                .withStartDate(VALID_START_DATE_OSCAR).build();
+        DESC_GRAMMY = new EditAppointmentDescriptorBuilder().withName(VALID_APPOINTMENT_NAME_GRAMMY)
+                .withStartTime(VALID_START_TIME_GRAMMY).withEndTime(VALID_END_TIME_GRAMMY)
+                .withLocation(VALID_APPOINTMENT_LOCATION_GRAMMY).withEndDate(VALID_END_DATE_GRAMMY)
+                .withStartDate(VALID_START_DATE_GRAMMY).build();
     }
 
     /**

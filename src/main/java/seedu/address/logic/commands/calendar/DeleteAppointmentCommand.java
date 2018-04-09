@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowAppointmentListEvent;
@@ -30,8 +31,7 @@ public class DeleteAppointmentCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS = "List of appointments must be shown "
-            + "before deleting an appointment";
+
     public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
     public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
             + "Switching back to calendar view by day\n"
@@ -49,7 +49,7 @@ public class DeleteAppointmentCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         if (!model.getIsListingAppointments()) {
-            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+            throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
 
         try {
@@ -61,6 +61,7 @@ public class DeleteAppointmentCommand extends Command {
         List<Appointment> currentAppointmentList = model.getCurrentlyDisplayedAppointments();
         // if the list becomes empty, switch back to combined calendar day view
         if (currentAppointmentList.isEmpty()) {
+            model.setIsListingAppointments(false);
             return changeToCalendarWithDayView();
         }
 

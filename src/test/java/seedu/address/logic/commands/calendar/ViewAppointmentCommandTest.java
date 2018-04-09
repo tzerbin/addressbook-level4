@@ -10,7 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_APPOINTMENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalStorageCalendar.CONCERT;
 import static seedu.address.testutil.TypicalStorageCalendar.DENTAL;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import org.junit.Test;
 
@@ -21,13 +21,15 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.testutil.AppointmentBuilder;
 
 public class ViewAppointmentCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    private Model model;
 
     @Test
     public void execute_validIndexListingAppointments_success() {
+        model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setIsListingAppointments(true);
@@ -44,9 +46,10 @@ public class ViewAppointmentCommandTest {
                 + "Celebrities attending: " + CONCERT.getCelebritiesAttending() + "\n"
                 + "Points of Contact: " + CONCERT.getPointsOfContact();
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
-        expectedModel.addAppointmentToStorageCalendar(CONCERT);
-        expectedModel.addAppointmentToStorageCalendar(DENTAL);
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
+        expectedModel.addAppointmentToStorageCalendar((new AppointmentBuilder(CONCERT)).build());
+        expectedModel.addAppointmentToStorageCalendar((new AppointmentBuilder(DENTAL)).build());
         //still have appointments in the list after deletion, should show appointment list
         expectedModel.setIsListingAppointments(true);
 
@@ -55,6 +58,8 @@ public class ViewAppointmentCommandTest {
 
     @Test
     public void execute_validIndexNotListingAppointments_throwsCommandException() {
+        model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
@@ -63,11 +68,12 @@ public class ViewAppointmentCommandTest {
 
         assertCommandFailure(viewAppointmentCommand,
                 model,
-                viewAppointmentCommand.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+                ViewAppointmentCommand.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
     }
 
     @Test
     public void execute_invalidOutOfBoundsIndexListingAppointments_throwsCommandException() {
+        model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.setIsListingAppointments(true);
         model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
         Index outOfBoundIndex = Index.fromOneBased(model.getAppointmentList().size() + 1);
@@ -78,6 +84,7 @@ public class ViewAppointmentCommandTest {
 
     @Test
     public void equals() {
+        model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         ViewAppointmentCommand viewFirstAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
         ViewAppointmentCommand viewSecondAppointmentCommand = prepareCommand(INDEX_SECOND_APPOINTMENT);
 

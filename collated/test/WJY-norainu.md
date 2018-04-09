@@ -42,7 +42,7 @@ public class RemoveTagCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
     private Tag nonExistingTag = new Tag("thisTagNameIsSuperLongAndThereShouldntBeAnyoneWithSuchATag");
 
     @Test
@@ -74,7 +74,7 @@ public class RemoveTagCommandTest {
                 FRIENDS_TAG.toString(),
                 count);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         expectedModel.removeTag(FRIENDS_TAG);
 
         assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
@@ -82,7 +82,7 @@ public class RemoveTagCommandTest {
 
     @Test
     public void executeUndoRedo_friendsTagWhichThreePersonsHave_success() throws Exception {
-        Model expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
 
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);

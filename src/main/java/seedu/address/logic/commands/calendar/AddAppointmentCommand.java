@@ -57,7 +57,7 @@ public class AddAppointmentCommand extends Command {
     public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only add appointment when "
             + "viewing combined calendar\n"
             + "currently viewing %1$s's calendar";
-    public static final String MESSAGE_SUCCESS = "Added appointment successfully";
+    public static final String MESSAGE_SUCCESS = "Added appointment: %1$s";
 
     private final Appointment appt;
     private final Set<Index> celebrityIndices;
@@ -98,7 +98,7 @@ public class AddAppointmentCommand extends Command {
             model.setIsListingAppointments(false);
             EventsCenter.getInstance().post(new ShowCalendarEvent());
         }
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, appt.getTitle()));
     }
 
     @Override

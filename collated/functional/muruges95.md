@@ -886,7 +886,7 @@ public class ModelManager extends ComponentManager implements Model {
         initializeCelebCalendarSource(celebCalendarSource);
 
         this.storageCalendar = storageCalendar;
-        appointments = storageCalendar.getAllAppointments();
+        appointments = getStoredAppointmentList();
 
         currentCelebCalendarViewPage = DAY_VIEW_PAGE;
         currentCelebCalendarOwner = null;

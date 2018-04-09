@@ -631,7 +631,7 @@ Format: `showLocation ma/MapAddress`
 
 Examples:
 
-* `showlocation ma/Punggol` +
+* `showLocation ma/Punggol` +
 Updates the map by re-centering to the new location `Punggol` and adding a location marker to it.
 
 ****

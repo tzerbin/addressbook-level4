@@ -14,7 +14,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_JAY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_ROBERT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalStorageCalendar.EMPTY_CALENDAR;
+import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
 
 import org.junit.Test;
 
@@ -27,7 +27,7 @@ import seedu.address.model.UserPrefs;
 
 //@@author WJY-norainu
 public class ViewCalendarCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
 
     @Test
     public void execute_validCelebrityIndex_success() {
@@ -35,7 +35,8 @@ public class ViewCalendarCommandTest {
 
         String expectedMessage = String.format(ViewCalendarCommand.MESSAGE_SUCCESS, ROBERT.getName().toString());
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setCelebCalendarOwner(ROBERT);
 
         assertCommandSuccess(viewCalendarCommand, model, expectedMessage, expectedModel);
@@ -71,7 +72,8 @@ public class ViewCalendarCommandTest {
 
         String expectedMessage = String.format(ViewCalendarCommand.MESSAGE_SUCCESS, JAY.getName().toString());
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), EMPTY_CALENDAR, new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(),
+                new UserPrefs());
         expectedModel.setCelebCalendarOwner(JAY);
 
         assertCommandSuccess(viewCalendarCommand, model, expectedMessage, expectedModel);

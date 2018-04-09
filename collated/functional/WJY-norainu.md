@@ -102,8 +102,6 @@ public class DeleteAppointmentCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS = "List of appointments must be shown "
-            + "before deleting an appointment";
     public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
     public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
             + "Switching back to calendar view by day\n"
@@ -122,7 +120,7 @@ public class DeleteAppointmentCommand extends Command {
     public CommandResult execute() throws CommandException {
         // throw exception if the user is not currently viewing an appointment list
         if (!model.getIsListingAppointments()) {
-            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+            throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
         }
         model.deleteAppointmentFromStorageCalendar(targetIndex.getZeroBased());
         apptToDelete = model.removeAppointmentFromInternalList(targetIndex.getZeroBased());
@@ -722,7 +720,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
      * @param person
      */
     private void removePersonFromAppointments(Person person) {
-        List<Appointment> allAppointments = getStorageCalendar().getAllAppointments();
+        List<Appointment> allAppointments = getStoredAppointmentList();
         // to be implemented after knowing how normal person is added to an appointment
     }
 
@@ -736,7 +734,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     private synchronized void deleteCelebrity(Celebrity targetCelebrity) {
         CelebCalendar targetCelebCalendar = targetCelebrity.getCelebCalendar();
         StorageCalendar storageCalendar = this.getStorageCalendar();
-        List<Appointment> allAppointments = storageCalendar.getAllAppointments();
+        List<Appointment> allAppointments = getStoredAppointmentList();
 
         // find appointment that has entry(s) belonging to target's celeb calendar
         // remove these entry(s) from the appointment's childEntryList

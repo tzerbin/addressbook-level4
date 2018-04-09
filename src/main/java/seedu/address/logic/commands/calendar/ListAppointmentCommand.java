@@ -33,7 +33,7 @@ public class ListAppointmentCommand extends Command {
             + "Example: " + COMMAND_WORD + " 23-04 01-05";
 
     public static final String MESSAGE_INVALID_DATE_RANGE = "Start date cannot be after end date";
-    public static final String MESSAGE_SUCCESS = "Listed appointments from $1%s to $2%s successfully.";
+    public static final String MESSAGE_SUCCESS = "Listed appointments from %s to %s successfully.";
 
     public static final String MESSAGE_NO_APPTS_ERROR = "No appointments to list";
 

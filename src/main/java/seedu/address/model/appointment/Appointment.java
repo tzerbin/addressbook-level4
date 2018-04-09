@@ -70,10 +70,11 @@ public class Appointment extends Entry {
         requireNonNull(endDate);
 
         this.setMinimumDuration(minDuration);
-        this.changeStartTime(startTime);
         this.changeStartDate(startDate);
-        this.changeEndTime(endTime);
         this.changeEndDate(endDate);
+        this.changeStartTime(startTime);
+        this.changeEndTime(endTime);
+
 
         this.mapAddress = mapAddress;
         if (mapAddress == null) {
@@ -91,8 +92,8 @@ public class Appointment extends Entry {
     public Appointment(Appointment appointment) {
         this.setTitle(appointment.getTitle());
         this.changeStartDate(appointment.getStartDate());
-        this.changeStartTime(appointment.getStartTime());
         this.changeEndDate(appointment.getEndDate());
+        this.changeStartTime(appointment.getStartTime());
         this.changeEndTime(appointment.getEndTime());
         this.mapAddress = appointment.getMapAddress();
 
@@ -140,7 +141,14 @@ public class Appointment extends Entry {
         }
 
         Appointment otherAppt = (Appointment) other;
-        return Objects.equals(otherAppt.getId(), this.getId());
+        return Objects.equals(otherAppt.getTitle(), this.getTitle())
+                && Objects.equals(otherAppt.getMapAddress(), this.getMapAddress())
+                && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
+                && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute())
+                && Objects.equals(otherAppt.getStartDate(), this.getStartDate())
+                && (otherAppt.getEndTime().getHour() == this.getEndTime().getHour())
+                && (otherAppt.getEndTime().getMinute() == this.getEndTime().getMinute())
+                && Objects.equals(otherAppt.getEndDate(), this.getEndDate());
     }
 
     /**

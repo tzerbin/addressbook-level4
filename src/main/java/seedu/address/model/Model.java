@@ -85,6 +85,9 @@ public interface Model {
     /** Returns the full appointment list that contains all appointments */
     List<Appointment> getAppointmentList();
 
+    /** Returns stored appointment list in storage calendar */
+    List<Appointment> getStoredAppointmentList();
+
     /** Returns the currently displayed appointment list */
     List<Appointment> getCurrentlyDisplayedAppointments();
 
