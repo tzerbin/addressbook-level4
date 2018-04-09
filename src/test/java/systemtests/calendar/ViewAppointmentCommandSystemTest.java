@@ -23,14 +23,6 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " ", ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " "
                 + 2 , ViewAppointmentCommand.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
-
-        executeCommand("la");
-        assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " "
-                + 4 , Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
-
-        /* ------------------------------ Perform valid viewAppointment operations --------------------------------- */
-        assertCommandSuccess(1);
-        assertCommandSuccess(2);
     }
 
     /**
