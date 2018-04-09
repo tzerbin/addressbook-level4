@@ -5,6 +5,7 @@ import static seedu.address.testutil.TypicalStorageCalendar.DENTAL;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.calendar.ViewAppointmentCommand;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.Model;
@@ -20,6 +21,16 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " " + 0, ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " ads" , ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " ", ParserUtil.MESSAGE_INVALID_INDEX);
+        assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " "
+                + 2 , ViewAppointmentCommand.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+
+        executeCommand("la");
+        assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " "
+                + 4 , Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+
+        /* ------------------------------ Perform valid viewAppointment operations --------------------------------- */
+        assertCommandSuccess(1);
+        assertCommandSuccess(2);
     }
 
     /**
