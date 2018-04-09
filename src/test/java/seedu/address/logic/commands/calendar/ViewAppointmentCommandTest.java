@@ -28,6 +28,7 @@ public class ViewAppointmentCommandTest {
 
     @Test
     public void execute_validIndexListingAppointments_success() {
+        model = new ModelManager(getTypicalAddressBook(), EMPTY_CALENDAR, new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setIsListingAppointments(true);
