@@ -4,7 +4,6 @@ import static seedu.address.testutil.TypicalStorageCalendar.DENTAL;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.calendar.ViewAppointmentCommand;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.Model;
