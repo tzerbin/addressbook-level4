@@ -1,6 +1,5 @@
 package systemtests.calendar;
 
-import static seedu.address.testutil.TypicalStorageCalendar.CONCERT;
 import static seedu.address.testutil.TypicalStorageCalendar.DENTAL;
 
 import org.junit.Test;
