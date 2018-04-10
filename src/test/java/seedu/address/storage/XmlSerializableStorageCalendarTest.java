@@ -1,12 +1,19 @@
 //@@author tzerbin
 package seedu.address.storage;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
+import java.util.List;
 
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.XmlUtil;
+import seedu.address.testutil.TypicalStorageCalendar;
 
 public class XmlSerializableStorageCalendarTest {
 
@@ -20,8 +27,6 @@ public class XmlSerializableStorageCalendarTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    // Test is failing, need to correct
-    /*
     @Test
     public void toModelType_typicalAppointmentsFile_success() throws Exception {
         XmlSerializableStorageCalendar dataFromFile =
@@ -38,5 +43,5 @@ public class XmlSerializableStorageCalendarTest {
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }
-    */
+
 }
