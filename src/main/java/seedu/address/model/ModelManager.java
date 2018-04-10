@@ -79,7 +79,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         celebCalendarSource = new CalendarSource(CELEB_CALENDAR_SOURCE_NAME);
         resetCelebCalendars();
-        addCalendarsToCelebCalendarSource(this.getCelebrities(), this.getCelebCalendarSource());
 
         this.storageCalendar = storageCalendar;
         appointments = getStoredAppointmentList();
@@ -90,15 +89,6 @@ public class ModelManager extends ComponentManager implements Model {
         currentlyDisplayedAppointments = new ArrayList<>();
         isListingAppointments = false;
         baseDate = LocalDate.now();
-    }
-
-    /** Adds celebrities' calendars to model's celebCalenderSource*/
-    private void addCalendarsToCelebCalendarSource(
-            ArrayList<Celebrity> celebrities, CalendarSource celebCalendarSource) {
-
-        for (Celebrity celebrity: celebrities) {
-            celebCalendarSource.getCalendars().add(celebrity.getCelebCalendar());
-        }
     }
 
     //@@author WJY-norainu

@@ -36,13 +36,17 @@ public class ViewAppointmentCommandTest {
         model.setCurrentlyDisplayedAppointments(model.getStorageCalendar().getAllAppointments());
         ViewAppointmentCommand viewAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT);
 
+        String displayedLocation = (CONCERT.getLocation() == null)
+                ? ViewAppointmentCommand.MESSAGE_NO_LOCATION
+                : CONCERT.getLocation();
+
         String expectedMessage = "Selected appointment details:\n"
                 + "Appointment Name: " + CONCERT.getTitle() + "\n"
                 + "Start Date: " + CONCERT.getStartDate() + "\n"
                 + "Start Time: " + CONCERT.getStartTime() + "\n"
                 + "End Date: " + CONCERT.getEndDate() + "\n"
                 + "End Time: " + CONCERT.getEndTime() + "\n"
-                + "Location: " + CONCERT.getLocation() + "\n"
+                + "Location: " + displayedLocation + "\n"
                 + "Celebrities attending: " + CONCERT.getCelebritiesAttending() + "\n"
                 + "Points of Contact: " + CONCERT.getPointsOfContact();
 

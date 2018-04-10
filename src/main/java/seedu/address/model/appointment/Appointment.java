@@ -152,22 +152,6 @@ public class Appointment extends Entry {
     }
 
     /**
-     * Checks if the parameters (date, time, title and location of two appointments are equal.
-     */
-    public boolean equalsValue (Object other) {
-        Appointment otherAppt = (Appointment) other;
-        return Objects.equals(otherAppt.getTitle(), this.getTitle())
-                && Objects.equals(otherAppt.getMapAddress(), this.getMapAddress())
-                && (otherAppt.getStartTime().getHour() == this.getStartTime().getHour())
-                && (otherAppt.getStartTime().getMinute() == this.getStartTime().getMinute())
-                && Objects.equals(otherAppt.getStartDate(), this.getStartDate())
-                && (otherAppt.getEndTime().getHour() == this.getEndTime().getHour())
-                && (otherAppt.getEndTime().getMinute() == this.getEndTime().getMinute())
-                && Objects.equals(otherAppt.getEndDate(), this.getEndDate());
-
-    }
-
-    /**
      * Resets the stores celebrities and points of contacts, along with their associated
      * information stored in the Appointment object
      */

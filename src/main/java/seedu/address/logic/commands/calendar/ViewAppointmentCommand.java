@@ -29,6 +29,8 @@ public class ViewAppointmentCommand extends Command {
             + "before viewing an appointment";
     public static final String MESSAGE_SUCCESS = "Selected appointment details:\n";
 
+    public static final String MESSAGE_NO_LOCATION = "No location for selected appointment!";
+
     private static Appointment selectedAppointment;
     private int chosenIndex;
 
@@ -61,12 +63,15 @@ public class ViewAppointmentCommand extends Command {
     }
 
     public static String getAppointmentDetailsResult () {
+        String displayedLocation = (selectedAppointment.getLocation() == null)
+                ? MESSAGE_NO_LOCATION
+                : selectedAppointment.getLocation();
         return "Appointment Name: " + selectedAppointment.getTitle() + "\n"
                 + "Start Date: " + selectedAppointment.getStartDate() + "\n"
                 + "Start Time: " + selectedAppointment.getStartTime() + "\n"
                 + "End Date: " + selectedAppointment.getEndDate() + "\n"
                 + "End Time: " + selectedAppointment.getEndTime() + "\n"
-                + "Location: " + selectedAppointment.getLocation() + "\n"
+                + "Location: " + displayedLocation + "\n"
                 + "Celebrities attending: " + selectedAppointment.getCelebritiesAttending() + "\n"
                 + "Points of Contact: " + selectedAppointment.getPointsOfContact();
     }

@@ -105,7 +105,7 @@ public class AddAppointmentCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof AddAppointmentCommand
-                && appt.equalsValue(((AddAppointmentCommand) other).appt));
+                && appt.equals(((AddAppointmentCommand) other).appt));
     }
 
 
