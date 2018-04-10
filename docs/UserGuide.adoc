@@ -327,6 +327,7 @@ Returns `john` and `John Doe`.
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`.
 
+// tag::removeTag[]
 ==== Removing a tag : `removeTag` [Since v1.2]
 
 Removes the specified tag from every person with it in CelebManager and shows the number of person(s) affected by this
@@ -345,6 +346,7 @@ Examples:
 Removes the tag, `friends` from every person with it in CelebManager and shows the number of person(s) affected.
 * `removeTag colleagues` +
 Removes the tag, `colleagues` from every person with it in CelebManager and shows the number of person(s) affected.
+// end::removeTag[]
 
 {sp} +
 
@@ -400,6 +402,7 @@ appointment listing. The index *must be a positive integer* `1`, `2`, `3`, ...
 refer to <<Adding an appointment: `addAppointment` [Since v1.2]>>.
 ****
 
+// tag::deleteAppointment[]
 ====  Deleting an appointment `deleteAppointment` [Since v1.4]
 
 Deletes the specified appointment from CelebManager. +
@@ -408,7 +411,7 @@ Format: `deleteAppointment INDEX`
 
 [IMPORTANT]
 ====
-You can only delete an appointment when you are in appointment list view. Refer to
+You can only delete an appointment when you are listing appointments. Refer to
 <<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
 ====
 
@@ -428,12 +431,35 @@ Deletes the 2nd appointment in the appointment list from CelebManager.
 * `listAppointment` +
 `deleteAppointment 1` +
 Deletes the 1st appointment in the appointment list from CelebManager.
+// end::deleteAppointment[]
 
-==== Listing appointments: `listAppointment` [Since v1.3]
+==== Listing appointments: `listAppointment` [Since v1.5]
 
-Lists all appointments in our CelebManager. +
+Lists all appointments from the specified start date to end date (inclusive). +
 Alias: `la` +
-Format: `listAppointment`
+Format: `listAppointment [STARTDATE ENDDATE]`
+
+****
+* Lists appointments according to the specified date range.
+* When no date range is given, all appointments in CelebManager will be listed.
+* The date *must be in the format of* `DD-MM-YYYY` or `DD-MM`. For the latter, year will be set to current year.
+* The date *must be* a valid date, eg, `01-13-2018` and `30-02` are not valid dates.
+* `STARTDATE` *must not be* after `ENDDATE`.
+* If there is no appointment within the specified date range, an error message will be shown instead of an empty list.
+* If an appointment starts within the date range specified but ends after the `ENDDATE`, it will also be shown.
+* If an appointment ends within the date range specified but starts before the `STARTDATE`, it will also be shown.
+****
+
+Examples:
+
+* `listAppointment 01-04-2018 10-04-2018` +
+Lists all appointments, if any, scheduled between 1st April and 10th April in 2018.
+
+* `listAppointment 10-04 20-04` +
+Lists all appointments, if any, scheduled between 10th April and 20th April h in the current year.
+
+* `listAppointment 20-04-2018 01-05`
+Lists all appointments, if any, scheduled between 20th April of 2018 and 1st May of the current year.
 
 ==== View appointment: `viewAppointment` [Since v1.4]
 
@@ -473,6 +499,7 @@ Whenever the appointment has an invalid location, the map will remove any existi
 
 === Calendar Features
 
+// tag::view-calendar[]
 ==== Changing the calendar: `viewCalendar` [Since v1.3]
 
 Changes to view the calendar of the specified `celebrity`. +
@@ -574,6 +601,7 @@ For example, after `viewDate 03-05-2018`, you can type `viewCalendarBy week` - w
 calendar for the first week of May of 2018, or `viewCalendarBy month` - which will show you the calendar
 for May of 2018.
 ====
+// end::view-calendar[]
 
 {sp} +
 
