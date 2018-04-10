@@ -34,7 +34,7 @@ public class ShowLocationCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Location is being shown in Map (identified by marker)!";
 
-    private final MapAddress address;
+    private static MapAddress address;
 
     /**
      * Creates an AddAppointmentCommand with the following parameters
@@ -43,12 +43,12 @@ public class ShowLocationCommand extends Command {
     public ShowLocationCommand (MapAddress address) {
         requireNonNull(address);
         this.address = address;
-        Map.removeExistingMarker();
-        Map.clearRoute();
     }
 
     @Override
     public CommandResult execute() {
+        Map.removeExistingMarker();
+        Map.clearRoute();
         addNewMarkerToMap();
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -84,5 +84,9 @@ public class ShowLocationCommand extends Command {
         Geocoding convertToLatLng = new Geocoding();
         convertToLatLng.initialiseLatLngFromAddress(address.toString());
         return new LatLong(convertToLatLng.getLat(), convertToLatLng.getLong());
+    }
+
+    public static MapAddress getLocation() {
+        return address;
     }
 }
