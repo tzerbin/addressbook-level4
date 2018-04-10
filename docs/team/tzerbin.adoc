@@ -99,22 +99,7 @@ Refer to <<Features>> for details of all commands available in CelebManager and 
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-======= Storage Component
-   
-   The following diagram shows the class diagram of the `Storage` component.
-   It describes how the overall structure of the `Storage` component and its different sub-components.
-   
-   .Class diagram of the `Storage` component
-   image::StorageClassDiagram.png[width="800"]
-   
-   *API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
-   
-   The `Storage` component:
-   
-   * saves `UserPref` objects in json format and read it back.
-   * saves contacts data in xml format and read it back.
-   * saves appointments data in xml format and read it back.
- Storage Component
+=== Storage Component
 
 The following diagram shows the class diagram of the `Storage` component.
 It describes how the overall structure of the `Storage` component and its different sub-components.
@@ -129,7 +114,6 @@ The `Storage` component:
 * saves `UserPref` objects in json format and read it back.
 * saves contacts data in xml format and read it back.
 * saves appointments data in xml format and read it back.
-
 
 === Appointment Storage Feature
 ==== Current Implementation
