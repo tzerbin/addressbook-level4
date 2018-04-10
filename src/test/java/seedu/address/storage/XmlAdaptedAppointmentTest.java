@@ -16,13 +16,7 @@ import seedu.address.testutil.Assert;
 
 public class XmlAdaptedAppointmentTest {
     private static final String INVALID_TITLE = "Event N@me";
-    private static final String INVALID_STARTTIME = "25:70";
-    private static final String INVALID_STARTDATE = "31-02-2018";
-    private static final String INVALID_ENDTIME = "25:70";
-    private static final String INVALID_ENDDATE = "31-02-2018";
-    private static final String INVALID_LOCATION = "S04-2*/";
 
-    private static final String VALID_TITLE = DENTAL.getTitle();
     private static final String VALID_STARTTIME = DENTAL.getStartTime().toString();
     private static final String VALID_STARTDATE = DENTAL.getStartDate().toString();
     private static final String VALID_ENDTIME = DENTAL.getEndTime().toString();
