@@ -1,0 +1,450 @@
+= Damienskt - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CelebManager
+
+---
+
+== Overview
+
+CelebManager is a software application that aims to allow celebrity managers to maintain schedule of celebrities under them. CelebManager is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a Graphical User Interface (GUI) for visual feedback.
+
+In this software, the users should be able to:
+
+.   Manage contacts
+.	Manage appointments
+.	Manage calendars
+.	Plan efficient routes
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to show location in map*
+** What it does: Allow the celebrity manager to have a view of the exact location in a map. Notify celebrity manager if a location cannot be found on the map.
+** Justification: This feature improves the product significantly by allowing the celebrity manager to be familiar with the location.
+ This is important as they are responsible of ensuring that their celebrities reaches the correct location for their appointment.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+ The implementation was challenging as it requires a clear understanding of the external libraries used and how the libraries function integrates with the existing structure.
+** Credits: Third party library used, which are `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
+
+* *Major enhancement*: added *the ability to estimate route, distance and travel time between two location by driving in map*
+** What it does: Allow the celebrity manager to have a view of the best route by driving between two location in a map. Provides information of estimated distance and time of travel by driving between two location. Notifies the celebrity manager if two location cannot be reached by driving.
+** Justification: This feature improves the product significantly by allowing the celebrity manager to find the best travel route between two location.
+ This is important as they are responsible of chauffeuring their celebrities for their appointment.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+ The implementation was challenging as it requires a clear understanding of the external libraries used and how the libraries function integrates with the existing structure.
+** Credits: Third party library used, which are `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
+
+
+* *Minor enhancement*: added a View Appointment command which allow the celebrity manager to view a specific appointment details.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/Damienskt.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/Damienskt.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.4` on GitHub
+
+** Enhancements to existing features:
+*** Updated the GUI color scheme (Pull requests https://github.com/CS2103JAN2018-W14-B4/main/pull/117[#117])
+*** Added Map panel UI into GUI (Pull requests https://github.com/CS2103JAN2018-W14-B4/main/pull/41[#41])
+
+** Documentation:
+*** Updated features content in User Guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/108[#108] https://github.com/CS2103JAN2018-W14-B4/main/pull/93[#93] https://github.com/CS2103JAN2018-W14-B4/main/pull/138[#138] https://github.com/CS2103JAN2018-W14-B4/main/pull/20[#20]
+https://github.com/CS2103JAN2018-W14-B4/main/pull/21[#21] https://github.com/CS2103JAN2018-W14-B4/main/pull/58[#58]
+*** Updated features implementation content in developer guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/108[#108] https://github.com/CS2103JAN2018-W14-B4/main/pull/93[#93] https://github.com/CS2103JAN2018-W14-B4/main/pull/138[#138] https://github.com/CS2103JAN2018-W14-B4/main/pull/124[#124]
+https://github.com/CS2103JAN2018-W14-B4/main/pull/58[#58] https://github.com/CS2103JAN2018-W14-B4/main/pull/1[#1]
+
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F11-B3/main/issues/138[1], https://github.com/CS2103JAN2018-F11-B3/main/issues/113[2], https://github.com/CS2103JAN2018-F11-B3/main/issues/114[3] https://github.com/CS2103JAN2018-F11-B3/main/issues/115[4])
+
+** Tools:
+*** Integrated three third party library (CalendarFX, GMAPSFX and Google Map Web Services) to the project (https://github.com/CS2103JAN2018-W14-B4/main/pull/24[#24] https://github.com/CS2103JAN2018-W14-B4/main/pull/8[#8] https://github.com/CS2103JAN2018-W14-B4/main/pull/23[#23])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Map Features
+
+Figure 7 is a snippet of the `MapPanel` which shows the results of all map related features.
+
+.Default State of `MapPanel`
+image::BeforeInputMap.png[width="400"]
+
+Button features:
+
+. Click the Map or Satellite button to toggle between road map or satellite view.
+. Click the `+` to zoom in and `-` button to zoom out.
+. Click, hold and move the mouse cursor to shift the current view of the map.
+
+[NOTE]
+Do not click on the `Google` logo or `Terms of Use` button. [To be resolved in v2.0].
+
+==== Estimate route on map : `estimateRoute` [Since v1.3]
+
+Shows the estimated route in the map interface and display the estimated distance and time of travel in result display.
+ Any existing location marker or route will be removed. +
+
+Alias: `er` +
+Format: `estimateRoute sma/MapAddress ema/MapAddress`
+
+Examples:
+
+* `estimateRoute sma/Punggol ema/NUS` +
+Updates the map by re-centering to the new route of `Punggol` and `NUS`.
+
+****
+* Address should be a postal code, road name, location name or building name.
+* Start and end address should be reachable by driving.
+****
+
+The snippet in Figure 8 shows the updated map after the command input of `estimateRoute sma/Punggol ema/NUS`.
+
+.State of `MapPanel` after `CommandInput`
+image::AfterEstimateRouteInput.png[width="400"]
+
+[NOTE]
+====
+Whenever a new valid or invalid `estimateRoute` command is done, any existing route or location marker will be removed.
+====
+
+==== Show location on map : `showLocation` [Since v1.2]
+
+Shows the specific location in the map interface, by marking the latitude and longitude with a location marker.
+Any existing location marker or route will be removed. +
+
+Alias: `sl` +
+Format: `showLocation ma/MapAddress`
+
+Examples:
+
+* `showLocation ma/Punggol` +
+Updates the map by re-centering to the new location `Punggol` and adding a location marker to it.
+
+****
+* Address should be a postal code, road name, location name or building name.
+****
+
+The snippet in Figure 9 shows the updated map after the command input of `showLocation ma/Punggol`.
+
+.State of `MapPanel` after `CommandInput`
+image::AfterShowLocationInput.png[width="400"]
+
+[NOTE]
+====
+Whenever a new valid or invalid `showLocation` command is done, any existing route and location marker will be removed.
+====
+==== View appointment: `viewAppointment` [Since v1.4]
+
+View a specific appointment based on list generated by `listAppointment` in CelebManager.
+`listAppointment` has to be done before the input of `viewAppointment` command. +
+Alias: `va` +
+Format: `viewAppointment INDEX`
+
+Examples:
+
+* `viewAppointment 1`
+
+****
+* Index should be within the list size.
+* Smallest index is 1 and largest index is size of list.
+* List generated by `listAppointment` should have at least one appointment.
+* Location will not be shown if `Appointment` does not have location data.
+****
+
+The state of CelebManager in figure 2 after input of `listAppointment`.
+
+.State of application after `listAppointment` input
+image::listAppointmentInput.png[width=""]
+
+The state of CelebManager in figure 3 after the example input `viewAppointment i/1'.
+Which selects the first appointment in the list.
+
+.State of application after `viewAppointment i/1` input
+image::viewAppointmentInput.png[width=""]
+
+[NOTE]
+====
+Whenever the appointment has an invalid location, the map will remove any existing marker or route.
+====
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+=== ShowLocation Feature
+==== Current Implementation
+
+The ShowLocation mechanism is facilitated by the `ShowLocationCommand`, which resides inside `Logic`. It supports the viewing of location
+in the `MapPanel` by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the latitude and longitude of the
+location and identifying it with a location marker. This command inherits from `Command` so it *does not support the undo/redo feature*.
+
+The following figure shows the marker that is used to identify the location in the `MapPanel`:
+
+.Location marker
+image::LocationMarker.png[width="50"]
+
+The following diagram shows the inheritance diagram for `ShowLocationCommand`:
+
+.Inheritance diagram for `Command`
+image::ShowLocationLogicCommandClassDiagram.png[width=""]
+
+As you can see from the diagram, `ShowLocationCommand` inherits from the Command class and is not part of the Undoable Command.
+Similar to the other commands like `FindCommand` *it will not be identified by the undo/redo feature*.
+
+This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
+ the difference in address specification details as the `Address` model is too specific for the command to work.
+An example would be the details of unit number (e.g #11-111) which will result in an invalid command or inaccurate result.
+
+The main difference between both model is shown below in the two code snippets.
+
+The snippet code below shows the `Address` model:
+
+[source,java]
+----
+public class Address {
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
+                "Person addresses can take any values, and it should not be blank";
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    /**
+     * Returns true if a given string is a valid person email.
+     */
+    public static boolean isValidAddress(String test) {
+        return test.matches(ADDRESS_VALIDATION_REGEX);
+    }
+    ...
+}
+----
+
+The snippet code below shows the `MapAddress` model:
+
+[source,java]
+----
+public class MapAddress {
+    public static final String MESSAGE_ADDRESS_MAP_CONSTRAINTS =
+            "Address should be in location name, road name, block and road name or postal code format.\n"
+                    + "Note:(Person address may not be valid as it consist of too many details like unit number)"
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    ...
+    /**
+     * Returns true if a given string is a valid map address.
+     */
+    public static boolean isValidAddress(String test) {
+        boolean isValid;
+        Geocoding testAddress = new Geocoding();
+        isValid = testAddress.checkIfAddressCanBeFound(test);
+        return test.matches(ADDRESS_MAP_VALIDATION_REGEX) && isValid;
+    }
+    ...
+}
+----
+The difference to note is the `isValidAddress` method, where `Address` only checks for *blank space* whereas `MapAddress`
+checks for *blank space and the validity of location in google server*. Thus, making the command more restrictive to location,
+ road, block name and postal code. Any details more than that, would result in a higher possibility of it being invalid or inaccurate.
+
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
+
+* `GMAPSFX API` is used to create the `MapPanel` class which allows the
+command to re-center and mark the new location which is then shown to the user.
+
+* `Google Maps Web Services API` is used to create the
+`Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
+is then used by the command to find the exact location in the `MapPanel`.
+
+Every new input of this command will remove the previous route or location marker and add the new marker into the map.
+
+The snippet below shows the state of `MapPanel` before input of `ShowLocation` command:
+
+.Default State of `MapPanel`
+image::BeforeInputMap.png[width="400"]
+
+After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to the diagram below:
+
+.State of `MapPanel` after `CommandInput`
+image::AfterShowLocationInput.png[width="400"]
+
+Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
+
+[NOTE]
+Whenever an invalid `showlocation` command is done, any existing location marker or route will be removed from the map.
+
+The following sequence diagram shows how the command works:
+
+.Sequence Diagram of `showLocation` Command
+image::ShowLocationSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `showLocationCommand`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Allows new developers to understand easily as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline
+
+===== Aspect: Use of address model
+* **Alternative 1 (current choice):** Use `MapAddress`
+** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion
+** Cons: Confusing as both `MapAddress` and `Address` model are quite similar.
+* **Alternative 2:** Use `Address`
+** Pros: Reduces the amount of code/class in the project
+** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
+
+// tag::estimateRoute[]
+=== EstimateRoute Feature
+==== Current Implementation
+
+The EstimateRoute mechanism is facilitated by the `EstimateRouteCommand`, which resides inside `Logic`. It supports the viewing of estimated route
+in the `MapPanel` by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the new route.
+
+
+
+The following figure shows the marker that is used to identify the start and end location in the `MapPanel`:
+
+.Start Location marker
+image::Start_Location_Marker.png[width="100"]
+
+.End Location marker
+image::End_Location_Marker.png[width="100"]
+
+`EstimateRouteCommand` inherits from the Command class and is not part of the Undoable Command.
+Similar to the other commands like `FindCommand` *it will not be identified by the undo/redo feature*.
+
+This command is similar to the `ShowLocation` feature which does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to the difference in address specification details as the `Address` model is too specific for the command to work.
+Even if it works the results may not be accurate.
+An example would be the details of unit number (e.g #11-111) which will result in an invalid command or inaccurate results.
+
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
+
+* `GMAPSFX` is used to create the `MapPanel` which allows the
+command to re-center the map view, create the route, mark the start and end location which is then shown to the user.
+
+* `Google Maps Web Services API` is used to create the
+`Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
+is then used by the command to find the exact location in the `MapPanel`.
+
+* `Google Maps Web Services API` is also used to create the `DistanceEstimate` class, which allows
+the calculation of estimated time and distance of travel between two location by driving. `DistanceEstimate` class is also used to check if two locations
+can be reached by driving.
+
+The snippet below shows the state of `MapPanel` before input of `estimateRoute` command:
+
+.Default State of `MapPanel`
+image::BeforeInputMap.png[width="400"]
+
+After the input of "estimateRoute sma/Punggol ema/NUS" the `MapPanel` will be updated to the diagram below:
+
+.State of `MapPanel` after `CommandInput`
+image::AfterEstimateRouteInput.png[width="400"]
+
+Any subsequent `estimateRoute` command will remove any existing marker or route before updating the `MapPanel` with the new route.
+
+[NOTE]
+Whenever an invalid `estimateRoute` command is done, any existing location marker or route will be removed from the map.
+
+The following sequence diagram shows how the command works:
+
+.Sequence Diagram of `estimateRoute` Command
+image::EstimateRouteSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `estimateCommand`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Allows new developers to understand easily as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline.
+
+===== Aspect: Use of address model
+* **Alternative 1 (current choice):** Use `MapAddress`
+** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion.
+** Cons: Confusing as the two models are similar.
+* **Alternative 2:** Use `Address`
+** Pros: Reduces the amount of code/class in the project.
+** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
+
+===== Aspect: Input using appointment index
+* **Alternative 1 (current choice):** Use `Location` name
+** Pros: Allows the function to be used independently
+** Cons: Requires keying in of location instead of just an index.
+* **Alternative 2:** Use `Appointment` index
+** Pros: Reduces the amount of typing.
+** Cons: Restricts the use of function as without an appointment index you will not be able to use it.
+
+=== ViewAppointment Feature
+==== Current Implementation
+The ViewAppointment mechanism is facilitated by the `ViewAppointmentCommand`, which resides inside `Logic`. It supports the viewing of a specific appointment
+in the `ResultDisplayPanel`  by displaying the `Appointment` details. The specific `Appointment` is selected using an index based on the list generated by `ListAppointmentCommand`.
+ This command inherits from `Command` so it *does not support the undo/redo feature*.
+
+The input index is *one-based* which means that the smallest possible index is '1' and the largest possible index is the size of list
+generated by `ListAppointmentCommand` (total number of `Appointment`).
+
+As this command relies on the list generated by `ListAppointmentCommand`, the command retrieves the start (earliest) and end (latest) date
+from `ListAppointmentCommand`, which is used to generate the appointment list internally from the `StorageCalendar` in `Model`.
+This is done by `getChosenAppointment()` method.
+
+The snippet code below shows the code that retrieves the selected appointment.
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+        selectedAppointment = model.getChosenAppointment(chosenIndex);
+        try {
+            ShowLocationCommand showLocation = new ShowLocationCommand(
+                    new MapAddress(selectedAppointment.getLocation()));
+            showLocation.execute();
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        } catch (NullPointerException npe) {
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        }
+    }
+----
+
+To show the location in the `MapPanel`, `ShowLocationCommand` is used to update the location marker in `MapPanel` to
+point to the `Appointment` location.
+
+In the case where the `Appointment` do not have any location data, the result will still be displayed without the
+location being shown in the map.
+
+[NOTE]
+Whenever an `Appointment` has no location data, any existing location marker or route will be removed from the map.
+
+The diagram below in figure 32 shows the sequence diagram of `ViewAppointmentCommand`.
+
+.Sequence Diagram of `viewAppointment` Command
+image::ViewAppointmentSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `viewAppointment`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline.
+
+===== Aspect: Inclusion of showing location on map
+* **Alternative 1 (current choice):** Show location of appointment on map
+** Pros: Reduces the hassle of keying an extra command to show `Appointment` location on map.
+** Cons: Reduces independent usage of `ShowLocationCommand`.
+* **Alternative 2:** Does not show location on map
+** Pros: Reduces unnecessary showing of location.
+** Cons: Requires an extra command input to show location when required.
+
