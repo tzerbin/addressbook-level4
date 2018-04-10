@@ -54,7 +54,6 @@ of the deleted celebrity from the appointments he/she is attending, as well as t
 *** Standardised the language of existing contents of the User Guide: https://github.com[#14]
 *** Collated codes for `v1.4` release
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
 
 == Contributions to the User Guide
