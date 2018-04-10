@@ -65,8 +65,8 @@ of the deleted celebrity from the appointments he/she is attending, as well as t
 They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=view-calendar]
-include::../UserGuide.adoc[tag=deleteAppointment]
+include::../UserGuide.adoc[tag=view-calendar] +
+include::../UserGuide.adoc[tag=deleteAppointment] +
 include::../UserGuide.adoc[tag=removeTag]
 
 == Contributions to the Developer Guide
@@ -76,5 +76,5 @@ include::../UserGuide.adoc[tag=removeTag]
 They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=removeTag]
+include::../DeveloperGuide.adoc[tag=removeTag] +
 include::../DeveloperGuide.adoc[tag=deleteAppointment]
