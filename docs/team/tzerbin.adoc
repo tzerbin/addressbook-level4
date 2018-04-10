@@ -1,0 +1,181 @@
+= tzerbin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CelebManager
+
+---
+
+== Overview
+
+CelebManager is a software application that aims to allow celebrity managers to maintain schedule of celebrities under them. CelebManager is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a Graphical User Interface (GUI) for visual feedback.
+
+In this software, the users should be able to:
+
+.   Manage contacts
+.	Manage appointments
+.	Manage calendars
+.	Plan efficient routes
+
+== Summary of contributions
+
+* *Major enhancement*: Provide functionalities for storing calendar and appointment data
+** What it does: Allow functionalities for celebrity manager to automaticallly save appointments in an .xml file, and read appointments data from a .xml file to run the application.
+
+** Justification: This feature allows other components to communicate with `Storage` component so that other features related to appointments can be saved and retrieved.
+
+** Highlights: This feature affects commands related to appointments, and commands to be added in future.
+
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/tzerbin.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/tzerbin.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed documentation as a whole for project submissions in CS2103T and CS2101.
+
+** Documentation:
+*** Updated features content in User Guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/108[#108] https://github.com/CS2103JAN2018-W14-B4/main/pull/93[#93] https://github.com/CS2103JAN2018-W14-B4/main/pull/138[#138] https://github.com/CS2103JAN2018-W14-B4/main/pull/20[#20]
+https://github.com/CS2103JAN2018-W14-B4/main/pull/21[#21] https://github.com/CS2103JAN2018-W14-B4/main/pull/58[#58]
+*** Updated features implementation content in developer guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/108[#108] https://github.com/CS2103JAN2018-W14-B4/main/pull/93[#93] https://github.com/CS2103JAN2018-W14-B4/main/pull/138[#138] https://github.com/CS2103JAN2018-W14-B4/main/pull/124[#124]
+https://github.com/CS2103JAN2018-W14-B4/main/pull/58[#58] https://github.com/CS2103JAN2018-W14-B4/main/pull/1[#1]
+
+** Community:
+*** Reported bugs and suggestions for other teams in the class
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/119[Issue 1]
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/118[Issue 2]
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/117[Issue 3]
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/115[Issue 4]
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/113[Issue 5]
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/112[Issue 6]
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/111[Issue 7]
+**** https://github.com/CS2103JAN2018-F11-B2/main/issues/110[Issue 8]
+
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Introduction
+
+CelebManager (CM) is for celebrity managers who *prefer to use a desktop app for managing their celebrity's schedule
+with ease*. More importantly, CM is *optimized for those who prefer to work with a Command Line Interface* (CLI) while
+still having the benefits of a Graphical User Interface (GUI). If you require a versatile application that has the
+feature of *managing contacts, organising schedules, emailing (Coming in v2.0) and trip planning*. You are at the right
+place as CM would be the best platform for you, with its integration of address book, calendar and visual maps.
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+
+=== Quick Start
+
+Follow this series of steps to have the CelebManager app quickly up and running on your computer.
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer. The link to the latest version of Java
+can be found
+https://java.com/en/download/[here].
++
+[NOTE]
+Having any Java 8 version is not enough. +
+This app will not work with earlier versions of Java 8.
++
+.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your CelebManager.
+.  Double-click the file to start the app. The interface should appear in a few seconds.
++
+The image below (Figure 1) shows the current interface of CelebManager.
++
+.Interface of CelebManager
+image::Ui_UserGuide.png[width="790"]
++
+.  Type `help` in the command box and press kbd:[Enter] to execute it. A help window should be opened.
++
+[TIP]
+Refer to <<Features>> for details of all commands available in CelebManager and their example usage.
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+======= Storage Component
+   
+   The following diagram shows the class diagram of the `Storage` component.
+   It describes how the overall structure of the `Storage` component and its different sub-components.
+   
+   .Class diagram of the `Storage` component
+   image::StorageClassDiagram.png[width="800"]
+   
+   *API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+   
+   The `Storage` component:
+   
+   * saves `UserPref` objects in json format and read it back.
+   * saves contacts data in xml format and read it back.
+   * saves appointments data in xml format and read it back.
+ Storage Component
+
+The following diagram shows the class diagram of the `Storage` component.
+It describes how the overall structure of the `Storage` component and its different sub-components.
+
+.Class diagram of the `Storage` component
+image::StorageClassDiagram.png[width="800"]
+
+*API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+
+The `Storage` component:
+
+* saves `UserPref` objects in json format and read it back.
+* saves contacts data in xml format and read it back.
+* saves appointments data in xml format and read it back.
+
+
+=== Appointment Storage Feature
+==== Current Implementation
+The storing of appointment is facilitated by the `XmlStorageCalendarStorage` class, which resides in the `Storage` component.
+It supports the retrieval and storage for appointments made by the user.
+
+During start-up of application, the storage component will be initialized by the `MainApp`, which retrieves information from the specified file path in `UserPrefs`.
+
+The following code snippet shows how the storage component will be initialized by the `MainApp`.
+[source,java]
+----
+public void init() throws Exception {
+        // initializes application.
+
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        StorageCalendarStorage storageCalendarStorage =
+                new XmlStorageCalendarStorage(userPrefs.getStorageCalendarFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, storageCalendarStorage);
+
+        // initializes other component in the application.
+    }
+----
+
+The following figure shows the sequence diagram for reading `StorageCalendar`.
+
+.Sequence Diagram for reading `StorageCalendar`
+image::ReadStorageCalendarSequenceDiagram.png[width=""]
+
+In the `XmlStorageCalendarStorage` class, it allows developers to use methods:
+
+* `readStorageCalendar`, to retrieve a `StorageCalendar`
+** This is done by checking if the file exist, and load the list from `XmlSerializableStorageCalendar`.
+* `saveStorageCalendar`, to write information into `filePath` specified in `userPrefs`
+** This is done by creating a new file and rewriting to the list in `XmlSerializableStorageCalendar`.
+
+While the `XmlStorageCalendarStorage` class allows access to data stored on the hard disk, the `XmlSerializableStorageCalendar` class represents the data of the appointment list for the calendar.
+In `XmlSerializableStorageCalendar`, it contains a `List` of XML formats of appointments `XmlAdaptedAppointment`.
+`XmlAdaptedAppointment` will then contain essential information of different `Appointment` in `StorageCalendar` of the `Model` component, which includes:
+
+* `title` of appointment
+* `startTime` of appointment indicating its starting time
+* `startDate` of appointment indicating its starting date
+* `endTime` of appointment indicating its ending time
+* `endDate` of appointment indicating its ending date
+* `location` of appointment that is going to happen
+* `celebrityIds` of celebrities that are attending the appointment
+* `pointOfContactIds` of non-celebrities that are attending the appointment
