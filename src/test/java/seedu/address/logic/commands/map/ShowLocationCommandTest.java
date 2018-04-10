@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_MAP_AMY;
@@ -27,9 +28,14 @@ public class ShowLocationCommandTest {
     }
 
     @Test
+    public void execute_initialisationOfCommand_success() {
+        ShowLocationCommand showLocationCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB));
+        assertEquals(showLocationCommand.getLocation(), new MapAddress(VALID_ADDRESS_MAP_BOB));
+    }
+
+    @Test
     public void equals() {
         ShowLocationCommand showLocationFirstCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB));
-        ShowLocationCommand showLocationSecondCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_AMY));
 
         // same object -> returns true
         assertTrue(showLocationFirstCommand.equals(showLocationFirstCommand));
@@ -45,6 +51,7 @@ public class ShowLocationCommandTest {
         assertFalse(showLocationFirstCommand.equals(null));
 
         // different map address -> returns false
+        ShowLocationCommand showLocationSecondCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_AMY));
         assertFalse(showLocationFirstCommand.equals(showLocationSecondCommand));
     }
 

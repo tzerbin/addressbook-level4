@@ -65,15 +65,15 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
         this.endLocation = end;
         this.startLatLng = getLatLong(startLocation);
         this.endLatLng = getLatLong(endLocation);
-        Map.removeExistingMarker();
-        Map.clearRoute();
-        directionService = Map.getDirectionService();
+        setDistAndTimeOfTravel();
     }
 
     @Override
     public CommandResult execute() {
+        directionService = Map.getDirectionService();
+        Map.removeExistingMarker();
+        Map.clearRoute();
         addRouteToMap();
-        setDistAndTimeOfTravel();
         return new CommandResult(MESSAGE_SUCCESS + getStringOfDistanceAndTime());
     }
 
@@ -131,5 +131,21 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
         Geocoding convertToLatLng = new Geocoding();
         convertToLatLng.initialiseLatLngFromAddress(address.toString());
         return convertToLatLng.getLatLng();
+    }
+
+    public static MapAddress getStartLocation() {
+        return startLocation;
+    }
+
+    public static MapAddress getEndLocation() {
+        return endLocation;
+    }
+
+    public static String getDistOfTravel() {
+        return distOfTravel;
+    }
+
+    public static String getTimeOfTravel() {
+        return timeOfTravel;
     }
 }

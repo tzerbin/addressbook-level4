@@ -1,6 +1,5 @@
 package systemtests.calendar;
 
-import static seedu.address.testutil.TypicalStorageCalendar.CONCERT;
 import static seedu.address.testutil.TypicalStorageCalendar.DENTAL;
 
 import org.junit.Test;
@@ -20,6 +19,8 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " " + 0, ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " ads" , ParserUtil.MESSAGE_INVALID_INDEX);
         assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " ", ParserUtil.MESSAGE_INVALID_INDEX);
+        assertCommandFailure(ViewAppointmentCommand.COMMAND_WORD + " "
+                + 2 , ViewAppointmentCommand.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
     }
 
     /**
@@ -45,10 +46,7 @@ public class ViewAppointmentCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, int index) {
         Model expectedModel = getModel();
 
-        Appointment selected = CONCERT;
-        if (index == 2) {
-            selected = DENTAL;
-        }
+        Appointment selected = DENTAL;
         String expectedResultMessage = "Selected appointment details:\n"
                 + "Appointment Name: " + selected.getTitle() + "\n"
                 + "Start Date: " + selected.getStartDate() + "\n"
