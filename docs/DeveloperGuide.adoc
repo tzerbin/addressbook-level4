@@ -411,6 +411,8 @@ image::RemoveTagSequenceDiagram.png[width=""]
 ** Pros: Provides an easy way to mass remove `celebrity` tag and clears all celebrities from the address book.
 ** Cons: Requires the creation of additional events to interact with `CalendarPanel` as calendars are under
 UI component, which logic component has no directly access to.
+// end::removeTag[]
+
 
 // tag::undoredo[]
 === Undo/Redo Command Feature
@@ -712,6 +714,7 @@ the new appointment with the correct fields.
 ** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
 in UI component while appointments in Model component.
 
+// tag::deleteAppointment[]
 === DeleteAppointment Feature
 ==== Current Implementation
 
@@ -848,6 +851,7 @@ deleted visually on calendar.
 ** Pros: Can restore deletions made by mistake.
 ** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
 in UI component while appointments in Model component.
+// end::deleteAppointment[]
 
 // tag::viewAppointment[]
 === ViewAppointment Feature

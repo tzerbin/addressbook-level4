@@ -17,22 +17,24 @@ CelebManager consists of a GUI created with JavaFX and is written in Java. The p
 == Summary of contributions
 
 * *Major enhancement*: added *support for interacting with the calendar using CLI*
-** What it does: This enhancement includes these commands: viewCalendar, viewCombinedCalendar, viewCalendarBy, and
-viewDate. With these commands, users can view different celebrities' calendars, a joint calendar of all celebrities,
+** What it does: This enhancement includes commands: `viewCalendar`, `viewCombinedCalendar`, `viewCalendarBy`, and
+`viewDate`. With these commands, users can view different celebrities' calendars, a joint calendar of all celebrities,
 a day's or week's or month's appointments, and change base date of the calendar.
-** Justification: This feature improves the product significantly because [].
-** Highlights: The implementation was challenging as it requires comprehension of CalendarFX's API and experimenting
-with the API to understand which methods to be used to update the calendar UI. Also, additional variables were created
+** Justification: This feature improves the product significantly because it allows users to interact with the
+calendar inside CeleManager, and makes calendar a powerful visualisation tool to view timings of appointments.
+** Highlights: The implementation requires comprehension of CalendarFX's API and experimenting with the API to
+understand which methods to be used to update the calendar UI. Also, additional variables were created
 to keep track of the current calendar's status to preserve the original ways of interaction between different
 components.
 ** Credits: [http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]]
 
 * *Major enhancement*: added *the ability to delete an appointment*
-** What it does: This enhancement refers to the deleteAppointment command. It allows users to delete an existing
+** What it does: This enhancement refers to the command, `deleteAppointment`. It allows users to delete an existing
 appointment.
 ** Justification: This feature improves the product significantly because users can delete a specified appointment to
-indicate the cancellation of appointments and keep the calendar(s) clean and tidy.
-** Highlights: This enhancement requires an understanding of how appointments are stored.
+get rid of appointments that are cancelled or no longer needed.
+** Highlights: This enhancement requires an understanding of how appointments are stored and can be removed from the
+calendar visually.
 ** Credits: [http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]]
 
 * *Minor enhancement*: added *the ability to list appointments within a given date range*
@@ -59,22 +61,20 @@ of the deleted celebrity from the appointments he/she is attending, as well as t
 
 
 |===
-|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|_Given below are sections I contributed to the User Guide.
+They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=view-calendar]
+include::../UserGuide.adoc[tag=deleteAppointment]
+include::../UserGuide.adoc[tag=removeTag]
 
 == Contributions to the Developer Guide
 
 |===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|_Given below are sections I contributed to the Developer Guide.
+They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
+include::../DeveloperGuide.adoc[tag=removeTag]
+include::../DeveloperGuide.adoc[tag=deleteAppointment]
