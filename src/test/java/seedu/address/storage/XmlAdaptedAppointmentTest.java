@@ -5,9 +5,7 @@ import static seedu.address.testutil.TypicalStorageCalendar.DENTAL;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
 
-import org.joda.time.DateTime;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -30,7 +28,7 @@ public class XmlAdaptedAppointmentTest {
     private static final String VALID_ENDTIME = DENTAL.getEndTime().toString();
     private static final String VALID_ENDDATE = DENTAL.getEndDate().toString();
     private static final String VALID_LOCATION = DENTAL.getMapAddress().toString();
-    
+
     @Test
     public void toModelType_validAppointmentDetails_returnsAppointment() throws Exception {
         XmlAdaptedAppointment appointment = new XmlAdaptedAppointment(DENTAL);
@@ -39,7 +37,7 @@ public class XmlAdaptedAppointmentTest {
 
     @Test
     public void toModelType_nullTitle_throwsIllegalValueException() {
-        XmlAdaptedAppointment appointment = new XmlAdaptedAppointment(null, 
+        XmlAdaptedAppointment appointment = new XmlAdaptedAppointment(null,
                 LocalTime.parse(VALID_STARTTIME),
                 LocalDate.parse(VALID_STARTDATE),
                 new MapAddress(VALID_LOCATION),

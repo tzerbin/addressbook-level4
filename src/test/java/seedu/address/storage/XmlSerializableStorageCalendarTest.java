@@ -27,7 +27,7 @@ public class XmlSerializableStorageCalendarTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    
+
     @Test
     public void toModelType_typicalAppointmentsFile_success() throws Exception {
         XmlSerializableStorageCalendar dataFromFile =
@@ -44,5 +44,5 @@ public class XmlSerializableStorageCalendarTest {
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
     }
-    
+
 }
