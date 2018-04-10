@@ -957,6 +957,11 @@ public void init() throws Exception {
     }
 ----
 
+The following figure shows the sequence diagram for reading `StorageCalendar`.
+
+.Sequence Diagram for reading `StorageCalendar`
+image::ReadStorageCalendarSequenceDiagram.png[width=""]
+
 In the `XmlStorageCalendarStorage` class, it allows developers to use methods:
 
 * `readStorageCalendar`, to retrieve a `StorageCalendar`
@@ -969,10 +974,14 @@ In `XmlSerializableStorageCalendar`, it contains a `List` of XML formats of appo
 `XmlAdaptedAppointment` will then contain essential information of different `Appointment` in `StorageCalendar` of the `Model` component, which includes:
 
 * `title` of appointment
-* `interval` of appointment indicating its starting and ending time
-* `fullDay` tag of appointment indicating whether if appointment is a full-day event
-* `calendarName` of which the appointment is allocated to
+* `startTime` of appointment indicating its starting time
+* `startDate` of appointment indicating its starting date
+* `endTime` of appointment indicating its ending time
+* `endDate` of appointment indicating its ending date
 * `location` of appointment that is going to happen
+* `celebrityIds` of celebrities that are attending the appointment
+* `pointOfContactIds` of non-celebrities that are attending the appointment
+
 
 ==== Design Considerations
 ===== Aspect: Implementing of `StorageCalendarStorage`
