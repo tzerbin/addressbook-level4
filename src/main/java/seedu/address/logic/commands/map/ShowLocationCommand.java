@@ -34,7 +34,7 @@ public class ShowLocationCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Location is being shown in Map (identified by marker)!";
 
-    private static MapAddress address;
+    private MapAddress address;
 
     /**
      * Creates an AddAppointmentCommand with the following parameters
@@ -86,7 +86,7 @@ public class ShowLocationCommand extends Command {
         return new LatLong(convertToLatLng.getLat(), convertToLatLng.getLong());
     }
 
-    public static MapAddress getLocation() {
-        return address;
+    public MapAddress getLocation() {
+        return this.address;
     }
 }

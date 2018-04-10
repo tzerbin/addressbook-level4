@@ -36,7 +36,6 @@ public class ShowLocationCommandTest {
     @Test
     public void equals() {
         ShowLocationCommand showLocationFirstCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_BOB));
-        ShowLocationCommand showLocationSecondCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_AMY));
 
         // same object -> returns true
         assertTrue(showLocationFirstCommand.equals(showLocationFirstCommand));
@@ -52,6 +51,7 @@ public class ShowLocationCommandTest {
         assertFalse(showLocationFirstCommand.equals(null));
 
         // different map address -> returns false
+        ShowLocationCommand showLocationSecondCommand = prepareCommand(new MapAddress(VALID_ADDRESS_MAP_AMY));
         assertFalse(showLocationFirstCommand.equals(showLocationSecondCommand));
     }
 
