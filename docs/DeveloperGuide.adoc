@@ -1107,7 +1107,7 @@ image::AfterShowLocationInput.png[width="400"]
 Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
 
 [NOTE]
-Whenever an invalid `showlocation` command is done, any existing location marker or route will be removed from the map.
+Whenever an invalid `showLocation` command is done, any existing location marker or route will be removed from the map.
 
 The following sequence diagram shows how the command works:
 
