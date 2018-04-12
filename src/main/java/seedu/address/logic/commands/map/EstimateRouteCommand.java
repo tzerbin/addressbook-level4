@@ -125,7 +125,8 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     }
 
     /**
-     * Retrieves information of {@code startLocation}, {@code endLocation}, {@code distOfTravel} and {@code timeOfTravel}
+     * Retrieves information of {@code startLocation}, {@code endLocation}, {@code distOfTravel} and
+     * {@code timeOfTravel}
      * which is then converted to string format to be shown to user
      * @return information of distance and time of travel
      */
