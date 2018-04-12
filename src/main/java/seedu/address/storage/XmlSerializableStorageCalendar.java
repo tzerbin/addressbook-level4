@@ -30,9 +30,11 @@ public class XmlSerializableStorageCalendar {
 
     public XmlSerializableStorageCalendar(StorageCalendar storageCalendar) {
         this();
-        List<Appointment> appointmentList = storageCalendar.getAllAppointments();
-        for (Appointment appt : appointmentList) {
-            appointments.add(new XmlAdaptedAppointment(appt));
+        if (storageCalendar != null) {
+            List<Appointment> appointmentList = storageCalendar.getAllAppointments();
+            for (Appointment appt : appointmentList) {
+                appointments.add(new XmlAdaptedAppointment(appt));
+            }
         }
     }
 
