@@ -502,7 +502,7 @@ Whenever the appointment has an invalid location, the map will remove any existi
 // tag::view-calendar[]
 ==== Changing the calendar: `viewCalendar` [Since v1.3]
 
-Changes to view the calendar of the specified `celebrity`. +
+Changes to view the calendar of the specified celebrity. +
 Alias: `vc` +
 Format: `viewCalendar INDEX`
 
@@ -510,7 +510,7 @@ Format: `viewCalendar INDEX`
 * Changes to view the calendar of the `celebrity` at the specified `INDEX`.
 * The index refers to the index number shown in the last shown list of contacts.
 * The index *must be a positive integer* `1`, `2`, `3`, ...
-* The person at the specified index *must be* a `celebrity`.
+* The person at the specified index *must be* a celebrity.
 ****
 
 Examples:
@@ -534,8 +534,14 @@ Format: `viewCalendarBy VIEW`
 * Changes the calendar view to the specified `VIEW`.
 * `VIEW` *must be* `day`, `week`, or `month`.
 * `VIEW` is not case-sensitive, e.g. you can type `viewCalendarBy WeEK` to change to view calendar by week.
-* CelebManger only supports showing calendar for *current* `day`, `week` or `month`.
 ****
+
+[IMPORTANT]
+====
+You may notice that in `month` view, the dates on the calendar are clickable. However, this feature will only be integrated
+into our `v2.0` product and hence you should not click on the dates. If you want to view a certain date's appointment,
+use `viewDate` command. Refer to <<Changing the base date of calendar: `viewDate` [Since v1.5]>> for more information.
+====
 
 Examples:
 
