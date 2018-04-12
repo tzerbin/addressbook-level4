@@ -58,13 +58,18 @@ public class MapAddress {
         boolean isValid = true;
         LatLng startLatLng;
         LatLng endLatLng;
+
         DistanceEstimate checkValid = new DistanceEstimate();
         Geocoding latLong = new Geocoding();
+
         latLong.initialiseLatLngFromAddress(start);
-        startLatLng = latLong.getLatLng();
+        startLatLng = latLong.getLatLng(); //Get LatLong of start location
+
         latLong.initialiseLatLngFromAddress(end);
-        endLatLng = latLong.getLatLng();
+        endLatLng = latLong.getLatLng(); //Get LatLong of end location
+
         checkValid.calculateDistanceMatrix(startLatLng, endLatLng, TravelMode.DRIVING);
+
         if (checkValid.getTravelTime().equals("null")) {
             isValid = false;
         }

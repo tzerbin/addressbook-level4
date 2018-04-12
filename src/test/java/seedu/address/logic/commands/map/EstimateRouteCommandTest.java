@@ -48,7 +48,7 @@ public class EstimateRouteCommandTest {
 
         assertEquals(estimateRouteCommand.getStartLocation(), new MapAddress(VALID_ADDRESS_MAP_BOB));
         assertEquals(estimateRouteCommand.getEndLocation(), new MapAddress(VALID_ADDRESS_MAP_AMY));
-        assertEquals(estimateRouteCommand.getDistOfTravel(), estimate.getDistOriginDest());
+        assertEquals(estimateRouteCommand.getDistOfTravel(), estimate.getDistBetweenOriginDest());
         assertEquals(estimateRouteCommand.getTimeOfTravel(), estimate.getTravelTime());
     }
 

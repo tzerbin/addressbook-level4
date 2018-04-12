@@ -25,12 +25,15 @@ public class MapPanel extends UiPart<Region> implements MapComponentInitializedL
     public static final double LATITUDE_SG = 1.3607962;
     public static final double LONGITUDE_SG = 103.8109208;
     public static final int DEFAULT_ZOOM_LEVEL = 10;
+
     protected static DirectionsPane directions;
     protected static DirectionsRenderer renderer;
     protected static DirectionsService directionService;
     protected static DirectionsRequest directionRequest;
     protected static GoogleMap actualMap;
+
     private static final String FXML = "MapsPanel.fxml";
+
     protected GoogleMapView mapView;
 
     public MapPanel() {

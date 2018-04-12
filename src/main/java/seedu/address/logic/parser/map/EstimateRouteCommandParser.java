@@ -31,10 +31,13 @@ public class EstimateRouteCommandParser implements Parser<EstimateRouteCommand> 
      */
     @Override
     public EstimateRouteCommand parse(String args) throws ParseException {
+
         initialiseConnection = new GoogleWebServices();
+
         if (!initialiseConnection.checkInitialisedConnection()) {
             throw new ParseException(GoogleWebServices.MESSAGE_FAIL_CONNECTION);
         }
+
         ArgumentMultimap argMultiMap =
                 ArgumentTokenizer.tokenize(args, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS);
         if (!arePrefixesPresent(argMultiMap, PREFIX_START_MAP_ADDRESS, PREFIX_END_MAP_ADDRESS)

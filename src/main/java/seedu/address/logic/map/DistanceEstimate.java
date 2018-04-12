@@ -19,7 +19,7 @@ import com.google.maps.model.TravelMode;
  */
 public class DistanceEstimate extends GoogleWebServices {
 
-    private String distOriginDest;
+    private String distBetweenOriginDest;
     private String travelTime;
 
     /**
@@ -55,7 +55,7 @@ public class DistanceEstimate extends GoogleWebServices {
     /**
      * Initialises the calculation of time and distance between two location by sending request with
      * {@code startPostalCode},{@code endPostalCode} and {@code modeOfTravel} to google server, details
-     * extracted from result {@code estimate} and stored into {@code distOriginDest} and {@code travelTime}
+     * extracted from result {@code estimate} and stored into {@code distBetweenOriginDest} and {@code travelTime}
      */
     public void calculateDistanceMatrix(LatLng startLocation, LatLng endLocation, TravelMode modeOfTravel) {
         DistanceMatrixApiRequest request = getApprovalForRequest(GoogleWebServices.getGeoApiContext());
@@ -73,7 +73,7 @@ public class DistanceEstimate extends GoogleWebServices {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        distOriginDest = String.valueOf(extractDistanceDetailsToString(estimate));
+        distBetweenOriginDest = String.valueOf(extractDistanceDetailsToString(estimate));
         travelTime = String.valueOf(extractDurationDetailsToString(estimate));
     }
 
@@ -81,7 +81,7 @@ public class DistanceEstimate extends GoogleWebServices {
         return travelTime;
     }
 
-    public String getDistOriginDest() {
-        return distOriginDest;
+    public String getDistBetweenOriginDest() {
+        return distBetweenOriginDest;
     }
 }
