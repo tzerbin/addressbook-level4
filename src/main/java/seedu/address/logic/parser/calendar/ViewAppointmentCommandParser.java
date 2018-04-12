@@ -10,7 +10,7 @@ import seedu.address.model.map.Map;
 
 //@@author Damienskt
 /**
- * Parses input arguments and creates a new ViewAppointmentCommand object
+ * Reads {@code args} and checks if the input has all the necessary values
  */
 public class ViewAppointmentCommandParser implements Parser<ViewAppointmentCommand> {
 

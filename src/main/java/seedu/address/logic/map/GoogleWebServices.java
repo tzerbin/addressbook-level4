@@ -13,6 +13,7 @@ import com.google.maps.model.LatLng;
  */
 public class GoogleWebServices {
 
+    // 5 API keys for accessing google server
     public static final String API_KEY_1 = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
     public static final String API_KEY_2 = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
     public static final String API_KEY_3 = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
@@ -23,10 +24,10 @@ public class GoogleWebServices {
 
     private static GeoApiContext context;
     private String [] apiKeys;
-    private boolean initialised;
+    private boolean isInitialised;
 
     /**
-     * Initialises access to google server using Api key
+     * Initialises access to google server using Api keys
      */
     public GoogleWebServices() {
         apiKeys = new String [5];
@@ -40,11 +41,11 @@ public class GoogleWebServices {
     }
 
     /**
-     * Initialise and test connection to google server
+     * Initialise with valid Api key and test connection to google server
      */
     private void initialiseConnection() {
         for (int i = 0; i < 5; i++) {
-            initialised = true;
+            isInitialised = true;
             context = new GeoApiContext.Builder()
                     .apiKey(apiKeys[i])
                     .build();
@@ -53,16 +54,16 @@ public class GoogleWebServices {
                         "Punggol").await();
                 LatLng location = results[0].geometry.location;
             } catch (ApiException | InterruptedException | IOException | IndexOutOfBoundsException e) {
-                initialised = false;
+                isInitialised = false;
             }
-            if (initialised) {
+            if (isInitialised) {
                 break;
             }
         }
     }
 
     public boolean checkInitialisedConnection() {
-        return initialised;
+        return isInitialised;
     }
 
     public static GeoApiContext getGeoApiContext() {

@@ -15,7 +15,7 @@ import seedu.address.model.map.Map;
 import seedu.address.model.map.MapAddress;
 //@@author Damienskt
 /**
- * Update the Map by adding a marker to the location of map address
+ * Update the Map by adding a marker to the location of map selectedLocation
  * and delete existing marker if it exist
  */
 public class ShowLocationCommand extends Command {
@@ -24,7 +24,7 @@ public class ShowLocationCommand extends Command {
     public static final String COMMAND_ALIAS = "sl";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Shows the location of address in the Map.\n"
+            + ": Shows the location of selectedLocation in the Map.\n"
             + "Parameters: "
             + PREFIX_MAP_ADDRESS + "LOCATION (Name of location or postal code)\n"
             + "Example: " + COMMAND_WORD + " "
@@ -34,7 +34,7 @@ public class ShowLocationCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Location is being shown in Map (identified by marker)!";
 
-    private MapAddress address;
+    private MapAddress selectedLocation;
 
     /**
      * Creates an AddAppointmentCommand with the following parameters
@@ -42,7 +42,7 @@ public class ShowLocationCommand extends Command {
      */
     public ShowLocationCommand (MapAddress address) {
         requireNonNull(address);
-        this.address = address;
+        this.selectedLocation = address;
     }
 
     @Override
@@ -57,11 +57,11 @@ public class ShowLocationCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ShowLocationCommand // instanceof handles nulls
-                && this.address.equals(((ShowLocationCommand) other).address));
+                && this.selectedLocation.equals(((ShowLocationCommand) other).selectedLocation));
     }
 
     /**
-     * Remove any existing marker and adds new marker {@code location} to Map
+     * Remove any existing marker and add new marker {@code location} to Map
      */
     public void addNewMarkerToMap() {
 
@@ -72,6 +72,10 @@ public class ShowLocationCommand extends Command {
         Map.setMarkerOnMap(center);
     }
 
+    /**
+     * Initialise new marker with selected location {@code center} options
+     * @return Marker with initialised options
+     */
     private Marker getMarkerOptions(LatLong center) {
         MarkerOptions markOptions = new MarkerOptions();
         markOptions.animation(Animation.DROP)
@@ -80,13 +84,17 @@ public class ShowLocationCommand extends Command {
         return new Marker(markOptions);
     }
 
+    /**
+     * Converts selected location {@code selectedLocation} to LatLng form
+     * @return LatLong
+     */
     private LatLong getLatLong() {
         Geocoding convertToLatLng = new Geocoding();
-        convertToLatLng.initialiseLatLngFromAddress(address.toString());
+        convertToLatLng.initialiseLatLngFromAddress(selectedLocation.toString());
         return new LatLong(convertToLatLng.getLat(), convertToLatLng.getLong());
     }
 
     public MapAddress getLocation() {
-        return this.address;
+        return this.selectedLocation;
     }
 }
