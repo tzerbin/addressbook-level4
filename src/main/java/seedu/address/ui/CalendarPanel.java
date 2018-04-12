@@ -25,12 +25,10 @@ import seedu.address.commons.core.LogsCenter;
 
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
 import seedu.address.commons.events.ui.ShowCalendarBasedOnDateEvent;
 import seedu.address.commons.events.ui.ShowCombinedCalendarViewRequestEvent;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.calendar.CelebCalendar;
-import seedu.address.model.person.Celebrity;
 
 //@@author muruges95
 /**
@@ -154,13 +152,6 @@ public class CalendarPanel extends UiPart<Region> {
                 }
             }
         });
-    }
-
-    //keep this method to load calendar if the selected person is a celeb
-    @Subscribe
-    private void handlePersonPanelSelectionChangedToCelebrityEvent(PersonPanelSelectionChangedToCelebrityEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showCalendarOf(((Celebrity) event.getNewSelection().person).getCelebCalendar());
     }
 
     @Subscribe

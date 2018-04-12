@@ -3,6 +3,7 @@ package systemtests;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.model.ModelManager.CELEBRITY_TAG;
 import static seedu.address.testutil.TypicalTags.FRIENDS_TAG;
 
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class RemoveTagCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: remove tag friends from a non-empty address book that has this tag in tag list, command with leading
          * spaces and trailing spaces
-         * -> tag removed and shows 7 person affected
+         * -> tag removed and shows 8 persons affected
          */
         String command = "   " + RemoveTagCommand.COMMAND_WORD + "  " + FRIENDS_TAG.tagName + " ";
         assertCommandSuccess(command, FRIENDS_TAG);
@@ -64,6 +65,10 @@ public class RemoveTagCommandSystemTest extends AddressBookSystemTest {
         /* Case: valid tag name but tag does not exist in the address book -> rejected */
         command = RemoveTagCommand.COMMAND_WORD + " " + VALID_TAG_FRIEND;
         assertCommandFailure(command, String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND, FRIENDS_TAG.toString()));
+
+        /* Case: celebrity tag -> rejected */
+        command = RemoveTagCommand.COMMAND_WORD + " " + CELEBRITY_TAG.tagName;
+        assertCommandFailure(command, String.format(RemoveTagCommand.MESSAGE_CANNOT_REMOVE_CELEBRITY_TAG));
     }
 
     /**
@@ -74,8 +79,7 @@ public class RemoveTagCommandSystemTest extends AddressBookSystemTest {
      * {@code toRemove}.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} equal to the corresponding components in
      * the original empty model.<br>
-     * 5. Browser url and selected card remain unchanged.<br>
-     * 6. Status bar's sync status changes.<br>
+     * 5. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -91,7 +95,8 @@ public class RemoveTagCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Tag toRemove) throws Exception {
         Model expectedModel = getModel();
-        int numOfPersonsAffected = expectedModel.removeTag(toRemove);
+        int numOfPersonsAffected = expectedModel.countPersonsWithTag(toRemove);
+        expectedModel.removeTag(toRemove);
         String expectedResultMessage = String.format(RemoveTagCommand.MESSAGE_DELETE_TAG_SUCCESS,
                                                     toRemove.toString(),
                                                     numOfPersonsAffected);

@@ -14,9 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedToCelebrityEvent;
 import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
 
 /**
  * Panel containing the list of persons.
@@ -47,9 +45,6 @@ public class PersonListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        if (newValue.person.hasTag(new Tag("celebrity"))) {
-                            raise(new PersonPanelSelectionChangedToCelebrityEvent(newValue));
-                        }
                     }
                 });
     }
