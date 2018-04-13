@@ -68,7 +68,8 @@ public class EditAppointmentCommand extends Command {
             + PREFIX_POINT_OF_CONTACT + "3 "
             + PREFIX_POINT_OF_CONTACT + "4 ";
 
-    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the application";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the application,"
+            + " or the edited fields are the same as the original.";
     public static final String MESSAGE_SUCCESS = "Edited appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
 

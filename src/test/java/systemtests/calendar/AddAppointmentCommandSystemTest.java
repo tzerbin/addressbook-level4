@@ -40,6 +40,7 @@ import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.AppointmentUtil;
@@ -48,7 +49,7 @@ import systemtests.AddressBookSystemTest;
 public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
 
     @Test
-    public void addAppointment() throws DuplicatePersonException {
+    public void addAppointment() {
         Model model = getModel();
 
 
@@ -151,7 +152,12 @@ public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Appointment toAdd) {
         Model expectedModel = getModel();
-        expectedModel.addAppointmentToStorageCalendar(toAdd);
+        try {
+            expectedModel.addAppointmentToStorageCalendar(toAdd);
+        } catch (DuplicateAppointmentException e) {
+            throw new IllegalArgumentException("toAdd already exists in th model.");
+        }
+
 
         String expectedResultMessage = String.format(AddAppointmentCommand.MESSAGE_SUCCESS, toAdd.getTitle());
 

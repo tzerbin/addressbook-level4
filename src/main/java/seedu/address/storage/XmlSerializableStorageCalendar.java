@@ -45,7 +45,7 @@ public class XmlSerializableStorageCalendar {
      * {@code XmlAdaptedAppointments}.
      */
     public StorageCalendar toModelType() throws IllegalValueException {
-        StorageCalendar calendar = new StorageCalendar("Storage Calendar");
+        StorageCalendar calendar = new StorageCalendar();
         for (XmlAdaptedAppointment a : appointments) {
             calendar.addAppointment(a.toModelType());
         }

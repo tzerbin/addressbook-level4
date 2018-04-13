@@ -23,8 +23,17 @@ import seedu.address.model.person.exceptions.DuplicateAppointmentException;
  */
 public class StorageCalendar extends Calendar {
 
-    public StorageCalendar(String title) {
-        super(title);
+    private static String storageCalendarName = "Storage Calendar";
+
+    public StorageCalendar() {
+        super(storageCalendarName);
+    }
+
+    public StorageCalendar(StorageCalendar cal) {
+        super(storageCalendarName);
+        for (Appointment a : cal.getAllAppointments()) {
+            this.addEntry(a);
+        }
     }
 
     public boolean hasAtLeastOneAppointment() {
@@ -73,6 +82,9 @@ public class StorageCalendar extends Calendar {
 
     }
 
+    /**
+     * Checks if appointment already exists in the model, and if it doesnt adds it to the calendar
+     */
     public void addAppointment(Appointment appt) throws DuplicateAppointmentException {
         if (getAllAppointments().contains(appt)) {
             throw new DuplicateAppointmentException();

@@ -59,6 +59,6 @@ public class TypicalStorageCalendar {
     }
 
     public static StorageCalendar generateEmptyStorageCalendar() {
-        return new StorageCalendar("Storage Calendar");
+        return new StorageCalendar();
     }
 }
