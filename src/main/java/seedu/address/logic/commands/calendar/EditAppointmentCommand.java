@@ -35,6 +35,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 //@@author muruges95
 /**
@@ -67,6 +68,8 @@ public class EditAppointmentCommand extends Command {
             + PREFIX_POINT_OF_CONTACT + "3 "
             + PREFIX_POINT_OF_CONTACT + "4 ";
 
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the application,"
+            + " or the edited fields are the same as the original.";
     public static final String MESSAGE_SUCCESS = "Edited appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
 
@@ -104,9 +107,13 @@ public class EditAppointmentCommand extends Command {
                 ? model.getPointsOfContactChosen(editAppointmentDescriptor.getPointOfContactIndices().get())
                 : appointmentToEdit.getPointOfContactList();
 
+        try {
+            model.addAppointmentToStorageCalendar(editedAppointment);
+        } catch (DuplicateAppointmentException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        }
         appointmentToEdit.removeAppointment();
         editedAppointment.updateEntries(celebrityList, pointOfContactList);
-        model.addAppointmentToStorageCalendar(editedAppointment);
 
         // reset calendar view to day view
         model.setCelebCalendarViewPage(DAY_VIEW_PAGE);

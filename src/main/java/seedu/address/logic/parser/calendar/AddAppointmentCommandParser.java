@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +33,9 @@ import seedu.address.model.map.MapAddress;
  * Parses input arguments and creates a new AddAppointmentCommand object
  */
 public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
+
+    public static final String MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME = "Start date/time is not "
+            + "chronologically before end date/time.";
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
@@ -64,12 +68,12 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             MapAddress location = null;
             LocalTime startTime = LocalTime.now();
             LocalDate startDate = LocalDate.now();
-            LocalTime endTime = LocalTime.now();
+            LocalTime endTime = LocalTime.now().plusMinutes(15);
             LocalDate endDate = LocalDate.now();
 
             if (startTimeInput.isPresent()) {
                 startTime = startTimeInput.get();
-                endTime = startTimeInput.get();
+                endTime = startTimeInput.get().plusMinutes(15);
             }
             if (endTimeInput.isPresent()) {
                 endTime = endTimeInput.get();
@@ -85,10 +89,26 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
                 location = locationInput.get();
             }
 
+            // Checking if date and time take in correct values
+            if (isDateTimeNotValid(startDate, endDate, startTime, endTime)) {
+                throw new ParseException(MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
+            }
+
             Appointment appt = new Appointment(appointmentName, startTime, startDate, location, endTime, endDate);
             return new AddAppointmentCommand(appt, celebrityIndices, pointOfContactIndices);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
+
+    /**
+     * Checks if the start date/time is NOT at least 15 min before end date/time
+     */
+    private boolean isDateTimeNotValid(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
+        LocalDateTime sdt = LocalDateTime.of(startDate, startTime);
+        LocalDateTime edt = LocalDateTime.of(endDate, endTime);
+
+        return edt.isBefore(sdt.plusMinutes(15));
+    }
+
 }

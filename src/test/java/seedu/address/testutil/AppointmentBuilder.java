@@ -17,7 +17,7 @@ public class AppointmentBuilder {
     public static final MapAddress DEFAULT_LOCATION = null;
     public static final LocalTime DEFAULT_START_TIME = LocalTime.now();
     public static final LocalDate DEFAULT_START_DATE = LocalDate.now();
-    public static final LocalTime DEFAULT_END_TIME = LocalTime.now();
+    public static final LocalTime DEFAULT_END_TIME = LocalTime.now().plusMinutes(15);
     public static final LocalDate DEFAULT_END_DATE = LocalDate.now();
 
     private String name;
@@ -73,7 +73,7 @@ public class AppointmentBuilder {
      */
     public AppointmentBuilder withStartTime(String startTime) {
         this.startTime = LocalTime.parse(startTime, Appointment.TIME_FORMAT);
-        this.endTime = this.startTime;
+        this.endTime = this.startTime.plusMinutes(15);
         return this;
     }
 

@@ -52,7 +52,7 @@ public class Appointment extends Entry {
 
 
     // Minimum duration for an appointment is at least 1 minute
-    private static final Duration minDuration = Duration.ofMinutes(1);
+    private static final Duration minDuration = Duration.ofMinutes(15);
 
     private final List<Entry> childEntryList;
     private final List<Celebrity> celebrityList;

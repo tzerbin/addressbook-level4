@@ -37,11 +37,28 @@ public class TypicalStorageCalendar {
                     .withEndTime("18:00")
                     .withEndDate("26-08-2018").build());
 
+    public static final Appointment OSCAR = new Appointment(
+            new AppointmentBuilder().withName("Oscar Awards")
+                    .withStartTime("12:30")
+                    .withStartDate("12-12-2018")
+                    .withLocation("Clementi Rd")
+                    .withEndTime("13:30")
+                    .withEndDate("12-12-2018").build());
+
+    public static final Appointment GRAMMY = new Appointment(
+            new AppointmentBuilder().withName("Grammy Awards")
+                    .withStartTime("18:00")
+                    .withStartDate("10-10-2019")
+                    .withLocation("Commonwealth Ave")
+                    .withEndTime("19:00")
+                    .withEndDate("10-10-2019").build());
+
+
     public static List<Appointment> getTypicalAppointmentList() {
         return new ArrayList<>(Arrays.asList(CONCERT, DENTAL, MEETING));
     }
 
     public static StorageCalendar generateEmptyStorageCalendar() {
-        return new StorageCalendar("Storage Calendar");
+        return new StorageCalendar();
     }
 }

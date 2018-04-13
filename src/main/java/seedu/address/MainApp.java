@@ -115,13 +115,13 @@ public class MainApp extends Application {
             if (!storageCalendarOptional.isPresent()) {
                 logger.info("Storage calendar file not found. WIll be starting with an empty Storage Calendar");
             }
-            initalStoredCalendar = storageCalendarOptional.orElse(new StorageCalendar("Storage Calendar"));
+            initalStoredCalendar = storageCalendarOptional.orElse(new StorageCalendar());
         } catch (DataConversionException e) {
             logger.warning("Storage calendar file not in the correct format. Will be starting with a new Calendar");
-            initalStoredCalendar = new StorageCalendar("Storage Calendar");
+            initalStoredCalendar = new StorageCalendar();
         } catch (IOException e) {
             logger.warning("Problem while reading from the calendar file. Will be starting with an empty calendar");
-            initalStoredCalendar = new StorageCalendar("Storage Calendar");
+            initalStoredCalendar = new StorageCalendar();
         }
 
         return new ModelManager(initialAddressBook, initalStoredCalendar, userPrefs);
