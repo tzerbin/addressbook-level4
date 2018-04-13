@@ -651,7 +651,9 @@ image::ViewCalendarByMonth.jpg[width=""]
 
 ==== Changing the base date of calendar: `viewDate` [Since v1.5]
 
-Changes the base date of calendar and displays the calendar by day for the specified `date`. +
+Changes the base date of calendar and displays the calendar by day for the specified `date`.
+The base date is different from the current date. It is a date which `viewCalendarBy` is based on. Refer to the tip
+below examples for more information. +
 Alias: `vd` +
 Format: `viewDate [DATE]`
 
