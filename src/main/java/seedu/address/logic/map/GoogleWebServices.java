@@ -23,7 +23,7 @@ public class GoogleWebServices {
             + "please wait till 3pm SGT for it to be reset";
 
     private static GeoApiContext context;
-    private String [] apiKeys;git
+    private String [] apiKeys;
     private boolean isInitialised;
 
     /**
