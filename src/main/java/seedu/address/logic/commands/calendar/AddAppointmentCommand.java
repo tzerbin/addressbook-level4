@@ -22,6 +22,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 //@@author muruges95
 /**
@@ -54,6 +55,8 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_POINT_OF_CONTACT + "3 "
             + PREFIX_POINT_OF_CONTACT + "4 ";
 
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the application";
+
     public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only add appointment when "
             + "viewing combined calendar\n"
             + "currently viewing %1$s's calendar";
@@ -84,10 +87,14 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
+        try {
+            model.addAppointmentToStorageCalendar(appt);
+        } catch (DuplicateAppointmentException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        }
         appt.updateEntries(
                 model.getCelebritiesChosen(celebrityIndices),
                 model.getPointsOfContactChosen(pointOfContactIndices));
-        model.addAppointmentToStorageCalendar(appt);
 
         // reset calendar view to day view and set base date to the day when appointment starts
         model.setBaseDate(appt.getStartDate());

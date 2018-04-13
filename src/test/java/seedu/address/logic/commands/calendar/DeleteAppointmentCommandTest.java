@@ -24,6 +24,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.testutil.AppointmentBuilder;
 
 //@@author WJY-norainu
@@ -32,7 +33,8 @@ public class DeleteAppointmentCommandTest {
     private Model model;
 
     @Test
-    public void execute_validIndexListingAppointmentsWithRemainingAppointments_success() {
+    public void execute_validIndexListingAppointmentsWithRemainingAppointments_success()
+            throws DuplicateAppointmentException {
         model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);
@@ -53,7 +55,8 @@ public class DeleteAppointmentCommandTest {
     }
 
     @Test
-    public void execute_deletesTheOnlyAppointmentWithCombinedCalendar_successAndChangeToCombinedCalendar() {
+    public void execute_deletesTheOnlyAppointmentWithCombinedCalendar_successAndChangeToCombinedCalendar()
+            throws DuplicateAppointmentException {
         model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setIsListingAppointments(true);
@@ -72,7 +75,8 @@ public class DeleteAppointmentCommandTest {
     }
 
     @Test
-    public void execute_deleteTheOnlyAppointmentWithCelebCalendar_successAndShowCelebCalendar() {
+    public void execute_deleteTheOnlyAppointmentWithCelebCalendar_successAndShowCelebCalendar()
+            throws DuplicateAppointmentException {
         model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(DENTAL);
         model.setCelebCalendarOwner(JAY);
@@ -92,7 +96,8 @@ public class DeleteAppointmentCommandTest {
     }
 
     @Test
-    public void execute_validIndexNotListingAppointments_throwsCommandException() {
+    public void execute_validIndexNotListingAppointments_throwsCommandException()
+            throws DuplicateAppointmentException {
         model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(CONCERT);
         model.addAppointmentToStorageCalendar(DENTAL);

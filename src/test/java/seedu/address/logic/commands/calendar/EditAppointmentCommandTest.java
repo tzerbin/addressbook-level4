@@ -20,11 +20,11 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.calendar.EditAppointmentCommand.EditAppointmentDescriptor;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.EditAppointmentDescriptorBuilder;
 
@@ -36,7 +36,7 @@ public class EditAppointmentCommandTest {
     private Model model;
 
     @Test
-    public void execute_allFieldsSpecifiedListingAppointments_success() {
+    public void execute_allFieldsSpecifiedListingAppointments_success() throws DuplicateAppointmentException {
         prepareModel(CONCERT);
 
         Appointment editedAppointment = new AppointmentBuilder().withLocation("Clementi Road").build();
@@ -52,7 +52,7 @@ public class EditAppointmentCommandTest {
     }
 
     @Test
-    public void execute_someFieldsSpecifiedListingAppointments_success() {
+    public void execute_someFieldsSpecifiedListingAppointments_success() throws DuplicateAppointmentException {
         prepareModel(CONCERT);
 
         Appointment editedAppointment = new AppointmentBuilder(CONCERT)
@@ -69,22 +69,17 @@ public class EditAppointmentCommandTest {
     }
 
     @Test
-    public void execute_noFieldsSpecifiedListingAppointments_success() throws CommandException {
+    public void execute_noFieldsSpecifiedListingAppointments_throwsCommandException()
+            throws DuplicateAppointmentException {
         prepareModel(CONCERT);
 
         EditAppointmentCommand editAppointmentCommand = prepareCommand(INDEX_FIRST_APPOINTMENT,
                 new EditAppointmentDescriptor());
-        Appointment editedAppointment = new AppointmentBuilder(CONCERT).build();
-        String expectedMessage = String.format(EditAppointmentCommand.MESSAGE_SUCCESS, editedAppointment.getTitle());
-        Model expectedModel = new ModelManager(model.getAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
-        expectedModel.addAppointmentToStorageCalendar(editedAppointment);
-        expectedModel.setIsListingAppointments(false);
-
-        assertCommandSuccess(editAppointmentCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(editAppointmentCommand, model, EditAppointmentCommand.MESSAGE_DUPLICATE_APPOINTMENT);
     }
 
     @Test
-    public void execute_validIndexNotListingAppointments_throwsCommandException() {
+    public void execute_validIndexNotListingAppointments_throwsCommandException() throws DuplicateAppointmentException {
         prepareModel(CONCERT);
         model.setIsListingAppointments(false);
 
@@ -97,7 +92,7 @@ public class EditAppointmentCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexListingAppointments_throwsCommandException() {
+    public void execute_invalidIndexListingAppointments_throwsCommandException() throws DuplicateAppointmentException {
         prepareModel(CONCERT);
 
         Index outOfBoundIndex = Index.fromOneBased(model.getAppointmentList().size() + 1);
@@ -145,7 +140,7 @@ public class EditAppointmentCommandTest {
     /**
      * Add appointment to storageCalendar Model and change isListingAppointment attribute of model
      */
-    private void prepareModel(Appointment appt) {
+    private void prepareModel(Appointment appt) throws DuplicateAppointmentException {
         model = new ModelManager(getTypicalAddressBook(), generateEmptyStorageCalendar(), new UserPrefs());
         model.addAppointmentToStorageCalendar(appt);
         model.setIsListingAppointments(true);

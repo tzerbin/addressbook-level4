@@ -30,9 +30,11 @@ public class XmlSerializableStorageCalendar {
 
     public XmlSerializableStorageCalendar(StorageCalendar storageCalendar) {
         this();
-        List<Appointment> appointmentList = storageCalendar.getAllAppointments();
-        for (Appointment appt : appointmentList) {
-            appointments.add(new XmlAdaptedAppointment(appt));
+        if (storageCalendar != null) {
+            List<Appointment> appointmentList = storageCalendar.getAllAppointments();
+            for (Appointment appt : appointmentList) {
+                appointments.add(new XmlAdaptedAppointment(appt));
+            }
         }
     }
 
@@ -43,9 +45,9 @@ public class XmlSerializableStorageCalendar {
      * {@code XmlAdaptedAppointments}.
      */
     public StorageCalendar toModelType() throws IllegalValueException {
-        StorageCalendar calendar = new StorageCalendar("Storage Calendar");
+        StorageCalendar calendar = new StorageCalendar();
         for (XmlAdaptedAppointment a : appointments) {
-            calendar.addEntry(a.toModelType());
+            calendar.addAppointment(a.toModelType());
         }
         return calendar;
     }

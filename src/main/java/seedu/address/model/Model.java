@@ -16,6 +16,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -102,7 +103,7 @@ public interface Model {
     Appointment getChosenAppointment(int chosenIndex) throws CommandException;
 
     /** Adds the given appointment to the internal StorageCalendar */
-    void addAppointmentToStorageCalendar(Appointment appt);
+    void addAppointmentToStorageCalendar(Appointment appt) throws DuplicateAppointmentException;
 
     /** Removes appointment from internal StorageCalendar based on zero-based index
      *  Returns the removed appointment
