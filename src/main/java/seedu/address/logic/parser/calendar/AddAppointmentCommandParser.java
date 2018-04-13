@@ -1,6 +1,7 @@
 package seedu.address.logic.parser.calendar;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -10,9 +11,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POINT_OF_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
+import static seedu.address.model.appointment.Appointment.isDateTimeNotValid;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 import java.util.Set;
@@ -33,9 +34,6 @@ import seedu.address.model.map.MapAddress;
  * Parses input arguments and creates a new AddAppointmentCommand object
  */
 public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
-
-    public static final String MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME = "Start date/time is not "
-            + "chronologically before end date/time.";
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
@@ -100,15 +98,4 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             throw new ParseException(ive.getMessage(), ive);
         }
     }
-
-    /**
-     * Checks if the start date/time is NOT at least 15 min before end date/time
-     */
-    private boolean isDateTimeNotValid(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
-        LocalDateTime sdt = LocalDateTime.of(startDate, startTime);
-        LocalDateTime edt = LocalDateTime.of(endDate, endTime);
-
-        return edt.isBefore(sdt.plusMinutes(15));
-    }
-
 }
