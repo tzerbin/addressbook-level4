@@ -36,20 +36,20 @@ https://java.com/en/download/[here].
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `CelebManager.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your CelebManager.
 .  Double-click the file to start the app. The interface should appear in a few seconds.
 +
 The image below (Figure 1) shows the interface of CelebManager after the first launch.
 +
-.Interface of CelebManager Upon The First Launch
+.Interface of CelebManager upon the first launch
 image::Ui_UserGuide.jpg[width="790"]
 +
-CelebManager's interface comprises of `CommandBox` (top), `ResultDisplay` (right below `CommandBox`),
+CelebManager's interface comprises of 5 panels: `CommandBox` (top), `ResultDisplay` (right below `CommandBox`),
 `PersonListPanel` (left), `MapPanel` (bottom left), and `CalendarPanel` (bottom right), as labelled in the figure below.
 Note that the labelling is for illustration purpose and will not appear in the actual interface.
 +
-.Interface of CelebManager With Labels
+.Interface of CelebManager with labels
 image::Ui_labelled_UserGuide.jpg[width="790"]
 +
 `CommandBox` is for you to enter the commands. +
@@ -120,7 +120,7 @@ Alias: `c` +
 Format: `clear` +
 The picture below shows how CelebManager looks like after executing `clear`. +
 
-.Status of CelebManager After `clear`
+.Status of CelebManager after executing `clear`
 image::Ui_clean_state.jpg[width="790"]
 
 `PersonListPanel` should become empty. It is possible that your calendar in `CalendarPanel` may
