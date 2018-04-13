@@ -15,6 +15,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Entry;
 
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 //@@author muruges95
 /**
@@ -70,5 +71,12 @@ public class StorageCalendar extends Calendar {
 
         return appointmentsWithinDate;
 
+    }
+
+    public void addAppointment(Appointment appt) throws DuplicateAppointmentException {
+        if (getAllAppointments().contains(appt)) {
+            throw new DuplicateAppointmentException();
+        }
+        this.addEntry(appt);
     }
 }

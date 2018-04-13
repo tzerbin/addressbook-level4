@@ -27,6 +27,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -263,8 +264,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addAppointmentToStorageCalendar(Appointment appt) {
-        storageCalendar.addEntry(appt);
+    public void addAppointmentToStorageCalendar(Appointment appt) throws DuplicateAppointmentException{
+        storageCalendar.addAppointment(appt);
         appointments.add(appt);
         indicateAppointmentListChanged();
     }
