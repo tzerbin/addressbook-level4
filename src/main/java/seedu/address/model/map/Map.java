@@ -54,6 +54,10 @@ public class Map extends MapPanel {
         }
     }
 
+    /**
+     * Set new marker with {@code center} LatLong on map
+     * @param center
+     */
     public static void setMarkerOnMap(LatLong center) {
         actualMap.addMarker(Map.location);
         actualMap.setCenter(center);

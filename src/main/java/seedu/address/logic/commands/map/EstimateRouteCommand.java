@@ -49,8 +49,10 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     private static MapAddress endLocation = null;
     private static String distOfTravel;
     private static String timeOfTravel;
+
     private final LatLng endLatLng;
     private final LatLng startLatLng;
+
     private DirectionsService directionService;
 
     /**
@@ -75,18 +77,6 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
         Map.clearRoute();
         addRouteToMap();
         return new CommandResult(MESSAGE_SUCCESS + getStringOfDistanceAndTime());
-    }
-
-    /**
-     * Retrieves information of {@startLocation}, {@endLocation}, {@distOfTravel} and {@code timeOfTravel}
-     * which is then converted to string format to be shown to user
-     * @return information of distance and time of travel
-     */
-    public static String getStringOfDistanceAndTime() {
-        return "Start Location: " + startLocation.toString() + "\n"
-                + "End Location: " + endLocation.toString() + "\n"
-                + "Estimated Distance of travel: " + distOfTravel + "\n"
-                + "Estimated Time of travel: " + timeOfTravel;
     }
 
     @Override
@@ -120,17 +110,31 @@ public class EstimateRouteCommand extends Command implements DirectionsServiceCa
     private void setDistAndTimeOfTravel() {
         DistanceEstimate distEstimate = new DistanceEstimate();
         distEstimate.calculateDistanceMatrix(startLatLng, endLatLng, TravelMode.DRIVING);
-        distOfTravel = distEstimate.getDistOriginDest();
+        distOfTravel = distEstimate.getDistBetweenOriginDest();
         timeOfTravel = distEstimate.getTravelTime();
     }
 
     /**
      * Converts {@code address} into LatLng form
+     * @return LatLng of address
      */
     private LatLng getLatLong(MapAddress address) {
         Geocoding convertToLatLng = new Geocoding();
         convertToLatLng.initialiseLatLngFromAddress(address.toString());
         return convertToLatLng.getLatLng();
+    }
+
+    /**
+     * Retrieves information of {@code startLocation}, {@code endLocation}, {@code distOfTravel} and
+     * {@code timeOfTravel}
+     * which is then converted to string format to be shown to user
+     * @return information of distance and time of travel
+     */
+    public static String getStringOfDistanceAndTime() {
+        return "Start Location: " + startLocation.toString() + "\n"
+                + "End Location: " + endLocation.toString() + "\n"
+                + "Estimated Distance of travel: " + distOfTravel + "\n"
+                + "Estimated Time of travel: " + timeOfTravel;
     }
 
     public static MapAddress getStartLocation() {
