@@ -100,6 +100,10 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             throw new ParseException(ive.getMessage(), ive);
         }
     }
+
+    /**
+     * Checks if the start date/time is NOT at least 15 min before end date/time
+     */
     private boolean isDateTimeNotValid(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
         LocalDateTime sdt = LocalDateTime.of(startDate, startTime);
         LocalDateTime edt = LocalDateTime.of(endDate, endTime);

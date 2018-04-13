@@ -41,7 +41,6 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.AppointmentUtil;
 import systemtests.AddressBookSystemTest;
