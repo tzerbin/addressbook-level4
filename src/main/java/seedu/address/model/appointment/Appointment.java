@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
@@ -104,6 +105,17 @@ public class Appointment extends Entry {
         this.pointOfContactIds = appointment.getPointOfContactIds();
     }
 
+    /**
+     * Checks if the start date/time is NOT at least 15 min before end date/time
+     */
+    public static boolean isDateTimeNotValid(LocalDate startDate, LocalDate endDate, LocalTime startTime,
+                                             LocalTime endTime) {
+        LocalDateTime sdt = LocalDateTime.of(startDate, startTime);
+        LocalDateTime edt = LocalDateTime.of(endDate, endTime);
+
+        return edt.isBefore(sdt.plusMinutes(15));
+    }
+
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
@@ -149,6 +161,12 @@ public class Appointment extends Entry {
                 && (otherAppt.getEndTime().getHour() == this.getEndTime().getHour())
                 && (otherAppt.getEndTime().getMinute() == this.getEndTime().getMinute())
                 && Objects.equals(otherAppt.getEndDate(), this.getEndDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getMapAddress(), getStartTime().getHour(), getEndTime().getHour(),
+                getStartDate(), getEndDate(), getStartTime().getMinute(), getEndTime().getMinute());
     }
 
     /**

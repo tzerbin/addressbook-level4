@@ -28,7 +28,7 @@ public class AppointmentUtil {
     public static String getAppointmentDetails(Appointment appointment) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + appointment.getTitle() + " ");
-        sb.append(PREFIX_LOCATION + appointment.getLocation() + " ");
+        sb.append(PREFIX_LOCATION + appointment.getMapAddress().value + " ");
         sb.append(PREFIX_START_TIME + appointment.getStartTime().format(Appointment.TIME_FORMAT) + " ");
         sb.append(PREFIX_START_DATE + appointment.getStartDate().format(Appointment.DATE_FORMAT) + " ");
         sb.append(PREFIX_END_TIME + appointment.getEndTime().format(Appointment.TIME_FORMAT) + " ");
