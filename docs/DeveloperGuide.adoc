@@ -1898,17 +1898,50 @@ For each subsequent launch, window size and location should be the same as the s
 .. Re-launch the App by double-clicking the jar file +
    _Expected: The most recent window size and location are retained._
 
-=== Deleting a person
-This section includes instructions to test the delete command of the application.
+=== Adding a person/celebrity
+This section includes instructions to test the `add` command of the application.
 [NOTE]
-Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+Prerequisites: No other person in the addressbook with the details of the two persons below.
 
-.. Type `delete 1` in command box and press enter +
+.. Type `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney` in command box and press enter. +
+    _Expected: A contact by the name John Doe and with the above personal particulars will be added. +
+    Details of the added contact shown in the status message. Timestamp in the status bar is updated._
+.. Type `add n/Jane Doe p/98765431 e/janed@example.com a/311, Clementi Ave 1, #02-25 t/celebrity` in command box and press enter. +
+    _Expected: A celebrity by the name Jane Doe is added with the above personal particulars. A new calendar with the initial `J` +
+    will be created in the calendar panel. Details of the added celebrity shown in the status message. Timestamp in the status bar is updated._
+.. Type in `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney` in command box and press enter. +
+    _Expected: No person is added. Error details is shown in the status message. Status bar remains the same._
+
+=== Deleting a person/celebrity
+This section includes instructions to test the `delete` command of the application.
+[NOTE]
+Prerequisites: List all persons using the `list` command. Multiple persons in the list. At least one celebrity in the list.
+
+.. Type `delete n` in command box (n refers to the one-based index of the celebrity in the person list panel) and press enter. +
+    _Expected: Chosen celebrity is deleted from the list. Calendar corresponding to the deleted celebrity is removed from the calendar panel.
+    Details of the deleted celebrity is shown in the status message. Timestamp in the status bar is updated._
+.. Type `delete 1` in command box and press enter. +
    _Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated._
-.. Type `delete 0` in command box and press enter +
+.. Type `delete 0` in command box and press enter. +
    _Expected: No person is deleted. Error details shown in the status message. Status bar remains the same._
 .. Type other incorrect delete command such as `delete`, `delete x` (where x is larger than the list size) in command box and press enter +
    _Expected: Similar to previous._
+
+=== Adding an appointment
+This section includes instructions to test the `addAppointment` command of the application.
+[NOTE]
+Prerequisites: List all persons using the `list` command. At least one celebrity and one normal person in the person list panel. No appointments currently present.
+
+.. Type `aa n/Oscar` and press enter. Then type `la` and press enter. +
+    _Expected: An appointment with the name Oscar is added. The start date/time corresponds to the current time. The end date/time is 15 minutes from now._
+.. Type `aa n/Grammy sd/10-04-2018 st/15:00` and press enter. Then type `la` and press enter. +
+    _Expected: An appointment with the name Grammy is added. The start date/time correspond to the input values. End date/time is 15 minutes from that._
+.. Type `aa n/Dentist appointment sd/11-04-2018 st/16:00 ed/12-04-2018 et/09:00 c/n p/k` (where n corresponds to the index of a celebrity
+    and k corresponds to the index of a normal person) and press enter. Then type `la` and press enter. +
+    _Expected: An appointment with the above details and the selected celebrity and point of contact will appear in the appointment list._
+.. Type the above message again and press enter. +
+    _Expected: No appointment is added. Error details shown in the status message.
+
 
 ////
 === Saving data

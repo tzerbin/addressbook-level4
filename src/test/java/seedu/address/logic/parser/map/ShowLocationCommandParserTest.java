@@ -18,7 +18,8 @@ public class ShowLocationCommandParserTest {
     @Test
     public void parse_validArgs_returnsShowLocationCommand() {
         MapAddress address = new MapAddress(VALID_ADDRESS_MAP_BOB);
-        assertParseSuccess(parser, " " + PREFIX_MAP_ADDRESS + VALID_ADDRESS_MAP_BOB, new ShowLocationCommand(address));
+        assertParseSuccess(parser, " " + PREFIX_MAP_ADDRESS + VALID_ADDRESS_MAP_BOB,
+                new ShowLocationCommand(address));
     }
 
     @Test
