@@ -14,11 +14,12 @@ import com.google.maps.model.LatLng;
 public class GoogleWebServices {
 
     // 5 API keys for accessing google server
-    public static final String API_KEY_1 = "AIzaSyB78sjE5UtuPn9T7u1WHowRkWj2KFo92rI";
+    public static final String API_KEY_1 = "AIzaSyD__AeJPs2lM6ktAoRrrYMfFfP-_mZckQI";
     public static final String API_KEY_2 = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
     public static final String API_KEY_3 = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";
     public static final String API_KEY_4 = "AIzaSyA-gBgtvaQU4NMEmO37UJEyx5YHnuFU30E";
     public static final String API_KEY_5 = "AIzaSyAD8_oIBJlzOp30VA9mOvQKp6GZe8SFsYY";
+
     public static final String MESSAGE_FAIL_CONNECTION = "Api key reached max daily usage, "
             + "please wait till 3pm SGT for it to be reset";
 
