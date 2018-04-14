@@ -1107,7 +1107,7 @@ image::AfterShowLocationInput.png[width="400"]
 Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
 
 [NOTE]
-Whenever an invalid `showlocation` command is done, any existing location marker or route will be removed from the map.
+Whenever an invalid `showLocation` command is done, any existing location marker or route will be removed from the map.
 
 The following sequence diagram shows how the command works:
 
@@ -1946,7 +1946,40 @@ Prerequisites: List all persons using the `list` command. At least one celebrity
 .. Type `aa n/Dinner l/???` and press enter. +
     _Expected: No appointment is added. Error details shown in the status message._
 
+=== Viewing an appointment
+This section includes instructions to test the viewAppointment command of the application.
+[NOTE]
+Prerequisites: List all appointments using the `listAppointment` command. Multiple appointments in the list.
 
+.. Type `viewAppointment 1` in command box and press enter +
+   _Expected: First appointment is selected from the list. Details of the selected appointment shown in the result display. Location shown in map. Success message shown in result display._
+.. Type `viewAppointment 0` in command box and press enter +
+   _Expected: No appointment is selected. Error details shown in the result display. Status bar remains the same. Map removes any existing location marker or route._
+.. Type other incorrect  command such as `viewAppointment`, `viewAppointment x` (where x is larger than the list size or appointment chosen does not have location data) in command box and press enter +
+   _Expected: Similar to previous._
+
+=== Show location on map
+This section includes instructions to test the showLocation command of the application.
+
+.. Type `showLocation ma/NUS` in command box and press enter +
+   _Expected: Location shown in map. Map view will be centered to location._
+.. Type `showLocation ma/!!!!!!` in command box and press enter +
+   _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing location marker or route._
+.. Type other incorrect  command such as `showLocation`, `showLocation Punggol` in command box and press enter +
+   _Expected: Similar to previous._
+
+=== Estimated route between two location on map
+This section includes instructions to test the estimateRoute command of the application.
+
+.. Type `estimateRoute sma/NUS ema/Punggol` in command box and press enter +
+   _Expected: Best route by driving will be added to map. Map view will be centered to location. Details of distance and time of travel shown in result display.
+    Success message shown in result display._
+.. Type `estimateRoute sma/!!!!!! ema/Punggol` in command box and press enter +
+   _Expected: Location not found in google server. Error details shown in the result display. Status bar remains the same._
+.. Type `estimateRoute sma/NUS ema/!!!!!!` in command box and press enter +
+   _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing marker or route._
+.. Type other incorrect  command such as `estimateRoute`, `estimateRoute Punggol NUS`, `estimateRoute sma/Punggol NUS`, `estimateRoute NUS ema/Punggol` in command box and press enter +
+   _Expected: Similar to previous._
 ////
 === Saving data
 
