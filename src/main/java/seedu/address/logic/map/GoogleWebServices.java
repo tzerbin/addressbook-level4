@@ -46,10 +46,10 @@ public class GoogleWebServices {
     private void initialiseConnection() {
         for (int i = 0; i < 5; i++) {
             isInitialised = true;
-            try {
-                context = new GeoApiContext.Builder()
+            context = new GeoApiContext.Builder()
                         .apiKey(apiKeys[i])
                         .build();
+            try {
                 GeocodingResult[] results = GeocodingApi.geocode(context,
                         "Punggol").await();
                 LatLng location = results[0].geometry.location;
