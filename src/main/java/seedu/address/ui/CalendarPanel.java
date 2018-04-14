@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDARVIEW;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_CALENDAR_VIEW;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 import static seedu.address.model.ModelManager.MONTH_VIEW_PAGE;
 import static seedu.address.model.ModelManager.WEEK_VIEW_PAGE;
@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.view.CalendarView;
-
 import com.calendarfx.view.DateControl;
 import com.calendarfx.view.page.DayPage;
 import com.google.common.eventbus.Subscribe;
@@ -20,9 +19,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
-
 import seedu.address.commons.events.ui.ChangeCalendarRequestEvent;
 import seedu.address.commons.events.ui.ChangeCalendarViewPageRequestEvent;
 import seedu.address.commons.events.ui.ShowCalendarBasedOnDateEvent;
@@ -99,6 +96,7 @@ public class CalendarPanel extends UiPart<Region> {
         celebCalendarView.setShowPrintButton(false);
         celebCalendarView.setShowPageToolBarControls(false);
         celebCalendarView.setShowPageSwitcher(false);
+        celebCalendarView.setShowToolBar(false);
         celebCalendarView.setLayout(DateControl.Layout.SWIMLANE);
     }
 
@@ -133,7 +131,7 @@ public class CalendarPanel extends UiPart<Region> {
 
             default:
                 try {
-                    throw new ParseException(MESSAGE_UNKNOWN_CALENDARVIEW);
+                    throw new ParseException(MESSAGE_UNKNOWN_CALENDAR_VIEW);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

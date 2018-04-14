@@ -98,7 +98,7 @@ public class CommandTestUtil {
     public static final String APPT_END_DATE_DESC_GRAMMY = " " + PREFIX_END_DATE + VALID_END_DATE_GRAMMY;
 
     public static final String INVALID_APPT_NAME_DESC = " " + PREFIX_NAME + "Dinner & Dance"; // '&' not allowed in name
-    public static final String INVALID_APPT_LOCATION_DESC = " " + PREFIX_LOCATION + " "; // cant be just empty space
+    public static final String INVALID_APPT_LOCATION_DESC = " " + PREFIX_LOCATION + "???"; // cant be just qn marks
     public static final String INVALID_START_TIME = " " + PREFIX_START_TIME + "23:61"; // Minute cannot be more than 60
     public static final String INVALID_START_DATE = " " + PREFIX_START_DATE + "31-02-2018"; // There is no Feb 31st
     public static final String INVALID_END_TIME = " " + PREFIX_END_TIME + "23:61"; // Minute cannot be more than 60

@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -362,9 +363,16 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && isListingAppointments == other.isListingAppointments
-                && getStoredAppointmentList().equals(other.getStoredAppointmentList());
+                && getStoredAppointmentSet().equals(other.getStoredAppointmentSet());
     }
     //=========== Private inner methods =============================================================
+
+    /**
+     * Returns all stored appointments in a set
+     */
+    private Set<Appointment> getStoredAppointmentSet() {
+        return new HashSet<>(getStoredAppointmentList());
+    }
 
     /**
      * Populates our CelebCalendar CalendarSource by creating a calendar for every celebrity in our addressbook
