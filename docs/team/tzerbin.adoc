@@ -40,7 +40,7 @@ In this project, I have added the ability for users to save user data in the har
 
 *Code Contribution*
 
-Please refer to the [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/tzerbin.md[Functional code]] and [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/tzerbin.md[Test code]] that I have contributed in GitHub. 
+Please refer to the [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/tzerbin.md[Functional code]] and [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/tzerbin.md[Test code]] that I have contributed in GitHub.
 
 *Other Contributions*
 

@@ -1917,3 +1917,15 @@ Prerequisites: List all persons using the `list` command. Multiple persons in th
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 ////
+
+=== Transferring of storage calendar .xml file
+This section includes instructions to test the transferring of file of the application
+[NOTE]
+Preprequisites: The file is a valid .xml file for storage calendar, and is named `storagecalendar.xml`.
+
+.. Close the application.
+.. Open the `data/` directory in the folder containing the .jar file.
+   _Expected: `storagecalendar.xml` consisting the to-be-replaced data is in the folder._
+.. Replace the old `storagecalendar.xml` with the the new `storagecalendar.xml` file.
+.. Restart the application.
+   _Expeected: The new appointments data from `storagecalendar.xml` is reflected in the calendar panel._
