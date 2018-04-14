@@ -2107,6 +2107,16 @@ Prerequisites: Calendar is currently in `day` view and displays the current day'
 .. Type `viewDate !` in command box and press enter +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type other incorrect `viewDate` commands such as `viewDate`, `viewDate x` (where `x` is not a date in `DD-MM-YYYY` or `DD-MM` format) in command box and press enter +
-   _Expected: No change in calendar. Error details shown in the status message._      
-   
-   
+   _Expected: No change in calendar. Error details shown in the status message._
+
+=== Transferring of storage calendar .xml file
+This section includes instructions to test the transferring of file of the application
+[NOTE]
+Preprequisites: The file is a valid .xml file for storage calendar, and is named `storagecalendar.xml`.
+
+.. Close the application.
+.. Open the `data/` directory in the folder containing the .jar file.
+   _Expected: `storagecalendar.xml` consisting the to-be-replaced data is in the folder._
+.. Replace the old `storagecalendar.xml` with the the new `storagecalendar.xml` file.
+.. Restart the application.
+   _Expeected: The new appointments data from `storagecalendar.xml` is reflected in the calendar panel._
