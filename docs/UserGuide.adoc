@@ -254,7 +254,6 @@ Format: `select INDEX`
 
 ****
 * Selects the person at the specified `INDEX` in the last shown person list.
-* The selected person's information will be highlited with yellow colour.
 * `INDEX` refers to the index number shown in the most recent listing.
 * `INDEX` *must be a positive integer* `1`, `2`, `3`, ...
 ****
@@ -321,10 +320,16 @@ Format: `removeTag TAG`
 Examples:
 
 * `removeTag friends` +
-Removes the tag, `friends` from every person and shows the number of person(s) affected.
+Removes the tag, `friends` from every person and shows the number of person(s) affected. +
+Suppose `PersonListPanel` looks like the one on the left below before execution. +
+After execution, `PersonListPanel` should get updated to the one on the right below.
 
-* `removeTag colleagues` +
-Removes the tag, `colleagues` from every person and shows the number of person(s) affected.
+[.text-center]
+.State of `PersonListPanel` before (left) and after (right) executing `removeTag friends`
+image::removeTag.png[width="800"]
+
+* `removeTag owesMoney` +
+Removes the tag, `owesMoney` from every person and shows the number of person(s) affected.
 // end::removeTag[]
 
 // tag::undoredo[]
