@@ -1946,7 +1946,6 @@ Prerequisites: List all persons using the `list` command. At least one celebrity
 .. Type `aa n/Dinner l/???` and press enter. +
     _Expected: No appointment is added. Error details shown in the status message._
 
-
 === Viewing an appointment
 This section includes instructions to test the viewAppointment command of the application.
 [NOTE]
