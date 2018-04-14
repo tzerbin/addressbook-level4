@@ -2,6 +2,7 @@ package seedu.address.logic.commands.calendar;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -11,6 +12,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POINT_OF_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
+import static seedu.address.model.appointment.Appointment.isDateTimeNotValid;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,10 +33,12 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 //@@author muruges95
 /**
@@ -67,6 +71,8 @@ public class EditAppointmentCommand extends Command {
             + PREFIX_POINT_OF_CONTACT + "3 "
             + PREFIX_POINT_OF_CONTACT + "4 ";
 
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the application,"
+            + " or the edited fields are the same as the original.";
     public static final String MESSAGE_SUCCESS = "Edited appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided";
 
@@ -90,39 +96,44 @@ public class EditAppointmentCommand extends Command {
         }
         try {
             appointmentToEdit = model.getChosenAppointment(appointmentIndex.getZeroBased());
+            Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+
+            // either use existing celebrity list or get new one
+            List<Celebrity> celebrityList = (editAppointmentDescriptor.getCelebrityIndices().isPresent())
+                    ? model.getCelebritiesChosen(editAppointmentDescriptor.getCelebrityIndices().get())
+                    : appointmentToEdit.getCelebrities();
+
+            List<Person> pointOfContactList = (editAppointmentDescriptor.getPointOfContactIndices().isPresent())
+                    ? model.getPointsOfContactChosen(editAppointmentDescriptor.getPointOfContactIndices().get())
+                    : appointmentToEdit.getPointOfContactList();
+            model.addAppointmentToStorageCalendar(editedAppointment);
+            appointmentToEdit.removeAppointment();
+            editedAppointment.updateEntries(celebrityList, pointOfContactList);
+
+            // reset calendar view to day view
+            model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
+            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+            if (model.getIsListingAppointments()) {
+                model.setIsListingAppointments(false);
+                EventsCenter.getInstance().post(new ShowCalendarEvent());
+            }
+            return new CommandResult(String.format(MESSAGE_SUCCESS, editedAppointment.getTitle()));
         } catch (IndexOutOfBoundsException iobe) {
             throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        } catch (ParseException pe) {
+            throw new CommandException(MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
+        } catch (DuplicateAppointmentException dae) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
-        Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
 
-        // either use existing celebrity list or get new one
-        List<Celebrity> celebrityList = (editAppointmentDescriptor.getCelebrityIndices().isPresent())
-                ? model.getCelebritiesChosen(editAppointmentDescriptor.getCelebrityIndices().get())
-                : appointmentToEdit.getCelebrities();
-
-        List<Person> pointOfContactList = (editAppointmentDescriptor.getPointOfContactIndices().isPresent())
-                ? model.getPointsOfContactChosen(editAppointmentDescriptor.getPointOfContactIndices().get())
-                : appointmentToEdit.getPointOfContactList();
-
-        appointmentToEdit.removeAppointment();
-        editedAppointment.updateEntries(celebrityList, pointOfContactList);
-        model.addAppointmentToStorageCalendar(editedAppointment);
-
-        // reset calendar view to day view
-        model.setCelebCalendarViewPage(DAY_VIEW_PAGE);
-        EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
-        if (model.getIsListingAppointments()) {
-            model.setIsListingAppointments(false);
-            EventsCenter.getInstance().post(new ShowCalendarEvent());
-        }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedAppointment.getTitle()));
     }
 
     /**
      * Creates and returns a {@code Appointment} with the details of {@code apptToEdit}
      * edited with {@code ead}.
      */
-    public static Appointment createEditedAppointment(Appointment apptToEdit, EditAppointmentDescriptor ead) {
+    public static Appointment createEditedAppointment(Appointment apptToEdit, EditAppointmentDescriptor ead)
+            throws ParseException {
         assert apptToEdit != null;
 
         String apptName = ead.getAppointmentName().orElse(apptToEdit.getTitle());
@@ -132,6 +143,9 @@ public class EditAppointmentCommand extends Command {
         LocalDate endDate = ead.getEndDate().orElse(apptToEdit.getEndDate());
         MapAddress location = ead.getLocation().orElse(apptToEdit.getMapAddress());
 
+        if (isDateTimeNotValid(startDate, endDate, startTime, endTime)) {
+            throw new ParseException(MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
+        }
         return new Appointment(apptName, startTime, startDate, location, endTime, endDate);
     }
 

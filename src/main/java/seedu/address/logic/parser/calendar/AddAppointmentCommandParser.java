@@ -1,6 +1,7 @@
 package seedu.address.logic.parser.calendar;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
@@ -10,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_POINT_OF_CONTACT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.ParserUtil.arePrefixesPresent;
+import static seedu.address.model.appointment.Appointment.isDateTimeNotValid;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -64,12 +66,12 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             MapAddress location = null;
             LocalTime startTime = LocalTime.now();
             LocalDate startDate = LocalDate.now();
-            LocalTime endTime = LocalTime.now();
+            LocalTime endTime = LocalTime.now().plusMinutes(15);
             LocalDate endDate = LocalDate.now();
 
             if (startTimeInput.isPresent()) {
                 startTime = startTimeInput.get();
-                endTime = startTimeInput.get();
+                endTime = startTimeInput.get().plusMinutes(15);
             }
             if (endTimeInput.isPresent()) {
                 endTime = endTimeInput.get();
@@ -83,6 +85,11 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
             }
             if (locationInput.isPresent()) {
                 location = locationInput.get();
+            }
+
+            // Checking if date and time take in correct values
+            if (isDateTimeNotValid(startDate, endDate, startTime, endTime)) {
+                throw new ParseException(MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
             }
 
             Appointment appt = new Appointment(appointmentName, startTime, startDate, location, endTime, endDate);

@@ -33,7 +33,9 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalStorageCalendar;
 import seedu.address.ui.CommandBox;
 import seedu.address.ui.ResultDisplay;
 
@@ -64,7 +66,8 @@ public abstract class AddressBookSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
+        testApp = setupHelper.setupApplication(this::getInitialData, this::getInitialStorageCalendar,
+                getDataFileLocation(), getStorageCalendarFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         styleOfResultDisplayDefault = mainWindowHandle.getResultDisplay().getClassStyle();
@@ -87,11 +90,22 @@ public abstract class AddressBookSystemTest {
         return TypicalPersons.getTypicalAddressBook();
     }
 
+    protected StorageCalendar getInitialStorageCalendar() {
+        return TypicalStorageCalendar.generateEmptyStorageCalendar();
+    }
+
     /**
      * Returns the directory of the data file.
      */
     protected String getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Returns the directory of the storage calendar file.
+     */
+    protected String getStorageCalendarFileLocation() {
+        return TestApp.STORAGE_CALENDAR_LOCATION_FOR_TESTING;
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -169,7 +183,7 @@ public abstract class AddressBookSystemTest {
      * and the person list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-            Model expectedModel) {
+                                                     Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());

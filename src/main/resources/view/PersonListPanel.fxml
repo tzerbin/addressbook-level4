@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <ListView fx:id="personListView" prefWidth="248.0" VBox.vgrow="ALWAYS" />
 </VBox>

@@ -1,7 +1,5 @@
 package seedu.address;
 
-import static seedu.address.testutil.TypicalStorageCalendar.generateEmptyStorageCalendar;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Supplier;
@@ -18,8 +16,10 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableStorageCalendar;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -30,26 +30,38 @@ import systemtests.ModelHelper;
 public class TestApp extends MainApp {
 
     public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final String STORAGE_CALENDAR_LOCATION_FOR_TESTING = TestUtil
+            .getFilePathInSandboxFolder("sampleStorageCalendar.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
+    protected Supplier<StorageCalendar> initialStorageCalendarSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected String storageCalendarFileLocation = STORAGE_CALENDAR_LOCATION_FOR_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
+                   Supplier<StorageCalendar> initialStorageCalendarSupplier,
+                   String saveFileLocation, String storageCalenderFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
         this.saveFileLocation = saveFileLocation;
+        this.storageCalendarFileLocation = storageCalenderFileLocation;
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
             createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
                     this.saveFileLocation);
+        }
+
+        if (initialStorageCalendarSupplier.get() != null) {
+            createDataFileWithData(new XmlSerializableStorageCalendar(this.initialStorageCalendarSupplier.get()),
+                    this.storageCalendarFileLocation);
         }
     }
 
@@ -68,6 +80,7 @@ public class TestApp extends MainApp {
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
+        userPrefs.setStorageCalendarFilePath(storageCalendarFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
     }
@@ -96,7 +109,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), generateEmptyStorageCalendar(),
+        Model copy = new ModelManager((model.getAddressBook()), model.getStorageCalendar(),
                 new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
