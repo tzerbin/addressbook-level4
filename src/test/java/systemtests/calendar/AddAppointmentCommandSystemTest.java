@@ -1,5 +1,6 @@
 package systemtests.calendar;
 
+import static seedu.address.logic.commands.CommandTestUtil.APPT_END_DATE_DESC_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_END_DATE_DESC_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_END_TIME_DESC_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_END_TIME_DESC_OSCAR;
@@ -7,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.APPT_LOCATION_DESC_GR
 import static seedu.address.logic.commands.CommandTestUtil.APPT_LOCATION_DESC_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_NAME_DESC_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_NAME_DESC_OSCAR;
+import static seedu.address.logic.commands.CommandTestUtil.APPT_START_DATE_DESC_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_START_DATE_DESC_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_START_TIME_DESC_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_START_TIME_DESC_OSCAR;
@@ -14,9 +16,11 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_LOC
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_LOCATION_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_NAME_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_NAME_OSCAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_OSCAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_OSCAR;
@@ -27,6 +31,7 @@ import static seedu.address.testutil.TestUtil.getPersonIndices;
 import static seedu.address.testutil.TypicalCelebrities.AYANE;
 import static seedu.address.testutil.TypicalCelebrities.JAY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalStorageCalendar.OSCAR;
 
 import java.util.ArrayList;
@@ -49,9 +54,6 @@ public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void addAppointment() {
-        Model model = getModel();
-
-
         /* ------------------------ Perform add appointment operations on the shown unfiltered list ----------------- */
 
         /* Case: add an appointment, command with leading spaces and trailing spaces
@@ -123,6 +125,34 @@ public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
                 pointOfContactIndices);
 
         assertCommandSuccess(command, toAdd);
+
+        /* Case: add an appointment with all fields and 2 celebrities and 1 point of contact -> added */
+
+        pointOfContactList.add(CARL);
+        celebrityIndices.clear();
+        celebrityIndices.addAll(getCelebrityIndices(this.getModel(), celebrityList));
+        pointOfContactIndices.clear();
+        pointOfContactIndices.addAll(getPersonIndices(this.getModel(), pointOfContactList));
+        toAdd = new AppointmentBuilder().withName(VALID_APPOINTMENT_NAME_GRAMMY)
+                .withLocation(VALID_APPOINTMENT_LOCATION_GRAMMY).withStartDate(VALID_START_DATE_GRAMMY)
+                .withStartTime(VALID_START_TIME_GRAMMY).withEndDate(VALID_END_DATE_GRAMMY)
+                .withEndTime(VALID_END_TIME_GRAMMY).build();
+        toAdd.updateEntries(celebrityList, pointOfContactList);
+
+        command = AddAppointmentCommand.COMMAND_WORD + APPT_NAME_DESC_GRAMMY + APPT_LOCATION_DESC_GRAMMY
+                + APPT_END_DATE_DESC_GRAMMY + APPT_END_TIME_DESC_GRAMMY + APPT_START_DATE_DESC_GRAMMY
+                + APPT_START_TIME_DESC_GRAMMY + generatePointOfContactandCelebrityFields(celebrityIndices,
+                pointOfContactIndices);
+
+        assertCommandSuccess(command, toAdd);
+
+        /* ----------------------------------- Perform invalid add appointment operations --------------------------- */
+
+        /* Case: add a duplicate appointment -> rejected */
+        command = "   " + AddAppointmentCommand.COMMAND_WORD + "  " + APPT_NAME_DESC_OSCAR + "  "
+                + APPT_LOCATION_DESC_OSCAR + "  " + APPT_START_DATE_DESC_OSCAR + "  " + APPT_END_DATE_DESC_OSCAR + "  "
+                + APPT_START_TIME_DESC_OSCAR + "  " + APPT_END_TIME_DESC_OSCAR + " ";
+        assertCommandFailure(command, AddAppointmentCommand.MESSAGE_DUPLICATE_APPOINTMENT);
 
     }
 

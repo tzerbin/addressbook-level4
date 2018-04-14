@@ -99,6 +99,7 @@ public class CalendarPanel extends UiPart<Region> {
         celebCalendarView.setShowPrintButton(false);
         celebCalendarView.setShowPageToolBarControls(false);
         celebCalendarView.setShowPageSwitcher(false);
+        celebCalendarView.setShowToolBar(false);
         celebCalendarView.setLayout(DateControl.Layout.SWIMLANE);
     }
 
