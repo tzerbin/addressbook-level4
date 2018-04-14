@@ -32,7 +32,7 @@ public class StorageCalendar extends Calendar {
     public StorageCalendar(StorageCalendar cal) {
         super(storageCalendarName);
         for (Appointment a : cal.getAllAppointments()) {
-            this.addEntry(a);
+            this.addEntry(new Appointment(a));
         }
     }
 

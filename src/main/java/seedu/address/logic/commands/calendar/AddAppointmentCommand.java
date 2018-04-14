@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.model.ModelManager.DAY_VIEW_PAGE;
 
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
@@ -22,6 +23,8 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.person.Celebrity;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 
 //@@author muruges95
@@ -87,14 +90,14 @@ public class AddAppointmentCommand extends Command {
                             model.getCurrentCelebCalendarOwner().getName().toString()));
         }
 
+        List<Celebrity> celebrityList =  model.getCelebritiesChosen(celebrityIndices);
+        List<Person> pointOfContactList = model.getPointsOfContactChosen(pointOfContactIndices);
         try {
             model.addAppointmentToStorageCalendar(appt);
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
-        appt.updateEntries(
-                model.getCelebritiesChosen(celebrityIndices),
-                model.getPointsOfContactChosen(pointOfContactIndices));
+        appt.updateEntries(celebrityList, pointOfContactList);
 
         // reset calendar view to day view and set base date to the day when appointment starts
         model.setBaseDate(appt.getStartDate());
