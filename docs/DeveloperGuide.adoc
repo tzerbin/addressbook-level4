@@ -1927,6 +1927,21 @@ Prerequisites: List all persons using the `list` command. Multiple persons in th
 .. Type other incorrect delete command such as `delete`, `delete x` (where `x` is larger than the list size) in command box and press enter +
    _Expected: Similar to previous._
 
+=== Removing a tag
+This section includes instructions to test the `removeTag` command of the application.
+[NOTE]
+Prerequisites: At least one person in the full contact list (not necessarily the last shown list) has `friends` tag.
+
+.. Type `removeTag friends` in command box and press enter +
+   _Expected: `friends` tag is removed from any person who has it. Number of persons affected shown in the status message._
+.. Type `removeTag !@#` in command box and press enter +
+   _Expected: No tag is removed. Error details shown in the status message._
+.. Type `removeTag celebrity` in command box and press enter +
+   _Expected: `celebrity` tag is not removed. Error details shown in the status message._
+.. Type other incorrect `removeTag` commands such as `removeTag`, `removeTag x`
+(where `x` is a tag that nobody has in the full contact list or an invalid tag name) in command box and press enter +
+   _Expected: No tag is removed. Error details shown in the status message._
+
 === Adding an appointment
 This section includes instructions to test the `addAppointment` command of the application.
 [NOTE]
@@ -1946,6 +1961,44 @@ Prerequisites: List all persons using the `list` command. At least one celebrity
 .. Type `aa n/Dinner l/???` and press enter. +
     _Expected: No appointment is added. Error details shown in the status message._
 
+=== Listing appointments
+This section includes instructions to test the `listAppointment` command of the application.
+[NOTE]
+Prerequisites: At least one appointment stored in CelebManager.
+
+.. Type `listAppointment` in command box and press enter +
+   _Expected: All appointments are listed._
+.. Type `listAppointment 01-04 01-05` in command box and press enter +
+   _Expected: Appointments with scheduled timings which overlap with the period of 1st April to 1st May of the current year are listed.
+   If there is no such appointment, error details shown in the status message._
+.. Type `listAppointment 0` in command box and press enter +
+   _Expected: No appointments listed. Error details shown in the status message._
+.. Type `listAppointment a` in command box and press enter +
+   _Expected: No appointments listed. Error details shown in the status message._
+.. Type `listAppointment 03-05 02-01` in command box and press enter +
+   _Expected: No appointments listed. Error details shown in the status message._
+.. Type other incorrect `listAppointment` commands such as `listAppointment`, `listAppointment x`
+(where `x` is not a date range of format `DD-MM-YYYY DD-MM-YYYY`, `DD-MM-YYYY DD-MM`, `DD-MM DD-MM-YYYY`, or `DD-MM DD-MM`)
+in command box and press enter +
+   _Expected: No appointments listed. Error details shown in the status message._
+
+=== Deleting an appointment
+This section includes instructions to test the `deleteAppointment` command of the application.
+[NOTE]
+Prerequisites: List appointments using the `listAppointment` command. At least one appointment in the list.
+
+. while listing appointments:
+.. Type `deleteAppointment 0` in command box and press enter +
+   _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
+.. Type `deleteAppointment 1` in command box and press enter +
+   _Expected: First appointment is deleted from the list. If the deleted appointment is the only appointment in the list, CelebManager will switch back to the calendar of the current day._
+.. Type other incorrect `deleteAppointment` commands such as `deleteAppointment`, `deleteAppointment x` (where `x` is larger than the appointment list size) in command box and press enter +
+   _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
+
+. While not listing appointments
+.. Type correct deleteAppointment commands such as `deleteAppointment 1` in command box and press enter +
+   _Expected: No appointment is deleted. Error details shown in the status message._
+
 === Viewing an appointment
 This section includes instructions to test the viewAppointment command of the application.
 [NOTE]
@@ -1958,7 +2011,7 @@ Prerequisites: List all appointments using the `listAppointment` command. Multip
 .. Type other incorrect  command such as `viewAppointment`, `viewAppointment x` (where x is larger than the list size or appointment chosen does not have location data) in command box and press enter +
    _Expected: Similar to previous._
 
-=== Show location on map
+=== Showing location on map
 This section includes instructions to test the showLocation command of the application.
 
 .. Type `showLocation ma/NUS` in command box and press enter +
@@ -1968,7 +2021,7 @@ This section includes instructions to test the showLocation command of the appli
 .. Type other incorrect  command such as `showLocation`, `showLocation Punggol` in command box and press enter +
    _Expected: Similar to previous._
 
-=== Estimated route between two location on map
+=== Estimating route between two location on map
 This section includes instructions to test the estimateRoute command of the application.
 
 .. Type `estimateRoute sma/NUS ema/Punggol` in command box and press enter +
@@ -1987,37 +2040,6 @@ This section includes instructions to test the estimateRoute command of the appl
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 ////
-
-=== Removing a tag
-This section includes instructions to test the `removeTag` command of the application.
-[NOTE]
-Prerequisites: At least one person in the full contact list (not necessarily the last shown list) has `friends` tag.
-
-.. Type `removeTag friends` in command box and press enter +
-   _Expected: `friends` tag is removed from any person who has it. Number of persons affected shown in the status message._
-.. Type `removeTag !@#` in command box and press enter +
-   _Expected: No tag is removed. Error details shown in the status message._
-.. Type `removeTag celebrity` in command box and press enter +
-   _Expected: `celeberity` tag is not removed. Error details shown in the status message._
-.. Type other incorrect `removeTag` commands such as `removeTag`, `removeTag x` (where `x` is a tag that nobody has in the full contact list or an invalid tag name) in command box and press enter +
-   _Expected: No tag is removed. Error details shown in the status message._
-   
-=== Deleting an appointment
-This section includes instructions to test the `deleteAppointment` command of the application.
-[NOTE]
-Prerequisites: List appointments using the `listAppointment` command. At least one appointment in the list.
-
-. while listing appointments:
-.. Type `deleteAppointment 0` in command box and press enter +
-   _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
-.. Type `deleteAppointment 1` in command box and press enter +
-   _Expected: First appointment is deleted from the list. If the deleted appointment is the only appointment in the list, CelebManager will switch back to the calendar of the current day._
-.. Type other incorrect `deleteAppointment` commands such as `deleteAppointment`, `deleteAppointment x` (where `x` is larger than the appointment list size) in command box and press enter +
-   _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
-
-. While not listing appointments
-.. Type correct deletAppointment commands such as `deleteAppointment 1` in command box and press enter +
-   _Expected: No appointment is deleted. Error details shown in the status message._
    
 === Viewing a celebrity's calendar
 This section includes instructions to test the `viewCalendar` command of the application.
