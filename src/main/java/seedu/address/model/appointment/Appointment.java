@@ -163,6 +163,12 @@ public class Appointment extends Entry {
                 && Objects.equals(otherAppt.getEndDate(), this.getEndDate());
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getMapAddress(), getStartTime().getHour(), getEndTime().getHour(),
+                getStartDate(), getEndDate(), getStartTime().getMinute(), getEndTime().getMinute());
+    }
+
     /**
      * Resets the stores celebrities and points of contacts, along with their associated
      * information stored in the Appointment object

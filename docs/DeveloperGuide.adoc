@@ -1939,8 +1939,12 @@ Prerequisites: List all persons using the `list` command. At least one celebrity
 .. Type `aa n/Dentist appointment sd/11-04-2018 st/16:00 ed/12-04-2018 et/09:00 c/n p/k` (where n corresponds to the index of a celebrity
     and k corresponds to the index of a normal person) and press enter. Then type `la` and press enter. +
     _Expected: An appointment with the above details and the selected celebrity and point of contact will appear in the appointment list._
-.. Type the above message again and press enter. +
-    _Expected: No appointment is added. Error details shown in the status message.
+.. Type the above command again and press enter. +
+    _Expected: No appointment is added. Error details shown in the status message._
+.. Type `aa n/Lunch meeting c/x` (where x refers to an invalid celebrity index) and press enter. +
+    _Expected: No appointment is added. Error details shown in the status message._
+.. Type `aa n/Dinner l/???` and press enter. +
+    _Expected: No appointment is added. Error details shown in the status message._
 
 
 ////

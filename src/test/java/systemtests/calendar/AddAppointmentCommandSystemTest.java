@@ -1,5 +1,8 @@
 package systemtests.calendar;
 
+import static seedu.address.commons.core.Messages.MESSAGE_NOT_CELEBRITY_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_NOT_POINT_OF_CONTACT_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_END_DATE_DESC_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_END_DATE_DESC_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_END_TIME_DESC_GRAMMY;
@@ -12,6 +15,7 @@ import static seedu.address.logic.commands.CommandTestUtil.APPT_START_DATE_DESC_
 import static seedu.address.logic.commands.CommandTestUtil.APPT_START_DATE_DESC_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_START_TIME_DESC_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPT_START_TIME_DESC_OSCAR;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_APPT_LOCATION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_LOCATION_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_LOCATION_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_NAME_GRAMMY;
@@ -24,8 +28,11 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_GRAM
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_OSCAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GRAMMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_OSCAR;
+import static seedu.address.logic.commands.calendar.AddAppointmentCommand.MESSAGE_DUPLICATE_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CELEBRITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POINT_OF_CONTACT;
+import static seedu.address.model.map.MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS;
 import static seedu.address.testutil.TestUtil.getCelebrityIndices;
 import static seedu.address.testutil.TestUtil.getPersonIndices;
 import static seedu.address.testutil.TypicalCelebrities.AYANE;
@@ -47,7 +54,6 @@ import seedu.address.model.person.Celebrity;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.testutil.AppointmentBuilder;
-import seedu.address.testutil.AppointmentUtil;
 import systemtests.AddressBookSystemTest;
 
 public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
@@ -149,10 +155,42 @@ public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
         /* ----------------------------------- Perform invalid add appointment operations --------------------------- */
 
         /* Case: add a duplicate appointment -> rejected */
-        command = "   " + AddAppointmentCommand.COMMAND_WORD + "  " + APPT_NAME_DESC_OSCAR + "  "
-                + APPT_LOCATION_DESC_OSCAR + "  " + APPT_START_DATE_DESC_OSCAR + "  " + APPT_END_DATE_DESC_OSCAR + "  "
-                + APPT_START_TIME_DESC_OSCAR + "  " + APPT_END_TIME_DESC_OSCAR + " ";
-        assertCommandFailure(command, AddAppointmentCommand.MESSAGE_DUPLICATE_APPOINTMENT);
+        command = AddAppointmentCommand.COMMAND_WORD + APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
+                + APPT_START_DATE_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
+                + APPT_END_TIME_DESC_OSCAR;
+        assertCommandFailure(command, MESSAGE_DUPLICATE_APPOINTMENT);
+
+        /* Case: add an appointment with invalid map address -> rejected */
+        command = AddAppointmentCommand.COMMAND_WORD + APPT_NAME_DESC_OSCAR + INVALID_APPT_LOCATION_DESC
+                + APPT_START_DATE_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
+                + APPT_END_TIME_DESC_OSCAR;
+        assertCommandFailure(command, MESSAGE_ADDRESS_MAP_CONSTRAINTS);
+
+        /* Case: add an appointment with invalid celebrity indices -> rejected */
+        celebrityIndices.clear();
+        celebrityIndices.addAll(pointOfContactIndices);
+        command = AddAppointmentCommand.COMMAND_WORD + APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
+                + APPT_START_DATE_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
+                + APPT_END_TIME_DESC_OSCAR + generatePointOfContactandCelebrityFields(celebrityIndices,
+                pointOfContactIndices);
+        assertCommandFailure(command, MESSAGE_NOT_CELEBRITY_INDEX);
+
+        /* Case: add an appointment with invalid point of contact indices -> rejected */
+        celebrityIndices.clear();
+        celebrityIndices.addAll(getCelebrityIndices(this.getModel(), celebrityList));
+        pointOfContactIndices.clear();
+        pointOfContactIndices.addAll(celebrityIndices);
+        command = AddAppointmentCommand.COMMAND_WORD + APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
+                + APPT_START_DATE_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR + APPT_START_TIME_DESC_OSCAR
+                + APPT_END_TIME_DESC_OSCAR + generatePointOfContactandCelebrityFields(celebrityIndices,
+                pointOfContactIndices);
+        assertCommandFailure(command, MESSAGE_NOT_POINT_OF_CONTACT_INDEX);
+
+        /* Case: add a appointment with start time not 15 minutes before end time -> rejected */
+        command = AddAppointmentCommand.COMMAND_WORD + APPT_NAME_DESC_OSCAR + APPT_LOCATION_DESC_OSCAR
+                + APPT_START_DATE_DESC_OSCAR + APPT_END_DATE_DESC_OSCAR + APPT_START_TIME_DESC_GRAMMY
+                + " " + PREFIX_END_TIME + VALID_START_TIME_OSCAR;
+        assertCommandFailure(command, MESSAGE_START_DATE_TIME_NOT_BEFORE_END_DATE_TIME);
 
     }
 
@@ -168,16 +206,6 @@ public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
      * 6. Status bar's sync status changes.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(Appointment toAdd) {
-        assertCommandSuccess(AppointmentUtil.getAddAppointmentCommand(toAdd), toAdd);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(Appointment)}. Executes {@code command}
-     * instead.
-     * @see AddAppointmentCommandSystemTest#assertCommandSuccess(Appointment)
      */
     private void assertCommandSuccess(String command, Appointment toAdd) {
         Model expectedModel = getModel();
