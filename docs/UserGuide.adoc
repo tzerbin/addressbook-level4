@@ -75,9 +75,10 @@ For each of the command in CelebManager, their formats follow some general patte
 *Command Format*
 
 * All commands have an alias, which you can also use to execute the command, e.g. to add a contact to CelebManager,
-you can type either `add n/John Doe` or `a n/John Doe`.
-* Words in `UPPER_CASE` are the parameters to be supplied by the user, e.g. in `add n/NAME`, `NAME` is a parameter which
-can be used as `add n/John Doe`.
+you can type either `add n/John Doe p/123456 e/john@gmail.com a/Clementi` or `a n/John Doe p/123456 e/john@gmail.com a/Clementi`.
+* Words in `UPPER_CASE` are the parameters to be supplied by you, e.g. in `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS`,
+`NAME`, `PHONE_NUMBER`, `EMAIL`, `ADDRESS`, and `TAG` are parameters which can be used as
+`add n/John Doe p/123456 e/john@gmail.com a/Clementi`.
 * Items in square brackets are optional, e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times, e.g. `[t/TAG]...` can be used as `{nbsp}`
 (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -88,12 +89,11 @@ acceptable.
 ====
 *Precaution*
 
-* Commands that can result in loss of information are highlighted in red. Double-check before pressing kbd:[Enter] to
-execute it.
 * Refrain from clicking inside the calendar at all times, except for scrolling up and down using the scroll bar.
 This bug will be fixed in v2.0.
 * Commands that modify the persons and appointments stored in CelebManager (`add`, `delete`, `edit`, `undo`, `redo`,
-`addAppointment`) must be performed in combined calendar view unless specified otherwise. +
+`addAppointment`, `deleteAppointment`, `editAppointment` etc) must be performed in combined calendar view unless
+specified otherwise. +
 Information about combined calendar view can be found in +
 <<Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]>>.
 ====
@@ -110,7 +110,7 @@ General features include commands that affect and are affected by the overall st
 
 ==== Viewing help : `help` [Since v1.0]
 
-Shows a separate help window that contains this User Guide. +
+Shows a help window that contains this User Guide. +
 Format: `help`
 
 ==== Clearing all entries : `clear` [Since v1.0]
@@ -123,8 +123,8 @@ The picture below shows how CelebManager looks like after executing `clear`. +
 .Status of CelebManager after executing `clear`
 image::Ui_clean_state.jpg[width="790"]
 
-`PersonListPanel` should become empty. It is possible that your calendar in `CalendarPanel` may
-indicate a different date as it shows the current date.
+`PersonListPanel` and `CalendarPanel` should become empty. It is possible that your calendar in `CalendarPanel` shows
+a different date as it should show the current date.
 
 ==== Listing entered commands : `history` [Since v1.0]
 
@@ -154,9 +154,7 @@ There is no need to save manually.
 === Address Book Features
 
 Address book features allow you to modify and interact with the person list displayed in `PersonListPanel` located at
-the middle left of CelebManager. The figure below shows a possible state of `PersonListPanel`.
-
-If you have no persons saved in CelebManager, `PersonListPanel` will be empty.
+the middle left of CelebManager.
 
 ==== Adding a person: `add` [Since v1.0]
 
@@ -168,9 +166,10 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 A person can have any number of tags, including 0.
 
 ****
-* CelebManager has two types of persons: contacts and celebrities.
+* You can add two types of persons to CelebManager: contacts and celebrities.
 * Celebrities refer to the celebrities that you, the manager, are currently managing, while contacts refer to other persons.
-* If you want to add a celebrity person in CelebManager, you need to tag this person with `celebrity` tag.
+* Contacts refer to contacts other than celebrities.
+* If you want to add a celebrity to CelebManager, you need to tag him/her with `celebrity` tag.
 Refer to examples below for more information.
 * For each celebrity added, CelebManager creates a calendar in `CalendarPanel` for him/her. This calendar displays the appointments
 he/she will be attending.
@@ -210,11 +209,9 @@ Examples:
 
 * `find John` +
 Lists out any person having the name `John`.
-If you follow all the examples so far, `PersonListPanel` should list out `John Doe` and `John Lennon`.
 
 * `find Betsy John` +
 Lists out any person having any of the names: `Betsy` or `John`.
-If you follow all the examples so far, `PersonListPanel` should list out `Besty Crower`, `John Doe` and `John Lennon`.
 
 ==== Listing all persons : `list` [Since v1.0]
 
@@ -230,8 +227,10 @@ Format: `delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX` from `PersonListPanel`. This deletion is undoable.
+* If the person is a contact, he/she will be deleted from points of contacts of appointments he/she is associated with.
+Deletion of the contact from appointments *is not undoable*.
 * If the person is a celebrity, his/her calendar will be deleted. He/She will be deleted from appointments that he/she
-will be attending. Deletion of calendar and celebrity from appointments *is not undoable*.
+will be attending. Deletion of the calendar and the celebrity from appointments *is not undoable*.
 * When you undo deletion of a celebrity, a new empty calendar will be created for the restored celebrity.
 * `INDEX` refers to the index number shown in the most recent listing.
 * `INDEX` *must be a positive integer* `1`, `2`, `3`, ...
@@ -246,8 +245,6 @@ Deletes the 2nd person displayed in `PersonListPanel`. If `PersonListPanel` is e
 * `find Paul` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command. If the list is empty, an error message will be shown.
-If you follow all the examples so far, `Paul McCartney` will be deleted. As `Paul McCartney` is a celebrity, his calendar in
-`CalendarPanel` should also be deleted as shown in the figure below.
 
 ==== Selecting a person : `select` [Since v1.0]
 
@@ -325,11 +322,9 @@ Examples:
 
 * `removeTag friends` +
 Removes the tag, `friends` from every person and shows the number of person(s) affected.
-If you follow all the examples so far, `ResultDisaply` will show affected.
 
 * `removeTag colleagues` +
 Removes the tag, `colleagues` from every person and shows the number of person(s) affected.
-If you follow all the examples so far, `ResultDisplay` will show affected.
 // end::removeTag[]
 
 // tag::undoredo[]
@@ -419,9 +414,11 @@ Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/STAR
 * `START_DATE` *must not be* after `END_DATE`.
 * If `START_DATE` or `END_DATE` is omitted, it will take on the value of the current date.
 * `START_TIME` and `END_TIME` must be of the format `HH:MM` and 24-hour format is used, e.g. `14:05`.
-* `START_TIME` *must be* smaller than `END_TIME` if `START_DATE` is equal to `END_DATE`.
-* If `START_TIME` is omitted, it will take on the current time.
-* If `END_TIME` is omitted, it will take on the time of 1 minute after `START_TIME`.
+* `START_TIME` *must be* at least 15 minutes before `END_TIME` if `START_DATE` is equal to `END_DATE`.
+* If `START_TIME` and `END_TIME` are both omitted, `START_TIME` will take on the current time and `END_TIME` will be
+15 minutes after `START_TIME`.
+* If `START_TIME` is omitted while `END_TIME` is not, `START_TIME` will be 15 minutes before `END_TIME`.
+* If `END_TIME` is omitted while `START_TIME` is not, `END_TIME` will be 15 minutes after `START_TIME`.
 * `CELEBRITY_INDEX` and `POINT_OF_person_INDEX` refer to the index shwon in the last shown person list in `PersonListPanel`.
 * The person at `CELEBRITY_INDEX` *must be* a celebrity.
 * The person at `POINT_OF_person_INDEX` *must not be* a celebrity.
@@ -524,7 +521,7 @@ Deletes the 2nd appointment in the appointment list.
 Deletes the 1st appointment in the result of `listAppointment 01-04 01-05`.
 // end::deleteAppointment[]
 
-==== View appointment: `viewAppointment` [Since v1.4]
+==== Viewing an appointment: `viewAppointment` [Since v1.4]
 
 Pre-requisite: you can only edit an appointment when `CalendarPanel` is showing an appointment list.
 Refer to <<Listing appointments: `listAppointment` [Since v1.5]>> for more information. +
@@ -577,7 +574,7 @@ In <<Listing appointments: `listAppointment` [Since v1.5]>>, `listAppointment` c
 appointment list. To bring back the calendar, you can use any of the commands under this section.
 
 // tag::view-calendar[]
-==== Changing the calendar: `viewCalendar` [Since v1.3]
+==== Displaying a celebrity's calendar: `viewCalendar` [Since v1.3]
 
 Changes to view the calendar of the specified celebrity. +
 Alias: `vc` +
@@ -595,13 +592,13 @@ Examples:
 * `viewCalendar 1` +
 Changes to view the calendar of the 1st person in the last shown person list, if he/she is a celebrity.
 
-==== Changing to view the combined calendar: `viewCombinedCalendar` [Since v1.3]
+==== Displaying the combined calendar: `viewCombinedCalendar` [Since v1.3]
 
 Changes to shows all celebrities' appointments in one calendar. +
 Alias: `vcc` +
 Format: `viewCombinedCalendar`
 
-==== Changing the calendar view: `viewCalendarBy` [Since v1.3]
+==== Changing the calendar view type: `viewCalendarBy` [Since v1.3]
 
 Changes the calendar view to a different one specified by the user. +
 Alias: `vcb` +
@@ -649,7 +646,7 @@ The box highlighted in red indicates the current day.
 .State of `CalendarPanel` after executing `viewCalendarBy month`
 image::ViewCalendarByMonth.jpg[width=""]
 
-==== Changing the base date of calendar: `viewDate` [Since v1.5]
+==== Displaying a specific date's calendar: `viewDate` [Since v1.5]
 
 Changes the base date of calendar and displays the calendar by day for the specified `date`.
 The base date is different from the current date. It is a date which `viewCalendarBy` is based on. Refer to the tip
