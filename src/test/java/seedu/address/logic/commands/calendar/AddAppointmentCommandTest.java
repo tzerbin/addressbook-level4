@@ -28,6 +28,7 @@ import seedu.address.model.person.Person;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.TypicalCelebrities;
+// @@author muruges95
 
 public class AddAppointmentCommandTest {
     @Rule

@@ -55,6 +55,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.testutil.AppointmentBuilder;
 import systemtests.AddressBookSystemTest;
+// @@author muruges95
 
 public class AddAppointmentCommandSystemTest extends AddressBookSystemTest {
 
