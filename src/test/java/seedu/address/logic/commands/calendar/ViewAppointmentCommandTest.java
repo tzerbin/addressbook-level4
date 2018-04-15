@@ -23,7 +23,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.testutil.AppointmentBuilder;
-
+//@@author Damienskt
 public class ViewAppointmentCommandTest {
 
     private Model model;
