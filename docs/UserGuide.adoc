@@ -156,6 +156,12 @@ There is no need to save manually.
 Address book features allow you to modify and interact with the person list displayed in `PersonListPanel` located at
 the middle left of CelebManager.
 
+==== Person vs Celebrity: What's the difference?
+
+In our application, Celebrities are meant to be the celebrities that you, the manager, are currently managing. The other people are each referred to as a Person. The way you create or edit a Person is almost exactly the same as a Celebrity. Both have the same necessary and optional fields to them such as a name, phone number, address, email and some descriptive tags. The only difference is that if you want to create a Celebrity instead of a regular Person in our app, you need to have a compulsory `celebrity` tag, in small letters. This will signal to the program that you want to create a Celebrity instead of a normal Person. In other words, the usage of `celebrity` as a tag is reserved for creation of Celebrities. In some of the commands which deal with the adding and editing of a person this will be further explained.
+
+Each celebrity has their own calendar, which will displays the appointments he/she will be attending.
+
 ==== Adding a person: `add` [Since v1.0]
 
 Adds a person to CelebManager. +

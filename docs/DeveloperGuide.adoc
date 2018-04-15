@@ -601,7 +601,7 @@ Right now, the addAppointment command takes in up to 8 parameters. They are:
 * Start Time
 * End Date
 * End Time
-* Celebrity indices
+* Celebrity Indices
 * Point of Contact Indices
 
 The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:
