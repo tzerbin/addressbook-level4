@@ -38,7 +38,7 @@ Responsibilities: Model Component, Testing, Schdeuling and Tracking
 
 '''
 
-=== Sim Kwan Tiong Damien
+=== Sim Kwan Tiong, Damien
 image::Damienskt.jpeg[width="150", align="left"]
 {empty}[http://github.com/Damienskt[github]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/docs/team/Damienskt.adoc[Project Portfolio]]
 
