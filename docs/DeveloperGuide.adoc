@@ -1901,7 +1901,7 @@ Prerequisites: No other person in the addressbook with the details of the two pe
     _Expected: No person is added. Error details is shown in the status message. Status bar remains the same._
 
 === Deleting a person/celebrity
-This section includes instructions to test the `delete` command of the application.
+This section includes instructions to test the `delete` command of the CelebManager.
 [NOTE]
 Prerequisites: List all persons using the `list` command. Multiple persons in the list. At least one celebrity in the list.
 
@@ -1912,41 +1912,41 @@ Prerequisites: List all persons using the `list` command. Multiple persons in th
    _Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated._
 .. Type `delete 0` in command box and press enter. +
    _Expected: No person is deleted. Error details shown in the status message. Status bar remains the same._
-.. Type other incorrect delete command such as `delete`, `delete x` (where `x` is larger than the list size) in command box and press enter +
+.. Type other incorrect delete command such as `delete`, `delete x` (where `x` is larger than the list size) in command box and press enter. +
    _Expected: Similar to previous._
 
 === Removing a tag
-This section includes instructions to test the `removeTag` command of the application.
+This section includes instructions to test the `removeTag` command of the CelebManager.
 [NOTE]
 Prerequisites: At least one person in the full contact list (not necessarily the last shown list) has `friends` tag.
 
-.. Type `removeTag friends` in command box and press enter +
+.. Type `removeTag friends` in command box and press enter. +
    _Expected: `friends` tag is removed from any person who has it. Number of persons affected shown in the status message._
-.. Type `removeTag !@#` in command box and press enter +
+.. Type `removeTag !@#` in command box and press enter. +
    _Expected: No tag is removed. Error details shown in the status message._
-.. Type `removeTag celebrity` in command box and press enter +
+.. Type `removeTag celebrity` in command box and press enter. +
    _Expected: `celebrity` tag is not removed. Error details shown in the status message._
 .. Type other incorrect `removeTag` commands such as `removeTag`, `removeTag x`
-(where `x` is a tag that nobody has in the full contact list or an invalid tag name) in command box and press enter +
+(where `x` is a tag that nobody has in the full contact list or an invalid tag name) in command box and press enter. +
    _Expected: No tag is removed. Error details shown in the status message._
 
 === Adding an appointment
-This section includes instructions to test the `addAppointment` command of the application.
+This section includes instructions to test the `addAppointment` command of the CelebManager.
 [NOTE]
 Prerequisites: List all persons using the `list` command. At least one celebrity and one normal person in the person list panel. No appointments currently present.
 
-.. Type `aa n/Oscar` and press enter. Then type `la` and press enter. +
+.. Type `addAppointment n/Oscar` and press enter. Then type `la` and press enter. +
     _Expected: An appointment with the name Oscar is added. The start date/time corresponds to the current time. The end date/time is 15 minutes from now._
-.. Type `aa n/Grammy sd/10-04-2018 st/15:00` and press enter. Then type `la` and press enter. +
+.. Type `addAppointment n/Grammy sd/10-04-2018 st/15:00` and press enter. Then type `la` and press enter. +
     _Expected: An appointment with the name Grammy is added. The start date/time correspond to the input values. End date/time is 15 minutes from that._
-.. Type `aa n/Dentist appointment sd/11-04-2018 st/16:00 ed/12-04-2018 et/09:00 c/n p/k` (where n corresponds to the index of a celebrity
+.. Type `addAppointment n/Dentist appointment sd/11-04-2018 st/16:00 ed/12-04-2018 et/09:00 c/n p/k` (where n corresponds to the index of a celebrity
     and k corresponds to the index of a normal person) and press enter. Then type `la` and press enter. +
     _Expected: An appointment with the above details and the selected celebrity and point of contact will appear in the appointment list._
 .. Type the above command again and press enter. +
     _Expected: No appointment is added. Error details shown in the status message._
-.. Type `aa n/Lunch meeting c/x` (where x refers to an invalid celebrity index) and press enter. +
+.. Type `addAppointment n/Lunch meeting c/x` (where x refers to an invalid celebrity index) and press enter. +
     _Expected: No appointment is added. Error details shown in the status message._
-.. Type `aa n/Dinner l/???` and press enter. +
+.. Type `addAppointment n/Dinner l/???` and press enter. +
     _Expected: No appointment is added. Error details shown in the status message._
 
 === Listing appointments
@@ -1954,21 +1954,39 @@ This section includes instructions to test the `listAppointment` command of the 
 [NOTE]
 Prerequisites: At least one appointment stored in CelebManager.
 
-.. Type `listAppointment` in command box and press enter +
+.. Type `listAppointment` in command box and press enter. +
    _Expected: All appointments are listed._
-.. Type `listAppointment 01-04 01-05` in command box and press enter +
+.. Type `listAppointment 01-04 01-05` in command box and press enter. +
    _Expected: Appointments with scheduled timings which overlap with the period of 1st April to 1st May of the current year are listed.
    If there is no such appointment, error details shown in the status message._
-.. Type `listAppointment 0` in command box and press enter +
+.. Type `listAppointment 0` in command box and press enter. +
    _Expected: No appointments listed. Error details shown in the status message._
-.. Type `listAppointment a` in command box and press enter +
+.. Type `listAppointment a` in command box and press enter. +
    _Expected: No appointments listed. Error details shown in the status message._
-.. Type `listAppointment 03-05 02-01` in command box and press enter +
+.. Type `listAppointment 03-05 02-01` in command box and press enter. +
    _Expected: No appointments listed. Error details shown in the status message._
 .. Type other incorrect `listAppointment` commands such as `listAppointment`, `listAppointment x`
 (where `x` is not a date range of format `DD-MM-YYYY DD-MM-YYYY`, `DD-MM-YYYY DD-MM`, `DD-MM DD-MM-YYYY`, or `DD-MM DD-MM`)
-in command box and press enter +
+in command box and press enter. +
    _Expected: No appointments listed. Error details shown in the status message._
+
+=== Edititng an appointment
+This section includes instructions to test the `editAppointment` command of the CelebManager.
+[NOTE]
+Prerequisites: List all appointments using the `listAppointment` command. At least one appointment stored in the list.
+
+. while listing appointments:
+.. Type `editAppointment 0` in command box and press enter. +
+   _Expected: No appointment is edited. Error details shown in the status message. Appointment list remains the same._
+.. Type `editAppointment 1 n/New Appointment` in command box and press enter. +
+   _Expected: First appointment is renamed as `New Appointment` as long as it did not already have that name previously, and will go back to the calendar page.
+   If there is an error because the name is the same, no appointment is edited, error details shown in the status message and appointment list remains the same._
+.. Type other incorrect `editAppointment` commands such as `editAppointment`, `editAppointment x` (where `x` is larger than the appointment list size) in command box and press enter. +
+   _Expected: No appointment is edited. Error details shown in the status message. Appointment list remains the same._
+
+. While not listing appointments
+.. Type correct deleteAppointment commands such as `editAppointment 1` in command box and press enter. +
+   _Expected: No appointment is edited. Error details shown in the status message._
 
 === Deleting an appointment
 This section includes instructions to test the `deleteAppointment` command of the application.
@@ -1976,50 +1994,50 @@ This section includes instructions to test the `deleteAppointment` command of th
 Prerequisites: List appointments using the `listAppointment` command. At least one appointment in the list.
 
 . while listing appointments:
-.. Type `deleteAppointment 0` in command box and press enter +
+.. Type `deleteAppointment 0` in command box and press enter. +
    _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
-.. Type `deleteAppointment 1` in command box and press enter +
+.. Type `deleteAppointment 1` in command box and press enter. +
    _Expected: First appointment is deleted from the list. If the deleted appointment is the only appointment in the list, CelebManager will switch back to the calendar of the current day._
-.. Type other incorrect `deleteAppointment` commands such as `deleteAppointment`, `deleteAppointment x` (where `x` is larger than the appointment list size) in command box and press enter +
+.. Type other incorrect `deleteAppointment` commands such as `deleteAppointment`, `deleteAppointment x` (where `x` is larger than the appointment list size) in command box and press enter. +
    _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
 
 . While not listing appointments
-.. Type correct deleteAppointment commands such as `deleteAppointment 1` in command box and press enter +
+.. Type correct deleteAppointment commands such as `deleteAppointment 1` in command box and press enter. +
    _Expected: No appointment is deleted. Error details shown in the status message._
 
 === Viewing an appointment
-This section includes instructions to test the viewAppointment command of the application.
+This section includes instructions to test the `viewAppointment` command of the application.
 [NOTE]
 Prerequisites: List all appointments using the `listAppointment` command. Multiple appointments in the list.
 
-.. Type `viewAppointment 1` in command box and press enter +
+.. Type `viewAppointment 1` in command box and press enter. +
    _Expected: First appointment is selected from the list. Details of the selected appointment shown in the result display. Location shown in map. Success message shown in result display._
-.. Type `viewAppointment 0` in command box and press enter +
+.. Type `viewAppointment 0` in command box and press enter. +
    _Expected: No appointment is selected. Error details shown in the result display. Status bar remains the same. Map removes any existing location marker or route._
-.. Type other incorrect  command such as `viewAppointment`, `viewAppointment x` (where x is larger than the list size or appointment chosen does not have location data) in command box and press enter +
+.. Type other incorrect  command such as `viewAppointment`, `viewAppointment x` (where x is larger than the list size or appointment chosen does not have location data) in command box and press enter. +
    _Expected: Similar to previous._
 
 === Showing location on map
-This section includes instructions to test the showLocation command of the application.
+This section includes instructions to test the `showLocation` command of the application.
 
-.. Type `showLocation ma/NUS` in command box and press enter +
+.. Type `showLocation ma/NUS` in command box and press enter. +
    _Expected: Location shown in map. Map view will be centered to location._
-.. Type `showLocation ma/!!!!!!` in command box and press enter +
+.. Type `showLocation ma/!!!!!!` in command box and press enter. +
    _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing location marker or route._
-.. Type other incorrect  command such as `showLocation`, `showLocation Punggol` in command box and press enter +
+.. Type other incorrect  command such as `showLocation`, `showLocation Punggol` in command box and press enter. +
    _Expected: Similar to previous._
 
 === Estimating route between two location on map
-This section includes instructions to test the estimateRoute command of the application.
+This section includes instructions to test the `estimateRoute` command of the application.
 
-.. Type `estimateRoute sma/NUS ema/Punggol` in command box and press enter +
+.. Type `estimateRoute sma/NUS ema/Punggol` in command box and press enter. +
    _Expected: Best route by driving will be added to map. Map view will be centered to location. Details of distance and time of travel shown in result display.
     Success message shown in result display._
-.. Type `estimateRoute sma/!!!!!! ema/Punggol` in command box and press enter +
+.. Type `estimateRoute sma/!!!!!! ema/Punggol` in command box and press enter. +
    _Expected: Location not found in google server. Error details shown in the result display. Status bar remains the same._
-.. Type `estimateRoute sma/NUS ema/!!!!!!` in command box and press enter +
+.. Type `estimateRoute sma/NUS ema/!!!!!!` in command box and press enter. +
    _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing marker or route._
-.. Type other incorrect  command such as `estimateRoute`, `estimateRoute Punggol NUS`, `estimateRoute sma/Punggol NUS`, `estimateRoute NUS ema/Punggol` in command box and press enter +
+.. Type other incorrect  command such as `estimateRoute`, `estimateRoute Punggol NUS`, `estimateRoute sma/Punggol NUS`, `estimateRoute NUS ema/Punggol` in command box and press enter. +
    _Expected: Similar to previous._
 ////
 === Saving data
@@ -2034,15 +2052,15 @@ This section includes instructions to test the `viewCalendar` command of the app
 [NOTE]
 Prerequisites: At least one celebrity in the last shown list and the celebrity's calendar is not currently displayed.
 
-.. Type `viewCalendar c` (where `c` is the index of the celebrity) in command box and press enter +
+.. Type `viewCalendar c` (where `c` is the index of the celebrity) in command box and press enter. +
    _Expected: `CalendarPanel` now displays the celebrity's calendar. If the celebrity is the only celebrity in the full contact list, there won't be any change in terms of the outlook of calendar._
-.. Type `viewCalendar c` (where `c` is the index of the same celebrity in the previous command) again after previous execution in command box and press enter +
+.. Type `viewCalendar c` (where `c` is the index of the same celebrity in the previous command) again after previous execution in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-.. Type `viewCalendar p` (where `p` is the index of a non-celebrity person) in command box and press enter +
+.. Type `viewCalendar p` (where `p` is the index of a non-celebrity person) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-.. Type `viewCalendar 0` in command box and press enter +
+.. Type `viewCalendar 0` in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._   
-.. Type other incorrect `viewCalendar` commands such as `viewCalendar`, `viewCalendar x` (where `x` is larger than the last shown contact list size or not a valid index number or the index of the celebrity whose calendar is currently displayed) in command box and press enter +
+.. Type other incorrect `viewCalendar` commands such as `viewCalendar`, `viewCalendar x` (where `x` is larger than the last shown contact list size or not a valid index number or the index of the celebrity whose calendar is currently displayed) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
    
 === Viewing the combined calendar
@@ -2050,9 +2068,9 @@ This section includes instructions to test the `viewCombinedCalendar` command of
 [NOTE]
 Prerequisites: Combined calendar is not currently displayed.
 
-.. Type `viewCombinedCalendar` in command box and press enter +
+.. Type `viewCombinedCalendar` in command box and press enter. +
    _Expected: `CalendarPanel` now displays the combined calendar. If there is only one celebrity in the full contact list, there won't be any change in terms of the outlook of calendar._
-.. Type `viewCombinedCalendar` again after previous execution in command box and press enter +
+.. Type `viewCombinedCalendar` again after previous execution in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 
 === Changing to a different calendar view
@@ -2060,19 +2078,19 @@ This section includes instructions to test the `viewCalendarBy` command of the a
 [NOTE]
 Prerequisites: Calendar is currently in `day` view.
 
-.. Type `viewCalendarBy week` in command box and press enter +
+.. Type `viewCalendarBy week` in command box and press enter. +
    _Expected: Calendar shows the week which the original day is in._
-.. Type `viewCalendarBy month` in command box and press enter +
+.. Type `viewCalendarBy month` in command box and press enter. +
    _Expected: Calendar shows the month which the original day is in._
-.. Type `viewCalendarBy day` in command box and press enter +
+.. Type `viewCalendarBy day` in command box and press enter. +
    _Expected: Calendar shows the day which is the original day._
-.. Type `viewCalendarBy day` again after executing the previous command in command box and press enter +
+.. Type `viewCalendarBy day` again after executing the previous command in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._ 
-.. Type `viewCalendarBy MOnTh` in command box and press enter +
+.. Type `viewCalendarBy MOnTh` in command box and press enter. +
    _Expected: Calendar shows the week which the original day is in._
-.. Type `viewCalendarBy 1` in command box and press enter +
+.. Type `viewCalendarBy 1` in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-.. Type other incorrect `viewCalendarBy` commands such as `viewCalendarBy`, `viewCalendarBy x` (where x is not `day`, `week`, `month` or mixed uppercase and lowercase of one of them) in command box and press enter +
+.. Type other incorrect `viewCalendarBy` commands such as `viewCalendarBy`, `viewCalendarBy x` (where x is not `day`, `week`, `month` or mixed uppercase and lowercase of one of them) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
    
 === Viewing a particular day's calendar
@@ -2080,21 +2098,21 @@ This section includes instructions to test the `viewDate` command of the applica
 [NOTE]
 Prerequisites: Calendar is currently in `day` view and displays the current day's calendar. Current day is not 1st April of 2018.
 
-.. Type `viewDate 01-04-2018` in command box and press enter +
+.. Type `viewDate 01-04-2018` in command box and press enter. +
    _Expected: `CalendarPanel` displays the calendar for 1st April of 2018._
-.. Type `viewDate d` (where `d` is a date that is different from the current day's date, in DD-MM format) in command box and press enter +
+.. Type `viewDate d` (where `d` is a date that is different from the current day's date, in DD-MM format) in command box and press enter. +
    _Expected: `CalendarPanel` displays the calendar for date `d` of current year._
-.. Type `viewDate` in command box and press enter +
+.. Type `viewDate` in command box and press enter. +
    _Expected: `CalendarPanel` displays the calendar for the current day._
-.. Type `viewDate` again after executing the previous command in command box and press enter +
+.. Type `viewDate` again after executing the previous command in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-.. Type `viewDate 01-04` again after executing the previous command in command box and press enter +
+.. Type `viewDate 01-04` again after executing the previous command in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._ 
-.. Type `viewDate 0` in command box and press enter +
+.. Type `viewDate 0` in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-.. Type `viewDate !` in command box and press enter +
+.. Type `viewDate !` in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-.. Type other incorrect `viewDate` commands such as `viewDate`, `viewDate x` (where `x` is not a date in `DD-MM-YYYY` or `DD-MM` format) in command box and press enter +
+.. Type other incorrect `viewDate` commands such as `viewDate`, `viewDate x` (where `x` is not a date in `DD-MM-YYYY` or `DD-MM` format) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._      
    
    
