@@ -859,7 +859,15 @@ The snippet code below shows the code that retrieves the selected appointment.
 [source,java]
 ----
     public CommandResult execute() throws CommandException {
-        selectedAppointment = model.getChosenAppointment(chosenIndex);
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
+        try {
+            selectedAppointment = model.getChosenAppointment(chosenIndex);
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        }
+
         try {
             ShowLocationCommand showLocation = new ShowLocationCommand(
                     new MapAddress(selectedAppointment.getLocation()));
@@ -1092,8 +1100,6 @@ After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to t
 .State of `MapPanel` after `CommandInput`
 image::AfterShowLocationInput.png[width="400"]
 
-Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
-
 [NOTE]
 Whenever an invalid `showLocation` command is done, any existing location marker or route will be removed from the map.
 
@@ -1147,7 +1153,7 @@ An example would be the details of unit number (e.g #11-111) which will result i
 This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
 * `GMAPSFX` is used to create the `MapPanel` which allows the
-command to re-center the map view, create the route, mark the start and end location which is then shown to the user.
+command to re-center the map view, create the route, mark the start, end location and route which is then shown to the user.
 
 * `Google Maps Web Services API` is used to create the
 `Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
