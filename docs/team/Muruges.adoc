@@ -19,8 +19,8 @@ In this software, the users should be able to:
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to add and edit appointments*
-** What it does: Allows users to add new appointments or edit existing appointments in CelebManager. For each appointment, CelebManager takes in an appointment an appointment name field and other optional fields
+* *Major enhancement*: added *the ability to add appointments*
+** What it does: Allows users to add new appointments into CelebManager. For each appointment, CelebManager takes in an appointment an appointment name field and other optional fields
 such as the list of celebrities attending the appointment.
 ** Justification: This feature is in fact the main feature of the appointment, as we want to be able to manage the schedules of celebrities.
  The only way to do this would be to store and make corrections to these appointments that the celebrities are attending, which is what this feature allows for.
@@ -85,25 +85,31 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 [TIP]
 A person can have any number of tags, including 0.
 
+****
+* You can add two types of persons to CelebManager: contacts and celebrities.
+* Celebrities refer to the celebrities that you, the manager, are currently managing, while contacts refer to other persons.
+* Contacts refer to contacts other than celebrities.
+* If you want to add a celebrity to CelebManager, you need to tag him/her with `celebrity` tag.
+Refer to examples below for more information.
+* For each celebrity added, CelebManager creates a calendar in `CalendarPanel` for him/her. This calendar displays the appointments
+he/she will be attending.
+* CelebManager assumes that any celebrity added is a celebrity that you are managing. If you want to add an actual celebrity
+who is not managed by you, you need to avoid using `celebrity` tag and find another tag name to indicate this information.
+****
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+Adds a contact named `John Doe` to CelebManager.
 
-If you want to instead create a *Celebrity*, you *must* include the tag `celebrity` along with any other tags you wish to add.
+* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal` +
+Adds a contact named `Betsy Crower` to CelebManager.
 
-Examples:
+* `add n/John Lennon p/91827364 e/johnlennon@example.com a/John Lennon Rd, Block 321, #03-04 t/celebrity t/singer` +
+Adds a celebrity named `John Lennon` to CelebManager and creates an empty calendar named `John Lennon`.
 
-* `add n/John Lennon p/91827364 e/johnlennon@example.com a/John Lennon Rd, Block 321, #03-04 t/celebrity t/singer`
-* `add n/Paul McCartney p/91827364 e/paulmccartney@example.com a/Paul McCartney Rd, Block 789, #05-06 t/celebrity`
-
-Examples:
-
-[IMPORTANT]
-====
-You can only edit an appointment when you are in appointment list view. Refer to
-<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
-====
+* `add n/Paul McCartney p/91827364 e/paulmccartney@example.com a/Paul McCartney Rd, Block 789, #05-06 t/celebrity` +
+Adds a celebrity named `Paul McCartney` to CelebManager and creates an empty calendar named `Paul McCartney`.
 
 ==== Editing a person : `edit` [Since v1.0]
 
@@ -112,87 +118,74 @@ Alias: `e` +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
-The index *must be a positive integer* `1`, `2`, `3`, ...
+* Edits the person at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the last person listing.
+* `INDEX` *must be a positive integer* `1`, `2`, `3`, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-* If `celebrity` tag gets removed, the person's calendar will be removed.
+* When editing tags, the existing tags of the contact will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tag after it.
+* If `celebrity` tag gets removed, the person's calendar will be removed and person will be removed from appointments
+he/she will be attending. Removal of the calendar and person from appointments *is not undoable*.
 * If the person now has `celebrity` tag, a calendar will be created for him/her.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `list` +
+`edit 1 p/91234567 e/johndoe@example.com` +
+Changes the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
-Similar to our `add` command, if you wish to convert a Person to a Celebrity, you have to include the `celebrity` tag along with any other tags you wish to add. Conversely, if you wish to convert a Celebrity into a Person, you would have to make sure at least one tag field is included and that the `celebrity` tag is not used.
+* `edit 2 n/Betsy Crowen t/` +
+Changes the name of the 2nd person to be `Betsy Crowen` and clears all existing tags.
 
-Example of converting Person into a Celebrity:
+* `edit 1 t/celebrity`
+Converts the 1st person to a celebrity.
+If you follow all the examples so far, a new calendar should be created for this person as shown below.
 
-* edit 3 n/Jay Chou t/celebrity t/singer
-* edit 1 t/celebrity
-
-Example of converting Celebrity into a Person:
-
-* edit 2 n/Michael Jackson t/Singer
-* edit 4 t/
+* `edit 3 n/Michael Jackson t/Singer`
+Converts the 3rd person to a contact.
+If you follow all the examples so far, this person's calendar should be deleted as shown below.
 
 
 === Appointment Features
 
 ==== Adding an appointment: `addAppointment` [Since v1.2]
 
-Adds an appointment to CelebManager. +
+Adds an appointment and shows the calendar of the start date of the added appointment. +
+
+[NOTE]
+====
+To change the date displayed by the calendar in `CalendarPanel`,
+refer to <<Changing the base date of calendar: `viewDate` [Since v1.5]>>.
+====
+
 Alias: `aa` +
-Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_CONTACT_INDEX]...`
+Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME]
+[c/CELEBRITY_INDEX]... [p/POINT_OF_person_INDEX]...`
+
+****
+* `START_DATE` and `END_DATE` must be of the format `DD-MM-YYYY`, e.g. `03-07-2018`.
+* `START_DATE` *must not be* after `END_DATE`.
+* If `START_DATE` or `END_DATE` is omitted, it will take on the value of the current date.
+* `START_TIME` and `END_TIME` must be of the format `HH:MM` and 24-hour format is used, e.g. `14:05`.
+* `START_TIME` *must be* at least 15 minutes before `END_TIME` if `START_DATE` is equal to `END_DATE`.
+* If `START_TIME` and `END_TIME` are both omitted, `START_TIME` will take on the current time and `END_TIME` will be
+15 minutes after `START_TIME`.
+* If `START_TIME` is omitted while `END_TIME` is not, `START_TIME` will be 15 minutes before `END_TIME`.
+* If `END_TIME` is omitted while `START_TIME` is not, `END_TIME` will be 15 minutes after `START_TIME`.
+* `CELEBRITY_INDEX` and `POINT_OF_person_INDEX` refer to the index shwon in the last shown person list in `PersonListPanel`.
+* The person at `CELEBRITY_INDEX` *must be* a celebrity.
+* The person at `POINT_OF_person_INDEX` *must not be* a celebrity.
+* `CELEBRITY_INDEX` and `POINT_OF_person_INDEX` *must be a positive integer* `1`, `2`, `3`, ...
+****
 
 Examples:
 
 * `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00 p/1 p/5`
+
 * `addAppointment n/Dentist Appointment l/Dental Clinic st/15:45 c/1 c/3`
 
-****
-* Start and end dates must be of the format dd/mm/yyyy. If the day is a 1 digit number such as the 3rd of July
-it must be prefixed with a 0, e.g. `03/07/2017`.
-* Start and end times must be of the format hh:mm. 24 hour format is used for the hour. If either the hour
-or minute is a 1 digit number, you need to prefix it with a 0, e.g. `09:05`.
-* The celebrity index refers to the person's index on the person list displayed inside of our app. This person *must* be a celebrity,
-failing which you will receive an error message stating so.
-* The point of contact index refers to an ordinary person associated with the appointment. This person *must not* be a Celebrity.
-* Similar to our other commands, the celebrity and point of contact indices must be positive numbers greater than 0 and at most the number of person being shown.
-* You can choose multiple celebrities or points of contact whom you want to add the appointment as shown in our example.
-* All the fields with brackets as shown in the format are optional and can be omitted.
-****
-
-====  Editing an appointment `editAppointment` [Since v1.4]
-
-Edits an appointment currently stored in CelebManager. +
-Alias: `ea` +
-Format: `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_CONTACT_INDEX]...`
-
-Examples:
-
-* `editAppointment 2 n/Dentist Appointment l/Orchard Road p/3`
-* `editAppointment 1 st/16:00 et/20:00 sd/23-03-2018 c/1 c/2`
-
-[IMPORTANT]
-====
-You can only edit an appointment when you are in appointment list view. Refer to
-<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
-====
-
-****
-* Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the current
-appointment listing. The index *must be a positive integer* `1`, `2`, `3`, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* For more information on constraints of the different fields,
-refer to <<Adding an appointment: `addAppointment` [Since v1.2]>>.
-****
 
 == Contributions to the Developer Guide
 
@@ -228,7 +221,7 @@ Right now, the addAppointment command takes in up to 8 parameters. They are:
 * Start Time
 * End Date
 * End Time
-* Celebrity indices
+* Celebrity Indices
 * Point of Contact Indices
 
 The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:
