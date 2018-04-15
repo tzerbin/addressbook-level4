@@ -10,12 +10,14 @@
 
 CelebManager is a software application that aims to allow celebrity managers to maintain schedule of celebrities under them. CelebManager is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a Graphical User Interface (GUI) for visual feedback.
 
-In this software, the users should be able to:
+In this software, the users will be able to:
 
 .   Manage contacts
 .	Manage appointments
 .	Manage calendars
 .	Plan efficient routes
+
+The aim of the project portfolio is to show my contribution towards the development of CelebManager. This includes features implemented and contributions made to the user and developer guide.
 
 == Summary of contributions
 
@@ -23,16 +25,14 @@ In this software, the users should be able to:
 ** What it does: Allow the celebrity manager to have a view of the exact location in a map. Notify celebrity manager if a location cannot be found on the map.
 ** Justification: This feature improves the product significantly by allowing the celebrity manager to be familiar with the location.
  This is important as they are responsible of ensuring that their celebrities reaches the correct location for their appointment.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
- The implementation was challenging as it requires a clear understanding of the external libraries used and how the libraries function integrates with the existing structure.
+** Highlights: This enhancement required an in-depth analysis of design alternatives. The implementation too was challenging as it required integration of the new map interface with existing CelebManager interface. The implementation was challenging as it require a clear understanding of the external libraries used and its integration with the existing structure.
 ** Credits: Third party library used, which are `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
 * *Major enhancement*: added *the ability to estimate route, distance and travel time between two location by driving in map*
 ** What it does: Allow the celebrity manager to have a view of the best route by driving between two location in a map. Provides information of estimated distance and time of travel by driving between two location. Notifies the celebrity manager if two location cannot be reached by driving.
 ** Justification: This feature improves the product significantly by allowing the celebrity manager to find the best travel route between two location.
  This is important as they are responsible of chauffeuring their celebrities for their appointment.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
- The implementation was challenging as it requires a clear understanding of the external libraries used and how the libraries function integrates with the existing structure.
+** Highlights: This enhancement requires an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to other command implementation. The implementation also required the integration of third party libraries with existing code structure.
 ** Credits: Third party library used, which are `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
 
 
@@ -48,6 +48,7 @@ In this software, the users should be able to:
 ** Enhancements to existing features:
 *** Updated the GUI color scheme (Pull requests https://github.com/CS2103JAN2018-W14-B4/main/pull/117[#117])
 *** Added Map panel UI into GUI (Pull requests https://github.com/CS2103JAN2018-W14-B4/main/pull/41[#41])
+*** Added different colour tags (Pull requests https://github.com/CS2103JAN2018-W14-B4/main/pull/6[#6])
 
 ** Documentation:
 *** Updated features content in User Guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/108[#108] https://github.com/CS2103JAN2018-W14-B4/main/pull/93[#93] https://github.com/CS2103JAN2018-W14-B4/main/pull/138[#138] https://github.com/CS2103JAN2018-W14-B4/main/pull/20[#20]
@@ -56,7 +57,6 @@ https://github.com/CS2103JAN2018-W14-B4/main/pull/21[#21] https://github.com/CS2
 https://github.com/CS2103JAN2018-W14-B4/main/pull/58[#58] https://github.com/CS2103JAN2018-W14-B4/main/pull/1[#1]
 
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F11-B3/main/issues/138[1], https://github.com/CS2103JAN2018-F11-B3/main/issues/113[2], https://github.com/CS2103JAN2018-F11-B3/main/issues/114[3] https://github.com/CS2103JAN2018-F11-B3/main/issues/115[4])
 
 ** Tools:
@@ -71,52 +71,27 @@ https://github.com/CS2103JAN2018-W14-B4/main/pull/58[#58] https://github.com/CS2
 
 === Map Features
 
-Figure 7 is a snippet of the `MapPanel` which shows the results of all map related features.
+Map features allow you to interact with Google Map in `MapPanel` located at the bottom left of CelebManager.
+The figure below shows the default state of `MapPanel`.
 
-.Default State of `MapPanel`
+.Default state of `MapPanel`
 image::BeforeInputMap.png[width="400"]
 
-Button features:
+Whenever a new valid or invalid command belonging to map features is executed, any existing route or location marker will be removed.
 
-. Click the Map or Satellite button to toggle between road map or satellite view.
-. Click the `+` to zoom in and `-` button to zoom out.
-. Click, hold and move the mouse cursor to shift the current view of the map.
+==== Click inside the map [Since v1.3]
 
-[NOTE]
-Do not click on the `Google` logo or `Terms of Use` button. [To be resolved in v2.0].
-
-==== Show location on map : `showLocation` [Since v1.2]
-
-Shows the specific location in the map interface, by marking the latitude and longitude with a location marker.
-Any existing location marker or route will be removed. +
-
-Alias: `sl` +
-Format: `showLocation ma/MapAddress`
-
-Examples:
-
-* `showLocation ma/Punggol` +
-Updates the map by re-centering to the new location `Punggol` and adding a location marker to it.
-
+Google Map in `MapPanel` supports mouse clicking. You can: +
 ****
-* Address should be a postal code, road name, location name or building name.
+* Click the Map or Satellite button to toggle between road map or satellite view.
+* Click the `+` to zoom in and `-` button to zoom out.
+* Click, hold and move the mouse cursor to shift the current view of the map.
 ****
 
-The snippet in Figure 9 shows the updated map after the command input of `showLocation ma/Punggol`.
-
-.State of `MapPanel` after `CommandInput`
-image::AfterShowLocationInput.png[width="400"]
-
 [NOTE]
-====
-Whenever a new valid or invalid `showLocation` command is done, any existing route and location marker will be removed.
-====
+Do not click the `Google` logo or `Terms of Use` button.
+Clicking these two things triggers a bug which we plan to fix in `v2.0`.
 
-== Contributions to the Developer Guide
-
-|===
-|_Given below are some key sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
-|===
 === ShowLocation Feature
 ==== Current Implementation
 
@@ -216,10 +191,8 @@ After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to t
 .State of `MapPanel` after `CommandInput`
 image::AfterShowLocationInput.png[width="400"]
 
-Any subsequent inputs will remove the previous location marker and update the `MapPanel` with the new marker.
-
 [NOTE]
-Whenever an invalid `showlocation` command is done, any existing location marker or route will be removed from the map.
+Whenever an invalid `showLocation` command is done, any existing location marker or route will be removed from the map.
 
 The following sequence diagram shows how the command works:
 
@@ -243,4 +216,3 @@ image::ShowLocationSequenceDiagram.png[width=""]
 * **Alternative 2:** Use `Address`
 ** Pros: Reduces the amount of code/class in the project
 ** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
-

@@ -6,13 +6,12 @@ import java.util.List;
 
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.calendar.StorageCalendar;
-
+//@@author tzerbin
 /**
  * A utility class containing a list of {@code Appointments} objects to be used in tests.
  */
 public class TypicalStorageCalendar {
 
-    //@@author tzerbin
     public static final Appointment CONCERT = new Appointment(
             new AppointmentBuilder().withName("Concert")
                     .withStartTime("19:00")
