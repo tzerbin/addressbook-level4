@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === K Muruges
 image::muruges95.png[width="150", align="left"]
-{empty} [https://github.com/muruges95[github]]
+{empty} [https://github.com/muruges95[GitHub]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/docs/team/Muruges.adoc[Project Portfolio]]
 
 Role: Team Leader
 
@@ -20,7 +20,7 @@ Responsibilities: Logic Component, Deliverables and Deadlines
 
 === Ng Tzer Bin
 image::tzerbin.png[width="150", align="left"]
-{empty}[https://github.com/tzerbin[github]]
+{empty}[https://github.com/tzerbin[GitHub]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/docs/team/tzerbin.adoc[Project Portfolio]]
 
 Role: Developer
 
@@ -30,7 +30,7 @@ Responsibilities: Storage(Data) Component, Documentation
 
 === Wang Jinyi
 image::WJY-norainu.jpeg[width="150", align="left"]
-{empty}[https://github.com/WJY-norainu[github]]
+{empty}[https://github.com/WJY-norainu[github]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/docs/team/WJY-norainu.adoc[Project Portfolio]]
 
 Role: Developer
 
@@ -40,7 +40,7 @@ Responsibilities: Model Component, Testing, Schdeuling and Tracking
 
 === Sim Kwan Tiong Damien
 image::Damienskt.jpeg[width="150", align="left"]
-{empty}[http://github.com/Damienskt[github]]
+{empty}[http://github.com/Damienskt[github]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/docs/team/Damienskt.adoc[Project Portfolio]]
 
 Role: Developer, Integration
 
