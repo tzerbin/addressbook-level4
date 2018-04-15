@@ -1,4 +1,4 @@
-= Damienskt - Project Portfolio
+= Sim Kwan Tiong Damien - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
