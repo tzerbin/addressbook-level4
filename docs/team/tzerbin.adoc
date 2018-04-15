@@ -68,34 +68,36 @@ I am also responsible for other contributions which does not involve project enh
 |_The following are sections of the user guide that I had contributed, which showcase my ability to write documentation targeting end-users._
 |===
 
-=== Adding a person: `add` [Since v1.0]
+===  Editing an appointment `editAppointment` [Since v1.4]
 
-Adds a person to CelebManager. +
-Alias: `a` +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Pre-requisite: you can only edit an appointment when `CalendarPanel` is showing an appointment list.
+Refer to <<Listing appointments: `listAppointment` [Since v1.5]>> for more information. +
 
-[TIP]
-A person can have any number of tags, including 0.
+Edits the specified appointment and replaces the appointment list with the calendar in
+`CalendarPanel` upon successful execution. +
+Alias: `ea` +
+Format: `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME]
+[ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_person_INDEX]...`
+
+****
+* Edits the appointment at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the current appointment list.
+* `INDEX` *must be a positive integer* `1`, `2`, `3`, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* For more information on constraints of the different fields,
+refer to <<Adding an appointment: `addAppointment` [Since v1.2]>>.
+****
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `listAppointment` +
+`editAppointment 2 n/Dentist Appointment l/Orchard Road p/3`
+Edits the 2nd appointment in the appointment list.
 
-If you want to instead create a *Celebrity*, you *must* include the tag `celebrity` along with any other tags you wish to add.
-
-Examples:
-
-* `add n/John Lennon p/91827364 e/johnlennon@example.com a/John Lennon Rd, Block 321, #03-04 t/celebrity t/singer`
-* `add n/Paul McCartney p/91827364 e/paulmccartney@example.com a/Paul McCartney Rd, Block 789, #05-06 t/celebrity`
-
-Examples:
-
-[IMPORTANT]
-====
-You can only edit an appointment when you are in appointment list view. Refer to
-<<Listing appointments: `listAppointment` [Since v1.3]>> for more information.
-====
+* `listAppointment 01-04 01-05` +
+`editAppointment 1 st/16:00 et/20:00 sd/23-03-2018 c/1 c/2`
+Edits the 1st appointment in the result of `listAppointment 01-04 01-05`.
 
 
 == Developer Guide Contribution
