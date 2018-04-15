@@ -27,6 +27,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.exceptions.DuplicateAppointmentException;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.EditAppointmentDescriptorBuilder;
+// @@author muruges95
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditAppointmentCommand.
